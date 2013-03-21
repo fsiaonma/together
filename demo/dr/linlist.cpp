@@ -36,8 +36,8 @@ template <class T> class LinList {
         int getlistSize(void) const;
         int isEmpty(void) const;
         ListNode<T> *getNodeByIndex(int pos);
-        insert(const T &item, int pos);
-        T delete(int pos);
+        int insert(const T &item, int pos);
+        int remove(int pos);
 };
 
 template <class T> LinList<T>::LinList() {
@@ -61,7 +61,8 @@ template <class T> int LinList<T>::isEmpty(void) const {
 template <class T> ListNode<T>* LinList<T>::getNodeByIndex(int pos) {
     if (pos < -1 || pos > size) {
         cout << "参数 pos 越界" << endl;
-        exit(0);
+        ListNode<T> *p;
+        return p;
     }
 
     if (pos == -1) {
@@ -77,29 +78,29 @@ template <class T> ListNode<T>* LinList<T>::getNodeByIndex(int pos) {
     return p;
 };
 
-template <class T> LinList<T>::insert(const T &item, int pos) {
+template <class T> int LinList<T>::insert(const T &item, int pos) {
     if (pos < 0 || pos > size) {
         cout << "参数 pos 越界" << endl;
-        exit(0);
+        return 0;
     }
-
     ListNode<T> *p = getNodeByIndex(pos - 1);
     ListNode<T> *newNode = new ListNode<T>(item, p->next);
     p->next = newNode;
     ++size;
+    return 1;
 };
 
-template <class T> T LinList<T>::delete(int pos) {
+template <class T> int LinList<T>::remove(int pos) {
     if (pos < 0 || pos > size) {
         cout << "参数 pos 越界" << endl;
-        exit(0);
+        return 0;
     }
 
     ListNode<T> *q, *p = getNodeByIndex(pos - 1);
-    q = p->next
-    p-next = p->next->next;
+    q = p->next;
+    delete q;
     --size;
-    return data;
+    return 1;
 };
 
 struct PARAM {
@@ -110,7 +111,6 @@ struct PARAM {
 int main() {
     LinList<PARAM> mylist;
     cout << mylist.isEmpty() << endl;
-    cout << mylist.getlistSize() << endl;
 
     PARAM t;
     t.key = "username";
@@ -118,5 +118,14 @@ int main() {
     mylist.insert(t, mylist.getlistSize());
     cout << mylist.getNodeByIndex(0)->data.key << '\t'
         << mylist.getNodeByIndex(0)->data.value << endl;
+
+
+    // cout << mylist.getlistSize() << endl;
+    // cout << mylist.remove(0) << endl;
+    // cout << mylist.getlistSize() << endl;
+
+    // cout << mylist.getNodeByIndex(0)->data.key << endl;
+    // mylist.insert(t, 8);
+    // mylist.remove(8);
 	return 0;
 }
