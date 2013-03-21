@@ -120,12 +120,12 @@ int main() {
         << mylist.getNodeByIndex(0)->data.value << endl;
 
 
-    // cout << mylist.getlistSize() << endl;
-    // cout << mylist.remove(0) << endl;
-    // cout << mylist.getlistSize() << endl;
+    cout << mylist.getlistSize() << endl;
+    cout << mylist.remove(0) << endl;
+    cout << mylist.getlistSize() << endl;
 
-    // cout << mylist.getNodeByIndex(0)->data.key << endl;
-    // mylist.insert(t, 8);
-    // mylist.remove(8);
-	return 0;
+    cout << mylist.getNodeByIndex(0)->data.key << endl;
+    mylist.insert(t, 8);
+    mylist.remove(8);
+    return 0;
 }
