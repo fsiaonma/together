@@ -1,0 +1,33 @@
+<!DOCTYPE 5>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>标签工具</title>
+    <link rel="stylesheet" href="./resource/style.css"/>
+    <script type="text/javascript" src="./resource/config.js"></script>
+    <script type="text/javascript">
+        var initMenu = function () {
+            var ul = document.getElementById('menuList');
+            var innerStr = '';
+            for (var i = 0, len = list.length; i < len; ++i) {
+                innerStr += "<li><a href=" + list[i].href + " target='contentFrame'>" + 
+                            list[i].name + "</a></li><br />";
+            }
+            ul.innerHTML = innerStr;
+        };
+        window.onload = function () {
+            initMenu();
+        };
+    </script>
+</head>
+<body>
+    <div class="menu">
+        <center>
+            <li><h1> 网 站 列 表 </h1></li>
+        </center>
+        <ul id="menuList"></ul>
+    </div>
+    <div id="contentArea" class="contentArea">
+        <iframe id="contentFrame" name="contentFrame" class="content"></iframe>
+    </div>
+</body>
+</html>
