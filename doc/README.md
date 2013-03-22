@@ -1,16 +1,12 @@
-doc
-============
-
-### 所有相关文档
-
 Linux git 使用说明
 ====================
 
-安装 git
+一. 安装 git
 ----------
 > apt-get install git
 
-设置 SSH key
+
+二. 设置 SSH key
 -------------
 
 ### 1.找到 SSH key
@@ -27,7 +23,8 @@ Linux git 使用说明
 ### 4.测试
 > ssh -T git@github.com
 
-开始使用
+
+三. 开始使用
 ----------
 > 1. 创建一本地文件夹
 > 2. git init
