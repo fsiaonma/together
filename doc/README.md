@@ -12,19 +12,19 @@ Linux git 使用说明
 
 设置 SSH key
 -------------
-1.找到 SSH key
----------------
+
+### 1.找到 SSH key
 > cd ~/.ssh
-2.生成 SSH key （https://help.github.com/articles/generating-ssh-keys）
-------------------------------------------------------------------------
+
+### 2.生成 SSH key （https://help.github.com/articles/generating-ssh-keys）
 > ssh-keygen -t rsa -C "your_email@example.com"
-3.添加 SSH key 到 github
--------------------------
+
+### 3.添加 SSH key 到 github
 > sudo apt-get install xclip
 > xclip -sel clip < ~/.ssh/id_rsa.pub
 > 到 github 操作
-4.测试
--------
+
+### 4.测试
 > ssh -T git@github.com
 
 开始使用
@@ -45,8 +45,7 @@ Linux git 使用说明
 
 issue：
 ------
-22 端口被屏蔽解决方法 (http://www.cnblogs.com/kysnail/archive/2012/03/31/2427397.html)
----------------------------------------------------------------------------------------
+### 22 端口被屏蔽解决方法 (http://www.cnblogs.com/kysnail/archive/2012/03/31/2427397.html)
 > 在 ~/.ssh 文件夹中添加 config 文件，输入如下内容    
 > Host github.com
 > User xxxx@gmail.com
