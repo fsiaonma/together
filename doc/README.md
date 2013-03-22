@@ -34,24 +34,27 @@ Linux git 使用说明
 > 3. git clone 克隆远程库
 > 4. git remote add origin git@github.com/xxxxx (添加库名)
 > 5. git remote rm origin (删除库名)
-
 > 6. git pull origin master (同步远程)
-    
 > 7. git status (查看文件修改状态)
 > 8. git add <filename> (添加要提交的文件)
 > 9. git rm <filename> （添加要删除的文件）
 > 10. git commit -m "message" 提交代码
 > 11. git push origin master 推送代码到远程库
 
-issue：
+issue
 ------
 ### 22 端口被屏蔽解决方法 (http://www.cnblogs.com/kysnail/archive/2012/03/31/2427397.html)
 > 在 ~/.ssh 文件夹中添加 config 文件，输入如下内容    
-> 1.Host github.com
-> 2.User xxxx@gmail.com
-> 3.Port 443
-> 4.Hostname ssh.github.com
-> 5.identityfile ~/.ssh/id_rsa
+
+> Host github.com
+
+> User xxxx@gmail.com
+
+> Port 443
+
+> Hostname ssh.github.com
+
+> identityfile ~/.ssh/id_rsa
 
 
 
