@@ -37,6 +37,11 @@ Linux github 使用说明
 > 9. git rm <filename> （添加要删除的文件）
 > 10. git commit -m "message" 提交代码
 > 11. git push origin 推送代码到远程库
+> Host github.com
+> User xxxx@gmail.com
+> Port 443
+> Hostname ssh.github.com
+> identityfile ~/.ssh/id_rsa
 
 issue
 ------
@@ -44,13 +49,9 @@ issue
 ### 在 ~/.ssh 文件夹中添加 config 文件，输入如下内容    
 
 > Host github.com
-> 
 > User xxxx@gmail.com
-> 
 > Port 443
-> 
 > Hostname ssh.github.com
-> 
 > identityfile ~/.ssh/id_rsa
 
 
