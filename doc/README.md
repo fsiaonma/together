@@ -1,4 +1,4 @@
-Linux git 使用说明
+Linux github 使用说明
 ====================
 
 一. 安装 git
@@ -31,12 +31,12 @@ Linux git 使用说明
 > 3. git clone 克隆远程库
 > 4. git remote add origin git@github.com/xxxxx (添加库名)
 > 5. git remote rm origin (删除库名)
-> 6. git pull origin master (同步远程)
+> 6. git pull origin (同步远程)
 > 7. git status (查看文件修改状态)
 > 8. git add <filename> (添加要提交的文件)
 > 9. git rm <filename> （添加要删除的文件）
 > 10. git commit -m "message" 提交代码
-> 11. git push origin master 推送代码到远程库
+> 11. git push origin 推送代码到远程库
 
 issue
 ------
