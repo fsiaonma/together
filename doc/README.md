@@ -41,16 +41,12 @@ Linux github 使用说明
 issue
 ------
 ### 22 端口被屏蔽解决方法 (http://www.cnblogs.com/kysnail/archive/2012/03/31/2427397.html)
-> 在 ~/.ssh 文件夹中添加 config 文件，输入如下内容    
+### 在 ~/.ssh 文件夹中添加 config 文件，输入如下内容    
 
 > Host github.com
-
 > User xxxx@gmail.com
-
 > Port 443
-
 > Hostname ssh.github.com
-
 > identityfile ~/.ssh/id_rsa
 
 
