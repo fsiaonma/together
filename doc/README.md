@@ -16,9 +16,9 @@ Linux github 使用说明
 > ssh-keygen -t rsa -C "your_email@example.com"
 
 ### 3.添加 SSH key 到 github
-> sudo apt-get install xclip
-> xclip -sel clip < ~/.ssh/id_rsa.pub
-> 到 github 操作
+>     sudo apt-get install xclip
+>     xclip -sel clip < ~/.ssh/id_rsa.pub
+>     到 github 操作
 
 ### 4.测试
 > ssh -T git@github.com
