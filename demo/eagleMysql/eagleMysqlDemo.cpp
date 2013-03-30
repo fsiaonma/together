@@ -51,9 +51,9 @@ int main() {
     string sql = "select * from user;";
     mysql = e.excute(sql);
 
-	MYSQL_RES *result = NULL;
-	MYSQL_FIELD *field = NULL;
-	result = mysql_store_result(&mysql);
+    MYSQL_RES *result = NULL;
+    MYSQL_FIELD *field = NULL;
+    result = mysql_store_result(&mysql);
     cout << "result: " << result << endl;
     int rowcount = mysql_num_rows(result);
     cout << "rowcount " << rowcount << endl;

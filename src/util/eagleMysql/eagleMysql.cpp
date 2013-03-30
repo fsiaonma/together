@@ -16,13 +16,13 @@ using namespace std;
  * @Constructor
  */
 eagleMysql::eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port) {
-	MYSQL mysql;
-	mysql_init(&mysql);
-	this->domain = domain;
-	this->userName = userName;
-	this->password = password;
-	this->dataBase = dataBase;
-	this->port = port;
+    MYSQL mysql;
+    mysql_init(&mysql);
+    this->domain = domain;
+    this->userName = userName;
+    this->password = password;
+    this->dataBase = dataBase;
+    this->port = port;
 }
 
 /**
@@ -33,26 +33,26 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
  * @param {PARAMLIST} list insert values.
  */
 void eagleMysql::insert(string table, PARAMLIST list) {
-	mysql_init(&(this->mysql));
-	mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    mysql_init(&(this->mysql));
+    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
 	
-	string keys = "(", values = "(";
-	PARAMLIST::iterator ptr;
+    string keys = "(", values = "(";
+    PARAMLIST::iterator ptr;
 
-	ptr = list.begin();
-	for (int i = 0; i < list.size() - 1; ++i) {
-		keys += ptr->key + ", ";
-		values += "'" + ptr->value + "'" + ", ";
-		++ptr;
-	}
+    ptr = list.begin();
+    for (int i = 0; i < list.size() - 1; ++i) {
+        keys += ptr->key + ", ";
+        values += "'" + ptr->value + "'" + ", ";
+        ++ptr;
+    }
 
-	keys += ptr->key + ")";
-	values += "'" + ptr->value + "')";
+    keys += ptr->key + ")";
+    values += "'" + ptr->value + "')";
 
-	string sql = "insert into " + table + " " + keys + " values " + values + ";";
-	cout << "insert operation: " + sql << endl;
-	mysql_query(&(this->mysql), sql.c_str());
-	mysql_close(&(this->mysql));
+    string sql = "insert into " + table + " " + keys + " values " + values + ";";
+    cout << "insert operation: " + sql << endl;
+    mysql_query(&(this->mysql), sql.c_str());
+    mysql_close(&(this->mysql));
 }
 
 /**
@@ -63,12 +63,12 @@ void eagleMysql::insert(string table, PARAMLIST list) {
  * @param {string} condition sql condition.
  */
 void eagleMysql::remove(string table, string condition) {
-	mysql_init(&(this->mysql));
-	mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
-	string sql = "delete from " + table + " " + condition;
-	cout << "remove operation: " + sql << endl;
-	mysql_query(&(this->mysql), sql.c_str());
-	mysql_close(&(this->mysql));
+    mysql_init(&(this->mysql));
+    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    string sql = "delete from " + table + " " + condition;
+    cout << "remove operation: " + sql << endl;
+    mysql_query(&(this->mysql), sql.c_str());
+    mysql_close(&(this->mysql));
 }
 
 /**
@@ -80,25 +80,25 @@ void eagleMysql::remove(string table, string condition) {
  * @param {string} condition sql condition.
  */
 void eagleMysql::update(string table, PARAMLIST list, string condition) {
-	mysql_init(&(this->mysql));
-	mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    mysql_init(&(this->mysql));
+    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
 	
-	string keys = "(", values = "(";
-	PARAMLIST::iterator ptr;
+    string keys = "(", values = "(";
+    PARAMLIST::iterator ptr;
 
-	string sql = "update " + table + " set ";
-	ptr = list.begin();
-	for (int i = 0; i < list.size() - 1; ++i) {
-		sql += ptr->key + "=" + "'" + ptr->value + "', ";
-		++ptr;
-	}
-	sql += ptr->key + "=" + "'" + ptr->value + "' ";
-	sql += condition;
+    string sql = "update " + table + " set ";
+    ptr = list.begin();
+    for (int i = 0; i < list.size() - 1; ++i) {
+        sql += ptr->key + "=" + "'" + ptr->value + "', ";
+        ++ptr;
+    }
+    sql += ptr->key + "=" + "'" + ptr->value + "' ";
+    sql += condition;
 
-	cout << "update operation: " + sql << endl;
+    cout << "update operation: " + sql << endl;
 
-	mysql_query(&(this->mysql), sql.c_str());
-	mysql_close(&(this->mysql));
+    mysql_query(&(this->mysql), sql.c_str());
+    mysql_close(&(this->mysql));
 }
 
 /**
@@ -107,8 +107,8 @@ void eagleMysql::update(string table, PARAMLIST list, string condition) {
  * @method connet.
  */
 void eagleMysql::connet() {
-	mysql_init(&(this->mysql));
-	mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    mysql_init(&(this->mysql));
+    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
 }
 
 /**
@@ -118,8 +118,8 @@ void eagleMysql::connet() {
  * @param {string} sql sql is used to be excuted.
  */
 MYSQL eagleMysql::excute(string sql) {
-	mysql_query(&(this->mysql), sql.c_str());
-	return this->mysql;
+    mysql_query(&(this->mysql), sql.c_str());
+    return this->mysql;
 }
 
 /**
@@ -128,5 +128,5 @@ MYSQL eagleMysql::excute(string sql) {
  * @method close.
  */
 void eagleMysql::close() {
-	mysql_close(&(this->mysql));
+    mysql_close(&(this->mysql));
 }

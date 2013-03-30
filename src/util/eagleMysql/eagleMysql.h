@@ -20,21 +20,21 @@ typedef list<PARAM> PARAMLIST;
  * eagleMysql Class
  */
 class eagleMysql {
-	private:
-		const char* domain;
-		const char* userName;
-		const char* password;
-		const char* dataBase;
-		int port;
-		MYSQL mysql;
+    private:
+        const char* domain;
+        const char* userName;
+        const char* password;
+        const char* dataBase;
+        int port;
+        MYSQL mysql;
 
-	public:
-		eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port);
+    public:
+        eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port);
 
-		void insert(string table, PARAMLIST list);
-		void remove(string table, string condition);
-		void update(string table, PARAMLIST list, string condition);
-		void connet();
-		MYSQL excute(string sql);
-		void close();
+        void insert(string table, PARAMLIST list);
+        void remove(string table, string condition);
+        void update(string table, PARAMLIST list, string condition);
+        void connet();
+        MYSQL excute(string sql);
+        void close();
 };
