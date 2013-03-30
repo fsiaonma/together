@@ -3,6 +3,8 @@ BUILD_PATH = ./build
 DR_DEMO_PATH = $(BUILD_PATH)/demo/dr
 EAGLEMYSQL_DEMO_PATH = $(BUILD_PATH)/demo/eagleMysql
 
+all: $(DR_DEMO_PATH)/linListDemo $(EAGLEMYSQL_DEMO_PATH)/eagleMysqlDemo
+
 # dr linList demo
 $(DR_DEMO_PATH)/linListDemo: $(DR_DEMO_PATH)/linListDemo.o
 	g++ $(DR_DEMO_PATH)/linListDemo.o -o $(DR_DEMO_PATH)/linListDemo
@@ -18,4 +20,4 @@ $(EAGLEMYSQL_DEMO_PATH)/eagleMysql.o: src/util/eagleMysql/eagleMysql.cpp src/uti
 	g++ -c src/util/eagleMysql/eagleMysql.cpp -o $(EAGLEMYSQL_DEMO_PATH)/eagleMysql.o
 
 clean:
-	rm $(DR_DEMO_PATH)/*.o
+	rm $(DR_DEMO_PATH)/*.o && rm $(EAGLEMYSQL_DEMO_PATH)/*.o

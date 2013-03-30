@@ -30,8 +30,11 @@ class eagleMysql {
 
 	public:
 		eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port);
-		
-		void insert(string table, PARAMLIST list, string sql);
-		// void remove(string table, PARAM params[10], string sql);
-		// void update(string table, PARAM params[10], string sql);
+
+		void insert(string table, PARAMLIST list);
+		void remove(string table, string condition);
+		void update(string table, PARAMLIST list, string condition);
+		void connet();
+		MYSQL excute(string sql);
+		void close();
 };
