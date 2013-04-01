@@ -1,0 +1,21 @@
+package global;
+
+// 响应的基本结构
+message ResponseBase {
+	// 状态码,如200,404,503
+	optional int32 response_code = 1;
+	// 返回信息的简要描述
+	optional string response_msg = 2;
+}
+
+// 用于标识是属于哪个模块的数据
+enum ModuleType {
+	USER = 100;
+	ROOM = 200;
+}
+
+// 处理结果
+enum Result {
+	SUCCESS = 1;
+	FAIL = 2;
+}

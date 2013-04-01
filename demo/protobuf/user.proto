@@ -1,0 +1,38 @@
+package user;
+import "global.proto";
+
+// 用户模块请求包结构
+message UserRequest {
+	// 请求包的数据类型
+	enum RequestDataType {
+		LOGIN_RESQUEST = 1;
+	}
+	optional RequestDataType dataType = 1;
+	// 登陆请求数据
+	optional LoginResquest loginResquest = 2;
+}
+
+// 登陆请求数据包结构
+message LoginResquest {
+	optional string username = 1;
+	optional string password = 2;
+}
+
+// 用户模块响应包结构
+message UserResponse {
+	// 响应包的数据类型
+	enum ResponseDataType {
+		LOGIN_RESPONSE = 1;
+	}
+	optional ResponseDataType dataType = 1;
+	// 登陆响应数据
+	optional LoginResponse loginResponse = 2;
+}
+
+// 登陆响应数据包结构
+message LoginResponse {
+	optional global.ResponseBase base = 1;
+	optional global.ModuleType type = 2;
+	optional global.Result result = 3;
+}
+
