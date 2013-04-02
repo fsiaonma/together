@@ -1,5 +1,7 @@
 EAGLEMYSQL_PATH = ../../src/util/eagleMysql
 
+all: eagleMysqlDemo
+
 eagleMysqlDemo: eagleMysqlDemo.o eagleMysql.o
 	g++ -o eagleMysqlDemo eagleMysqlDemo.o eagleMysql.o -lmysqlclient
 eagleMysqlDemo.o: eagleMysqlDemo.cpp $(EAGLEMYSQL_PATH)/eagleMysql.h
