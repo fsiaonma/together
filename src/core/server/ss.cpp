@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include <sys/sendfile.h>
 
-#include "s.h"
+#include "./s.h"
 #include "../../module/user/user.h"
-#include "../../util/time/timer.h"
+#include "../../util/timer/timer.h"
 
 /**
 *
