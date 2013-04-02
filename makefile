@@ -39,4 +39,4 @@ $(BUILD)/$(GLOBAL)/global.o: $(SRC)/$(GLOBAL)/global.cpp $(SRC)/$(GLOBAL)/global
 	g++ -c $(SRC)/$(GLOBAL)/global.cpp -o $(BUILD)/$(GLOBAL)/global.o
 
 clean: 
-	find . -name "*.o" -exec rm {} \;
+	find $(BUILD) -type f ! -name "*.md" | xargs rm -f
