@@ -22,3 +22,6 @@ cmd:
 	mkdir -p $(BUILD)/$(EAGLEMYSQL)
 	mkdir -p $(BUILD)/$(LOG)
 	mkdir -p $(BUILD)/$(TIMER)
+
+clean: 
+	find . -name "*.c" -exec rm {} \;
