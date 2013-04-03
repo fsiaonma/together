@@ -1,12 +1,16 @@
 #include "../../common/global/global.h"
+#include "../../common/config/config.h"
+#include "../../util/tool/tool.h"
 #include "../../util/log/log.h"
 
 static process processes[MAX_PORCESS];
 static int efd;
 static epoll_event event;
 static int current_total_processes;
-static int listen_port[LISTEN_PORT_SIZE] = {LISTEN_HTTP_REQ_PORT, LISTEN_UPLOAD_REQ_PORT, LISTEN_TCP_REQ_PORT};
+static int listen_port[LISTEN_PORT_SIZE];
 static int listen_socks[LISTEN_PORT_SIZE];
+int keepalive_timeout;
+
 
 int setNonblocking(int fd);
 

@@ -54,12 +54,6 @@
 
 // 监听端口的数目
 const int LISTEN_PORT_SIZE = 3;
-// 处理HTTP的端口号
-const int LISTEN_HTTP_REQ_PORT = 9080;
-// 处理文件上传的端口号
-const int LISTEN_UPLOAD_REQ_PORT = 9081;
-// 处理长连接的端口号
-const int LISTEN_TCP_REQ_PORT = 9082;
 // 处理HTTP的类型标识
 const int LISTEN_HTTP_REQ_TYPE = 0;
 // 处理文件上传的类型标识
@@ -89,9 +83,6 @@ const int STATUS_SEND_RESPONSE = 4;
 const int STATUS_UPLOAD_READY = 5;
 const int STATUS_UPLOAD_ONGOING = 6;
 const int STATUS_UPLOAD_FINISHED = 7;
-
-// 超时断开的时长(单位:毫秒)
-const int KEEPALIVE_TIMEOUT = 5000;
 
 // 功能模块的标识码
 const int USER_MODULE = 100;

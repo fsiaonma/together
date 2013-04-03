@@ -174,7 +174,7 @@ process* accept_sock(int listen_sock) {
 **/
 void read_http_request(process* process)
 {
-	int sock = process->sock, s;
+	int sock = process->sock;
 	char* buf = process->buf;
 	char read_complete = 0;
 
@@ -402,7 +402,7 @@ void read_upload_request(process* process)
 **/
 void read_tcp_request(process* process)
 {
-	int sock = process->sock, s;
+	int sock = process->sock;
 	char* buf = process->buf;
 	char read_complete = 0;
 
@@ -505,7 +505,7 @@ void send_response(process *process) {
 		return ;
 	while (1) {
 		off_t offset = process->read_pos;
-		int s = sendfile(process-> sock, process -> fd, &offset, process->total_length);
+		sendfile(process-> sock, process -> fd, &offset, process->total_length);
 		process->read_pos = offset;
 		if (process->read_pos == process->total_length) {
       		// 读写完毕
@@ -651,7 +651,7 @@ void expire_timeout_sock()
     {
     	long interval = current_msec - iter->getActiveTime();
     	LOG << "sock:" << iter->getSock() << ", interval:" << interval << endl;
-    	if (interval < KEEPALIVE_TIMEOUT)
+    	if (interval < keepalive_timeout)
     	{
     		break;
     	}
@@ -676,7 +676,7 @@ void process_events_and_timer(epoll_event *events)
 	for(;;)
 	{
 		long delta;
-		long timer = find_timer(current_msec, KEEPALIVE_TIMEOUT);
+		long timer = find_timer(current_msec, keepalive_timeout);
 		//LOG << "timer:" << timer << endl;
 		delta = current_msec;
 		process_events(events, timer);
@@ -715,9 +715,20 @@ void process_events(epoll_event *events, int timer)
 	}
 }
 
+void iniConfig()
+{
+	Config *c = Config::get_instance();
+	map<string, string> config = c->get_config();
+	listen_port[LISTEN_HTTP_REQ_TYPE] = Tool::S2I(config["HTTP_PORT"], 9080);
+	listen_port[LISTEN_UPLOAD_REQ_TYPE] = Tool::S2I(config["UPLOAD_PORT"], 9081);
+	listen_port[LISTEN_TCP_REQ_TYPE] = Tool::S2I(config["TCP_PORT"], 9082);
+	keepalive_timeout = Tool::S2I(config["KEEPALIVE_TIMEOUT"], 5000);
+}
+
 int main()
 {
 	int s;
+	iniConfig();
 	epoll_event *events;
 	init_processes();
 	int listen_sock;
@@ -770,5 +781,6 @@ int main()
 	{
 		close(listen_socks[i]);
 	}
+	Config::del_instance();
 	return 0;
 }
