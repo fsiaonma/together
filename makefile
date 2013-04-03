@@ -1,42 +1,26 @@
-BUILD = ./build
-SRC = ./src
+SRC_DIR= src/
+CFLAGS+=-Wall -g 
+CFLAGS+=$(addprefix -I, $(SRC_DIR))
+CFILES=$(shell find $(SRC_DIR) -maxdepth 6 -name "*.cpp")
+OBJS=$(CFILES:%.cpp=%.o)
+LIBS+= -lmysqlclient
+TARGET = ./build/server
 
-GLOBAL = common/global
-CONST = common
+all:$(TARGET) clean
 
-SERVER = core/server
+-include $(addsuffix /*.d, $(SRC_DIR))
 
-USER = module/user
+$(TARGET):$(OBJS)
+	g++ $(LDFLAGS) $^ -o $@ $(LIBS)
 
-DR = util/dr
-EAGLEMYSQL = util/eagleMysql
-LOG = util/log
-TIMER = util/timer
+$(OBJS):%.o:%.cpp
+	g++ -c $(CFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -o $@ $<
 
-all: cmd $(BUILD)/$(SERVER)/server
+clean:
+	find $(SRC_DIR) -name "*.d" | xargs rm -f
+	find $(SRC_DIR) -name "*.o" | xargs rm -f
 
-cmd:
-	mkdir -p $(BUILD)/$(GLOBAL)
-	mkdir -p $(BUILD)/$(CONST)
-	mkdir -p $(BUILD)/$(SERVER)
-	mkdir -p $(BUILD)/$(USER)
-	mkdir -p $(BUILD)/$(DR)
-	mkdir -p $(BUILD)/$(EAGLEMYSQL)
-	mkdir -p $(BUILD)/$(LOG)
-	mkdir -p $(BUILD)/$(TIMER)
-
-$(BUILD)/$(SERVER)/server: $(BUILD)/$(TIMER)/timer.o $(BUILD)/$(SERVER)/ss.o $(BUILD)/$(USER)/user.o $(BUILD)/$(GLOBAL)/global.o $(BUILD)/$(LOG)/log.o
-	g++ -o $(BUILD)/$(SERVER)/server $(BUILD)/$(TIMER)/timer.o $(BUILD)/$(SERVER)/ss.o $(BUILD)/$(USER)/user.o $(BUILD)/$(GLOBAL)/global.o $(BUILD)/$(LOG)/log.o
-$(BUILD)/$(SERVER)/ss.o: $(SRC)/$(SERVER)/ss.cpp $(SRC)/$(SERVER)/s.h $(SRC)/$(LOG)/log.cpp $(SRC)/$(LOG)/log.h $(SRC)/$(GLOBAL)/global.cpp $(SRC)/$(GLOBAL)/global.h
-	g++ -c $(SRC)/$(SERVER)/ss.cpp -o $(BUILD)/$(SERVER)/ss.o
-$(BUILD)/$(USER)/user.o: $(SRC)/$(USER)/user.cpp $(SRC)/$(USER)/user.h $(SRC)/$(GLOBAL)/global.cpp $(SRC)/$(GLOBAL)/global.h
-	g++ -c $(SRC)/$(USER)/user.cpp -o $(BUILD)/$(USER)/user.o
-$(BUILD)/$(TIMER)/timer.o: $(SRC)/$(TIMER)/timer.cpp $(SRC)/$(TIMER)/timer.h $(SRC)/$(LOG)/log.cpp $(SRC)/$(LOG)/log.h
-	g++ -c $(SRC)/$(TIMER)/timer.cpp -o $(BUILD)/$(TIMER)/timer.o
-$(BUILD)/$(LOG)/log.o: $(SRC)/$(LOG)/log.cpp $(SRC)/$(LOG)/log.h
-	g++ -c $(SRC)/$(LOG)/log.cpp -o $(BUILD)/$(LOG)/log.o
-$(BUILD)/$(GLOBAL)/global.o: $(SRC)/$(GLOBAL)/global.cpp $(SRC)/$(GLOBAL)/global.h $(SRC)/$(CONST)/const.h
-	g++ -c $(SRC)/$(GLOBAL)/global.cpp -o $(BUILD)/$(GLOBAL)/global.o
-
-clean: 
-	find $(BUILD) -type f ! -name "*.md" | xargs rm -f
+cleanall:
+	find $(SRC_DIR) -name "*.d" | xargs rm -f
+	find $(SRC_DIR) -name "*.o" | xargs rm -f
+	rm -f $(TARGET)
