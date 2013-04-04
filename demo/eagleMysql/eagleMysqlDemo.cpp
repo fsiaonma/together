@@ -1,12 +1,23 @@
 #include <mysql/mysql.h>
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include "../../src/util/eagleMysql/eagleMysql.h"
+#include "../../src/common/config/config.h"
 using namespace std;
 
 int main() {
-	// init
-    eagleMysql e("localhost", "root", "123456", "testmysql", 3306);
+	Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+
+    const char *domain = config["DOMAIN"].c_str();
+    const char *userName = config["USER_NAME"].c_str();
+    const char *password = config["PASSWORD"].c_str();
+    const char *database = config["DATABASE"].c_str();
+    int port = atoi(config["PORT"].c_str());
+
+    // init
+    eagleMysql e(domain, userName, password, database, port);
 
 	// insert
     PARAM dataA;

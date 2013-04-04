@@ -7,4 +7,7 @@ var list = [{
 },{ 
     name: 'makefile',
     href: 'http://blog.csdn.net/slamdunk3/article/details/276055'
+},{
+	name: 'c++ type conversion',
+	href: 'http://www.51testing.com/?uid-128701-action-viewspace-itemid-148927'
 }];
