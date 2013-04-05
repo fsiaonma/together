@@ -21,14 +21,14 @@
 /**
 *处理请求内容
 **/
-void handle_read_request(process *process, char *req) {
+void handle_read_request(process *process, char *module, map<string, string> param) {
 	LOG << "handle_read_request" << endl;
-	int module_type = get_module_type(req);
+	int module_type = get_module_type(module);
 	int s;
 	switch (module_type) {
 		case USER_MODULE:
 		{
-			s = user_handler(process, req);
+			s = user_handler(process, param);
 			if (s == -1)
 				break;
 			else {
@@ -99,6 +99,42 @@ process* find_process_by_sock(int sock) {
 	} else {
 		return find_process_by_sock_slow(sock);
 	}
+}
+
+map<string, string> parse_param(char *param_data)
+{
+	char *p;
+	char *buf1 = param_data;
+	  
+	char *outer_ptr = NULL;
+	char *inner_ptr = NULL;
+
+	int k;
+	string key;
+	map<string, string> m;
+	while((p=strtok_r(buf1, "&", &outer_ptr))!=NULL)
+	{
+		buf1=p;
+		k = 0;
+		while((p=strtok_r(buf1, "=", &inner_ptr))!=NULL)
+		{
+			k++;
+			if (k == 1) {
+				key.assign(p);
+			} else if (k == 2) {
+				m.insert(pair<string, string>(key, p));
+				break;
+			}
+			buf1=NULL;
+		}  
+		buf1=NULL;
+	}
+    map<string, string>::iterator it;
+    for (it = m.begin(); it != m.end(); it++)
+    {
+        LOG << "key:" << it->first << "|val:" << it->second << endl;
+    }
+	return m;
 }
 
 /**
@@ -218,8 +254,150 @@ void read_http_request(process* process)
 	if (read_complete) {
     	// 重置读取位置
 		reset_process(process);
+		// 传输格式的位置 POST的时候format_pos=4,GET的时候format_post=3
+		int format_pos = -1;
+		if (strncmp(buf, "POST", 4) == 0) {
+    		format_pos = 4;
+		} else if (strncmp(buf, "GET", 3) == 0) {
+    		format_pos = 3;
+		}
+		LOG << "format_pos|" << format_pos << endl;
+		if (format_pos < 0)
+		{
+			process->response_code = 400;
+			process->status = STATUS_SEND_RESPONSE_HEADER;
+	    	strncpy(process->buf, header_400, sizeof(header_400));
+			send_response_header(process);
+			handle_error(processes, "bad request");
+			return;
+		}
+
+		// 解析第一行
+		const char *n_loc = strchr(buf, '\n');
+		const char *space_loc = strchr(buf + format_pos + 1, ' ');
+		if (n_loc <= space_loc) {
+			ERR << "read first line error" << endl;
+			process->response_code = 400;
+			process->status = STATUS_SEND_RESPONSE_HEADER;
+	    	strncpy(process->buf, header_400, sizeof(header_400));
+			send_response_header(process);
+			handle_error(processes, "bad request");
+			return;
+		}
+
+		// 解析出模块名
+		char module[50];
+		int module_len = space_loc - buf - (format_pos + 2);
+		strncpy(module, buf + (format_pos + 2), module_len);
+		module[module_len] = 0;
+		LOG << "module name|" << module << endl;
+
+
+		// 如果首部有Content-Length就解析出来
+		int content_length = -1;
+		char temp[10];
+		char *c = strstr(buf, HEADER_CONTENT_LENGTH);
+		if (c != 0)
+		{
+		    char *rn = strchr(c, '\r');
+		    if (rn == 0)
+		    {
+		        rn = strchr(c, '\n');
+		        if (rn == 0)
+		        {
+		        	ERR << "not found line break" << endl;
+					process->response_code = 400;
+					process->status = STATUS_SEND_RESPONSE_HEADER;
+			    	strncpy(process->buf, header_400, sizeof(header_400));
+					send_response_header(process);
+					handle_error(processes, "bad request");
+					return;
+		        }
+		    }
+		    int l = rn - c - sizeof(HEADER_CONTENT_LENGTH) + 1;
+		    strncpy(temp, c + sizeof(HEADER_CONTENT_LENGTH) - 1, l);
+		    temp[l] = 0;
+		}
+		LOG << "Content-Length|" << temp << endl;
+		content_length = atoi(temp);
+
+		// 解析最后一行
+		int request_len = strlen(buf);
+
+		int last_line_begin = 0;
+		int last_line_end = 0;
+		int count = 0;
+		int i = request_len - 1;
+		for (; i >= 0; i--)
+		{
+		    if (*(buf + i) == '\n')
+		    {
+		        if (last_line_end == 0)
+		        {
+		            last_line_end = i - 1;
+		            count++;
+		        }
+		        else if (last_line_begin == 0)
+		        {
+		            last_line_begin = i + 1;
+		            count++;
+		        }
+		    }
+		    if (count == 2)
+		        break;
+		}
+
+		char param_data[200];
+		int param_len = last_line_end - last_line_begin + 1;
+		strncpy(param_data, buf + last_line_begin, param_len);
+		param_data[param_len] = 0;
+		LOG << "param data|" << param_data << endl;
+
+		// 最后一行长度为0则视为数据出错
+		if (param_len == 0)
+		{
+			ERR << "receive data is null" << endl;
+			process->response_code = 400;
+			process->status = STATUS_SEND_RESPONSE_HEADER;
+		    strncpy(process->buf, header_400, sizeof(header_400));
+			send_response_header(process);
+			handle_error(processes, "bad request");
+			return;
+		}
+
+		// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
+		if (content_length > 0)
+		{
+			if (content_length != strlen(param_data))
+			{
+				ERR << "receive data size not same" << endl;
+				process->response_code = 400;
+				process->status = STATUS_SEND_RESPONSE_HEADER;
+		    	strncpy(process->buf, header_400, sizeof(header_400));
+				send_response_header(process);
+				handle_error(processes, "bad request");
+				return;
+			} else {
+				LOG << "receive data size same" << endl;
+			}
+		}
+
+		// 解析参数
+		map<string, string> param = parse_param(param_data);
+		if (param.empty())
+		{
+			ERR << "param is null" << endl;
+			process->response_code = 400;
+			process->status = STATUS_SEND_RESPONSE_HEADER;
+		    strncpy(process->buf, header_400, sizeof(header_400));
+			send_response_header(process);
+			handle_error(processes, "bad request");
+			return;
+		}
+
+
 		process->response_code = 200;
-		handle_read_request(process, buf);
+		handle_read_request(process, module, param);
 	}
 }
 
@@ -444,7 +622,7 @@ void read_tcp_request(process* process)
     	// 重置读取位置
 		reset_process(process);
 		process->response_code = 200;
-		handle_read_request(process, buf);
+		// handle_read_request(process, buf);
 	}
 }
 
@@ -484,6 +662,7 @@ void send_response_header(process *process) {
 	if (process->response_code != 200) {
     	// 非 200 不进入 send_response
 		send(process->sock, process->buf, strlen(process->buf), 0);  
+		cleanup(process);
 		//update_timer(process->sock, current_msec);
 	} else {
 		// 写入完毕

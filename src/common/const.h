@@ -12,6 +12,10 @@
     "Content-Type: text/html\r\nConnection: Close\r\n\r\n<h1>Bad request</h1>"
 #endif
 
+#ifndef HEADER_CONTENT_LENGTH
+#define HEADER_CONTENT_LENGTH "Content-Length: "
+#endif
+
 #ifndef header_end
 #define header_end "\r\n"
 #endif

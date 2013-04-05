@@ -20,7 +20,8 @@ clean:
 	find $(SRC_DIR) -name "*.d" | xargs rm -f
 	find $(SRC_DIR) -name "*.o" | xargs rm -f
 
-cleanall:
-	find $(SRC_DIR) -name "*.d" | xargs rm -f
-	find $(SRC_DIR) -name "*.o" | xargs rm -f
+cleanall:clean
 	rm -f $(TARGET)
+
+upload:cleanall
+	find ./ * | xargs chmod 777

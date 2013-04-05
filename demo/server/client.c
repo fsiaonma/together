@@ -53,10 +53,23 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             if(strcmp(buf,"exit")==0)  
             {  
                 break;  
-            }  
+            } else if (strcmp(buf,"server")==0){
+                char *temp = 
+                "POST /USER HTTP/1.1\n"
+                "Host: kc123kc.vicp.cc:9080\n"
+                "Content-Length: 34\n"
+                "Accept-Encoding: gzip\n"
+                "Content-Type: application/x-www-form-urlencoded; charset=utf-8\n"
+                "User-Agent: iReading 2.2 (iPad Simulator; iPhone OS 6.1; en_US)\n"
+                "Connection: close\n"
+                "\n"
+                "suohi=kuangchao&shadiao=kuangchao2\n";
+                strcpy(buf, temp);
+            }
             send(client_sockfd,buf,strlen(buf),0);  
             // 接收服务器端信息   
             len=recv(client_sockfd,buf,BUFFER_SIZE,0); 
+            buf[len] = 0;
 		printNowTime(); 
             printf("receive from server:%s\n",buf);  
             if(len<0)  

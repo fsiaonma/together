@@ -18,6 +18,7 @@ process* find_process_by_sock(int sock);
 
 process* accept_sock(int listen_sock);
 
+map<string, string> parse_param(char *param_data);
 
 void cleanup(process *process);
 
@@ -26,7 +27,7 @@ void handle_error(process *process, const char* error_string);
 void reset_process(process *process);
 
 
-void handle_read_request(process *process, char *req);
+void handle_read_request(process *process, char *module, map<string, string> param);
 
 void read_request(process* process);
 

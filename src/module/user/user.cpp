@@ -1,7 +1,12 @@
 #include "user.h"
 
-int user_handler(process *process, char *req) {
+int user_handler(process *process, map<string, string> param) {
 	int s;
+	map<string, string>::iterator it;
+    for (it = param.begin(); it != param.end(); it++)
+    {
+        LOG << "key:" << it->first << "|val:" << it->second << endl;
+    }
 
 	// 开始 header
 	process->buf[0] = 0;
