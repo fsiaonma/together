@@ -92,6 +92,9 @@ const int STATUS_UPLOAD_FINISHED = 7;
 const int USER_MODULE = 100;
 const int ROOM_MODULE = 200;
 
+const int USER_REGIEST = 100;
+const int USER_LOGIN = 200;
+
 
 #endif
 

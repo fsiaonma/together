@@ -33,8 +33,7 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
  * @param {PARAMLIST} list insert values.
  */
 void eagleMysql::insert(string table, PARAMLIST list) {
-    mysql_init(&(this->mysql));
-    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    this->connet();
 	
     string keys = "(", values = "(";
     PARAMLIST::iterator ptr;
@@ -52,7 +51,7 @@ void eagleMysql::insert(string table, PARAMLIST list) {
     string sql = "insert into " + table + " " + keys + " values " + values + ";";
     cout << "insert operation: " + sql << endl;
     mysql_query(&(this->mysql), sql.c_str());
-    mysql_close(&(this->mysql));
+    this->close();
 }
 
 /**
@@ -63,12 +62,11 @@ void eagleMysql::insert(string table, PARAMLIST list) {
  * @param {string} condition sql condition.
  */
 void eagleMysql::remove(string table, string condition) {
-    mysql_init(&(this->mysql));
-    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    this->connet();
     string sql = "delete from " + table + " " + condition;
     cout << "remove operation: " + sql << endl;
     mysql_query(&(this->mysql), sql.c_str());
-    mysql_close(&(this->mysql));
+    this->close();
 }
 
 /**
@@ -80,8 +78,7 @@ void eagleMysql::remove(string table, string condition) {
  * @param {string} condition sql condition.
  */
 void eagleMysql::update(string table, PARAMLIST list, string condition) {
-    mysql_init(&(this->mysql));
-    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    this->connet();
 	
     string keys = "(", values = "(";
     PARAMLIST::iterator ptr;
@@ -98,7 +95,7 @@ void eagleMysql::update(string table, PARAMLIST list, string condition) {
     cout << "update operation: " + sql << endl;
 
     mysql_query(&(this->mysql), sql.c_str());
-    mysql_close(&(this->mysql));
+    this->close();
 }
 
 /**
@@ -129,4 +126,34 @@ MYSQL eagleMysql::excute(string sql) {
  */
 void eagleMysql::close() {
     mysql_close(&(this->mysql));
+}
+
+/**
+ * judge whether the value is key list or not.  
+ * 
+ * @method is_exist.
+ */
+bool eagleMysql::is_exist(string key, string value) {
+    bool is_exist = 0;
+    MYSQL_RES *result = NULL;
+    MYSQL_ROW row = NULL;
+    int fieldcount;
+
+    this->connet();
+    this->mysql = this->excute("select " + key + " from user");
+
+    result = mysql_store_result(&(this->mysql));
+    fieldcount = mysql_num_fields(result);
+    row = mysql_fetch_row(result);
+    while(NULL != row) {
+        for(int i = 0; i < fieldcount; i++) {
+            if (row[i] == value) {
+                is_exist = 1;
+            }
+        }
+        row = mysql_fetch_row(result);
+    }
+
+    this->close();
+    return is_exist;
 }

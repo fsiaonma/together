@@ -36,7 +36,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
         if((client_sockfd=socket(PF_INET,SOCK_STREAM,0))<0)     
         {     
             perror("client socket creation failed");     
-            exit(EXIT_FAILURE);  
+            exit(EXIT_FAILURE);
         }     
         // 将套接字绑定到服务器的网络地址上   
         if(connect(client_sockfd,(struct sockaddr *)&remote_addr,sizeof(struct sockaddr))<0)     
@@ -70,10 +70,10 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
                 "POST /USER HTTP/1.1\n"
                 "Host: kc123kc.vicp.cc:9080\n"
                 "Connection: keep-alive\n"
-                "Content-Length: 25\n"
+                "Content-Length: 36\n"
                 "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3\n"
                 "\n"
-                "username=111&password=222\0";
+                "action=100&username=123&password=222\0";
                 #endif
                 strcpy(buf, temp);
             }
@@ -81,7 +81,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             // 接收服务器端信息   
             len=recv(client_sockfd,buf,BUFFER_SIZE,0); 
             buf[len] = 0;
-		printNowTime(); 
+		    printNowTime(); 
             printf("receive from server:%s\n",buf);  
             if(len<0)  
             {  

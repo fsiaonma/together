@@ -37,4 +37,6 @@ class eagleMysql {
         void connet();
         MYSQL excute(string sql);
         void close();
+
+        bool is_exist(string key, string value);
 };

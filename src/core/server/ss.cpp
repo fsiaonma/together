@@ -25,9 +25,10 @@ void handle_read_request(process *process, char *module, map<string, string> par
 	LOG << "handle_read_request" << endl;
 	int module_type = get_module_type(module);
 	int s;
+	
 	switch (module_type) {
 		case USER_MODULE:
-		{
+		{	
 			s = user_handler(process, param);
 			if (s == -1)
 				break;

@@ -3,7 +3,7 @@ CFLAGS+=-Wall -g
 CFLAGS+=$(addprefix -I, $(SRC_DIR))
 CFILES=$(shell find $(SRC_DIR) -maxdepth 6 -name "*.cpp")
 OBJS=$(CFILES:%.cpp=%.o)
-LIBS+= -lmysqlclient
+LIBS+= -lmysqlclient -lprotobuf
 TARGET = ./build/server
 
 all:$(TARGET) clean

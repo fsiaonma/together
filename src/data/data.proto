@@ -1,0 +1,9 @@
+package data;
+import "user/user.proto";
+
+message Response {
+	optional int32 response_code = 1;
+	optional bool success = 2;
+	optional string response_msg = 3;
+	optional user.RegiestResponse regiest_response = 4;
+}
