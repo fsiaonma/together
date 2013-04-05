@@ -10,4 +10,10 @@ var list = [{
 },{
 	name: 'c++ type conversion',
 	href: 'http://www.51testing.com/?uid-128701-action-viewspace-itemid-148927'
+},{
+	name: 'Google Protocol Buffer 的使用和原理',
+	href: 'http://www.ibm.com/developerworks/cn/linux/l-cn-gpb/'
+},{
+	name: 'Protocol Buffer技术详解(语言规范)',
+	href: 'http://www.cnblogs.com/stephen-liu74/archive/2013/01/02/2841485.html'
 }];
