@@ -325,26 +325,19 @@ void read_http_request(process* process)
 		int request_len = strlen(buf);
 
 		int last_line_begin = 0;
-		int last_line_end = 0;
 		int count = 0;
 		int i = request_len - 1;
+		int last_line_end = i;
 		for (; i >= 0; i--)
 		{
 		    if (*(buf + i) == '\n')
 		    {
-		        if (last_line_end == 0)
-		        {
-		            last_line_end = i - 1;
-		            count++;
-		        }
-		        else if (last_line_begin == 0)
+		    	if (last_line_begin == 0)
 		        {
 		            last_line_begin = i + 1;
-		            count++;
+		            break;
 		        }
 		    }
-		    if (count == 2)
-		        break;
 		}
 
 		char param_data[200];

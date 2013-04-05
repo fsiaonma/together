@@ -54,6 +54,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             {  
                 break;  
             } else if (strcmp(buf,"server")==0){
+                #if 0
                 char *temp = 
                 "POST /USER HTTP/1.1\n"
                 "Host: kc123kc.vicp.cc:9080\n"
@@ -63,7 +64,17 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
                 "User-Agent: iReading 2.2 (iPad Simulator; iPhone OS 6.1; en_US)\n"
                 "Connection: close\n"
                 "\n"
-                "suohi=kuangchao&shadiao=kuangchao2\n";
+                "suohi=kuangchao&shadiao=kuangchao2\0";
+                #else
+                char *temp = 
+                "POST /USER HTTP/1.1\n"
+                "Host: kc123kc.vicp.cc:9080\n"
+                "Connection: keep-alive\n"
+                "Content-Length: 25\n"
+                "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3\n"
+                "\n"
+                "username=111&password=222\0";
+                #endif
                 strcpy(buf, temp);
             }
             send(client_sockfd,buf,strlen(buf),0);  
