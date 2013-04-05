@@ -101,6 +101,10 @@ process* find_process_by_sock(int sock) {
 	}
 }
 
+
+/**
+* 从参数字符串中解析参数放入map中
+**/
 map<string, string> parse_param(char *param_data)
 {
 	char *p;
@@ -317,9 +321,9 @@ void read_http_request(process* process)
 		    int l = rn - c - sizeof(HEADER_CONTENT_LENGTH) + 1;
 		    strncpy(temp, c + sizeof(HEADER_CONTENT_LENGTH) - 1, l);
 		    temp[l] = 0;
+			LOG << "Content-Length|" << temp << endl;
+			content_length = atoi(temp);
 		}
-		LOG << "Content-Length|" << temp << endl;
-		content_length = atoi(temp);
 
 		// 解析最后一行
 		int request_len = strlen(buf);
