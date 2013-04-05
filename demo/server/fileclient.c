@@ -1,21 +1,54 @@
 #include <stdio.h>    
+#include <stdlib.h>  
 #include <sys/types.h>    
 #include <sys/socket.h>    
 #include <netinet/in.h>    
 #include <arpa/inet.h>    
 #include <string.h>  
-#include <stdlib.h>  
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <time.h> 
+#include <ctype.h>
+
+
+#define STR_VALUE(val) #val
+#define STR(name) STR_VALUE(name)
+
+#define PATH_LEN 256
+#define MD5_LEN 32
   
 #define BUFFER_SIZE 1024
 
-void str_server(int sock) 
+
+#define copy_str(dst, src) strncpy(dst, src, strlen(src) + 1)
+#define write_to_header(string_to_write) copy_str(buf + strlen(buf), string_to_write)
+
+
+int CalcFileMD5(char *file_name, char *md5_sum)
+{
+    #define MD5SUM_CMD_FMT "md5sum %." STR(PATH_LEN) "s 2>/dev/null"
+    char cmd[PATH_LEN + sizeof (MD5SUM_CMD_FMT)];
+    sprintf(cmd, MD5SUM_CMD_FMT, file_name);
+    #undef MD5SUM_CMD_FMT
+
+    FILE *p = popen(cmd, "r");
+    if (p == NULL) return 0;
+
+    int i, ch;
+    for (i = 0; i < MD5_LEN && isxdigit(ch = fgetc(p)); i++) {
+        *md5_sum++ = ch;
+    }
+
+    *md5_sum = '\0';
+    pclose(p);
+    return i == MD5_LEN;
+}
+
+void str_server(int sock, char *filename) 
 { 
     char buf[1025]; 
-    const char* filename = "./t.bmp"; 
+    // const char* filename = "/file/t.bmp"; 
     FILE *file = fopen(filename, "rb"); 
     if (!file)
     {
@@ -44,7 +77,7 @@ void str_server(int sock)
                 // use select() to wait for a small period of
                 // time to see if the socket becomes writable
                 // again before failing the transfer...
-		printf("%d", errno);
+		printf("%d\n", errno);
                 if (errno != EAGAIN) {
                     printf("Can't write to socket");
                     fclose(file);
@@ -65,18 +98,63 @@ void printNowTime()
 time_t t = time(NULL);
 struct tm *lt = localtime(&t);
 printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
-} 
+}
+
       
     int main(int argc, char *argv[])     
     {     
         int client_sockfd;     
         int len;  
-	if (argc < 2)
+	if (argc < 4)
 	{
-		printf("enter port\n");
+		printf("enter port md5 filename\n");
 		exit(0);
 	}   
 	char *port = argv[1];
+    char *m = argv[2];
+    char *fileName = argv[3];
+
+    struct stat ss;
+    if( stat( fileName, &ss ) == -1 )
+    {
+        return ;
+    }
+    int fileSize = ss.st_size - 1;
+
+    char md5[MD5_LEN + 1];
+    strcpy(md5, m);
+
+    int cc = 0;
+    int n = fileSize;
+    for (; n > 0; n = n / 10)
+        cc++;
+    printf("len %d\n", cc);
+    int contentLength = 10 + cc + 5 + 32;
+
+    char *p = strstr(fileName, ".");
+    char suffix[10];
+    if (p == 0)
+        suffix[0] = 0;
+    else
+        strncpy(suffix, p, strlen(p) + 1);
+    printf("suffix %s\n", suffix);
+    int suffix_len = strlen(suffix);
+    char *suffix_data;
+    if (suffix_len > 0)
+    {
+        suffix_data = "&suffix=";
+        contentLength = contentLength + 8 + suffix_len;
+    } else {
+        suffix_data = "\0";
+    }
+
+    char f[50];
+    strncpy(f, md5, MD5_LEN + 1);
+    strncpy(f + strlen(f), suffix, strlen(suffix) + 1);
+    printf("file name :%s\n", f);
+
+
+    
 
         struct sockaddr_in remote_addr; // 服务器端网络地址结构体     
         char buf[BUFFER_SIZE];  // 数据传送的缓冲区     
@@ -96,6 +174,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             perror("connect to server failed");     
             exit(EXIT_FAILURE);  
         }    
+
         // 循环监听服务器请求     
         while(1)  
         {  
@@ -105,68 +184,37 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             if(strcmp(buf,"exit")==0)  
             {  
                 break;  
-            }  
+            }  else if(strcmp(buf,"server")==0)  
+            {  
+                // char *temp = 
+                // "POST /USER HTTP/1.1\n"
+                // "Host: kc123kc.vicp.cc:9080\n"
+                // "Connection: keep-alive\n"
+                // "Content-Length: 54\n"
+                // "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3\n"
+                // "\n"
+                // "file_size=4500053&md5=cefcb8e6d025249ad9156f30c0c7fe8c\0"; 
+
+            sprintf(buf,
+                "POST /UPLOAD HTTP/1.1\n"
+                "Host: kc123kc.vicp.cc:9080\n"
+                "Connection: keep-alive\n"
+                "Content-Length: %d\n"
+                "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3\n"
+                "\n"
+                "file_size=%d&md5=%s%s%s\0"
+                , contentLength, fileSize, md5, suffix_data, suffix);
+                // strcpy(buf, temp);
+            }
+
             send(client_sockfd,buf,strlen(buf),0);
-            str_server(client_sockfd);
+            str_server(client_sockfd, fileName);
 
-            // FILE * fp = fopen(file_name, "rb");
-            // char file_data[BUFFER_SIZE];
-            // size_t nbytes;
-            // int sent;
-            // while ( (nbytes = fread(file_data, sizeof(char), BUFFER_SIZE, fp)) > 0)
-            // {
-            //     sent = send(client_sockfd, file_data, nbytes, 0);
-            //     int offset = 0;
-            //     while ((sent = send(client_sockfd, file_data + offset, nbytes, 0)) > 0
-            //           || (sent == -1 && errno == EINTR) ) {
-            //             if (sent > 0) {
-            //                 offset += sent;
-            //                 nbytes -= sent;
-            //             }
-            //     }
-            // }
-            // printf("---------%d\n", sent);
-            // fclose(fp);
 
-            // int readpos;
-            // int fd = open(file_name, O_RDONLY);
-            // while (1) {
-            //     off_t offset = 0;
-            //     int s = sendfile(client_sockfd, fd, &offset, total_length);
-            //     readpos = offset;
-            //     if (readpos == total_length) {
-            //         // 读写完毕
-            //         return;
-            //     }
-            // }
-            // close(fd);
-            // FILE * fp = fopen(file_name, "rb");
-            // int numbytes;
-            // int file_block_length = 0;
-            // char buffer[BUFFER_SIZE];
-            // while ((file_block_length = fread(buffer, sizeof(char), BUFFER_SIZE, fp)) > 0)
-            // {
-            //     if (send(client_sockfd, buffer, file_block_length, 0) < 0)
-            //     {
-            //         printf("Send File:\t%s Failed\n", file_name);
-            //         break;
-            //     }
-            //     bzero(buffer, BUFFER_SIZE);
-            // }
-            // fclose(fp);
-
-                //Sending file
-    // while(!feof(fp)){
-    //     numbytes = fread(buf, sizeof(char), sizeof(buf), fp);
-    //     //printf("fread %d bytes, ", numbytes);
-    //     numbytes = write(client_sockfd, buf, numbytes);
-    //     bzero(buf, BUFFER_SIZE);
-    //     //printf("Sending %d bytes\n",numbytes);
-    // }
-
-            //send(client_sockfd,buf,strlen(buf),0);  
             // 接收服务器端信息   
             len=recv(client_sockfd,buf,BUFFER_SIZE,0); 
+
+            buf[len] = 0;
 		printNowTime(); 
             printf("receive from server:%s\n",buf);  
             if(len<0)  

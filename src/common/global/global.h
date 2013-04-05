@@ -25,6 +25,7 @@ struct process {
 	int total_length;
 	char buf[kBufferSize];
 	char md5[MD5_LEN + 1];
+	char suffix[8];
 	int type;
 };
 
