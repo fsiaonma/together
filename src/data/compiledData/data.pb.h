@@ -23,7 +23,6 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "user.pb.h"
 // @@protoc_insertion_point(includes)
@@ -37,25 +36,6 @@ void protobuf_ShutdownFile_data_2eproto();
 
 class HTTPResponse;
 
-enum Result {
-  SUCCESS = 1,
-  FAIL = 2
-};
-bool Result_IsValid(int value);
-const Result Result_MIN = SUCCESS;
-const Result Result_MAX = FAIL;
-const int Result_ARRAYSIZE = Result_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* Result_descriptor();
-inline const ::std::string& Result_Name(Result value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    Result_descriptor(), value);
-}
-inline bool Result_Parse(
-    const ::std::string& name, Result* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<Result>(
-    Result_descriptor(), name, value);
-}
 // ===================================================================
 
 class HTTPResponse : public ::google::protobuf::Message {
@@ -119,12 +99,12 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 code() const;
   inline void set_code(::google::protobuf::int32 value);
 
-  // optional .data.Result result = 2;
-  inline bool has_result() const;
-  inline void clear_result();
-  static const int kResultFieldNumber = 2;
-  inline ::data::Result result() const;
-  inline void set_result(::data::Result value);
+  // optional bool success = 2;
+  inline bool has_success() const;
+  inline void clear_success();
+  static const int kSuccessFieldNumber = 2;
+  inline bool success() const;
+  inline void set_success(bool value);
 
   // optional string msg = 3;
   inline bool has_msg() const;
@@ -151,8 +131,8 @@ class HTTPResponse : public ::google::protobuf::Message {
  private:
   inline void set_has_code();
   inline void clear_has_code();
-  inline void set_has_result();
-  inline void clear_has_result();
+  inline void set_has_success();
+  inline void clear_has_success();
   inline void set_has_msg();
   inline void clear_has_msg();
   inline void set_has_regiest_response();
@@ -161,7 +141,7 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 code_;
-  int result_;
+  bool success_;
   ::std::string* msg_;
   ::user::RegiestResponse* regiest_response_;
 
@@ -204,27 +184,26 @@ inline void HTTPResponse::set_code(::google::protobuf::int32 value) {
   code_ = value;
 }
 
-// optional .data.Result result = 2;
-inline bool HTTPResponse::has_result() const {
+// optional bool success = 2;
+inline bool HTTPResponse::has_success() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void HTTPResponse::set_has_result() {
+inline void HTTPResponse::set_has_success() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void HTTPResponse::clear_has_result() {
+inline void HTTPResponse::clear_has_success() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void HTTPResponse::clear_result() {
-  result_ = 1;
-  clear_has_result();
+inline void HTTPResponse::clear_success() {
+  success_ = false;
+  clear_has_success();
 }
-inline ::data::Result HTTPResponse::result() const {
-  return static_cast< ::data::Result >(result_);
+inline bool HTTPResponse::success() const {
+  return success_;
 }
-inline void HTTPResponse::set_result(::data::Result value) {
-  assert(::data::Result_IsValid(value));
-  set_has_result();
-  result_ = value;
+inline void HTTPResponse::set_success(bool value) {
+  set_has_success();
+  success_ = value;
 }
 
 // optional string msg = 3;
@@ -344,10 +323,6 @@ inline void HTTPResponse::set_allocated_regiest_response(::user::RegiestResponse
 namespace google {
 namespace protobuf {
 
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::data::Result>() {
-  return ::data::Result_descriptor();
-}
 
 }  // namespace google
 }  // namespace protobuf

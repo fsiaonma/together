@@ -113,6 +113,7 @@ void eagleMysql::connet() {
  * 
  * @method excute
  * @param {string} sql sql is used to be excuted.
+ * @return {MYSQL} mysql object.
  */
 MYSQL eagleMysql::excute(string sql) {
     mysql_query(&(this->mysql), sql.c_str());
@@ -129,31 +130,18 @@ void eagleMysql::close() {
 }
 
 /**
- * judge whether the value is key list or not.  
- * 
+ * judge whether the value is exist in key list or not.  
+ *  
+ * @param {string} table the table of judging whether the value is exist or not. 
+ * @param {string} condition the condition of judging whether the value is exist or not.
  * @method is_exist.
+ * @return {bool} is_exist
  */
-bool eagleMysql::is_exist(string key, string value) {
-    bool is_exist = 0;
-    MYSQL_RES *result = NULL;
-    MYSQL_ROW row = NULL;
-    int fieldcount;
-
+bool eagleMysql::is_exist(string table, string condition) {
     this->connet();
-    this->mysql = this->excute("select " + key + " from user");
-
-    result = mysql_store_result(&(this->mysql));
-    fieldcount = mysql_num_fields(result);
-    row = mysql_fetch_row(result);
-    while(NULL != row) {
-        for(int i = 0; i < fieldcount; i++) {
-            if (row[i] == value) {
-                is_exist = 1;
-            }
-        }
-        row = mysql_fetch_row(result);
-    }
-
+    this->mysql = this->excute("select * from " + table + " " + condition + ";");
+    MYSQL_RES *result = mysql_store_result(&(this->mysql));
+    int row_count = mysql_num_rows(result);
     this->close();
-    return is_exist;
+    return row_count > 0;
 }

@@ -92,9 +92,13 @@ const int STATUS_UPLOAD_FINISHED = 7;
 const int USER_MODULE = 100;
 const int ROOM_MODULE = 200;
 
-const int USER_REGIEST = 100;
-const int USER_LOGIN = 200;
+// user action code.
+const int USER_REGIEST = 101;
+const int USER_LOGIN = 102;
 
+// regiest result.
+const int REGIEST_SUCCESS = 11000;
+const int USERNAME_IS_EXIST = 11001;
 
 #endif
 

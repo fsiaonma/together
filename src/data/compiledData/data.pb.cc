@@ -23,7 +23,6 @@ namespace {
 const ::google::protobuf::Descriptor* HTTPResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   HTTPResponse_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* Result_descriptor_ = NULL;
 
 }  // namespace
 
@@ -37,7 +36,7 @@ void protobuf_AssignDesc_data_2eproto() {
   HTTPResponse_descriptor_ = file->message_type(0);
   static const int HTTPResponse_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, regiest_response_),
   };
@@ -52,7 +51,6 @@ void protobuf_AssignDesc_data_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(HTTPResponse));
-  Result_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -84,11 +82,10 @@ void protobuf_AddDesc_data_2eproto() {
 
   ::user::protobuf_AddDesc_user_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ndata.proto\022\004data\032\nuser.proto\"x\n\014HTTPRe"
-    "sponse\022\014\n\004code\030\001 \001(\005\022\034\n\006result\030\002 \001(\0162\014.d"
-    "ata.Result\022\013\n\003msg\030\003 \001(\t\022/\n\020regiest_respo"
-    "nse\030\004 \001(\0132\025.user.RegiestResponse*\037\n\006Resu"
-    "lt\022\013\n\007SUCCESS\020\001\022\010\n\004FAIL\020\002", 185);
+    "\n\ndata.proto\022\004data\032\nuser.proto\"k\n\014HTTPRe"
+    "sponse\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n"
+    "\003msg\030\003 \001(\t\022/\n\020regiest_response\030\004 \001(\0132\025.u"
+    "ser.RegiestResponse", 139);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -102,26 +99,12 @@ struct StaticDescriptorInitializer_data_2eproto {
     protobuf_AddDesc_data_2eproto();
   }
 } static_descriptor_initializer_data_2eproto_;
-const ::google::protobuf::EnumDescriptor* Result_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return Result_descriptor_;
-}
-bool Result_IsValid(int value) {
-  switch(value) {
-    case 1:
-    case 2:
-      return true;
-    default:
-      return false;
-  }
-}
-
 
 // ===================================================================
 
 #ifndef _MSC_VER
 const int HTTPResponse::kCodeFieldNumber;
-const int HTTPResponse::kResultFieldNumber;
+const int HTTPResponse::kSuccessFieldNumber;
 const int HTTPResponse::kMsgFieldNumber;
 const int HTTPResponse::kRegiestResponseFieldNumber;
 #endif  // !_MSC_VER
@@ -144,7 +127,7 @@ HTTPResponse::HTTPResponse(const HTTPResponse& from)
 void HTTPResponse::SharedCtor() {
   _cached_size_ = 0;
   code_ = 0;
-  result_ = 1;
+  success_ = false;
   msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   regiest_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -187,7 +170,7 @@ HTTPResponse* HTTPResponse::New() const {
 void HTTPResponse::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     code_ = 0;
-    result_ = 1;
+    success_ = false;
     if (has_msg()) {
       if (msg_ != &::google::protobuf::internal::kEmptyString) {
         msg_->clear();
@@ -218,24 +201,19 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_result;
+        if (input->ExpectTag(16)) goto parse_success;
         break;
       }
 
-      // optional .data.Result result = 2;
+      // optional bool success = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_result:
-          int value;
+         parse_success:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          if (::data::Result_IsValid(value)) {
-            set_result(static_cast< ::data::Result >(value));
-          } else {
-            mutable_unknown_fields()->AddVarint(2, value);
-          }
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &success_)));
+          set_has_success();
         } else {
           goto handle_uninterpreted;
         }
@@ -297,10 +275,9 @@ void HTTPResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
   }
 
-  // optional .data.Result result = 2;
-  if (has_result()) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      2, this->result(), output);
+  // optional bool success = 2;
+  if (has_success()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->success(), output);
   }
 
   // optional string msg = 3;
@@ -331,10 +308,9 @@ void HTTPResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
   }
 
-  // optional .data.Result result = 2;
-  if (has_result()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      2, this->result(), target);
+  // optional bool success = 2;
+  if (has_success()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->success(), target);
   }
 
   // optional string msg = 3;
@@ -372,10 +348,9 @@ int HTTPResponse::ByteSize() const {
           this->code());
     }
 
-    // optional .data.Result result = 2;
-    if (has_result()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+    // optional bool success = 2;
+    if (has_success()) {
+      total_size += 1 + 1;
     }
 
     // optional string msg = 3;
@@ -422,8 +397,8 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_code()) {
       set_code(from.code());
     }
-    if (from.has_result()) {
-      set_result(from.result());
+    if (from.has_success()) {
+      set_success(from.success());
     }
     if (from.has_msg()) {
       set_msg(from.msg());
@@ -455,7 +430,7 @@ bool HTTPResponse::IsInitialized() const {
 void HTTPResponse::Swap(HTTPResponse* other) {
   if (other != this) {
     std::swap(code_, other->code_);
-    std::swap(result_, other->result_);
+    std::swap(success_, other->success_);
     std::swap(msg_, other->msg_);
     std::swap(regiest_response_, other->regiest_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

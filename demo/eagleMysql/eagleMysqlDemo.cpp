@@ -87,8 +87,8 @@ int main() {
 
     e.close();
 
-    bool is_exist = e.is_exist("username", "fsiaonma");
-    cout << is_exist << endl;
+    bool is_exist = e.is_exist("user", "where username = 'fsiaonma'");
+    cout << "is_exist: " << is_exist << endl;
 
 	return 0;
 }

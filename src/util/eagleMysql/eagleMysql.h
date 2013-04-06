@@ -38,5 +38,5 @@ class eagleMysql {
         MYSQL excute(string sql);
         void close();
 
-        bool is_exist(string key, string value);
+        bool is_exist(string table, string condition);
 };

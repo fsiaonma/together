@@ -3,12 +3,7 @@ import "user.proto";
 
 message HTTPResponse {
 	optional int32 code = 1;
-	optional Result result = 2;
+	optional bool success = 2;
 	optional string msg = 3;
 	optional user.RegiestResponse regiest_response = 4;
-}
-
-enum Result {
-	SUCCESS = 1;
-	FAIL = 2;
 }

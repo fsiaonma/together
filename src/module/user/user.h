@@ -7,5 +7,6 @@
 #include "../../common/global/global.h"
 #include "../../util/log/log.h"
 #include "../../data/compiledData/data.pb.h"
+#include "../../util/tool/tool.h"
 
 int user_handler(process *process, map<string, string> param);
