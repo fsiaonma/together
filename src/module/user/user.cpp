@@ -15,7 +15,8 @@ const char *regiest(string username, string password) {
 
 	Config *c = Config::get_instance();
     map<string, string> config = c->get_config();
-    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+    	config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
     if (e.is_exist("user", "where username = '" + username + "'")) {
     	http_res->set_code(USERNAME_IS_EXIST);
