@@ -6,6 +6,6 @@
 #include "../../util/eagleMysql/eagleMysql.h"
 #include "../../common/global/global.h"
 #include "../../util/log/log.h"
-#include "../../data/data.pb.h"
+#include "../../data/compiledData/data.pb.h"
 
 int user_handler(process *process, map<string, string> param);

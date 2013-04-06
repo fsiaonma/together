@@ -1,5 +1,5 @@
 package data;
-import "user/user.proto";
+import "user.proto";
 
 message HTTPResponse {
 	optional int32 code = 1;
