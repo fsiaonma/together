@@ -96,6 +96,9 @@ const int ROOM_MODULE = 200;
 const int USER_REGIEST = 101;
 const int USER_LOGIN = 102;
 
+// system status code
+const int PARAM_ERROR = 1001;
+
 // regiest result.
 const int REGIEST_SUCCESS = 11000;
 const int USERNAME_IS_EXIST = 11001;

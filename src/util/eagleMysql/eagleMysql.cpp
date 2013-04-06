@@ -2,6 +2,7 @@
 #include "eagleMysql.h"
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 using namespace std;
 
 /**
@@ -138,10 +139,19 @@ void eagleMysql::close() {
  * @return {bool} is_exist
  */
 bool eagleMysql::is_exist(string table, string condition) {
+    int row_count;
     this->connet();
-    this->mysql = this->excute("select * from " + table + " " + condition + ";");
+    this->mysql = this->excute("select count(1) from " + table + " " + condition + ";");
     MYSQL_RES *result = mysql_store_result(&(this->mysql));
-    int row_count = mysql_num_rows(result);
+    MYSQL_ROW rowdata = mysql_fetch_row(result);
+    if (rowdata)
+    {
+        row_count = atoi(rowdata[0]);
+    } else {
+        row_count = -1;
+    }
+    cout << "is_exist|" << row_count << endl;
+    mysql_free_result(result);
     this->close();
-    return row_count > 0;
+    return row_count;
 }
