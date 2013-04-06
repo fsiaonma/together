@@ -23,6 +23,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "user/user.pb.h"
 // @@protoc_insertion_point(includes)
@@ -34,18 +35,37 @@ void  protobuf_AddDesc_data_2eproto();
 void protobuf_AssignDesc_data_2eproto();
 void protobuf_ShutdownFile_data_2eproto();
 
-class Response;
+class HTTPResponse;
 
+enum Result {
+  SUCCESS = 1,
+  FAIL = 2
+};
+bool Result_IsValid(int value);
+const Result Result_MIN = SUCCESS;
+const Result Result_MAX = FAIL;
+const int Result_ARRAYSIZE = Result_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Result_descriptor();
+inline const ::std::string& Result_Name(Result value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Result_descriptor(), value);
+}
+inline bool Result_Parse(
+    const ::std::string& name, Result* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Result>(
+    Result_descriptor(), name, value);
+}
 // ===================================================================
 
-class Response : public ::google::protobuf::Message {
+class HTTPResponse : public ::google::protobuf::Message {
  public:
-  Response();
-  virtual ~Response();
+  HTTPResponse();
+  virtual ~HTTPResponse();
 
-  Response(const Response& from);
+  HTTPResponse(const HTTPResponse& from);
 
-  inline Response& operator=(const Response& from) {
+  inline HTTPResponse& operator=(const HTTPResponse& from) {
     CopyFrom(from);
     return *this;
   }
@@ -59,17 +79,17 @@ class Response : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Response& default_instance();
+  static const HTTPResponse& default_instance();
 
-  void Swap(Response* other);
+  void Swap(HTTPResponse* other);
 
   // implements Message ----------------------------------------------
 
-  Response* New() const;
+  HTTPResponse* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Response& from);
-  void MergeFrom(const Response& from);
+  void CopyFrom(const HTTPResponse& from);
+  void MergeFrom(const HTTPResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -92,175 +112,226 @@ class Response : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 response_code = 1;
-  inline bool has_response_code() const;
-  inline void clear_response_code();
-  static const int kResponseCodeFieldNumber = 1;
-  inline ::google::protobuf::int32 response_code() const;
-  inline void set_response_code(::google::protobuf::int32 value);
+  // optional int32 code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline ::google::protobuf::int32 code() const;
+  inline void set_code(::google::protobuf::int32 value);
 
-  // optional bool success = 2;
-  inline bool has_success() const;
-  inline void clear_success();
-  static const int kSuccessFieldNumber = 2;
-  inline bool success() const;
-  inline void set_success(bool value);
+  // optional .data.Result result = 2;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 2;
+  inline ::data::Result result() const;
+  inline void set_result(::data::Result value);
 
-  // optional string response_msg = 3;
-  inline bool has_response_msg() const;
-  inline void clear_response_msg();
-  static const int kResponseMsgFieldNumber = 3;
-  inline const ::std::string& response_msg() const;
-  inline void set_response_msg(const ::std::string& value);
-  inline void set_response_msg(const char* value);
-  inline void set_response_msg(const char* value, size_t size);
-  inline ::std::string* mutable_response_msg();
-  inline ::std::string* release_response_msg();
-  inline void set_allocated_response_msg(::std::string* response_msg);
+  // optional string msg = 3;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 3;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const char* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
 
-  // @@protoc_insertion_point(class_scope:data.Response)
+  // optional .user.RegiestResponse regiest_response = 4;
+  inline bool has_regiest_response() const;
+  inline void clear_regiest_response();
+  static const int kRegiestResponseFieldNumber = 4;
+  inline const ::user::RegiestResponse& regiest_response() const;
+  inline ::user::RegiestResponse* mutable_regiest_response();
+  inline ::user::RegiestResponse* release_regiest_response();
+  inline void set_allocated_regiest_response(::user::RegiestResponse* regiest_response);
+
+  // @@protoc_insertion_point(class_scope:data.HTTPResponse)
  private:
-  inline void set_has_response_code();
-  inline void clear_has_response_code();
-  inline void set_has_success();
-  inline void clear_has_success();
-  inline void set_has_response_msg();
-  inline void clear_has_response_msg();
+  inline void set_has_code();
+  inline void clear_has_code();
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+  inline void set_has_regiest_response();
+  inline void clear_has_regiest_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 response_code_;
-  bool success_;
-  ::std::string* response_msg_;
+  ::google::protobuf::int32 code_;
+  int result_;
+  ::std::string* msg_;
+  ::user::RegiestResponse* regiest_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
   friend void protobuf_ShutdownFile_data_2eproto();
 
   void InitAsDefaultInstance();
-  static Response* default_instance_;
+  static HTTPResponse* default_instance_;
 };
 // ===================================================================
 
 
 // ===================================================================
 
-// Response
+// HTTPResponse
 
-// optional int32 response_code = 1;
-inline bool Response::has_response_code() const {
+// optional int32 code = 1;
+inline bool HTTPResponse::has_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Response::set_has_response_code() {
+inline void HTTPResponse::set_has_code() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Response::clear_has_response_code() {
+inline void HTTPResponse::clear_has_code() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Response::clear_response_code() {
-  response_code_ = 0;
-  clear_has_response_code();
+inline void HTTPResponse::clear_code() {
+  code_ = 0;
+  clear_has_code();
 }
-inline ::google::protobuf::int32 Response::response_code() const {
-  return response_code_;
+inline ::google::protobuf::int32 HTTPResponse::code() const {
+  return code_;
 }
-inline void Response::set_response_code(::google::protobuf::int32 value) {
-  set_has_response_code();
-  response_code_ = value;
+inline void HTTPResponse::set_code(::google::protobuf::int32 value) {
+  set_has_code();
+  code_ = value;
 }
 
-// optional bool success = 2;
-inline bool Response::has_success() const {
+// optional .data.Result result = 2;
+inline bool HTTPResponse::has_result() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Response::set_has_success() {
+inline void HTTPResponse::set_has_result() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Response::clear_has_success() {
+inline void HTTPResponse::clear_has_result() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Response::clear_success() {
-  success_ = false;
-  clear_has_success();
+inline void HTTPResponse::clear_result() {
+  result_ = 1;
+  clear_has_result();
 }
-inline bool Response::success() const {
-  return success_;
+inline ::data::Result HTTPResponse::result() const {
+  return static_cast< ::data::Result >(result_);
 }
-inline void Response::set_success(bool value) {
-  set_has_success();
-  success_ = value;
+inline void HTTPResponse::set_result(::data::Result value) {
+  assert(::data::Result_IsValid(value));
+  set_has_result();
+  result_ = value;
 }
 
-// optional string response_msg = 3;
-inline bool Response::has_response_msg() const {
+// optional string msg = 3;
+inline bool HTTPResponse::has_msg() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Response::set_has_response_msg() {
+inline void HTTPResponse::set_has_msg() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Response::clear_has_response_msg() {
+inline void HTTPResponse::clear_has_msg() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Response::clear_response_msg() {
-  if (response_msg_ != &::google::protobuf::internal::kEmptyString) {
-    response_msg_->clear();
+inline void HTTPResponse::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
   }
-  clear_has_response_msg();
+  clear_has_msg();
 }
-inline const ::std::string& Response::response_msg() const {
-  return *response_msg_;
+inline const ::std::string& HTTPResponse::msg() const {
+  return *msg_;
 }
-inline void Response::set_response_msg(const ::std::string& value) {
-  set_has_response_msg();
-  if (response_msg_ == &::google::protobuf::internal::kEmptyString) {
-    response_msg_ = new ::std::string;
+inline void HTTPResponse::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
   }
-  response_msg_->assign(value);
+  msg_->assign(value);
 }
-inline void Response::set_response_msg(const char* value) {
-  set_has_response_msg();
-  if (response_msg_ == &::google::protobuf::internal::kEmptyString) {
-    response_msg_ = new ::std::string;
+inline void HTTPResponse::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
   }
-  response_msg_->assign(value);
+  msg_->assign(value);
 }
-inline void Response::set_response_msg(const char* value, size_t size) {
-  set_has_response_msg();
-  if (response_msg_ == &::google::protobuf::internal::kEmptyString) {
-    response_msg_ = new ::std::string;
+inline void HTTPResponse::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
   }
-  response_msg_->assign(reinterpret_cast<const char*>(value), size);
+  msg_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* Response::mutable_response_msg() {
-  set_has_response_msg();
-  if (response_msg_ == &::google::protobuf::internal::kEmptyString) {
-    response_msg_ = new ::std::string;
+inline ::std::string* HTTPResponse::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
   }
-  return response_msg_;
+  return msg_;
 }
-inline ::std::string* Response::release_response_msg() {
-  clear_has_response_msg();
-  if (response_msg_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* HTTPResponse::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = response_msg_;
-    response_msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void Response::set_allocated_response_msg(::std::string* response_msg) {
-  if (response_msg_ != &::google::protobuf::internal::kEmptyString) {
-    delete response_msg_;
+inline void HTTPResponse::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
   }
-  if (response_msg) {
-    set_has_response_msg();
-    response_msg_ = response_msg;
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
   } else {
-    clear_has_response_msg();
-    response_msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional .user.RegiestResponse regiest_response = 4;
+inline bool HTTPResponse::has_regiest_response() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void HTTPResponse::set_has_regiest_response() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void HTTPResponse::clear_has_regiest_response() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void HTTPResponse::clear_regiest_response() {
+  if (regiest_response_ != NULL) regiest_response_->::user::RegiestResponse::Clear();
+  clear_has_regiest_response();
+}
+inline const ::user::RegiestResponse& HTTPResponse::regiest_response() const {
+  return regiest_response_ != NULL ? *regiest_response_ : *default_instance_->regiest_response_;
+}
+inline ::user::RegiestResponse* HTTPResponse::mutable_regiest_response() {
+  set_has_regiest_response();
+  if (regiest_response_ == NULL) regiest_response_ = new ::user::RegiestResponse;
+  return regiest_response_;
+}
+inline ::user::RegiestResponse* HTTPResponse::release_regiest_response() {
+  clear_has_regiest_response();
+  ::user::RegiestResponse* temp = regiest_response_;
+  regiest_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_regiest_response(::user::RegiestResponse* regiest_response) {
+  delete regiest_response_;
+  regiest_response_ = regiest_response;
+  if (regiest_response) {
+    set_has_regiest_response();
+  } else {
+    clear_has_regiest_response();
   }
 }
 
@@ -273,6 +344,10 @@ inline void Response::set_allocated_response_msg(::std::string* response_msg) {
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::data::Result>() {
+  return ::data::Result_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf

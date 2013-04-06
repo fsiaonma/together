@@ -1,9 +1,14 @@
 package data;
 import "user/user.proto";
 
-message Response {
-	optional int32 response_code = 1;
-	optional bool success = 2;
-	optional string response_msg = 3;
+message HTTPResponse {
+	optional int32 code = 1;
+	optional Result result = 2;
+	optional string msg = 3;
 	optional user.RegiestResponse regiest_response = 4;
+}
+
+enum Result {
+	SUCCESS = 1;
+	FAIL = 2;
 }

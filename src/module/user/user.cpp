@@ -6,7 +6,7 @@ void regiest(string username, string password) {
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), atoi(config["PORT"].c_str()));
 
-    data::Response *response = new data::Response();
+    data::HTTPResponse *http_response = new data::HTTPResponse();
 
     if (e.is_exist("username", username)) {
         cout << "username is already exist" << endl;

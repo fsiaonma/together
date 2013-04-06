@@ -2,7 +2,7 @@
 // source: user/user.proto
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
-#include "user/user.pb.h"
+#include "user.pb.h"
 
 #include <algorithm>
 

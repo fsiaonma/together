@@ -20,9 +20,10 @@ namespace data {
 
 namespace {
 
-const ::google::protobuf::Descriptor* Response_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* HTTPResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  Response_reflection_ = NULL;
+  HTTPResponse_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* Result_descriptor_ = NULL;
 
 }  // namespace
 
@@ -33,23 +34,25 @@ void protobuf_AssignDesc_data_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "data.proto");
   GOOGLE_CHECK(file != NULL);
-  Response_descriptor_ = file->message_type(0);
-  static const int Response_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, response_code_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, success_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, response_msg_),
+  HTTPResponse_descriptor_ = file->message_type(0);
+  static const int HTTPResponse_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, regiest_response_),
   };
-  Response_reflection_ =
+  HTTPResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      Response_descriptor_,
-      Response::default_instance_,
-      Response_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, _unknown_fields_),
+      HTTPResponse_descriptor_,
+      HTTPResponse::default_instance_,
+      HTTPResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Response));
+      sizeof(HTTPResponse));
+  Result_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -63,14 +66,14 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Response_descriptor_, &Response::default_instance());
+    HTTPResponse_descriptor_, &HTTPResponse::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_data_2eproto() {
-  delete Response::default_instance_;
-  delete Response_reflection_;
+  delete HTTPResponse::default_instance_;
+  delete HTTPResponse_reflection_;
 }
 
 void protobuf_AddDesc_data_2eproto() {
@@ -81,13 +84,15 @@ void protobuf_AddDesc_data_2eproto() {
 
   ::user::protobuf_AddDesc_user_2fuser_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ndata.proto\022\004data\032\017user/user.proto\"H\n\010R"
-    "esponse\022\025\n\rresponse_code\030\001 \001(\005\022\017\n\007succes"
-    "s\030\002 \001(\010\022\024\n\014response_msg\030\003 \001(\t", 109);
+    "\n\ndata.proto\022\004data\032\017user/user.proto\"x\n\014H"
+    "TTPResponse\022\014\n\004code\030\001 \001(\005\022\034\n\006result\030\002 \001("
+    "\0162\014.data.Result\022\013\n\003msg\030\003 \001(\t\022/\n\020regiest_"
+    "response\030\004 \001(\0132\025.user.RegiestResponse*\037\n"
+    "\006Result\022\013\n\007SUCCESS\020\001\022\010\n\004FAIL\020\002", 190);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
-  Response::default_instance_ = new Response();
-  Response::default_instance_->InitAsDefaultInstance();
+  HTTPResponse::default_instance_ = new HTTPResponse();
+  HTTPResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_data_2eproto);
 }
 
@@ -97,131 +102,171 @@ struct StaticDescriptorInitializer_data_2eproto {
     protobuf_AddDesc_data_2eproto();
   }
 } static_descriptor_initializer_data_2eproto_;
+const ::google::protobuf::EnumDescriptor* Result_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Result_descriptor_;
+}
+bool Result_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Response::kResponseCodeFieldNumber;
-const int Response::kSuccessFieldNumber;
-const int Response::kResponseMsgFieldNumber;
+const int HTTPResponse::kCodeFieldNumber;
+const int HTTPResponse::kResultFieldNumber;
+const int HTTPResponse::kMsgFieldNumber;
+const int HTTPResponse::kRegiestResponseFieldNumber;
 #endif  // !_MSC_VER
 
-Response::Response()
+HTTPResponse::HTTPResponse()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void Response::InitAsDefaultInstance() {
+void HTTPResponse::InitAsDefaultInstance() {
+  regiest_response_ = const_cast< ::user::RegiestResponse*>(&::user::RegiestResponse::default_instance());
 }
 
-Response::Response(const Response& from)
+HTTPResponse::HTTPResponse(const HTTPResponse& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void Response::SharedCtor() {
+void HTTPResponse::SharedCtor() {
   _cached_size_ = 0;
-  response_code_ = 0;
-  success_ = false;
-  response_msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  code_ = 0;
+  result_ = 1;
+  msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  regiest_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-Response::~Response() {
+HTTPResponse::~HTTPResponse() {
   SharedDtor();
 }
 
-void Response::SharedDtor() {
-  if (response_msg_ != &::google::protobuf::internal::kEmptyString) {
-    delete response_msg_;
+void HTTPResponse::SharedDtor() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
   }
   if (this != default_instance_) {
+    delete regiest_response_;
   }
 }
 
-void Response::SetCachedSize(int size) const {
+void HTTPResponse::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Response::descriptor() {
+const ::google::protobuf::Descriptor* HTTPResponse::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Response_descriptor_;
+  return HTTPResponse_descriptor_;
 }
 
-const Response& Response::default_instance() {
+const HTTPResponse& HTTPResponse::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_data_2eproto();
   return *default_instance_;
 }
 
-Response* Response::default_instance_ = NULL;
+HTTPResponse* HTTPResponse::default_instance_ = NULL;
 
-Response* Response::New() const {
-  return new Response;
+HTTPResponse* HTTPResponse::New() const {
+  return new HTTPResponse;
 }
 
-void Response::Clear() {
+void HTTPResponse::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    response_code_ = 0;
-    success_ = false;
-    if (has_response_msg()) {
-      if (response_msg_ != &::google::protobuf::internal::kEmptyString) {
-        response_msg_->clear();
+    code_ = 0;
+    result_ = 1;
+    if (has_msg()) {
+      if (msg_ != &::google::protobuf::internal::kEmptyString) {
+        msg_->clear();
       }
+    }
+    if (has_regiest_response()) {
+      if (regiest_response_ != NULL) regiest_response_->::user::RegiestResponse::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool Response::MergePartialFromCodedStream(
+bool HTTPResponse::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 response_code = 1;
+      // optional int32 code = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &response_code_)));
-          set_has_response_code();
+                 input, &code_)));
+          set_has_code();
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(16)) goto parse_success;
+        if (input->ExpectTag(16)) goto parse_result;
         break;
       }
 
-      // optional bool success = 2;
+      // optional .data.Result result = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_success:
+         parse_result:
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &success_)));
-          set_has_success();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::data::Result_IsValid(value)) {
+            set_result(static_cast< ::data::Result >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(2, value);
+          }
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_response_msg;
+        if (input->ExpectTag(26)) goto parse_msg;
         break;
       }
 
-      // optional string response_msg = 3;
+      // optional string msg = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_response_msg:
+         parse_msg:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_response_msg()));
+                input, this->mutable_msg()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->response_msg().data(), this->response_msg().length(),
+            this->msg().data(), this->msg().length(),
             ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_regiest_response;
+        break;
+      }
+
+      // optional .user.RegiestResponse regiest_response = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_regiest_response:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_regiest_response()));
         } else {
           goto handle_uninterpreted;
         }
@@ -245,25 +290,32 @@ bool Response::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void Response::SerializeWithCachedSizes(
+void HTTPResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional int32 response_code = 1;
-  if (has_response_code()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->response_code(), output);
+  // optional int32 code = 1;
+  if (has_code()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->code(), output);
   }
 
-  // optional bool success = 2;
-  if (has_success()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->success(), output);
+  // optional .data.Result result = 2;
+  if (has_result()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->result(), output);
   }
 
-  // optional string response_msg = 3;
-  if (has_response_msg()) {
+  // optional string msg = 3;
+  if (has_msg()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->response_msg().data(), this->response_msg().length(),
+      this->msg().data(), this->msg().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->response_msg(), output);
+      3, this->msg(), output);
+  }
+
+  // optional .user.RegiestResponse regiest_response = 4;
+  if (has_regiest_response()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->regiest_response(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -272,26 +324,34 @@ void Response::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* Response::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* HTTPResponse::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 response_code = 1;
-  if (has_response_code()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->response_code(), target);
+  // optional int32 code = 1;
+  if (has_code()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->code(), target);
   }
 
-  // optional bool success = 2;
-  if (has_success()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->success(), target);
+  // optional .data.Result result = 2;
+  if (has_result()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      2, this->result(), target);
   }
 
-  // optional string response_msg = 3;
-  if (has_response_msg()) {
+  // optional string msg = 3;
+  if (has_msg()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->response_msg().data(), this->response_msg().length(),
+      this->msg().data(), this->msg().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->response_msg(), target);
+        3, this->msg(), target);
+  }
+
+  // optional .user.RegiestResponse regiest_response = 4;
+  if (has_regiest_response()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->regiest_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -301,27 +361,35 @@ void Response::SerializeWithCachedSizes(
   return target;
 }
 
-int Response::ByteSize() const {
+int HTTPResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 response_code = 1;
-    if (has_response_code()) {
+    // optional int32 code = 1;
+    if (has_code()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->response_code());
+          this->code());
     }
 
-    // optional bool success = 2;
-    if (has_success()) {
-      total_size += 1 + 1;
+    // optional .data.Result result = 2;
+    if (has_result()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
     }
 
-    // optional string response_msg = 3;
-    if (has_response_msg()) {
+    // optional string msg = 3;
+    if (has_msg()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->response_msg());
+          this->msg());
+    }
+
+    // optional .user.RegiestResponse regiest_response = 4;
+    if (has_regiest_response()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->regiest_response());
     }
 
   }
@@ -336,10 +404,10 @@ int Response::ByteSize() const {
   return total_size;
 }
 
-void Response::MergeFrom(const ::google::protobuf::Message& from) {
+void HTTPResponse::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const Response* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Response*>(
+  const HTTPResponse* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const HTTPResponse*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -348,55 +416,59 @@ void Response::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void Response::MergeFrom(const Response& from) {
+void HTTPResponse::MergeFrom(const HTTPResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_response_code()) {
-      set_response_code(from.response_code());
+    if (from.has_code()) {
+      set_code(from.code());
     }
-    if (from.has_success()) {
-      set_success(from.success());
+    if (from.has_result()) {
+      set_result(from.result());
     }
-    if (from.has_response_msg()) {
-      set_response_msg(from.response_msg());
+    if (from.has_msg()) {
+      set_msg(from.msg());
+    }
+    if (from.has_regiest_response()) {
+      mutable_regiest_response()->::user::RegiestResponse::MergeFrom(from.regiest_response());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void Response::CopyFrom(const ::google::protobuf::Message& from) {
+void HTTPResponse::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Response::CopyFrom(const Response& from) {
+void HTTPResponse::CopyFrom(const HTTPResponse& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Response::IsInitialized() const {
+bool HTTPResponse::IsInitialized() const {
 
   return true;
 }
 
-void Response::Swap(Response* other) {
+void HTTPResponse::Swap(HTTPResponse* other) {
   if (other != this) {
-    std::swap(response_code_, other->response_code_);
-    std::swap(success_, other->success_);
-    std::swap(response_msg_, other->response_msg_);
+    std::swap(code_, other->code_);
+    std::swap(result_, other->result_);
+    std::swap(msg_, other->msg_);
+    std::swap(regiest_response_, other->regiest_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata Response::GetMetadata() const {
+::google::protobuf::Metadata HTTPResponse::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Response_descriptor_;
-  metadata.reflection = Response_reflection_;
+  metadata.descriptor = HTTPResponse_descriptor_;
+  metadata.reflection = HTTPResponse_reflection_;
   return metadata;
 }
 

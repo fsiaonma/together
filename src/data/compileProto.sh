@@ -1,3 +1,3 @@
-protoc -I=. --cpp_out=./ --proto_path=./ ./user/user.proto 
-protoc -I=. --cpp_out=./ --proto_path=./ ./data.proto
+protoc --proto_path=. --cpp_out=. ./user/user.proto 
+protoc --proto_path=. --cpp_out=. ./data.proto
 
