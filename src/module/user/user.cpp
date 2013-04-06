@@ -34,21 +34,22 @@ const char *regiest(string username, string password) {
             http_res->set_msg("username is already exist");
             LOG << "username is already exist" << endl;
             break;
-        } else {
-            PARAM regist_item;
-            PARAMLIST regist_datas;
-            regist_item.key = "username";
-            regist_item.value = username;
-            regist_datas.push_back(regist_item);
-            regist_item.key = "password";
-            regist_item.value = password;
-            regist_datas.push_back(regist_item);
-            e.insert("user", regist_datas);
-
-            http_res->set_code(REGIEST_SUCCESS);
-            http_res->set_success(1);
-            http_res->set_msg("regiest success");
         }
+        
+        PARAM regist_item;
+        PARAMLIST regist_datas;
+        regist_item.key = "username";
+        regist_item.value = username;
+        regist_datas.push_back(regist_item);
+        regist_item.key = "password";
+        regist_item.value = password;
+        regist_datas.push_back(regist_item);
+        e.insert("user", regist_datas);
+
+        http_res->set_code(REGIEST_SUCCESS);
+        http_res->set_success(1);
+        http_res->set_msg("regiest success");
+
         user::RegiestResponse *regiest_res = new user::RegiestResponse();
         regiest_res->set_username(username);
         regiest_res->set_password(password);
