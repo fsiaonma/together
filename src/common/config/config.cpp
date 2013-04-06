@@ -7,6 +7,7 @@ Config::Config()
 	this->config.insert(pair<string, string>("UPLOAD_PORT", "9081"));
 	this->config.insert(pair<string, string>("TCP_PORT", "9082"));
 	this->config.insert(pair<string, string>("KEEPALIVE_TIMEOUT", "5000"));
+	this->config.insert(pair<string, string>("UPLOAD_PATH", "/upload/"));
 
 	// mysql config
 	this->config.insert(pair<string, string>("DOMAIN", "localhost"));
