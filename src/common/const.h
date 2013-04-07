@@ -99,7 +99,7 @@ const int USER_LOGIN = 102;
 // system status code
 const int PARAM_ERROR = 1001;
 
-// regiest result.
+// regiest result code
 const int REGIEST_SUCCESS = 11000;
 const int USERNAME_IS_EXIST = 11001;
 

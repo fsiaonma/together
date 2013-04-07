@@ -31,7 +31,7 @@ const char *regiest(string username, string password) {
             http_res->set_code(USERNAME_IS_EXIST);
             http_res->set_success(0);
             http_res->set_msg("username is already exist");
-            LOG << "username is already exist" << endl;
+            ERR << "username is already exist" << endl;
             break;
         }
         
@@ -53,6 +53,7 @@ const char *regiest(string username, string password) {
         regiest_res->set_username(username);
         regiest_res->set_password(password);
         http_res->set_allocated_regiest_response(regiest_res);
+        LOG << "regiest success" << endl;
     } while(0);
 
 
