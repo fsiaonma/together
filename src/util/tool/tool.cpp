@@ -28,7 +28,7 @@ int Tool::S2I(string num, int default_val)
 	}
 }
 
-string md5(string s)
+string Tool::md5(string s)
 {
     const char *input = s.c_str();
     char c[50];
