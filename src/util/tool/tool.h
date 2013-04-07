@@ -4,6 +4,7 @@
 #include <string>
 #include <stdlib.h>
 #include <sstream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -16,6 +17,8 @@ public:
 	static int getArrayLen(T &array);
 
 	static int S2I(string num, int default_val = -1);
+
+	static int md5_str(char *s,char *md5_sum);
 };
 
 #endif
