@@ -144,8 +144,7 @@ bool eagleMysql::is_exist(string table, string condition) {
     this->mysql = this->excute("select count(1) from " + table + " " + condition + ";");
     MYSQL_RES *result = mysql_store_result(&(this->mysql));
     MYSQL_ROW rowdata = mysql_fetch_row(result);
-    if (rowdata)
-    {
+    if (rowdata) {
         row_count = atoi(rowdata[0]);
     } else {
         row_count = -1;

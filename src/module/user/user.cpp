@@ -12,8 +12,7 @@ const char *regiest(string username, string password) {
     string result;
     data::HTTPResponse *http_res = new data::HTTPResponse();
 
-    do
-    {
+    do {
         LOG << "regiest params: username is " << username << " password is " << password << endl;
         if (username.empty() || password.empty()) {
             http_res->set_code(PARAM_ERROR);
