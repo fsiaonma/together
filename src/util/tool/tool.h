@@ -22,7 +22,7 @@ public:
 	static string L2S(long num);
 	static char *S2C(string str);
 
-	static int md5_str(char *s,char *md5_sum);
+	static string md5(string s);
 };
 
 #endif

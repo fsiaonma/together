@@ -101,5 +101,3 @@ int user_handler(process *process, map<string, string> param) {
 	write_to_header(header_end); // write header end
 	return 0;
 }
-
-
