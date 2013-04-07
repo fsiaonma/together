@@ -1,10 +1,12 @@
 #ifndef _TOOL_H_
 #define _TOOL_H_
 
-#include <string>
+#include <string.h>
 #include <stdlib.h>
 #include <sstream>
 #include <stdio.h>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -17,6 +19,8 @@ public:
 	static int getArrayLen(T &array);
 
 	static int S2I(string num, int default_val = -1);
+	static string L2S(long num);
+	static char *S2C(string str);
 
 	static int md5_str(char *s,char *md5_sum);
 };
