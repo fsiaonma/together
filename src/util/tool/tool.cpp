@@ -34,7 +34,6 @@ string md5(string s)
     char c[50];
     char md5_sum[33];
     sprintf(c, "printf '%s' | md5sum | cut -d ' ' -f1", input);
-    cout << "md5:" << c << endl;
     FILE *p = popen(c, "r");
     if (p == NULL) 
         return 0;
