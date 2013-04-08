@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sstream>
 #include <stdio.h>
 #include <sstream>
@@ -23,6 +24,8 @@ public:
 	static char *S2C(string str);
 
 	static string md5(string s);
+	static string& trim(string &s);
+	static char *get_project_path(char * buf, int count);
 };
 
 #endif

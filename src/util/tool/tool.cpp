@@ -59,3 +59,40 @@ string Tool::md5(string s) {
     else
         return "";
 }
+
+string& Tool::trim(string &s) 
+{
+    if (s.empty()) {
+        return s;
+    }
+    s.erase(0,s.find_first_not_of(" "));
+    s.erase(s.find_last_not_of(" ") + 1);
+    return s;
+}
+
+char *Tool::get_project_path(char * buf, int count)
+{
+    int i;
+    int rslt = readlink("/proc/self/exe", buf, count - 1);
+    if (rslt < 0 || (rslt >= count - 1))
+    {
+        return NULL;
+    }
+    buf[rslt] = '\0';
+    bool in_project_path = false;
+    for (i = rslt; i >= 0; i--)
+    {
+        if (buf[i] == '/')
+        {
+            if (i > 0 && !in_project_path)
+            {
+                in_project_path = true;
+                continue;
+            }
+            buf[i + 1] = '\0';
+            break;
+        }
+    }
+    printf("project path:%s\n", buf);
+    return buf;
+}
