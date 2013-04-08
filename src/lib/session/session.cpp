@@ -7,7 +7,7 @@ session::session(string username, string dev_id) {
 	string rand_num;
 	current_time = Tool::L2S(t);
 	rand_num = Tool::L2S(rand());
-	this->sid = Tool::md5(username + "_" + dev_id + "_" + current_time + '_' + rand_num);;
+	this->sid = Tool::md5(username + "_" + dev_id + "_" + current_time + '_' + rand_num);
 }
 
 session::~session() {
