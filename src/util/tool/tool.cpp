@@ -43,11 +43,9 @@ char *Tool::S2C(string str) {
 }
 
 string Tool::md5(string s) {
-    const char *input = s.c_str();
-    char c[50];
     char md5_sum[33];
-    sprintf(c, "printf '%s' | md5sum | cut -d ' ' -f1", input);
-    FILE *p = popen(c, "r");
+    string ss = "printf '" + s + "' | md5sum | cut -d ' ' -f1";
+    FILE *p = popen(ss.c_str(), "r");
     if (p == NULL) 
         return 0;
     int i, ch;
