@@ -11,37 +11,34 @@ int keepalive_timeout;
 
 int setNonblocking(int fd);
 
+process* find_process_by_sock_slow(int sock);
+
 process* find_process_by_sock(int sock);
+
+process* find_empty_process_for_sock(int sock);
 
 process* accept_sock(int listen_sock);
 
-map<string, string> parse_param(char *param_data);
+int iniConfig();
 
-void cleanup(process *process);
+void init_processes();
 
-void handle_error(process *process, const char* error_string);
-
-void reset_process(process *process);
+static int create_and_bind(int port);
 
 
-// void handle_read_request(process *process, char *module, map<string, string> param);
 
 void read_request(process* process);
 
-void read_http_request(process* process);
-
-void read_tcp_request(process* process);
-
-void read_upload_request(process* process);
-
-
-void send_response_header(process *process);
-
-void send_response(process *process);
-
-
 void process_events_and_timer(epoll_event *events);
+
+void expire_timeout_sock();
 
 void process_events(epoll_event *events, int timer);
 
-void expire_timeout_sock();
+bool in_listen_sock(int sock);
+
+void handle_request(int sock, int events);
+
+process* accept_sock(int listen_sock);
+
+void read_request(process* process);
