@@ -4,12 +4,12 @@
 #include <netinet/in.h>
 #include <sys/wait.h>
 #include <arpa/inet.h>
-#include <sys/epoll.h>
 #include <netdb.h>
 #include <sys/resource.h>
 #include <stdlib.h>
 #include <sys/sendfile.h>
 
+#include "./recv.h"
 #include "./s.h"
 #include "../../module/user/user.h"
 #include "../../util/timer/timer.h"
@@ -21,41 +21,41 @@
 /**
 *处理请求内容
 **/
-void handle_read_request(process *process, char *module, map<string, string> param) {
-	LOG << "handle_read_request" << endl;
-	int module_type = get_module_type(module);
-	int s;
+// void handle_read_request(process *process, char *module, map<string, string> param) {
+// 	LOG << "handle_read_request" << endl;
+// 	int module_type = get_module_type(module);
+// 	int s;
 	
-	switch (module_type) {
-		case USER_MODULE:
-		{	
-			s = user_handler(process, param);
-			if (s == -1)
-				break;
-			else {
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    // 修改此 sock 的监听状态，改为监视写状态
-				event.data.fd = process->sock;
-				event.events = EPOLLOUT;
-				s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
-				if (s == -1) {
-					ERR << "epoll_ctl error" << endl;
-					abort();
-				}
-				LOG << "------send header------" << endl;
-				LOG << process->buf << endl;
-			}
-			break;
-		}
-		case ROOM_MODULE:
-		{
-			//room_handler(process, req);
-			break;
-		}
-		default:
-		break;
-	}
-}
+// 	switch (module_type) {
+// 		case USER_MODULE:
+// 		{	
+// 			s = user_handler(process, param);
+// 			if (s == -1)
+// 				break;
+// 			else {
+// 				process->status = STATUS_SEND_RESPONSE_HEADER;
+// 			    // 修改此 sock 的监听状态，改为监视写状态
+// 				event.data.fd = process->sock;
+// 				event.events = EPOLLOUT;
+// 				s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
+// 				if (s == -1) {
+// 					ERR << "epoll_ctl error" << endl;
+// 					abort();
+// 				}
+// 				LOG << "------send header------" << endl;
+// 				LOG << process->buf << endl;
+// 			}
+// 			break;
+// 		}
+// 		case ROOM_MODULE:
+// 		{
+// 			//room_handler(process, req);
+// 			break;
+// 		}
+// 		default:
+// 		break;
+// 	}
+// }
 
 /**
 *设置socket非阻塞
@@ -630,7 +630,7 @@ void read_upload_request(process* process)
 		case STATUS_UPLOAD_ONGOING:
 		{
 			LOG << "STATUS_UPLOAD_ONGOING" << endl;
-			char file_name[50];
+			char file_name[256];
 			Config *c = Config::get_instance();
 			map<string, string> config = c->get_config();
 			sprintf(file_name, "%s%s%s", config["UPLOAD_PATH"].c_str(), process->md5, process->suffix);
@@ -663,11 +663,11 @@ void read_upload_request(process* process)
 		    // TODO::保存文件成功,之后判断接收到的文件MD5与预期的是否一样,一样的话就写入数据库.返回响应信息
     		LOG << "save file succ!" << endl;
     		char md5[MD5_LEN + 1];
-			char file_name[50];
+			char file_name[256];
 			Config *c = Config::get_instance();
 			map<string, string> config = c->get_config();
 			sprintf(file_name, "%s%s%s", config["UPLOAD_PATH"].c_str(), process->md5, process->suffix);
-    		if (calc_file_MD5(file_name, md5))
+    		if (Tool::calc_file_MD5(file_name, md5))
     		{
     			LOG << "Calc Success! MD5 sum :" << md5 << endl;
     			if (strcmp(md5, process->md5) == 0)
@@ -1035,20 +1035,27 @@ void process_events(epoll_event *events, int timer)
 	}
 }
 
-void iniConfig()
+int iniConfig()
 {
 	Config *c = Config::get_instance();
 	map<string, string> config = c->get_config();
+	if (config.empty())
+		return -1;
 	listen_port[LISTEN_HTTP_REQ_TYPE] = Tool::S2I(config["HTTP_PORT"], 9080);
 	listen_port[LISTEN_UPLOAD_REQ_TYPE] = Tool::S2I(config["UPLOAD_PORT"], 9081);
 	listen_port[LISTEN_TCP_REQ_TYPE] = Tool::S2I(config["TCP_PORT"], 9082);
 	keepalive_timeout = Tool::S2I(config["KEEPALIVE_TIMEOUT"], 5000);
+	return 1;
 }
 
 int main()
 {
 	int s;
-	iniConfig();
+	s = iniConfig();
+	if (s == -1) {
+		ERR << "init config error!" << endl;
+		abort();
+	}
 	epoll_event *events;
 	init_processes();
 	int listen_sock;

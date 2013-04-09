@@ -33,8 +33,10 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
  * @param {string} table table which is going to insert value in.
  * @param {PARAMLIST} list insert values.
  */
-void eagleMysql::insert(string table, PARAMLIST list) {
-    this->connet();
+int eagleMysql::insert(string table, PARAMLIST list) {
+    if (!connet())
+        return SQL_CONNECT_FAIL;
+    int ret = SQL_OK;
 	
     string keys = "(", values = "(";
     PARAMLIST::iterator ptr;
@@ -51,8 +53,9 @@ void eagleMysql::insert(string table, PARAMLIST list) {
 
     string sql = "insert into " + table + " " + keys + " values " + values + ";";
     cout << "insert operation: " + sql << endl;
-    mysql_query(&(this->mysql), sql.c_str());
+    ret = excute(sql);
     this->close();
+    return ret;
 }
 
 /**
@@ -62,12 +65,16 @@ void eagleMysql::insert(string table, PARAMLIST list) {
  * @param {string} table table which is going to remove data from.
  * @param {string} condition sql condition.
  */
-void eagleMysql::remove(string table, string condition) {
-    this->connet();
+int eagleMysql::remove(string table, string condition) {
+    if (!connet())
+        return SQL_CONNECT_FAIL;
+    int ret = SQL_OK;
+
     string sql = "delete from " + table + " " + condition;
     cout << "remove operation: " + sql << endl;
-    mysql_query(&(this->mysql), sql.c_str());
+    ret = excute(sql);
     this->close();
+    return ret;
 }
 
 /**
@@ -78,8 +85,10 @@ void eagleMysql::remove(string table, string condition) {
  * @param {PARAMLIST} list list update values.
  * @param {string} condition sql condition.
  */
-void eagleMysql::update(string table, PARAMLIST list, string condition) {
-    this->connet();
+int eagleMysql::update(string table, PARAMLIST list, string condition) {
+    if (!connet())
+        return SQL_CONNECT_FAIL;
+    int ret = SQL_OK;
 	
     string keys = "(", values = "(";
     PARAMLIST::iterator ptr;
@@ -95,18 +104,24 @@ void eagleMysql::update(string table, PARAMLIST list, string condition) {
 
     cout << "update operation: " + sql << endl;
 
-    mysql_query(&(this->mysql), sql.c_str());
+    ret = excute(sql);
     this->close();
+    return ret;
 }
 
 /**
  * connet to mysql.
  * 
  * @method connet.
+ * @return {bool} whether it is connect successfully
  */
-void eagleMysql::connet() {
+bool eagleMysql::connet() {
     mysql_init(&(this->mysql));
-    mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0);
+    if (!mysql_real_connect(&(this->mysql), this->domain, this->userName, this->password, this->dataBase, this->port, NULL, 0)) {
+        cout << "Failed to connect to database: Error :" << mysql_error(&mysql) << endl;  
+        return false;
+    }
+    return true;
 }
 
 /**
@@ -116,9 +131,11 @@ void eagleMysql::connet() {
  * @param {string} sql sql is used to be excuted.
  * @return {MYSQL} mysql object.
  */
-MYSQL eagleMysql::excute(string sql) {
-    mysql_query(&(this->mysql), sql.c_str());
-    return this->mysql;
+int eagleMysql::excute(string sql) {
+    int ret = SQL_OK;
+    if ((mysql_query(&(this->mysql), sql.c_str())) != 0)
+        ret = SQL_QUERY_ERR;
+    return ret;
 }
 
 /**
@@ -130,27 +147,35 @@ void eagleMysql::close() {
     mysql_close(&(this->mysql));
 }
 
+MYSQL eagleMysql::get_mysql() {
+    return this->mysql;
+}
+
 /**
  * judge whether the value is exist in key list or not.  
  *  
  * @param {string} table the table of judging whether the value is exist or not. 
  * @param {string} condition the condition of judging whether the value is exist or not.
  * @method is_exist.
- * @return {bool} is_exist
+ * @return {int} is_exist
  */
-bool eagleMysql::is_exist(string table, string condition) {
-    int row_count;
-    this->connet();
-    this->mysql = this->excute("select count(1) from " + table + " " + condition + ";");
+int eagleMysql::is_exist(string table, string condition, bool &exist) {
+    int ret = SQL_OK;
+    exist = false;
+    if (!connet())
+        return SQL_CONNECT_FAIL;
+
+    excute("select count(1) from " + table + " " + condition + ";");
     MYSQL_RES *result = mysql_store_result(&(this->mysql));
     MYSQL_ROW rowdata = mysql_fetch_row(result);
     if (rowdata) {
-        row_count = atoi(rowdata[0]);
+        if (atoi(rowdata[0]) > 0)
+            exist = true;
     } else {
-        row_count = -1;
+        ret = SQL_COUNT_ERR;
     }
-    cout << "is_exist|" << row_count << endl;
+    cout << "is_exist|" << exist << endl;
     mysql_free_result(result);
     this->close();
-    return row_count;
+    return ret;
 }

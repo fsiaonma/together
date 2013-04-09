@@ -36,18 +36,6 @@
 #define USE_TCP_CORK 1
 #endif
 
-#ifndef STR_VALUE
-#define STR_VALUE(val) #val
-#endif
-
-#ifndef STR
-#define STR(name) STR_VALUE(name)
-#endif
-
-#ifndef PATH_LEN
-#define PATH_LEN 256
-#endif
-
 #ifndef MD5_LEN
 #define MD5_LEN 32
 #endif
@@ -98,10 +86,18 @@ const int USER_LOGIN = 102;
 
 // system status code
 const int PARAM_ERROR = 1001;
+const int DB_ERROR = 1002;
+
+// database status code
+const int DB_OK = 5000;
+const int DB_CONNECT_FAIL = 5001;
+const int DB_COUNT_ERR = 5002;
+const int DB_QUERY_ERR = 5003;
 
 // regiest result code
 const int REGIEST_SUCCESS = 11000;
-const int USERNAME_IS_EXIST = 11001;
+const int REGIEST_FAIL = 11001;
+const int USERNAME_IS_EXIST = 11002;
 
 #endif
 
