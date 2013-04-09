@@ -11,27 +11,38 @@
 const char *regiest(string username, string password) {
     string result;
     data::HTTPResponse *http_res = new data::HTTPResponse();
+    string msg;
 
     do {
         LOG << "regiest params: username is " << username << " password is " << password << endl;
         if (username.empty() || password.empty()) {
             http_res->set_code(PARAM_ERROR);
             http_res->set_success(0);
-            http_res->set_msg("username or password is null");
-            ERR << "username or password is null" << endl;
+            msg = "username or password is null";
+            ERR << msg << endl;
             break;
         }
-        
         Config *c = Config::get_instance();
         map<string, string> config = c->get_config();
         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
-        if (e.is_exist("user", "where username = '" + username + "'")) {
+
+        int ret;
+        bool exist;
+        ret = e.is_exist("user", "where username = '" + username + "'", exist);
+        if (ret != DB_OK) {
+            http_res->set_code(DB_ERROR);
+            http_res->set_success(0);
+            msg = "DB ERROR|" + Tool::toString(ret);
+            ERR << msg << endl;
+            break;
+        }
+        if (exist) {
             http_res->set_code(USERNAME_IS_EXIST);
             http_res->set_success(0);
-            http_res->set_msg("username is already exist");
-            ERR << "username is already exist" << endl;
+            msg = "username is already exist";
+            ERR << msg << endl;
             break;
         }
         
@@ -43,19 +54,26 @@ const char *regiest(string username, string password) {
         regist_item.key = "password";
         regist_item.value = password;
         regist_datas.push_back(regist_item);
-        e.insert("user", regist_datas);
+        ret = e.insert("user", regist_datas);
+        if (ret != DB_OK) {
+            http_res->set_code(REGIEST_FAIL);
+            http_res->set_success(0);
+            msg = "REGIEST_FAIL|" + Tool::toString(ret);
+            ERR << msg << endl;
+            break;
+        }
 
         http_res->set_code(REGIEST_SUCCESS);
         http_res->set_success(1);
-        http_res->set_msg("regiest success");
+        msg = "regiest success";
 
         user::RegiestResponse *regiest_res = new user::RegiestResponse();
         regiest_res->set_username(username);
         regiest_res->set_password(password);
         http_res->set_allocated_regiest_response(regiest_res);
-        LOG << "regiest success" << endl;
+        LOG << msg << endl;
     } while(0);
-
+    http_res->set_msg(msg);
 
     http_res->SerializeToString(&result);
     google::protobuf::ShutdownProtobufLibrary();
@@ -68,7 +86,8 @@ const char *login(string username, string password) {
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
-    if (e.is_exist("user", "where username = '" + username + "' and password = '" + password + "'")) {
+    bool exist;
+    if (e.is_exist("user", "where username = '" + username + "' and password = '" + password + "'", exist)) {
     	LOG << "login success" << endl;
     } else {
     	LOG << "login fail" << endl;

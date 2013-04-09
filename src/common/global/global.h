@@ -8,11 +8,16 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/epoll.h>
 #include "../const.h"
 
 using namespace std;
 
 extern long current_msec;
+
+extern int efd;
+extern epoll_event event;
+extern int current_total_processes;
 
 struct process {
 	static const int kBufferSize = 4024;
@@ -34,8 +39,6 @@ int get_index_file(char *filename_buf, struct stat *pstat);
 int get_module_type(char *req);
 
 void time_update();
-
-int calc_file_MD5(char *file_name, char *md5_sum);
 
 #endif
 

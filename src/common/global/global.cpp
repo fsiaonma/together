@@ -1,5 +1,9 @@
 #include "global.h"
+
 long current_msec;
+int efd;
+epoll_event event;
+int current_total_processes;
 
 // 根据目录名自动添加 index.htm
 int get_index_file(char *filename_buf, struct stat *pstat) {
@@ -49,24 +53,4 @@ void time_update()
 	sec = tv.tv_sec;
     msec = tv.tv_usec / 1000;
     current_msec = sec * 1000 + msec;
-}
-
-int calc_file_MD5(char *file_name, char *md5_sum)
-{
-    #define MD5SUM_CMD_FMT "md5sum %." STR(PATH_LEN) "s 2>/dev/null"
-    char cmd[PATH_LEN + sizeof (MD5SUM_CMD_FMT)];
-    sprintf(cmd, MD5SUM_CMD_FMT, file_name);
-    #undef MD5SUM_CMD_FMT
-
-    FILE *p = popen(cmd, "r");
-    if (p == NULL) return 0;
-
-    int i, ch;
-    for (i = 0; i < MD5_LEN && isxdigit(ch = fgetc(p)); i++) {
-        *md5_sum++ = ch;
-    }
-
-    *md5_sum = '\0';
-    pclose(p);
-    return i == MD5_LEN;
 }

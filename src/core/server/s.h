@@ -4,9 +4,6 @@
 #include "../../util/log/log.h"
 
 static process processes[MAX_PORCESS];
-static int efd;
-static epoll_event event;
-static int current_total_processes;
 static int listen_port[LISTEN_PORT_SIZE];
 static int listen_socks[LISTEN_PORT_SIZE];
 int keepalive_timeout;
@@ -27,7 +24,7 @@ void handle_error(process *process, const char* error_string);
 void reset_process(process *process);
 
 
-void handle_read_request(process *process, char *module, map<string, string> param);
+// void handle_read_request(process *process, char *module, map<string, string> param);
 
 void read_request(process* process);
 
