@@ -57,6 +57,7 @@ class eagleMysql {
         bool connet();
         int excute(string sql);
         void close();
+        MYSQL get_mysql();
 
         int is_exist(string table, string condition, bool &exist);
 };

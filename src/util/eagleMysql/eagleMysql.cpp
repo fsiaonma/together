@@ -147,6 +147,10 @@ void eagleMysql::close() {
     mysql_close(&(this->mysql));
 }
 
+MYSQL eagleMysql::get_mysql() {
+    return this->mysql;
+}
+
 /**
  * judge whether the value is exist in key list or not.  
  *  

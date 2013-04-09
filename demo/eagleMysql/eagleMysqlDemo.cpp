@@ -3,18 +3,14 @@
 #include <string>
 #include <stdlib.h>
 #include "../../src/util/eagleMysql/eagleMysql.h"
-#include "../../src/common/config/config.h"
 using namespace std;
 
 int main() {
-	Config *c = Config::get_instance();
-    map<string, string> config = c->get_config();
-
-    const char *domain = config["DOMAIN"].c_str();
-    const char *userName = config["USER_NAME"].c_str();
-    const char *password = config["PASSWORD"].c_str();
-    const char *database = config["DATABASE"].c_str();
-    int port = atoi(config["PORT"].c_str());
+    const char *domain = "localhost";
+    const char *userName = "root";
+    const char *password = "123456";
+    const char *database = "testmysql";
+    int port = 3306;
 
     // init
     eagleMysql e(domain, userName, password, database, port);
@@ -60,7 +56,8 @@ int main() {
 
     MYSQL mysql;
     string sql = "select * from user;";
-    mysql = e.excute(sql);
+    e.excute(sql);
+    mysql = e.get_mysql();
 
     MYSQL_RES *result = NULL;
     MYSQL_FIELD *field = NULL;
@@ -87,7 +84,8 @@ int main() {
 
     e.close();
 
-    bool is_exist = e.is_exist("user", "where username = 'fsiaonma'");
+    bool is_exist;
+    e.is_exist("user", "where username = 'fsiaonma'", is_exist);
     cout << "is_exist: " << is_exist << endl;
 
 	return 0;
