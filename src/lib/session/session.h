@@ -9,28 +9,23 @@
 
 using namespace std;
 
-class session {
-	private:
-		string sid;
-		map<string, string> arguments;
-	public:
-		session(string username, string dev_id);
-		~session();
-
-		string get_sid();
-		void set(string key, string value);
-		string get(string key);
+struct SESSION {
+	string sid;
+	string uid;
+	string username;
+	string dev_id;
+	string active_time;
+	string rand_num;
 };
 
-typedef list<session> SESSION_LIST;
+typedef list<SESSION> SESSION_LIST;
 
-class session_list {
+class session {
 	private:
 		SESSION_LIST list;
 	public:
-		session_list();
-		~session_list();
-		void set_session(session s);
-		session get_session(string sid);
-		void test();
+		session();
+		~session();
+		SESSION set(string uid, string username, string dev_id);
+		SESSION *get(string sid);
 };
