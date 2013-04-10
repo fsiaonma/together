@@ -19,6 +19,14 @@
 #ifndef header_end
 #define header_end "\r\n"
 #endif
+
+#ifndef BAD_REQUEST
+#define BAD_REQUEST process->response_code = 400; \
+process->status = STATUS_SEND_RESPONSE_HEADER; \
+strncpy(process->buf, header_400, sizeof(header_400)); \
+send_response_header(process); \
+handle_error(process, "bad request");
+#endif
     
 #ifndef copy_str
 #define copy_str(dst, src) strncpy(dst, src, strlen(src) + 1)
@@ -42,7 +50,6 @@
 
 #ifndef _CONST_H_
 #define _CONST_H_
-
 
 // 监听端口的数目
 const int LISTEN_PORT_SIZE = 3;

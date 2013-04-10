@@ -12,12 +12,12 @@
 #include "./close.h"
 #include "./send.h"
 #include "./s.h"
-#include "../../module/user/user.h"
-#include "../../util/timer/timer.h"
 
 /**
-*设置socket非阻塞
-**/
+ * [setNonblocking 设置socket非阻塞]
+ * @param  fd [socket描述符]
+ * @return    [description]
+ */
 int setNonblocking(int fd) {
 	int flags;
 	if (-1 ==(flags = fcntl(fd, F_GETFL, 0)))
@@ -26,8 +26,10 @@ int setNonblocking(int fd) {
 }
 
 /**
-*从process数组中遍历查找对应socket，慢
-**/
+ * [find_process_by_sock_slow 从process数组中遍历查找对应socket，慢]
+ * @param  sock [description]
+ * @return      [对应的process]
+ */
 process* find_process_by_sock_slow(int sock) {
 	int i;
 	for (i = 0; i < MAX_PORCESS; i++) {
@@ -39,8 +41,10 @@ process* find_process_by_sock_slow(int sock) {
 }
 
 /**
-*从process数组中找空的位置
-**/
+ * [find_empty_process_for_sock 从process数组中找空的位置]
+ * @param  sock [description]
+ * @return      [对应的process]
+ */
 process* find_empty_process_for_sock(int sock) {
 	if (sock < MAX_PORCESS && sock >= 0 && processes[sock].sock == NO_SOCK) {
 		return &processes[sock];
@@ -50,8 +54,10 @@ process* find_empty_process_for_sock(int sock) {
 }
 
 /**
-*从process数组中遍历查找对应socket所在
-**/
+ * [find_process_by_sock 从process数组中遍历查找对应socket所在]
+ * @param  sock [description]
+ * @return      [对应的process]
+ */
 process* find_process_by_sock(int sock) {
 	if (sock < MAX_PORCESS && sock >= 0 && processes[sock].sock == sock) {
 		return &processes[sock];
@@ -61,6 +67,10 @@ process* find_process_by_sock(int sock) {
 }
 
 
+/**
+ * [iniConfig description]
+ * @return [description]
+ */
 int iniConfig()
 {
 	Config *c = Config::get_instance();
@@ -75,8 +85,8 @@ int iniConfig()
 }
 
 /**
-*初始化process数组
-**/
+ * [init_processes 初始化process数组]
+ */
 void init_processes() {
 	int i = 0;
 	for (;i < MAX_PORCESS; i ++) {
@@ -85,8 +95,10 @@ void init_processes() {
 }
 
 /**
-*创建和绑定端口
-**/
+ * [create_and_bind 创建和绑定端口]
+ * @param  port [description]
+ * @return      [description]
+ */
 static int create_and_bind(int port) {
 	addrinfo hints;
 	addrinfo *result, *rp;
@@ -131,10 +143,25 @@ static int create_and_bind(int port) {
 	return listen_sock;
 }
 
+/**
+ * [in_listen_sock 判断当前要连接的socket是否在监察的端口]
+ * @param  sock [description]
+ * @return      [结果]
+ */
+bool in_listen_sock(int sock)
+{
+	for (int i = 0; i < LISTEN_PORT_SIZE; i++)
+	{
+		if (sock == listen_socks[i])
+			return true;
+	}
+	return false;
+}
 
 /**
-*事件与定时器的主循环
-**/
+ * [process_events_and_timer 事件与定时器的主循环]
+ * @param events [epoll事件]
+ */
 void process_events_and_timer(epoll_event *events)
 {
 	for(;;)
@@ -152,8 +179,8 @@ void process_events_and_timer(epoll_event *events)
 }
 
 /**
-*移除超时的socket
-**/
+ * [expire_timeout_sock 移除超时的socket]
+ */
 void expire_timeout_sock()
 {
 	int count = 0;
@@ -168,8 +195,7 @@ void expire_timeout_sock()
     	}
     	count++;
     }
-    // LOG << "overtime count:" << count << endl;
-    // del sock
+
     for (int i = 0; i < count; i++)
     {
     	int sock = timeSet.begin()->getSock();
@@ -180,8 +206,10 @@ void expire_timeout_sock()
 }
 
 /**
-*事件处理主循环
-**/
+ * [process_events 事件处理主循环]
+ * @param events [epoll事件]
+ * @param timer  [epowoo wait的超时时间]
+ */
 void process_events(epoll_event *events, int timer)
 {
 	int n, i;
@@ -207,19 +235,12 @@ void process_events(epoll_event *events, int timer)
 	}
 }
 
-bool in_listen_sock(int sock)
-{
-	for (int i = 0; i < LISTEN_PORT_SIZE; i++)
-	{
-		if (sock == listen_socks[i])
-			return true;
-	}
-	return false;
-}
 
 /**
-*判断事件的状态，作对应的处理
-**/
+ * [handle_request 判断事件的状态，作对应的处理]
+ * @param sock   [socket]
+ * @param events [事件的状态]
+ */
 void handle_request(int sock, int events) {
 	process* process = find_process_by_sock(sock);
 	if (in_listen_sock(sock) > 0) {
@@ -238,8 +259,10 @@ void handle_request(int sock, int events) {
 }
 
 /**
-*接受socket连接
-**/
+ * [accept_sock 接受socket连接]
+ * @param  listen_sock [监听的socket]
+ * @return             [接受socket连接后的process]
+ */
 process* accept_sock(int listen_sock) {
 	int s;
 	sockaddr_in remote_addr;
@@ -300,8 +323,9 @@ process* accept_sock(int listen_sock) {
 
 
 /**
-*读取socket请求
-**/
+ * [read_request 读取socket请求]
+ * @param process [process对象]
+ */
 void read_request(process* process) {
 	int sock_type = process->type;
 

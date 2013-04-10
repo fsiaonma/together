@@ -2,8 +2,9 @@
 #include "./close.h"
 
 /**
-*发送响应首部
-**/
+ * [send_response_header 发送响应首部]
+ * @param process [description]
+ */
 void send_response_header(process *process) {
 	LOG << "send" << endl;
 	if (process->response_code != 200) {
@@ -24,8 +25,9 @@ void send_response_header(process *process) {
 }
 
 /**
-*发送文件
-**/
+ * [send_response 发送文件]
+ * @param process [description]
+ */
 void send_response(process *process) {
 	if (process->fd == NO_FILE)
 		return ;

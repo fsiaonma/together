@@ -4,8 +4,9 @@
 
 
 /**
-* 从参数字符串中解析参数放入map中
-**/
+ * [parse_param 从参数字符串中解析参数放入map中]
+ * @param param_data [http请求的最后一行,post传过来的参数]
+ */
 map<string, string> parse_param(char *param_data)
 {
 	char *p;
@@ -42,6 +43,12 @@ map<string, string> parse_param(char *param_data)
 	return m;
 }
 
+/**
+ * [handle_read_request 处理HTTP的请求]
+ * @param process [process对象]
+ * @param module  [模块名]
+ * @param param   [保存了请求中参数及其对应的值,map<string, string>]
+ */
 void handle_read_request(process *process, char *module, map<string, string> param) {
 	LOG << "handle_read_request" << endl;
 	int module_type = get_module_type(module);
@@ -80,8 +87,9 @@ void handle_read_request(process *process, char *module, map<string, string> par
 
 
 /**
-*接收HTTP请求(LISTEN_HTTP_REQ_PORT端口)
-**/
+ * [read_http_request 接收HTTP请求(LISTEN_HTTP_REQ_PORT端口)]
+ * @param process [process对象]
+ */
 void read_http_request(process* process)
 {
 	int sock = process->sock;
@@ -112,11 +120,7 @@ void read_http_request(process* process)
 	LOG << buf << endl;
   	// 请求超长，不处理了
 	if (header_length > process->kBufferSize - 1) {
-		process->response_code = 400;
-		process->status = STATUS_SEND_RESPONSE_HEADER;
-    	strncpy(process->buf, header_400, sizeof(header_400));
-		send_response_header(process);
-		handle_error(process, "bad request");
+		BAD_REQUEST
 		return;
 	}
 	buf[header_length]=0;
@@ -134,11 +138,7 @@ void read_http_request(process* process)
 		LOG << "format_pos|" << format_pos << endl;
 		if (format_pos < 0)
 		{
-			process->response_code = 400;
-			process->status = STATUS_SEND_RESPONSE_HEADER;
-	    	strncpy(process->buf, header_400, sizeof(header_400));
-			send_response_header(process);
-			handle_error(process, "bad request");
+			BAD_REQUEST
 			return;
 		}
 
@@ -147,11 +147,7 @@ void read_http_request(process* process)
 		const char *space_loc = strchr(buf + format_pos + 1, ' ');
 		if (n_loc <= space_loc) {
 			ERR << "read first line error" << endl;
-			process->response_code = 400;
-			process->status = STATUS_SEND_RESPONSE_HEADER;
-	    	strncpy(process->buf, header_400, sizeof(header_400));
-			send_response_header(process);
-			handle_error(process, "bad request");
+			BAD_REQUEST
 			return;
 		}
 
@@ -176,11 +172,7 @@ void read_http_request(process* process)
 		        if (rn == 0)
 		        {
 		        	ERR << "not found line break" << endl;
-					process->response_code = 400;
-					process->status = STATUS_SEND_RESPONSE_HEADER;
-			    	strncpy(process->buf, header_400, sizeof(header_400));
-					send_response_header(process);
-					handle_error(process, "bad request");
+					BAD_REQUEST
 					return;
 		        }
 		    }
@@ -195,7 +187,6 @@ void read_http_request(process* process)
 		int request_len = strlen(buf);
 
 		int last_line_begin = 0;
-		int count = 0;
 		int i = request_len - 1;
 		int last_line_end = i;
 		for (; i >= 0; i--)
@@ -220,11 +211,7 @@ void read_http_request(process* process)
 		if (param_len == 0)
 		{
 			ERR << "receive data is null" << endl;
-			process->response_code = 400;
-			process->status = STATUS_SEND_RESPONSE_HEADER;
-		    strncpy(process->buf, header_400, sizeof(header_400));
-			send_response_header(process);
-			handle_error(process, "bad request");
+			BAD_REQUEST
 			return;
 		}
 
@@ -234,11 +221,7 @@ void read_http_request(process* process)
 			if (content_length != strlen(param_data))
 			{
 				ERR << "receive data size not same" << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-		    	strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			} else {
 				LOG << "receive data size same" << endl;
@@ -250,11 +233,7 @@ void read_http_request(process* process)
 		if (param.empty())
 		{
 			ERR << "param is null" << endl;
-			process->response_code = 400;
-			process->status = STATUS_SEND_RESPONSE_HEADER;
-		    strncpy(process->buf, header_400, sizeof(header_400));
-			send_response_header(process);
-			handle_error(process, "bad request");
+			BAD_REQUEST
 			return;
 		}
 
@@ -265,8 +244,11 @@ void read_http_request(process* process)
 }
 
 /**
-*接收文件数据,保存到硬盘
-**/
+ * [recv_file 接收文件数据,保存到硬盘]
+ * @param  process  [process对象]
+ * @param  filename [保存的文件名]
+ * @return          [接收的文件大小]
+ */
 int recv_file(process* process, const char* filename) 
 { 
     int rval; 
@@ -318,8 +300,9 @@ int recv_file(process* process, const char* filename)
 
 
 /**
-*接收HTTP请求,解析后开始接收文件数据,保存(LISTEN_UPLOAD_REQ_PORT端口)
-**/
+ * [read_upload_request 接收HTTP请求,解析后开始接收文件数据,保存(LISTEN_UPLOAD_REQ_PORT端口)]
+ * @param process [process对象]
+ */
 void read_upload_request(process* process)
 {
 	int s;
@@ -355,11 +338,7 @@ void read_upload_request(process* process)
 			#if 1
 			if (!(strncmp(buf, "POST", 4) == 0 || strncmp(buf, "GET", 3) == 0) ) 
 			{
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-		    	strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			}
 
@@ -376,11 +355,7 @@ void read_upload_request(process* process)
 			        if (rn == 0)
 			        {
 			        	ERR << "not found line break" << endl;
-						process->response_code = 400;
-						process->status = STATUS_SEND_RESPONSE_HEADER;
-				    	strncpy(process->buf, header_400, sizeof(header_400));
-						send_response_header(process);
-						handle_error(process, "bad request");
+						BAD_REQUEST
 						return;
 			        }
 			    }
@@ -420,11 +395,7 @@ void read_upload_request(process* process)
 			if (param_len == 0)
 			{
 				ERR << "receive data is null" << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			}
 
@@ -434,11 +405,7 @@ void read_upload_request(process* process)
 				if (content_length != strlen(param_data))
 				{
 					ERR << "receive data size not same" << endl;
-					process->response_code = 400;
-					process->status = STATUS_SEND_RESPONSE_HEADER;
-			    	strncpy(process->buf, header_400, sizeof(header_400));
-					send_response_header(process);
-					handle_error(process, "bad request");
+					BAD_REQUEST
 					return;
 				} else {
 					LOG << "receive data size same" << endl;
@@ -450,11 +417,7 @@ void read_upload_request(process* process)
 			if (param.empty())
 			{
 				ERR << "param is null" << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			}
 			#endif
@@ -462,22 +425,14 @@ void read_upload_request(process* process)
 			if (! (param.count("md5") > 0 && param.count("file_size") > 0) )
 			{
 				ERR << "md5 or file_size not exist" << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			}
 
 			if (!Tool::isNum(param["file_size"]))
 			{
 				ERR << "file_size error|" << param["file_size"] << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				return;
 			}
 			process->total_length = Tool::S2I(param["file_size"]);
@@ -509,11 +464,7 @@ void read_upload_request(process* process)
 			if (s < 0)
 			{
 				// TODO::
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-		    	strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
 				break;
 			}
 			if (s == process->total_length)
@@ -561,20 +512,12 @@ void read_upload_request(process* process)
     			} else {
 					// MD5不一致
 	    			LOG << "Fail! MD5 sum is inconsistent" << endl;
-					process->response_code = 400;
-					process->status = STATUS_SEND_RESPONSE_HEADER;
-			    	strncpy(process->buf, header_400, sizeof(header_400));
-					send_response_header(process);
-					handle_error(process, "bad request");
+					BAD_REQUEST
     			}
     		} else {
     			// TODO::计算MD5失败
     			ERR << "Calc MD5 ERROR" << endl;
-				process->response_code = 400;
-				process->status = STATUS_SEND_RESPONSE_HEADER;
-			    strncpy(process->buf, header_400, sizeof(header_400));
-				send_response_header(process);
-				handle_error(process, "bad request");
+				BAD_REQUEST
     		}
     		process->status = STATUS_UPLOAD_READY;
 			break;
@@ -585,8 +528,9 @@ void read_upload_request(process* process)
 }
 
 /**
-*接收长连接请求(LISTEN_TCP_REQ_PORT端口)
-**/
+ * [read_tcp_request 接收长连接请求(LISTEN_TCP_REQ_PORT端口)]
+ * @param process [process对象]
+ */
 void read_tcp_request(process* process)
 {
 	int sock = process->sock;
@@ -615,11 +559,7 @@ void read_tcp_request(process* process)
 	LOG << buf << endl;
   	// 请求超长，不处理了
 	if (header_length > process->kBufferSize - 1) {
-		process->response_code = 400;
-		process->status = STATUS_SEND_RESPONSE_HEADER;
-    	strncpy(process->buf, header_400, sizeof(header_400));
-		send_response_header(process);
-		handle_error(process, "bad request");
+		BAD_REQUEST
 		return;
 	}
 	#if 0

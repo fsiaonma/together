@@ -25,6 +25,8 @@ void init_processes();
 
 static int create_and_bind(int port);
 
+bool in_listen_sock(int sock);
+
 
 
 void read_request(process* process);
@@ -34,8 +36,6 @@ void process_events_and_timer(epoll_event *events);
 void expire_timeout_sock();
 
 void process_events(epoll_event *events, int timer);
-
-bool in_listen_sock(int sock);
 
 void handle_request(int sock, int events);
 

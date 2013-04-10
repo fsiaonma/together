@@ -1,8 +1,9 @@
 #include "./close.h"
 
 /**
-*清空一个process
-**/
+ * [cleanup 清空一个process]
+ * @param process [process对象]
+ */
 void cleanup(process *process) {
 	LOG << "cleanup" << endl;
 	int s;
@@ -29,8 +30,10 @@ void cleanup(process *process) {
 }
 
 /**
-*socket出错时的处理
-**/
+ * [handle_error socket出错时的处理]
+ * @param process      [process对象]
+ * @param error_string [错误字符串]
+ */
 void handle_error(process* process, const char* error_string) {
 	del_timer(process->sock);
 	cleanup(process);
@@ -38,8 +41,9 @@ void handle_error(process* process, const char* error_string) {
 }
 
 /**
-*重置一个process中的当前读写位置
-**/
+ * [reset_process 重置一个process中的当前读写位置]
+ * @param process [process对象]
+ */
 void reset_process(process* process) {
 	process->read_pos = 0;
 	process->write_pos = 0;
