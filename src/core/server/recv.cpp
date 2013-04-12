@@ -128,12 +128,10 @@ void read_http_request(process* process)
 	if (read_complete) {
     	// 重置读取位置
 		reset_process(process);
-		// 传输格式的位置 POST的时候format_pos=4,GET的时候format_post=3
+		// 传输格式的位置 POST的时候format_pos=4
 		int format_pos = -1;
 		if (strncmp(buf, "POST", 4) == 0) {
     		format_pos = 4;
-		} else if (strncmp(buf, "GET", 3) == 0) {
-    		format_pos = 3;
 		}
 		LOG << "format_pos|" << format_pos << endl;
 		if (format_pos < 0)
@@ -184,27 +182,31 @@ void read_http_request(process* process)
 		}
 
 		// 解析最后一行
-		int request_len = strlen(buf);
-
-		int last_line_begin = 0;
-		int i = request_len - 1;
-		int last_line_end = i;
-		for (; i >= 0; i--)
-		{
-		    if (*(buf + i) == '\n')
-		    {
-		    	if (last_line_begin == 0)
-		        {
-		            last_line_begin = i + 1;
-		            break;
-		        }
-		    }
-		}
-
 		char param_data[200];
-		int param_len = last_line_end - last_line_begin + 1;
-		strncpy(param_data, buf + last_line_begin, param_len);
+		param_data[0] = 0;
+		char *pp = strstr(buf, "\n\n");
+		if (pp == 0)
+		{
+			pp = strstr(buf, "\r\n\r\n");
+		    pp += 4;
+		} else {
+		    pp += 2;
+		}
+		char *end = strchr(pp, '\n');
+		if (end == 0)
+		{
+		    end = strchr(pp, '\0');
+		}
+		int param_len = end - pp;
+		if (param_len > 199)
+		{
+			ERR << "param is too long" << endl;
+			BAD_REQUEST
+			return;
+		}
+		strncpy(param_data, pp, param_len);
 		param_data[param_len] = 0;
+
 		LOG << "param data|" << param_data << endl;
 
 		// 最后一行长度为0则视为数据出错
@@ -336,7 +338,7 @@ void read_upload_request(process* process)
 			
 			// TODO:: 解析HTTP请求并设置好对应的文件总长度和md5
 			#if 1
-			if (!(strncmp(buf, "POST", 4) == 0 || strncmp(buf, "GET", 3) == 0) ) 
+			if (!(strncmp(buf, "POST", 4) == 0) ) 
 			{
 				BAD_REQUEST
 				return;
@@ -367,28 +369,30 @@ void read_upload_request(process* process)
 			}
 
 			// 解析最后一行
-			int request_len = strlen(buf);
-
-			int last_line_begin = 0;
-			int i = request_len - 1;
-			int last_line_end = i;
-			for (; i >= 0; i--)
-			{
-			    if (*(buf + i) == '\n')
-			    {
-			    	if (last_line_begin == 0)
-			        {
-			            last_line_begin = i + 1;
-			            break;
-			        }
-			    }
-			}
-
 			char param_data[200];
-			int param_len = last_line_end - last_line_begin + 1;
-			strncpy(param_data, buf + last_line_begin, param_len);
+			param_data[0] = 0;
+			char *pp = strstr(buf, "\n\n");
+			if (pp == 0)
+			{
+				pp = strstr(buf, "\r\n\r\n");
+			    pp += 4;
+			} else {
+			    pp += 2;
+			}
+			char *end = strchr(pp, '\n');
+			if (end == 0)
+			{
+			    end = strchr(pp, '\0');
+			}
+			int param_len = end - pp;
+			if (param_len > 199)
+			{
+				ERR << "param is too long" << endl;
+				BAD_REQUEST
+				return;
+			}
+			strncpy(param_data, pp, param_len);
 			param_data[param_len] = 0;
-			LOG << param_len << endl;
 			LOG << "param data|" << param_data << endl;
 
 			// 最后一行长度为0则视为数据出错
