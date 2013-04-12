@@ -8,6 +8,7 @@ static int listen_port[LISTEN_PORT_SIZE];
 static int listen_socks[LISTEN_PORT_SIZE];
 int keepalive_timeout;
 
+int CreateWorker(int nWorker);
 
 int setNonblocking(int fd);
 

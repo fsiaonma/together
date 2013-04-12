@@ -13,6 +13,48 @@
 #include "./send.h"
 #include "./s.h"
 
+int CreateWorker(int nWorker)
+{
+    if (0 < nWorker)
+    {
+        int bIsChild = 0;
+        pid_t nPid;
+
+        while (!bIsChild)
+        {
+            if (0 < nWorker)
+            {
+                nPid = fork();
+                if (nPid > 0)
+                {
+                    bIsChild = 0;
+                    --nWorker;
+                }
+                else if (0 == nPid)
+                {
+                    bIsChild = 1;
+                    printf("create worker %d success!\n", getpid());
+                }
+                else
+                {
+                    printf("fork error: %s\n", strerror(errno));
+                    return -1;
+                }
+            }
+            else
+            {
+                int nStatus;
+                if (-1 == wait(&nStatus))
+                {
+                    ++nWorker;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
 /**
  * [setNonblocking 设置socket非阻塞]
  * @param  fd [socket描述符]
@@ -401,6 +443,8 @@ int main()
 
 
 	events = new epoll_event[MAXEVENTS];
+
+	CreateWorker(10);
 
 	process_events_and_timer(events);
 
