@@ -340,7 +340,7 @@ process* accept_sock(int listen_sock) {
 		ERR << "epoll_ctl error" << endl;
 		abort();
 	}
-	LOG << "Connect from " << inet_ntoa(remote_addr.sin_addr) << ":" << ntohs(remote_addr.sin_port) << ", socket:" << infd << endl;
+	LOG << listen_sock << "|Connect from " << inet_ntoa(remote_addr.sin_addr) << ":" << ntohs(remote_addr.sin_port) << ", socket:" << infd << endl;
 	process* process = find_empty_process_for_sock(infd);
 	current_total_processes++;
 	reset_process(process);
@@ -425,7 +425,7 @@ int main()
 		listen_socks[i] = listen_sock;
 	}
 
-	CreateWorker(10);
+	// CreateWorker(10);
 
 	efd = epoll_create1(0);
 	LOG << "efd:" << efd << endl;

@@ -70,7 +70,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
                 "POST /USER HTTP/1.1\n"
                 "Host: kc123kc.vicp.cc:9080\n"
                 "Connection: keep-alive\n"
-                "Content-Length: 42\n"
+                "Content-Length: 43\n"
                 "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3\n"
                 "\n"
                 "action=101&username=xianjh&password=123456\0";

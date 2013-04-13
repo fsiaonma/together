@@ -220,7 +220,7 @@ void read_http_request(process* process)
 		// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
 		if (content_length > 0)
 		{
-			if (content_length != strlen(param_data))
+			if (content_length != strlen(param_data) + 1)
 			{
 				ERR << "receive data size not same" << endl;
 				BAD_REQUEST
@@ -315,25 +315,30 @@ void read_upload_request(process* process)
 		{
 			LOG << "STATUS_UPLOAD_READY" << endl;
 			int sock = process->sock;
-			char* buf = process->buf;
+			char* _buf = process->buf;
 			ssize_t count;
+			string request;
 			while (1) {
-				count = recv(sock, buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
+				count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 				if (count == -1) {
 					break;
 				} else if (count == 0) {
-			    	// 被客户端关闭连接
-			    	LOG << "client " << process->sock << " close connection" << endl;
-					cleanup(process);
-					return;
+					break;
 				} else if (count > 0) {
 					process->read_pos += count;
+					_buf[process->read_pos] = 0;
+					request.append(_buf);
+					LOG << _buf << endl;
+					LOG << "process->read_pos|" << process->read_pos << endl;
+					if (process->read_pos == process->kBufferSize)
+					{
+						process->read_pos = 0;
+					}
 				}
 			}
-			int header_length = process->read_pos;
 			LOG << "-----recv-----" << endl;
 			LOG << "from sock:" << process->sock << " type:" << process->type << endl;
-			buf[header_length]=0;
+			char* buf = (char *)request.c_str();
 			LOG << buf << endl;
 			
 			// TODO:: 解析HTTP请求并设置好对应的文件总长度和md5
@@ -406,7 +411,7 @@ void read_upload_request(process* process)
 			// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
 			if (content_length > 0)
 			{
-				if (content_length != strlen(param_data))
+				if (content_length != strlen(param_data) + 1)
 				{
 					ERR << "receive data size not same" << endl;
 					BAD_REQUEST
