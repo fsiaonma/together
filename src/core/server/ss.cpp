@@ -58,7 +58,7 @@ int CreateWorker(int nWorker)
 /**
  * [setNonblocking 设置socket非阻塞]
  * @param  fd [socket描述符]
- * @return    [description]
+ * @return    [description]accept_sockaccept_sock
  */
 int setNonblocking(int fd) {
 	int flags;
@@ -275,6 +275,7 @@ void process_events(epoll_event *events, int timer)
 		}
 		handle_request(events[i].data.fd, events[i].events);
 	}
+	// LOG << "pid:" << getpid() << endl;
 }
 
 
@@ -328,13 +329,15 @@ process* accept_sock(int listen_sock) {
 
 	s = setNonblocking(infd);
 	if (s == -1)
+	{
 		abort();
+	}
 
 	event.data.fd = infd;
 	event.events = EPOLLIN;
 	s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
 	if (s == -1) {
-		//ERR << "epoll_ctl error" << endl;
+		ERR << "epoll_ctl error" << endl;
 		abort();
 	}
 	LOG << "Connect from " << inet_ntoa(remote_addr.sin_addr) << ":" << ntohs(remote_addr.sin_port) << ", socket:" << infd << endl;
@@ -422,6 +425,8 @@ int main()
 		listen_socks[i] = listen_sock;
 	}
 
+	CreateWorker(10);
+
 	efd = epoll_create1(0);
 	LOG << "efd:" << efd << endl;
 	if (efd == -1) {
@@ -443,8 +448,6 @@ int main()
 
 
 	events = new epoll_event[MAXEVENTS];
-
-	CreateWorker(10);
 
 	process_events_and_timer(events);
 

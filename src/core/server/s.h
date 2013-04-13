@@ -1,7 +1,10 @@
+#include <atomic>
 #include "../../common/global/global.h"
 #include "../../common/config/config.h"
 #include "../../util/tool/tool.h"
 #include "../../util/log/log.h"
+
+// atomic_int is_accepting(0);
 
 static process processes[MAX_PORCESS];
 static int listen_port[LISTEN_PORT_SIZE];

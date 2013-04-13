@@ -18,10 +18,10 @@ $(TARGET):$(OBJS) $(CCOBJS)
 	g++ $(LDFLAGS) $^ -o $@ $(LIBS)
 
 $(OBJS):%.o:%.cpp
-	g++ -c $(CFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -o $@ $<
+	g++ -c $(CFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -o $@ -std=c++11  $<
 
 $(CCOBJS):%.o:%.cc
-	g++ -c $(CCFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -o $@ $<
+	g++ -c $(CCFLAGS) -MMD -MP -MF"$(@:%.o=%.d)" -o $@  $<
 
 clean:
 	find $(SRC_DIR) -name "*.d" | xargs rm -f
