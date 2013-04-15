@@ -4,6 +4,7 @@
 #include <string.h>
 #include <map>
 #include <list>
+#include <fstream>
 
 #include "../../util/tool/tool.h"
 
@@ -23,9 +24,11 @@ typedef list<SESSION> SESSION_LIST;
 class session {
 	private:
 		SESSION_LIST list;
+		char filename[100];
 	public:
 		session();
 		~session();
-		SESSION set(string uid, string username, string dev_id);
+		string set(string uid, string username, string dev_id);
 		SESSION *get(string sid);
+		int remove(string username);
 };

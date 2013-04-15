@@ -64,31 +64,24 @@ string& Tool::trim(string &s)
     return s;
 }
 
-char *Tool::get_project_path(char * buf, int count)
+char *Tool::get_project_path(int count)
 {
-    int i;
+    string str = "", result = "";
+    char buf[1024];
+
     int rslt = readlink("/proc/self/exe", buf, count - 1);
-    if (rslt < 0 || (rslt >= count - 1))
-    {
+    if (rslt < 0 || (rslt >= count - 1)) {
         return NULL;
     }
-    buf[rslt] = '\0';
-    bool in_project_path = false;
-    for (i = rslt; i >= 0; i--)
-    {
-        if (buf[i] == '/')
-        {
-            if (i > 0 && !in_project_path)
-            {
-                in_project_path = true;
-                continue;
-            }
-            buf[i + 1] = '\0';
-            break;
-        }
+    str = buf;
+    while(str.substr(0, str.find('/')) != "together") {
+        result += str.substr(0, str.find('/') + 1);
+        str = str.erase(0, str.find('/') + 1);
     }
-    printf("project path:%s\n", buf);
-    return buf;
+    result += "together/";
+    char *result_buf = Tool::S2C(result);
+    
+    return result_buf;
 }
 
 int Tool::calc_file_MD5(char *file_name, char *md5_sum)

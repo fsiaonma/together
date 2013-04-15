@@ -34,7 +34,7 @@ public:
 
 	static string md5(string s);
 	static string& trim(string &s);
-	static char *get_project_path(char * buf, int count);
+	static char *get_project_path(int count);
 	static int calc_file_MD5(char *file_name, char *md5_sum);
 	
 	/**

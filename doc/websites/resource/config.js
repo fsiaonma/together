@@ -16,7 +16,10 @@ var list = [{
 },{
     name: 'Protocol Buffer技术详解(语言规范)',
     href: 'http://www.cnblogs.com/stephen-liu74/archive/2013/01/02/2841485.html'
-}{
+},{
     name: 'protobuf 官网',
     href: 'https://developers.google.com/protocol-buffers/'
+},{
+    name: 'how to use fstream',
+    href: 'http://www.cnitblog.com/wufajiaru/archive/2012/06/28/56390.html'
 }];
