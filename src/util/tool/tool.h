@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <iostream>
+#include <vector>
 
 #ifndef STR_VALUE
 #define STR_VALUE(val) #val
@@ -36,6 +37,8 @@ public:
 	static string& trim(string &s);
 	static char *get_project_path(int count);
 	static int calc_file_MD5(char *file_name, char *md5_sum);
+	static string base64_decode(const char* Data);
+	static vector<string> split(string str, string pattern);
 	
 	/**
 	 * [Tool::fromString description]

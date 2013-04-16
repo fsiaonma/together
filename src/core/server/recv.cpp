@@ -318,6 +318,8 @@ void read_upload_request(process* process)
 			char* _buf = process->buf;
 			ssize_t count;
 			string request;
+			int content_length = 0;
+			int other_sign_num = 0;
 			while (1) {
 				count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 				if (count == -1) {
@@ -338,152 +340,177 @@ void read_upload_request(process* process)
 			}
 			LOG << "-----recv-----" << endl;
 			LOG << "from sock:" << process->sock << " type:" << process->type << endl;
-			char* buf = (char *)request.c_str();
-			LOG << buf << endl;
-			
-			// TODO:: 解析HTTP请求并设置好对应的文件总长度和md5
-			#if 1
-			if (!(strncmp(buf, "POST", 4) == 0) ) 
+			int request_len = request.length();
+			for (int i = request_len - 1; i >= 1; i--)
 			{
-				BAD_REQUEST
-				return;
+				if (request[i] == '\0' || request[i] == '\r' || request[i] == '\n') {
+					other_sign_num++;
+					continue;
+				}
+				if (request[i] == '=')
+					request[i] = '+';
+				else
+					break;
 			}
 
-			// 如果首部有Content-Length就解析出来
-			int content_length = -1;
-			char temp[10];
-			char *c = strstr(buf, HEADER_CONTENT_LENGTH);
-			if (c != 0)
+			vector<string> line = Tool::split(request, "\n");
+			int line_size = line.size();
+			int blank_linenum = 0;
+
+			for (int i = 0; i < line_size; i++)
 			{
-			    char *rn = strchr(c, '\r');
-			    if (rn == 0)
-			    {
-			        rn = strchr(c, '\n');
-			        if (rn == 0)
-			        {
-			        	ERR << "not found line break" << endl;
+			    if (line[i] == "" || line[i] == "\r") {
+			        blank_linenum = i;
+			        break;
+			    }
+			}
+			if (blank_linenum == 0) {
+				ERR << "request is null" << endl;
+				BAD_REQUEST
+				return ;
+			}
+			vector<string> prope_list;
+			for (int i = 1; i < blank_linenum; i++)
+			{
+				prope_list = Tool::split(line[i], ": ");
+				if (prope_list[0] == "Content-Length") {
+					if (prope_list.size() == 2) {
+						content_length = Tool::S2I(prope_list[1]);
+						if (content_length < 0)
+						{
+							ERR << "content_length err|" << prope_list[1] << endl;
+							BAD_REQUEST
+							return;
+						}
+					} else {
+						ERR << "prope list size err" << endl;
 						BAD_REQUEST
 						return;
-			        }
-			    }
-			    int l = rn - c - sizeof(HEADER_CONTENT_LENGTH) + 1;
-			    strncpy(temp, c + sizeof(HEADER_CONTENT_LENGTH) - 1, l);
-			    temp[l] = 0;
-				LOG << "Content-Length|" << temp << endl;
-				content_length = atoi(temp);
-			}
-
-			// 解析最后一行
-			char param_data[200];
-			param_data[0] = 0;
-			char *pp = strstr(buf, "\n\n");
-			if (pp == 0)
-			{
-				pp = strstr(buf, "\r\n\r\n");
-			    pp += 4;
-			} else {
-			    pp += 2;
-			}
-			char *end = strchr(pp, '\n');
-			if (end == 0)
-			{
-			    end = strchr(pp, '\0');
-			}
-			int param_len = end - pp;
-			if (param_len > 199)
-			{
-				ERR << "param is too long" << endl;
-				BAD_REQUEST
-				return;
-			}
-			strncpy(param_data, pp, param_len);
-			param_data[param_len] = 0;
-			LOG << "param data|" << param_data << endl;
-
-			// 最后一行长度为0则视为数据出错
-			if (param_len == 0)
-			{
-				ERR << "receive data is null" << endl;
-				BAD_REQUEST
-				return;
-			}
-
-			// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
-			if (content_length > 0)
-			{
-				if (content_length != strlen(param_data) + 1)
-				{
-					ERR << "receive data size not same" << endl;
-					BAD_REQUEST
-					return;
-				} else {
-					LOG << "receive data size same" << endl;
+					}
 				}
 			}
+			LOG << "content_length|" << content_length << endl;
+			LOG << line[blank_linenum + 1] << endl;
 
-			// 解析参数
-			map<string, string> param = parse_param(param_data);
+			if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
+				ERR << "param line is null" << endl;
+				BAD_REQUEST
+				return;
+			}
+			if (content_length > 0)
+			{
+				if (line[blank_linenum + 1].size() + other_sign_num != content_length) {
+					ERR << "content_length not equal" << endl;
+					BAD_REQUEST
+					return;
+				}
+			}
+			// cout << line[blank_linenum + 1] << endl;
+			vector<string> param_list = Tool::split(line[blank_linenum + 1], "&");
+			int param_list_len = param_list.size();
+			map<string, string> param;
+			for (int i = 0; i < param_list_len; i++)
+			{
+			    vector<string> _param = Tool::split(param_list[i], "=");
+			    if (_param.size() == 2)
+			    {
+					if (_param[0] == "md5") {
+						strncpy(process->md5, _param[1].c_str(), 33);
+					} else if (_param[0] == "filedata") {
+						int filedata_len = _param[1].size();
+						for (int j = filedata_len - 1; j >= 1; j--)
+						{
+							if (_param[1][j] == '+')
+								_param[1][j] = '=';
+							else
+								break;
+						}
+					}
+			        LOG << "key,val|" << _param[0] << "|" << _param[1] << endl;
+			        param.insert(pair<string, string>(_param[0], _param[1]));
+			    } else {
+			    	ERR << "_param size err" << endl;
+			    	BAD_REQUEST
+			    	return;
+			    }
+			}
 			if (param.empty())
 			{
 				ERR << "param is null" << endl;
 				BAD_REQUEST
 				return;
 			}
-			#endif
 
-			if (! (param.count("md5") > 0 && param.count("file_size") > 0) )
+			if (! (param.count("md5") > 0 && param.count("filedata") > 0) )
 			{
-				ERR << "md5 or file_size not exist" << endl;
+				ERR << "md5 or filedata not exist" << endl;
 				BAD_REQUEST
 				return;
 			}
 
-			if (!Tool::isNum(param["file_size"]))
-			{
-				ERR << "file_size error|" << param["file_size"] << endl;
-				BAD_REQUEST
-				return;
-			}
-			process->total_length = Tool::S2I(param["file_size"]);
-			// char md5[] = "cefcb8e6d025249ad9156f30c0c7fe8c";
-			strncpy(process->md5, param["md5"].c_str(), 33);
 			if (param.count("suffix"))
 			{
 				strncpy(process->suffix, param["suffix"].c_str(), strlen(param["suffix"].c_str()) + 1);
 			} else {
 				process->suffix[0] = 0;
 			}
-			LOG << "total_length|" << process->total_length << endl;
+
 			LOG << "MD5|" << process->md5 << endl;
 			LOG << "suffix|" << process->suffix << endl;
-			process->status = STATUS_UPLOAD_ONGOING;
-			break;
+
+			string strTmpResult = Tool::base64_decode(param["filedata"].c_str());
+			int len = strTmpResult.length();
+			Config *c = Config::get_instance();
+			map<string, string> config = c->get_config();
+			string filename = config["UPLOAD_PATH"] + param["md5"] + param["suffix"];
+			const char *file_data = strTmpResult.c_str();
+			int write_size = 1024;
+			FILE *file = fopen(filename.c_str(), "a+b"); 
+
+			int neee_to_write;
+			int off = 0;
+			LOG << "file_len|" << len << endl;
+			do
+			{
+			    neee_to_write = ((len - off) < write_size ? (len - off): write_size);
+			    int written = fwrite(&file_data[off], 1, neee_to_write, file);
+			    if (written < 1)
+			    {
+			    	BAD_REQUEST
+			        fclose(file);
+			        return;
+			    }
+			    off += written;
+			}while (off < len);
+			fclose(file); 
+
+			process->status = STATUS_UPLOAD_FINISHED;
 		}
 		case STATUS_UPLOAD_ONGOING:
 		{
-			LOG << "STATUS_UPLOAD_ONGOING" << endl;
-			char file_name[256];
-			Config *c = Config::get_instance();
-			map<string, string> config = c->get_config();
-			sprintf(file_name, "%s%s%s", config["UPLOAD_PATH"].c_str(), process->md5, process->suffix);
-			LOG << "save filename|" << file_name << endl;
-			// const char *file_name = "./test.bmp";
-			s = recv_file(process, file_name);
-			LOG << "recv file " << s << endl;
-			if (s < 0)
-			{
-				// TODO::
-				BAD_REQUEST
-				break;
-			}
-			if (s == process->total_length)
-			{
-				LOG << "recv file finish" << endl;
-				process->status = STATUS_UPLOAD_FINISHED;
-				LOG << process->status << endl;
-			} else {
-				break;
-			}
+			// LOG << "STATUS_UPLOAD_ONGOING" << endl;
+			// char file_name[256];
+			// Config *c = Config::get_instance();
+			// map<string, string> config = c->get_config();
+			// sprintf(file_name, "%s%s%s", config["UPLOAD_PATH"].c_str(), process->md5, process->suffix);
+			// LOG << "save filename|" << file_name << endl;
+			// // const char *file_name = "./test.bmp";
+			// s = recv_file(process, file_name);
+			// LOG << "recv file " << s << endl;
+			// if (s < 0)
+			// {
+			// 	// TODO::
+			// 	BAD_REQUEST
+			// 	break;
+			// }
+			// if (s == process->total_length)
+			// {
+			// 	LOG << "recv file finish" << endl;
+			// 	process->status = STATUS_UPLOAD_FINISHED;
+			// 	LOG << process->status << endl;
+			// } else {
+			// 	break;
+			// }
 		}
 		case STATUS_UPLOAD_FINISHED:
 		{
