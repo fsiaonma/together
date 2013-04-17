@@ -354,7 +354,6 @@ process* accept_sock(int listen_sock) {
 	}
 	process->sock = infd;
     process->fd = NO_FILE;
-    process->total_length = 0;
     memset(process->md5, 0, sizeof(char) * MD5_LEN + 1); 
     memset(process->suffix, 0, 8); 
 	if (process->type == LISTEN_UPLOAD_REQ_TYPE)
@@ -425,7 +424,7 @@ int main()
 		listen_socks[i] = listen_sock;
 	}
 
-	// CreateWorker(10);
+	CreateWorker(10);
 
 	efd = epoll_create1(0);
 	LOG << "efd:" << efd << endl;

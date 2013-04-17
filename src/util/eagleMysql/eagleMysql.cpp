@@ -42,7 +42,8 @@ int eagleMysql::insert(string table, PARAMLIST list) {
     PARAMLIST::iterator ptr;
 
     ptr = list.begin();
-    for (int i = 0; i < list.size() - 1; ++i) {
+    int size = list.size();
+    for (int i = 0; i < size - 1; ++i) {
         keys += ptr->key + ", ";
         values += "'" + ptr->value + "'" + ", ";
         ++ptr;
@@ -95,7 +96,8 @@ int eagleMysql::update(string table, PARAMLIST list, string condition) {
 
     string sql = "update " + table + " set ";
     ptr = list.begin();
-    for (int i = 0; i < list.size() - 1; ++i) {
+    int size = list.size();
+    for (int i = 0; i < size - 1; ++i) {
         sql += ptr->key + "=" + "'" + ptr->value + "', ";
         ++ptr;
     }

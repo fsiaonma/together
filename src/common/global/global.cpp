@@ -36,12 +36,13 @@ int get_index_file(char *filename_buf, struct stat *pstat) {
 }
 
 int get_module_type(char *req) {
-	// TODO::
-	if (USER_MODULE == 100) {
-		return USER_MODULE;
-	} else if (ROOM_MODULE == 200) {
-		return ROOM_MODULE;
+	int ret = UNKNOWN_MODULE;
+	if (strcmp(req, "USER") == 0) {
+		ret = USER_MODULE;
+	} else if (strcmp(req, "ROOM") == 0) {
+		ret = ROOM_MODULE;
 	}
+	return ret;
 }
 
 void time_update()

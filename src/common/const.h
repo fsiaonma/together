@@ -4,7 +4,7 @@
 
 #ifndef header_200_start
 #define header_200_start "HTTP/1.1 200 OK\r\n" \
-"Content-Type: image/bmp\r\n"
+"Content-Type: text/html\r\n"
 #endif
 
 #ifndef header_400
@@ -80,10 +80,10 @@ const int STATUS_HANDLE_READ_REQUEST = 2;
 const int STATUS_SEND_RESPONSE_HEADER = 3;
 const int STATUS_SEND_RESPONSE = 4;
 const int STATUS_UPLOAD_READY = 5;
-const int STATUS_UPLOAD_ONGOING = 6;
-const int STATUS_UPLOAD_FINISHED = 7;
+const int STATUS_UPLOAD_FINISHED = 6;
 
 // 功能模块的标识码
+const int UNKNOWN_MODULE = 99;
 const int USER_MODULE = 100;
 const int ROOM_MODULE = 200;
 

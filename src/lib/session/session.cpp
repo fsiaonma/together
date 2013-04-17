@@ -17,7 +17,7 @@ session::session() {
     while(!i_file.eof()) {
         getline(i_file, out_text);
         if (out_text != "") {
-        	while (out_text.find('/') != -1) {
+        	while ((int)out_text.find('/') != -1) {
         		key = out_text.substr(0, out_text.find(':'));
         		out_text = out_text.erase(0, out_text.find(':') + 1);
         		value = out_text.substr(0, out_text.find('/'));

@@ -20,7 +20,7 @@ extern epoll_event event;
 extern int current_total_processes;
 
 struct process {
-	static const int kBufferSize = 4024;
+	static const int kBufferSize = 1024;
 	int sock;
 	int status;
 	int response_code;
@@ -30,7 +30,7 @@ struct process {
 	int total_length;
 	char buf[kBufferSize];
 	char md5[MD5_LEN + 1];
-	char suffix[8];
+	char suffix[11];
 	int type;
 };
 

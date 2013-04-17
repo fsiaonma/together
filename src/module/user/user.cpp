@@ -15,7 +15,7 @@ const char *regiest(string username, string password) {
 
     do {
         LOG << "regiest params: username is " << username << " password is " << password << endl;
-        if (username.empty() || password.empty()) {
+        if (Tool::trim(username).empty() || Tool::trim(password).empty()) {
             http_res->set_code(PARAM_ERROR);
             http_res->set_success(0);
             msg = "username or password is null";
@@ -99,17 +99,33 @@ const char *login(string username, string password) {
 
 int user_handler(process *process, map<string, string> param) {
 	const char *response_data;
+    if (param.count("action") == 0) {
+        ERR << "action type is not exist" << endl;
+        return -1;
+    }
     int action_type = atoi(param["action"].c_str());
     LOG << "action_type: " << action_type << endl;
     switch (action_type) {
     	case USER_REGIEST: {
+            if (param.count("username") == 0 || param.count("password") == 0) {
+                ERR << "username or password is not exist" << endl;
+                return -1;
+            }
     	    response_data = regiest(param["username"], param["password"]);
     	    break ;
     	}
     	case USER_LOGIN: {
+            if (param.count("username") == 0 || param.count("password") == 0) {
+                ERR << "username or password is not exist" << endl;
+                return -1;
+            }
     		response_data = login(param["username"], param["password"]);
     		break ;
     	}
+        default: {
+            ERR << "action type err" << endl;
+            return -1;
+        }
     }
     LOG << "length:" << strlen(response_data) << endl;
 

@@ -1,5 +1,10 @@
 #include "tool.h"
 
+/**
+ * [Tool::isNum description]
+ * @param  str [description]
+ * @return     [description]
+ */
 bool Tool::isNum(string str)
 {
     stringstream sin(str);
@@ -12,6 +17,12 @@ bool Tool::isNum(string str)
     return true;
 }
 
+/**
+ * [Tool::S2I description]
+ * @param  num         [description]
+ * @param  default_val [description]
+ * @return             [description]
+ */
 int Tool::S2I(string num, int default_val)
 {
 	if (isNum(num)) {
@@ -21,6 +32,11 @@ int Tool::S2I(string num, int default_val)
 	}
 }
 
+/**
+ * [Tool::L2S description]
+ * @param  num [description]
+ * @return     [description]
+ */
 string Tool::L2S(long num) {
     stringstream ss;
     string result = ""; 
@@ -29,6 +45,11 @@ string Tool::L2S(long num) {
     return result;
 }
 
+/**
+ * [Tool::S2C description]
+ * @param  str [description]
+ * @return     [description]
+ */
 char *Tool::S2C(string str) {
     const char *str_tmp = str.c_str();
     char *buf = new char[strlen(str_tmp) + 1];
@@ -36,6 +57,12 @@ char *Tool::S2C(string str) {
     return buf;
 }
 
+
+/**
+ * [Tool::md5 description]
+ * @param  s [description]
+ * @return   [description]
+ */
 string Tool::md5(string s) {
     char md5_sum[33];
     string ss = "printf '" + s + "' | md5sum | cut -d ' ' -f1";
@@ -54,6 +81,12 @@ string Tool::md5(string s) {
         return "";
 }
 
+
+/**
+ * [Tool::trim description]
+ * @param  s [description]
+ * @return   [description]
+ */
 string& Tool::trim(string &s) 
 {
     if (s.empty()) {
@@ -64,6 +97,11 @@ string& Tool::trim(string &s)
     return s;
 }
 
+/**
+ * [Tool::get_project_path description]
+ * @param  count [description]
+ * @return       [description]
+ */
 char *Tool::get_project_path(int count)
 {
     string str = "", result = "";
@@ -84,6 +122,12 @@ char *Tool::get_project_path(int count)
     return result_buf;
 }
 
+/**
+ * [Tool::calc_file_MD5 description]
+ * @param  file_name [description]
+ * @param  md5_sum   [description]
+ * @return           [description]
+ */
 int Tool::calc_file_MD5(char *file_name, char *md5_sum)
 {
     #define MD5SUM_CMD_FMT "md5sum %." STR(PATH_LEN) "s 2>/dev/null"
@@ -104,6 +148,12 @@ int Tool::calc_file_MD5(char *file_name, char *md5_sum)
     return i == 32;
 }
 
+
+/**
+ * [Tool::base64_decode description]
+ * @param  Data [description]
+ * @return      [description]
+ */
 string Tool::base64_decode(const char* Data)
 {
     //解码表
@@ -131,16 +181,16 @@ string Tool::base64_decode(const char* Data)
     {
         if (*Data != '\r' && *Data!='\n')
         {
-            nValue = DecodeTable[*Data++] << 18;
-            nValue += DecodeTable[*Data++] << 12;
+            nValue = DecodeTable[(int)(*Data++)] << 18;
+            nValue += DecodeTable[(int)(*Data++)] << 12;
             strDecode+=(nValue & 0x00FF0000) >> 16;
             if (*Data != '=')
             {
-                nValue += DecodeTable[*Data++] << 6;
+                nValue += DecodeTable[(int)(*Data++)] << 6;
                 strDecode+=(nValue & 0x0000FF00) >> 8;
                 if (*Data != '=')
                 {
-                    nValue += DecodeTable[*Data++];
+                    nValue += DecodeTable[(int)(*Data++)];
                     strDecode+=nValue & 0x000000FF;
                 }
             }
@@ -155,6 +205,9 @@ string Tool::base64_decode(const char* Data)
     return strDecode;
 }
 
+/**
+ * 
+ */
 vector<string> Tool::split(string str, string pattern)
 {
     string::size_type pos;
@@ -162,14 +215,14 @@ vector<string> Tool::split(string str, string pattern)
     str+=pattern;//扩展字符串以方便操作
     int size=str.size();
  
-    for(int i=0; i<size; i++)
+    for(int i=0; i < size; i++)
     {
-        pos=str.find(pattern, i);
-        if(pos < size)
+        pos = str.find(pattern, i);
+        if((int)pos < size)
         {
-            string s=str.substr(i, pos - i);
+            string s = str.substr(i, pos - i);
             result.push_back(s);
-            i=pos + pattern.size() - 1;
+            i = pos + pattern.size() - 1;
         }
     }
     return result;
