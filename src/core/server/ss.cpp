@@ -37,7 +37,7 @@ int CreateWorker(int nWorker)
                 }
                 else
                 {
-                    LOG_DEBUG << "fork error: " << strerror(errno) << endl;
+                    LOG_ERROR << "fork error: " << strerror(errno) << endl;
                     return -1;
                 }
             }

@@ -31,10 +31,7 @@ public:
     Logger(enLogLevel level, const char* file, const char* func, int line)
     {
         lvl = level;
-        oss << getpid() << "|" << LogLevel[level] << "|" << file << "|";
-        if (lvl > 2)
-        	oss << func << "|";
-        oss << line << "|" << get_now_time() << "|";
+        oss << getpid() << "|" << LogLevel[level] << "|" << file << "|" << func << "|" << line << "|" << get_now_time() << "|";
     }
     ~Logger()
     {

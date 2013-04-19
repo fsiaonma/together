@@ -18,7 +18,7 @@ void cleanup(process *process) {
 	if (process->fd != -1) {
 		s = close(process->fd);
 		if (s == NO_FILE) {
-			LOG_ERROR << "fd: " << process->fd << " close file LOG_ERRORor" << endl;
+			LOG_ERROR << "fd: " << process->fd << " close file error" << endl;
 		}
 	}
 	process->sock = NO_SOCK;
@@ -31,14 +31,14 @@ void cleanup(process *process) {
 }
 
 /**
- * [handle_LOG_ERRORor socket出错时的处理]
+ * [handle_error socket出错时的处理]
  * @param process      [process对象]
- * @param LOG_ERRORor_string [错误字符串]
+ * @param error_string [错误字符串]
  */
-void handle_error(process* process, const char* LOG_ERRORor_string) {
+void handle_error(process* process, const char* error_string) {
 	del_timer(process->sock);
 	cleanup(process);
-	LOG_ERROR << LOG_ERRORor_string << endl;
+	LOG_ERROR << error_string << endl;
 }
 
 /**
