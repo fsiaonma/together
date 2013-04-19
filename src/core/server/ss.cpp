@@ -33,11 +33,11 @@ int CreateWorker(int nWorker)
                 else if (0 == nPid)
                 {
                     bIsChild = 1;
-                    printf("create worker %d success!\n", getpid());
+                    LOG_DEBUG << "create worker " << getpid() << " success!" << endl;
                 }
                 else
                 {
-                    printf("fork error: %s\n", strerror(errno));
+                    LOG_DEBUG << "fork error: " << strerror(errno) << endl;
                     return -1;
                 }
             }
@@ -155,7 +155,7 @@ static int create_and_bind(int port) {
 
 	s = getaddrinfo(NULL, _port, &hints, &result);
 	if (s != 0) {
-		ERR << "getaddrinfo: " << gai_strerror(s) << endl;
+		LOG_ERROR << "getaddrinfo: " << gai_strerror(s) << endl;
 		return -1;
 	}
 
@@ -168,7 +168,7 @@ static int create_and_bind(int port) {
 
 		s = bind(listen_sock, rp->ai_addr, rp->ai_addrlen);
 		if (s == 0) {
-			LOG << port << "|" << listen_sock << "|" << "bind successfully!" << endl;
+			LOG_INFO << port << "|" << listen_sock << "|" << "bind successfully!" << endl;
 			break;
 		}
 
@@ -176,7 +176,7 @@ static int create_and_bind(int port) {
 	}
 
 	if (rp == NULL) {
-		ERR << "Could not bind" << endl;
+		LOG_ERROR << "Could not bind" << endl;
 		return -1;
 	}
 
@@ -210,7 +210,7 @@ void process_events_and_timer(epoll_event *events)
 	{
 		long delta;
 		long timer = find_timer(current_msec, keepalive_timeout);
-		//LOG << "timer:" << timer << endl;
+		//LOG_INFO << "timer:" << timer << endl;
 		delta = current_msec;
 		process_events(events, timer);
 		delta = current_msec - delta;
@@ -230,7 +230,7 @@ void expire_timeout_sock()
 	for (iter = timeSet.begin(); iter != timeSet.end(); iter++)
     {
     	long interval = current_msec - iter->getActiveTime();
-    	LOG << "sock:" << iter->getSock() << ", interval:" << interval << endl;
+    	LOG_INFO << "sock:" << iter->getSock() << ", interval:" << interval << endl;
     	if (interval < keepalive_timeout)
     	{
     		break;
@@ -258,7 +258,7 @@ void process_events(epoll_event *events, int timer)
 	n = epoll_wait(efd, events, MAXEVENTS, timer);
 	if (n == -1) 
 	{
-		ERR << "epoll_wait error" << endl;
+		LOG_ERROR << "epoll_wait error" << endl;
 		return ;
 	}
 	// update time
@@ -269,13 +269,13 @@ void process_events(epoll_event *events, int timer)
 		if (( events[i].events & EPOLLERR) ||
 			(events[i].events & EPOLLHUP)) 
 		{
-			ERR << "epoll error|" << events[i].data.fd << endl;
+			LOG_ERROR << "epoll error|" << events[i].data.fd << endl;
 			close(events[i].data.fd);
 			continue;
 		}
 		handle_request(events[i].data.fd, events[i].events);
 	}
-	// LOG << "pid:" << getpid() << endl;
+	// LOG_INFO << "pid:" << getpid() << endl;
 }
 
 
@@ -318,7 +318,7 @@ process* accept_sock(int listen_sock) {
 	in_len = sizeof(struct sockaddr_in);
 	infd = accept(listen_sock, (sockaddr *)&remote_addr, &in_len);
 	if (infd == -1) {
-		ERR << "accept error" << endl;
+		LOG_WARN << "accept error" << endl;
 		return NULL;
 	}
 
@@ -337,10 +337,10 @@ process* accept_sock(int listen_sock) {
 	event.events = EPOLLIN;
 	s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
 	if (s == -1) {
-		ERR << "epoll_ctl error" << endl;
+		LOG_ERROR << "epoll_ctl error" << endl;
 		abort();
 	}
-	LOG << listen_sock << "|Connect from " << inet_ntoa(remote_addr.sin_addr) << ":" << ntohs(remote_addr.sin_port) << ", socket:" << infd << endl;
+	LOG_INFO << listen_sock << "|Connect from " << inet_ntoa(remote_addr.sin_addr) << ":" << ntohs(remote_addr.sin_port) << ", socket:" << infd << endl;
 	process* process = find_empty_process_for_sock(infd);
 	current_total_processes++;
 	reset_process(process);
@@ -355,7 +355,7 @@ process* accept_sock(int listen_sock) {
 	process->sock = infd;
     process->fd = NO_FILE;
     memset(process->md5, 0, sizeof(char) * MD5_LEN + 1); 
-    memset(process->suffix, 0, 8); 
+    memset(process->suffix, 0, 11); 
 	if (process->type == LISTEN_UPLOAD_REQ_TYPE)
 	{
 		process->status = STATUS_UPLOAD_READY;
@@ -399,7 +399,7 @@ int main()
 	int s;
 	s = iniConfig();
 	if (s == -1) {
-		ERR << "init config error!" << endl;
+		LOG_ERROR << "init config error!" << endl;
 		abort();
 	}
 	epoll_event *events;
@@ -412,13 +412,13 @@ int main()
 
 		s = setNonblocking(listen_sock);
 		if (s == -1) {
-			ERR << "setNonblocking error!" << endl;
+			LOG_ERROR << "setNonblocking error!" << endl;
 			abort();
 		}
 
 		s = listen(listen_sock, SOMAXCONN);
 		if (s == -1) {
-			ERR << "listen error!" << endl;
+			LOG_ERROR << "listen error!" << endl;
 			abort();
 		}
 		listen_socks[i] = listen_sock;
@@ -427,9 +427,9 @@ int main()
 	CreateWorker(10);
 
 	efd = epoll_create1(0);
-	LOG << "efd:" << efd << endl;
+	LOG_DEBUG << "efd:" << efd << endl;
 	if (efd == -1) {
-		ERR << "epoll create error!" << endl;
+		LOG_ERROR << "epoll create error!" << endl;
 		abort();
 	}
 
@@ -440,7 +440,7 @@ int main()
 		event.events = EPOLLIN;
 		s = epoll_ctl(efd, EPOLL_CTL_ADD, listen_sock, &event);
 		if (s == -1) {
-			ERR << "epoll_ctl error" << endl;
+			LOG_ERROR << "epoll_ctl error" << endl;
 			abort();
 		}
 	}

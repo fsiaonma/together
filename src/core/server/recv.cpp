@@ -38,7 +38,7 @@
  	map<string, string>::iterator it;
  	for (it = m.begin(); it != m.end(); it++)
  	{
- 		LOG << "key:" << it->first << "|val:" << it->second << endl;
+ 		LOG_INFO << "key:" << it->first << "|val:" << it->second << endl;
  	}
  	return m;
  }
@@ -50,7 +50,7 @@
  * @param param   [保存了请求中参数及其对应的值,map<string, string>]
  */
  void handle_read_request(process *process, char *module, map<string, string> param) {
- 	LOG << "handle_read_request" << endl;
+ 	LOG_INFO << "handle_read_request" << endl;
  	int module_type = get_module_type(module);
  	int s;
 
@@ -59,7 +59,7 @@
  		{	
  			s = user_handler(process, param);
  			if (s == -1) {
- 				ERR << "user_handler err" << endl;
+ 				LOG_ERROR << "user_handler err" << endl;
 	 			BAD_REQUEST
 	 			return;
  			}
@@ -72,7 +72,7 @@
  		}
  		default:
  		{
- 			ERR << "module_type err|" << module_type << endl;
+ 			LOG_ERROR << "module_type err|" << module_type << endl;
  			BAD_REQUEST
  			return;
  		}
@@ -84,11 +84,11 @@
  	event.events = EPOLLOUT;
  	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
  	if (s == -1) {
- 		ERR << "epoll_ctl error" << endl;
+ 		LOG_ERROR << "epoll_ctl error" << endl;
  		abort();
  	}
- 	LOG << "------send header------" << endl;
- 	LOG << process->buf << endl;
+ 	LOG_INFO << "------send header------" << endl;
+ 	LOG_INFO << process->buf << endl;
  }
 
 
@@ -110,7 +110,7 @@
  			break;
  		} else if (count == 0) {
 	    	// 被客户端关闭连接
- 			LOG << "client " << process->sock << " close connection" << endl;
+ 			LOG_INFO << "client " << process->sock << " close connection" << endl;
  			del_timer(process->sock);
  			cleanup(process);
  			return;
@@ -120,10 +120,10 @@
  	}
 
  	int header_length = process->read_pos;
- 	LOG << "-----recv-----" << endl;
- 	LOG << "from sock:" << process->sock << " type:" << process->type << endl;
+ 	LOG_INFO << "-----recv-----" << endl;
+ 	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
  	buf[header_length]=0;
- 	LOG << buf << endl;
+ 	LOG_INFO << buf << endl;
   	// 请求超长，不处理了
  	if (header_length > process->kBufferSize - 1) {
  		BAD_REQUEST
@@ -139,7 +139,7 @@
  		if (strncmp(buf, "POST", 4) == 0) {
  			format_pos = 4;
  		}
- 		LOG << "format_pos|" << format_pos << endl;
+ 		LOG_INFO << "format_pos|" << format_pos << endl;
  		if (format_pos < 0)
  		{
  			BAD_REQUEST
@@ -150,7 +150,7 @@
  		const char *n_loc = strchr(buf, '\n');
  		const char *space_loc = strchr(buf + format_pos + 1, ' ');
  		if (n_loc <= space_loc) {
- 			ERR << "read first line error" << endl;
+ 			LOG_ERROR << "read first line error" << endl;
  			BAD_REQUEST
  			return;
  		}
@@ -160,7 +160,7 @@
  		int module_len = space_loc - buf - (format_pos + 2);
  		strncpy(module, buf + (format_pos + 2), module_len);
  		module[module_len] = 0;
- 		LOG << "module name|" << module << endl;
+ 		LOG_INFO << "module name|" << module << endl;
 
 
 		// 如果首部有Content-Length就解析出来
@@ -175,7 +175,7 @@
  				rn = strchr(c, '\n');
  				if (rn == 0)
  				{
- 					ERR << "not found line break" << endl;
+ 					LOG_ERROR << "not found line break" << endl;
  					BAD_REQUEST
  					return;
  				}
@@ -183,7 +183,7 @@
  			int l = rn - c - sizeof(HEADER_CONTENT_LENGTH) + 1;
  			strncpy(temp, c + sizeof(HEADER_CONTENT_LENGTH) - 1, l);
  			temp[l] = 0;
- 			LOG << "Content-Length|" << temp << endl;
+ 			LOG_INFO << "Content-Length|" << temp << endl;
  			content_length = atoi(temp);
  		}
 
@@ -206,19 +206,19 @@
  		int param_len = end - pp;
  		if (param_len > 199)
  		{
- 			ERR << "param is too long" << endl;
+ 			LOG_ERROR << "param is too long" << endl;
  			BAD_REQUEST
  			return;
  		}
  		strncpy(param_data, pp, param_len);
  		param_data[param_len] = 0;
 
- 		LOG << "param data|" << param_data << endl;
+ 		LOG_INFO << "param data|" << param_data << endl;
 
 		// 最后一行长度为0则视为数据出错
  		if (param_len == 0)
  		{
- 			ERR << "receive data is null" << endl;
+ 			LOG_ERROR << "receive data is null" << endl;
  			BAD_REQUEST
  			return;
  		}
@@ -228,11 +228,11 @@
  		{
  			if (content_length != (int)strlen(param_data) + 1)
  			{
- 				ERR << "receive data size not same" << endl;
+ 				LOG_ERROR << "receive data size not same" << endl;
  				BAD_REQUEST
  				return;
  			} else {
- 				LOG << "receive data size same" << endl;
+ 				LOG_INFO << "receive data size same" << endl;
  			}
  		}
 
@@ -240,7 +240,7 @@
  		map<string, string> param = parse_param(param_data);
  		if (param.empty())
  		{
- 			ERR << "param is null" << endl;
+ 			LOG_ERROR << "param is null" << endl;
  			BAD_REQUEST
  			return;
  		}
@@ -266,7 +266,7 @@
  	FILE *file = fopen(filename, "a+b"); 
  	if (!file)
  	{
- 		ERR << "Can't open file for writing" << endl;
+ 		LOG_ERROR << "Can't open file for writing" << endl;
  		return -1;
  	}
 
@@ -276,7 +276,7 @@
  		if (rval < 0)
  		{
  			if (errno != EAGAIN) {
- 				ERR << "Can't read from socket" << "|" << rval << "|" << errno << endl;
+ 				LOG_ERROR << "Can't read from socket" << "|" << rval << "|" << errno << endl;
  				fclose(file);
  				return -1;
  			} else {
@@ -293,7 +293,7 @@
  			int written = fwrite(&buf[off], 1, rval - off, file);
  			if (written < 1)
  			{
- 				ERR << "Can't write to file" << endl;
+ 				LOG_ERROR << "Can't write to file" << endl;
  				fclose(file);
  				return read_total;
  			}
@@ -314,12 +314,12 @@
 void read_upload_request(process* process)
 {
 	int s;
-	LOG << "RECV|" << process->status << endl;
+	LOG_INFO << "RECV|" << process->status << endl;
 	switch(process->status)
 	{
 		case STATUS_UPLOAD_READY:
 		{
-			LOG << "STATUS_UPLOAD_READY" << endl;
+			LOG_INFO << "STATUS_UPLOAD_READY" << endl;
 			int sock = process->sock;
 			char* _buf = process->buf;
 			ssize_t count;
@@ -337,16 +337,16 @@ void read_upload_request(process* process)
 					process->read_pos += count;
 					_buf[process->read_pos] = 0;
 					request.append(_buf);
-					LOG << _buf << endl;
-					LOG << "process->read_pos|" << process->read_pos << endl;
+					LOG_INFO << _buf << endl;
+					LOG_INFO << "process->read_pos|" << process->read_pos << endl;
 					if (process->read_pos == process->kBufferSize)
 					{
 						process->read_pos = 0;
 					}
 				}
 			}
-			LOG << "-----recv-----" << endl;
-			LOG << "from sock:" << process->sock << " type:" << process->type << endl;
+			LOG_INFO << "-----recv-----" << endl;
+			LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
 			int request_len = request.length();
 			// 将最后的等号替换成+，方便之后截取
 			for (int i = request_len - 1; i >= 1; i--)
@@ -375,7 +375,7 @@ void read_upload_request(process* process)
 			    }
 			}
 			if (blank_linenum == 0) {
-				ERR << "request is null" << endl;
+				LOG_ERROR << "request is null" << endl;
 				BAD_REQUEST
 				return ;
 			}
@@ -390,23 +390,23 @@ void read_upload_request(process* process)
 						content_length = Tool::S2I(prope_list[1]);
 						if (content_length < 0)
 						{
-							ERR << "content_length err|" << prope_list[1] << endl;
+							LOG_ERROR << "content_length err|" << prope_list[1] << endl;
 							BAD_REQUEST
 							return;
 						}
 					} else {
-						ERR << "prope list size err" << endl;
+						LOG_ERROR << "prope list size err" << endl;
 						BAD_REQUEST
 						return;
 					}
 				}
 			}
-			LOG << "content_length|" << content_length << endl;
-			LOG << line[blank_linenum + 1] << endl;
+			LOG_INFO << "content_length|" << content_length << endl;
+			LOG_INFO << line[blank_linenum + 1] << endl;
 
 			// 判断空行下一行(即具体参数那行)是否为空
 			if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
-				ERR << "param line is null" << endl;
+				LOG_ERROR << "param line is null" << endl;
 				BAD_REQUEST
 				return;
 			}
@@ -415,7 +415,7 @@ void read_upload_request(process* process)
 			if (content_length > 0)
 			{
 				if ((int)line[blank_linenum + 1].size() + other_sign_num != content_length) {
-					ERR << "content_length not equal" << endl;
+					LOG_ERROR << "content_length not equal" << endl;
 					BAD_REQUEST
 					return;
 				}
@@ -442,10 +442,10 @@ void read_upload_request(process* process)
 								break;
 						}
 					}
-			        LOG << "key,val|" << _param[0] << "|" << _param[1] << endl;
+			        LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
 			        param.insert(pair<string, string>(_param[0], _param[1]));
 			    } else {
-			    	ERR << "_param size err" << endl;
+			    	LOG_ERROR << "_param size err" << endl;
 			    	BAD_REQUEST
 			    	return;
 			    }
@@ -454,7 +454,7 @@ void read_upload_request(process* process)
 			// 如果参数为空
 			if (param.empty())
 			{
-				ERR << "param is null" << endl;
+				LOG_ERROR << "param is null" << endl;
 				BAD_REQUEST
 				return;
 			}
@@ -464,7 +464,7 @@ void read_upload_request(process* process)
 			// md5参数校验
 			if (! (param.count("md5") > 0 && param["md5"].length() == 32) )
 			{
-				ERR << "md5 err" << endl;
+				LOG_ERROR << "md5 err" << endl;
 				BAD_REQUEST
 				return;
 			}
@@ -472,7 +472,7 @@ void read_upload_request(process* process)
 			// 如果没有filedata参数
 			if (! (param.count("filedata") > 0) )
 			{
-				ERR << "filedata not exist" << endl;
+				LOG_ERROR << "filedata not exist" << endl;
 				BAD_REQUEST
 				return;
 			}
@@ -482,7 +482,7 @@ void read_upload_request(process* process)
 			{
 				if (param["suffix"].length() > 10)
 				{
-					ERR << "suffix too long" << endl;
+					LOG_ERROR << "suffix too long" << endl;
 					BAD_REQUEST
 					return;
 				}
@@ -491,8 +491,8 @@ void read_upload_request(process* process)
 				process->suffix[0] = 0;
 			}
 
-			LOG << "MD5|" << process->md5 << endl;
-			LOG << "suffix|" << process->suffix << endl;
+			LOG_INFO << "MD5|" << process->md5 << endl;
+			LOG_INFO << "suffix|" << process->suffix << endl;
 
 			// base64解码得到文件内容
 			string strTmpResult = Tool::base64_decode(param["filedata"].c_str());
@@ -508,7 +508,7 @@ void read_upload_request(process* process)
 
 			int neee_to_write;
 			int off = 0;
-			LOG << "file_len|" << len << endl;
+			LOG_INFO << "file_len|" << len << endl;
 			do
 			{
 			    neee_to_write = ((len - off) < write_size ? (len - off): write_size);
@@ -527,9 +527,9 @@ void read_upload_request(process* process)
 		}
 		case STATUS_UPLOAD_FINISHED:
 		{
-			LOG << "STATUS_UPLOAD_FINISHED" << endl;
+			LOG_INFO << "STATUS_UPLOAD_FINISHED" << endl;
 			// TODO::保存文件成功,之后判断接收到的文件MD5与预期的是否一样,一样的话就写入数据库.返回响应信息
-			LOG << "save file succ!" << endl;
+			LOG_INFO << "save file succ!" << endl;
 			char md5[MD5_LEN + 1];
 			char file_name[256];
 			Config *c = Config::get_instance();
@@ -538,11 +538,11 @@ void read_upload_request(process* process)
 			// 保存的文件的MD5
 			if (Tool::calc_file_MD5(file_name, md5))
 			{
-				LOG << "Calc Success! MD5 sum :" << md5 << endl;
+				LOG_INFO << "Calc Success! MD5 sum :" << md5 << endl;
 				// MD5一致
 				if (strcmp(md5, process->md5) == 0)
 				{
-					LOG << "Success! MD5 sum is consistent" << endl;
+					LOG_INFO << "Success! MD5 sum is consistent" << endl;
 					process->response_code = 200;
 					memset(process->buf, 0, sizeof(char) * process->kBufferSize); 
 					process->buf[0] = 0;
@@ -557,17 +557,17 @@ void read_upload_request(process* process)
 					event.events = EPOLLOUT;
 					s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 					if (s == -1) {
-						ERR << "epoll_ctl error" << endl;
+						LOG_ERROR << "epoll_ctl error" << endl;
 						abort();
 					}
 				} else {
 					// MD5不一致
-					ERR << "Fail! MD5 sum is inconsistent" << endl;
+					LOG_ERROR << "Fail! MD5 sum is inconsistent" << endl;
 					BAD_REQUEST
 				}
 			} else {
     			// TODO::计算MD5失败
-				ERR << "Calc MD5 ERROR" << endl;
+				LOG_ERROR << "Calc MD5 err" << endl;
 				BAD_REQUEST
 			}
 			process->status = STATUS_UPLOAD_READY;
@@ -604,10 +604,10 @@ void read_tcp_request(process* process)
 		}
 	}
 	int header_length = process->read_pos;
-	LOG << "-----recv-----" << endl;
-	LOG << "from sock:" << process->sock << " type:" << process->type << endl;
+	LOG_INFO << "-----recv-----" << endl;
+	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
 	buf[header_length]=0;
-	LOG << buf << endl;
+	LOG_INFO << buf << endl;
   	// 请求超长，不处理了
 	if (header_length > process->kBufferSize - 1) {
 		BAD_REQUEST

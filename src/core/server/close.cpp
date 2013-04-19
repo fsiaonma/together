@@ -5,20 +5,20 @@
  * @param process [process对象]
  */
 void cleanup(process *process) {
-	LOG << "cleanup" << endl;
+	LOG_INFO << "cleanup" << endl;
 	int s;
 	if (process->sock != NO_SOCK) {
-		LOG << "close sock:" << process->sock << endl;
+		LOG_INFO << "close sock:" << process->sock << endl;
 		s = close(process->sock);
 		current_total_processes--;
 		if (s == NO_SOCK) {
-			ERR << "close sock" << endl;
+			LOG_ERROR << "close sock" << endl;
 		}
 	}
 	if (process->fd != -1) {
 		s = close(process->fd);
 		if (s == NO_FILE) {
-			ERR << "fd: " << process->fd << " close file error" << endl;
+			LOG_ERROR << "fd: " << process->fd << " close file LOG_ERRORor" << endl;
 		}
 	}
 	process->sock = NO_SOCK;
@@ -26,18 +26,19 @@ void cleanup(process *process) {
 	process->type = NO_TYPE;
 	process->status = NO_STATUS;
 	memset(process->md5, 0, sizeof(char) * MD5_LEN + 1); 
+    memset(process->suffix, 0, 11); 
 	reset_process(process);
 }
 
 /**
- * [handle_error socket出错时的处理]
+ * [handle_LOG_ERRORor socket出错时的处理]
  * @param process      [process对象]
- * @param error_string [错误字符串]
+ * @param LOG_ERRORor_string [错误字符串]
  */
-void handle_error(process* process, const char* error_string) {
+void handle_error(process* process, const char* LOG_ERRORor_string) {
 	del_timer(process->sock);
 	cleanup(process);
-	ERR << error_string << endl;
+	LOG_ERROR << LOG_ERRORor_string << endl;
 }
 
 /**

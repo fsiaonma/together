@@ -6,7 +6,7 @@
  * @param process [description]
  */
 void send_response_header(process *process) {
-	LOG << "send" << endl;
+	LOG_INFO << "send" << endl;
 	if (process->response_code != 200) {
     	// 非 200 不进入 send_response
 		send(process->sock, process->buf, strlen(process->buf), 0);  

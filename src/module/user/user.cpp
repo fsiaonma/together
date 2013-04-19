@@ -14,12 +14,12 @@ const char *regiest(string username, string password) {
     string msg;
 
     do {
-        LOG << "regiest params: username is " << username << " password is " << password << endl;
+        LOG_INFO << "regiest params: username is " << username << " password is " << password << endl;
         if (Tool::trim(username).empty() || Tool::trim(password).empty()) {
             http_res->set_code(PARAM_ERROR);
             http_res->set_success(0);
             msg = "username or password is null";
-            ERR << msg << endl;
+            LOG_ERROR << msg << endl;
             break;
         }
         Config *c = Config::get_instance();
@@ -35,14 +35,14 @@ const char *regiest(string username, string password) {
             http_res->set_code(DB_ERROR);
             http_res->set_success(0);
             msg = "DB ERROR|" + Tool::toString(ret);
-            ERR << msg << endl;
+            LOG_ERROR << msg << endl;
             break;
         }
         if (exist) {
             http_res->set_code(USERNAME_IS_EXIST);
             http_res->set_success(0);
             msg = "username is already exist";
-            ERR << msg << endl;
+            LOG_ERROR << msg << endl;
             break;
         }
         
@@ -59,7 +59,7 @@ const char *regiest(string username, string password) {
             http_res->set_code(REGIEST_FAIL);
             http_res->set_success(0);
             msg = "REGIEST_FAIL|" + Tool::toString(ret);
-            ERR << msg << endl;
+            LOG_ERROR << msg << endl;
             break;
         }
 
@@ -71,7 +71,7 @@ const char *regiest(string username, string password) {
         regiest_res->set_username(username);
         regiest_res->set_password(password);
         http_res->set_allocated_regiest_response(regiest_res);
-        LOG << msg << endl;
+        LOG_INFO << msg << endl;
     } while(0);
     http_res->set_msg(msg);
 
@@ -81,16 +81,16 @@ const char *regiest(string username, string password) {
 }
 
 const char *login(string username, string password) {
-	LOG << "login params: username is " << username << " password is " << password << endl;
+	LOG_INFO << "login params: username is " << username << " password is " << password << endl;
 	Config *c = Config::get_instance();
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
     bool exist;
     if (e.is_exist("user", "where username = '" + username + "' and password = '" + password + "'", exist)) {
-    	LOG << "login success" << endl;
+    	LOG_INFO << "login success" << endl;
     } else {
-    	LOG << "login fail" << endl;
+    	LOG_INFO << "login fail" << endl;
     }
 
     string result;
@@ -100,15 +100,15 @@ const char *login(string username, string password) {
 int user_handler(process *process, map<string, string> param) {
 	const char *response_data;
     if (param.count("action") == 0) {
-        ERR << "action type is not exist" << endl;
+        LOG_ERROR << "action type is not exist" << endl;
         return -1;
     }
     int action_type = atoi(param["action"].c_str());
-    LOG << "action_type: " << action_type << endl;
+    LOG_INFO << "action_type: " << action_type << endl;
     switch (action_type) {
     	case USER_REGIEST: {
             if (param.count("username") == 0 || param.count("password") == 0) {
-                ERR << "username or password is not exist" << endl;
+                LOG_ERROR << "username or password is not exist" << endl;
                 return -1;
             }
     	    response_data = regiest(param["username"], param["password"]);
@@ -116,18 +116,18 @@ int user_handler(process *process, map<string, string> param) {
     	}
     	case USER_LOGIN: {
             if (param.count("username") == 0 || param.count("password") == 0) {
-                ERR << "username or password is not exist" << endl;
+                LOG_ERROR << "username or password is not exist" << endl;
                 return -1;
             }
     		response_data = login(param["username"], param["password"]);
     		break ;
     	}
         default: {
-            ERR << "action type err" << endl;
+            LOG_ERROR << "action type err" << endl;
             return -1;
         }
     }
-    LOG << "length:" << strlen(response_data) << endl;
+    LOG_INFO << "length:" << strlen(response_data) << endl;
 
 	process->buf[0] = 0; 
 	write_to_header(header_200_start); // start to write header
