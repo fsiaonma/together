@@ -10,6 +10,16 @@
 
 using namespace std;
 
+/**
+ * struct SESSION
+ *  
+ * @param {String} sid session id; 
+ * @param {String} uid userid id; 
+ * @param {String} username username; 
+ * @param {String} dev_id device id; 
+ * @param {String} active_time active time; 
+ * @param {String} rand_num random number; 
+ */
 struct SESSION {
 	string sid;
 	string uid;

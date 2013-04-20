@@ -1,5 +1,8 @@
 #include "./session.h"
 
+/**
+ * session Construtor
+ */
 session::session() {
 	ifstream i_file;
 	string out_text;
@@ -43,6 +46,15 @@ session::session() {
     i_file.close();
 }
 
+/**
+ * set session
+ *  
+ * @method set
+ * @param {string} uid user id
+ * @param {string} username username
+ * @param {string} dev_id device id 
+ * @return {string} sid
+ */
 string session::set(string uid, string username, string dev_id) {
 	string result = "";
 	SESSION s;
@@ -80,6 +92,13 @@ string session::set(string uid, string username, string dev_id) {
 	return result;
 }
 
+/**
+ * get session by sid
+ *  
+ * @method get
+ * @param {string} sid session id
+ * @return {SESSION} SESSION whitch is found according to sid 
+ */
 SESSION *session::get(string sid) {
 	SESSION *s = NULL;
 	SESSION_LIST::iterator ptr;
@@ -94,6 +113,13 @@ SESSION *session::get(string sid) {
 	return s;
 }
 
+/**
+ * remove session by username
+ *  
+ * @method remove
+ * @param {string} username username
+ * @return {int} the status of remove operation
+ */
 int session::remove(string username) {
 	SESSION_LIST::iterator ptr;
 	ofstream o_file;
@@ -118,6 +144,9 @@ int session::remove(string username) {
     return 1;
 }
 
+/**
+ * session Destructor
+ */
 session::~session() {
 	this->list.clear();
 	memset(this->filename, 0, sizeof(this->filename));
