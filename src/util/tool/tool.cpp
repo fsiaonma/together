@@ -52,13 +52,14 @@ string Tool::L2S(long num) {
  */
 int Tool::S2C(string str, char *buf) {
     int i = 0, result = 1;
-    if (Tool::trim(str) == "") {
+    if (Tool::trim(str).empty()) {
         result = 0;
     } else {
         const char *str_tmp = str.c_str();
         char temp_buf[strlen(str_tmp) + 1];
         strcpy(temp_buf, str_tmp);
-        for (i = 0; i < strlen(temp_buf); ++i) {
+        int len = strlen(temp_buf);
+        for (i = 0; i < len; ++i) {
             buf[i] = temp_buf[i];
         }
         buf[i] = '\0';
