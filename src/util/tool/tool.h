@@ -31,11 +31,11 @@ public:
 	static bool isNum(string str);
 	static int S2I(string num, int default_val = -1);
 	static string L2S(long num);
-	static char *S2C(string str);
+	static int S2C(string str, char *buf);
 
 	static string md5(string s);
 	static string& trim(string &s);
-	static char *get_project_path(int count);
+	static int get_project_path(char *buf, int count);
 	static int calc_file_MD5(char *file_name, char *md5_sum);
 	static string base64_decode(const char* Data);
 	static vector<string> split(string str, string pattern);

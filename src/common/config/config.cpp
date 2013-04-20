@@ -3,7 +3,8 @@
 Config::Config()
 {
 	ifstream out;
-    char *prj_path = Tool::get_project_path(1024);
+    char prj_path[1024];
+    Tool::get_project_path(prj_path, 1024);
     char config_path[strlen(prj_path) + 20];
     sprintf(config_path, "%sconfig/config", prj_path);
     cout << "config file path:" << config_path << endl;

@@ -8,9 +8,10 @@ session::session() {
 
     this->list.clear();
 
-    char *str = Tool::get_project_path(1024);
-	char session_cache_path[strlen(str) + 20];
-    sprintf(session_cache_path, "%ssrc/lib/session/session_cache", str);
+    char prj_path[1024];
+    Tool::get_project_path(prj_path, 1024);
+	char session_cache_path[strlen(prj_path) + 20];
+    sprintf(session_cache_path, "%ssrc/lib/session/session_cache", prj_path);
    	strncpy(this->filename, session_cache_path, strlen(session_cache_path) + 1);
 
     i_file.open(this->filename, ios::in);

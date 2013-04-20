@@ -50,11 +50,20 @@ string Tool::L2S(long num) {
  * @param  str [description]
  * @return     [description]
  */
-char *Tool::S2C(string str) {
-    const char *str_tmp = str.c_str();
-    char *buf = new char[strlen(str_tmp) + 1];
-    strcpy(buf, str_tmp);
-    return buf;
+int Tool::S2C(string str, char *buf) {
+    int i = 0, result = 1;
+    if (Tool::trim(str) == "") {
+        result = 0;
+    } else {
+        const char *str_tmp = str.c_str();
+        char temp_buf[strlen(str_tmp) + 1];
+        strcpy(temp_buf, str_tmp);
+        for (i = 0; i < strlen(temp_buf); ++i) {
+            buf[i] = temp_buf[i];
+        }
+        buf[i] = '\0';
+    }
+    return result;
 }
 
 
@@ -102,24 +111,26 @@ string& Tool::trim(string &s)
  * @param  count [description]
  * @return       [description]
  */
-char *Tool::get_project_path(int count)
-{
-    string str = "", result = "";
-    char buf[1024];
+int Tool::get_project_path(char *buf, int count) {
+    string str = "", temp_buf = "";
+    int result = 1;
 
-    int rslt = readlink("/proc/self/exe", buf, count - 1);
+    char cur_path[1024];
+    int rslt = readlink("/proc/self/exe", cur_path, count - 1);
     if (rslt < 0 || (rslt >= count - 1)) {
-        return NULL;
+        result = 0;
+    } else {
+        str = cur_path;
+        while(str.substr(0, str.find('/')) != "together") {
+            temp_buf += str.substr(0, str.find('/') + 1);
+            str = str.erase(0, str.find('/') + 1);
+        }
+        temp_buf += "together/";
+        Tool::S2C(temp_buf, buf);
+        cout << buf << endl;
     }
-    str = buf;
-    while(str.substr(0, str.find('/')) != "together") {
-        result += str.substr(0, str.find('/') + 1);
-        str = str.erase(0, str.find('/') + 1);
-    }
-    result += "together/";
-    char *result_buf = Tool::S2C(result);
     
-    return result_buf;
+    return result;
 }
 
 /**
