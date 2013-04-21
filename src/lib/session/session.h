@@ -1,3 +1,15 @@
+#ifndef S_PARAM_ERROR_IN
+#define S_PARAM_ERROR_IN 1001
+#endif
+
+#ifndef S_OK_IN
+#define S_OK_IN 6000
+#endif
+
+#ifndef S_REPLACE_IN
+#define S_REPLACE_IN 12002
+#endif
+
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
@@ -13,8 +25,7 @@ using namespace std;
 /**
  * struct SESSION
  *  
- * @param {String} sid session id; 
- * @param {String} uid userid id; 
+ * @param {String} sid session id;
  * @param {String} username username; 
  * @param {String} dev_id device id; 
  * @param {String} active_time active time; 
@@ -22,7 +33,6 @@ using namespace std;
  */
 struct SESSION {
 	string sid;
-	string uid;
 	string username;
 	string dev_id;
 	string active_time;
@@ -31,14 +41,17 @@ struct SESSION {
 
 typedef list<SESSION> SESSION_LIST;
 
-class session {
+class Session {
 	private:
+		static Session *instance;
 		SESSION_LIST list;
 		char filename[100];
 	public:
-		session();
-		~session();
-		string set(string uid, string username, string dev_id);
+		Session();
+		~Session();
+		static Session *get_instance();
+		bool exist(string username);
+		int set(string username, string dev_id, string &sid);
 		SESSION *get(string sid);
 		int remove(string username);
 };

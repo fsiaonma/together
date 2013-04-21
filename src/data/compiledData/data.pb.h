@@ -127,6 +127,15 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::user::RegiestResponse* release_regiest_response();
   inline void set_allocated_regiest_response(::user::RegiestResponse* regiest_response);
 
+  // optional .user.LoginResponse login_response = 5;
+  inline bool has_login_response() const;
+  inline void clear_login_response();
+  static const int kLoginResponseFieldNumber = 5;
+  inline const ::user::LoginResponse& login_response() const;
+  inline ::user::LoginResponse* mutable_login_response();
+  inline ::user::LoginResponse* release_login_response();
+  inline void set_allocated_login_response(::user::LoginResponse* login_response);
+
   // @@protoc_insertion_point(class_scope:data.HTTPResponse)
  private:
   inline void set_has_code();
@@ -137,6 +146,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_msg();
   inline void set_has_regiest_response();
   inline void clear_has_regiest_response();
+  inline void set_has_login_response();
+  inline void clear_has_login_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -144,9 +155,10 @@ class HTTPResponse : public ::google::protobuf::Message {
   bool success_;
   ::std::string* msg_;
   ::user::RegiestResponse* regiest_response_;
+  ::user::LoginResponse* login_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
@@ -311,6 +323,44 @@ inline void HTTPResponse::set_allocated_regiest_response(::user::RegiestResponse
     set_has_regiest_response();
   } else {
     clear_has_regiest_response();
+  }
+}
+
+// optional .user.LoginResponse login_response = 5;
+inline bool HTTPResponse::has_login_response() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void HTTPResponse::set_has_login_response() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void HTTPResponse::clear_has_login_response() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void HTTPResponse::clear_login_response() {
+  if (login_response_ != NULL) login_response_->::user::LoginResponse::Clear();
+  clear_has_login_response();
+}
+inline const ::user::LoginResponse& HTTPResponse::login_response() const {
+  return login_response_ != NULL ? *login_response_ : *default_instance_->login_response_;
+}
+inline ::user::LoginResponse* HTTPResponse::mutable_login_response() {
+  set_has_login_response();
+  if (login_response_ == NULL) login_response_ = new ::user::LoginResponse;
+  return login_response_;
+}
+inline ::user::LoginResponse* HTTPResponse::release_login_response() {
+  clear_has_login_response();
+  ::user::LoginResponse* temp = login_response_;
+  login_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_login_response(::user::LoginResponse* login_response) {
+  delete login_response_;
+  login_response_ = login_response;
+  if (login_response) {
+    set_has_login_response();
+  } else {
+    clear_has_login_response();
   }
 }
 

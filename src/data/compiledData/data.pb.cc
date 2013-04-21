@@ -34,11 +34,12 @@ void protobuf_AssignDesc_data_2eproto() {
       "data.proto");
   GOOGLE_CHECK(file != NULL);
   HTTPResponse_descriptor_ = file->message_type(0);
-  static const int HTTPResponse_offsets_[4] = {
+  static const int HTTPResponse_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, regiest_response_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, login_response_),
   };
   HTTPResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -82,10 +83,11 @@ void protobuf_AddDesc_data_2eproto() {
 
   ::user::protobuf_AddDesc_user_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ndata.proto\022\004data\032\nuser.proto\"k\n\014HTTPRe"
-    "sponse\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n"
-    "\003msg\030\003 \001(\t\022/\n\020regiest_response\030\004 \001(\0132\025.u"
-    "ser.RegiestResponse", 139);
+    "\n\ndata.proto\022\004data\032\nuser.proto\"\230\001\n\014HTTPR"
+    "esponse\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013"
+    "\n\003msg\030\003 \001(\t\022/\n\020regiest_response\030\004 \001(\0132\025."
+    "user.RegiestResponse\022+\n\016login_response\030\005"
+    " \001(\0132\023.user.LoginResponse", 185);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -107,6 +109,7 @@ const int HTTPResponse::kCodeFieldNumber;
 const int HTTPResponse::kSuccessFieldNumber;
 const int HTTPResponse::kMsgFieldNumber;
 const int HTTPResponse::kRegiestResponseFieldNumber;
+const int HTTPResponse::kLoginResponseFieldNumber;
 #endif  // !_MSC_VER
 
 HTTPResponse::HTTPResponse()
@@ -116,6 +119,7 @@ HTTPResponse::HTTPResponse()
 
 void HTTPResponse::InitAsDefaultInstance() {
   regiest_response_ = const_cast< ::user::RegiestResponse*>(&::user::RegiestResponse::default_instance());
+  login_response_ = const_cast< ::user::LoginResponse*>(&::user::LoginResponse::default_instance());
 }
 
 HTTPResponse::HTTPResponse(const HTTPResponse& from)
@@ -130,6 +134,7 @@ void HTTPResponse::SharedCtor() {
   success_ = false;
   msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   regiest_response_ = NULL;
+  login_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -143,6 +148,7 @@ void HTTPResponse::SharedDtor() {
   }
   if (this != default_instance_) {
     delete regiest_response_;
+    delete login_response_;
   }
 }
 
@@ -178,6 +184,9 @@ void HTTPResponse::Clear() {
     }
     if (has_regiest_response()) {
       if (regiest_response_ != NULL) regiest_response_->::user::RegiestResponse::Clear();
+    }
+    if (has_login_response()) {
+      if (login_response_ != NULL) login_response_->::user::LoginResponse::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -248,6 +257,20 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(42)) goto parse_login_response;
+        break;
+      }
+
+      // optional .user.LoginResponse login_response = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_login_response:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_login_response()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -295,6 +318,12 @@ void HTTPResponse::SerializeWithCachedSizes(
       4, this->regiest_response(), output);
   }
 
+  // optional .user.LoginResponse login_response = 5;
+  if (has_login_response()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->login_response(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -328,6 +357,13 @@ void HTTPResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->regiest_response(), target);
+  }
+
+  // optional .user.LoginResponse login_response = 5;
+  if (has_login_response()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->login_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -365,6 +401,13 @@ int HTTPResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->regiest_response());
+    }
+
+    // optional .user.LoginResponse login_response = 5;
+    if (has_login_response()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->login_response());
     }
 
   }
@@ -406,6 +449,9 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_regiest_response()) {
       mutable_regiest_response()->::user::RegiestResponse::MergeFrom(from.regiest_response());
     }
+    if (from.has_login_response()) {
+      mutable_login_response()->::user::LoginResponse::MergeFrom(from.login_response());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -433,6 +479,7 @@ void HTTPResponse::Swap(HTTPResponse* other) {
     std::swap(success_, other->success_);
     std::swap(msg_, other->msg_);
     std::swap(regiest_response_, other->regiest_response_);
+    std::swap(login_response_, other->login_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

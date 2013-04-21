@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <map>
 #include "../../src/util/eagleMysql/eagleMysql.h"
 using namespace std;
 
@@ -15,41 +16,24 @@ int main() {
     // init
     eagleMysql e(domain, userName, password, database, port);
 
-	// insert
-    PARAM dataA;
-    dataA.key = "username";
-    dataA.value = "sam";
-    PARAM dataB;
-    dataB.key = "password";
-    dataB.value = "123456";
-
-    PARAMLIST insertList;
-    insertList.push_back(dataA);
-    insertList.push_back(dataB);
-
-    e.insert("user", insertList);
+    // insert
+    map<string, string> insert_params;
+    insert_params["username"] = "insert_test";
+    insert_params["password"] = "123456";
+    e.insert("user", insert_params);
 
 	// remove
     e.remove("user", "where username = 'sam'");
 
-	// update
-    PARAM dataC;
-    dataC.key = "username";
-    dataC.value = "testUpdate";
-    PARAMLIST testUpdateInsertList;
-    testUpdateInsertList.push_front(dataC);
-    e.insert("user", testUpdateInsertList);
+    // updata
+    map<string, string> update_insert_params;
+    update_insert_params["username"] = "update_insert_test";
+    update_insert_params["password"] = "654321";
+    e.insert("user", update_insert_params);
 
-    PARAM dataD;
-    dataD.key = "username";
-    dataD.value = "fsiaonma";
-    PARAM dataE;
-    dataE.key = "password";
-    dataE.value = "123456789";
-    PARAMLIST updateList;
-    updateList.push_back(dataD);
-    updateList.push_back(dataE);
-    e.update("user", updateList, "where username = 'testUpdate'");
+    map<string, string> update_params;
+    update_params["password"] = "testupdate";
+    e.update("user", update_params, "where username = 'update_insert_test'");
 
 	//excute
     e.connet();

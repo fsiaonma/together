@@ -33,24 +33,23 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
  * @param {string} table table which is going to insert value in.
  * @param {PARAMLIST} list insert values.
  */
-int eagleMysql::insert(string table, PARAMLIST list) {
+int eagleMysql::insert(string table, map<string, string> params) {
     if (!connet())
         return SQL_CONNECT_FAIL;
     int ret = SQL_OK;
 	
     string keys = "(", values = "(";
-    PARAMLIST::iterator ptr;
+    map<string, string>::iterator ptr;
 
-    ptr = list.begin();
-    int size = list.size();
-    for (int i = 0; i < size - 1; ++i) {
-        keys += ptr->key + ", ";
-        values += "'" + ptr->value + "'" + ", ";
+    ptr = params.begin();
+    int size = params.size();
+    for(int i = 0; i < size - 1; ++i) {
+        keys += ptr->first + ", ";
+        values += "'" + ptr->second + "'" + ", ";
         ++ptr;
     }
-
-    keys += ptr->key + ")";
-    values += "'" + ptr->value + "')";
+    keys += ptr->first + ")";
+    values += "'" + ptr->second + "')";
 
     string sql = "insert into " + table + " " + keys + " values " + values + ";";
     cout << "insert operation: " + sql << endl;
@@ -86,22 +85,22 @@ int eagleMysql::remove(string table, string condition) {
  * @param {PARAMLIST} list list update values.
  * @param {string} condition sql condition.
  */
-int eagleMysql::update(string table, PARAMLIST list, string condition) {
+int eagleMysql::update(string table, map<string, string> params, string condition) {
     if (!connet())
         return SQL_CONNECT_FAIL;
     int ret = SQL_OK;
 	
     string keys = "(", values = "(";
-    PARAMLIST::iterator ptr;
+    map<string, string>::iterator ptr;
 
     string sql = "update " + table + " set ";
-    ptr = list.begin();
-    int size = list.size();
+    ptr = params.begin();
+    int size = params.size();
     for (int i = 0; i < size - 1; ++i) {
-        sql += ptr->key + "=" + "'" + ptr->value + "', ";
+        sql += ptr->first + "=" + "'" + ptr->second + "', ";
         ++ptr;
     }
-    sql += ptr->key + "=" + "'" + ptr->value + "' ";
+    sql += ptr->first + "=" + "'" + ptr->second + "' ";
     sql += condition;
 
     cout << "update operation: " + sql << endl;
@@ -176,7 +175,7 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
     } else {
         ret = SQL_COUNT_ERR;
     }
-    cout << "is_exist|" << exist << endl;
+    cout << "is_exist: " << exist << endl;
     mysql_free_result(result);
     this->close();
     return ret;

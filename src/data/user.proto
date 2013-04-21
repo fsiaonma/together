@@ -1,7 +1,14 @@
 package user;
 
-//user response data
+//user regiest response data
 message RegiestResponse {
 	optional string username = 1;
 	optional string password = 2;
+	optional string sid = 3;
+}
+
+//user login response data
+message LoginResponse {
+	optional string sid = 1;
+	optional string username = 2;
 }

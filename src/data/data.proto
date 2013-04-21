@@ -6,4 +6,5 @@ message HTTPResponse {
 	optional bool success = 2;
 	optional string msg = 3;
 	optional user.RegiestResponse regiest_response = 4;
+	optional user.LoginResponse login_response = 5;
 }

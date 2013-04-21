@@ -90,6 +90,7 @@ const int ROOM_MODULE = 200;
 // user action code.
 const int USER_REGIEST = 101;
 const int USER_LOGIN = 102;
+const int USER_LOGOUT = 103;
 
 // system status code
 const int PARAM_ERROR = 1001;
@@ -101,10 +102,19 @@ const int DB_CONNECT_FAIL = 5001;
 const int DB_COUNT_ERR = 5002;
 const int DB_QUERY_ERR = 5003;
 
+// session status code
+const int SESSION_OK = 6000;
+const int SESSION_EXIST = 6001;
+
 // regiest result code
 const int REGIEST_SUCCESS = 11000;
 const int REGIEST_FAIL = 11001;
 const int USERNAME_IS_EXIST = 11002;
+
+// login result code
+const int LOGIN_SUCCESS = 12000;
+const int USER_NOT_EXIST = 12001;
+const int LOGIN_REPLACE = 12002;
 
 #endif
 

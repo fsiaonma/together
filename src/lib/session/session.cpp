@@ -3,7 +3,7 @@
 /**
  * session Construtor
  */
-session::session() {
+Session::Session() {
 	ifstream i_file;
 	string out_text;
 	string key, value;
@@ -27,8 +27,6 @@ session::session() {
         		value = out_text.substr(0, out_text.find('/'));
         		if (key == "sid") {
         			s.sid = value;
-        		} else if (key == "uid") {
-        			s.uid = value;
         		} else if (key == "username") {
         			s.username = value;
         		} else if (key == "dev_id") {
@@ -50,44 +48,50 @@ session::session() {
  * set session
  *  
  * @method set
- * @param {string} uid user id
  * @param {string} username username
  * @param {string} dev_id device id 
  * @return {string} sid
  */
-string session::set(string uid, string username, string dev_id) {
-	string result = "";
+int Session::set(string username, string dev_id, string &sid) {
+	int result;
 	SESSION s;
 	ofstream o_file;
 	SESSION_LIST::iterator ptr;
 
-	for (ptr = this->list.begin(); ptr != this->list.end();) {
-		if ((*ptr).username == username) {
-			this->remove(username);
-			break;
-		} else {
-			++ptr;
+	do {
+		// check whether username is in catch or not
+		for (ptr = this->list.begin(); ptr != this->list.end();) {
+			if ((*ptr).username == username) {
+				this->remove(username);
+				result = S_REPLACE_IN;
+				break;
+			} else {
+				++ptr;
+			}
 		}
-	}
 
-	s.uid = uid;
-	s.username = username;
-	s.dev_id = dev_id;
-	s.active_time = Tool::L2S(time(NULL));
-	s.rand_num = Tool::L2S(rand());
-	s.sid = Tool::md5(uid + "_" + username + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);;
-	this->list.push_back(s);
+		// store to cache
+		s.username = username;
+		s.dev_id = dev_id;
+		s.active_time = Tool::L2S(time(NULL));
+		s.rand_num = Tool::L2S(rand());
+		s.sid = Tool::md5(username + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);;
+		this->list.push_back(s);
 
-	o_file.open(this->filename, ios::app);
-	o_file << "username:" << s.username << "/"
-		   << "uid:" << s.uid << "/"  
-		   << "dev_id:" << s.dev_id << "/" 
-		   << "active_time:" << s.active_time << "/" 
-		   << "rand_num:" << s.rand_num << "/"
-		   << "sid:" << s.sid << "/\n";
-	o_file.close();
+		// write to file
+		o_file.open(this->filename, ios::app);
+		o_file << "username:" << s.username << "/"
+			   << "dev_id:" << s.dev_id << "/" 
+			   << "active_time:" << s.active_time << "/" 
+			   << "rand_num:" << s.rand_num << "/"
+			   << "sid:" << s.sid << "/\n";
+		o_file.close();
+		
+		// set sid
+		sid = s.sid;
 
-	result = s.sid;
+		result = S_OK_IN;
+	} while(0);
 
 	return result;
 }
@@ -99,7 +103,7 @@ string session::set(string uid, string username, string dev_id) {
  * @param {string} sid session id
  * @return {SESSION} SESSION whitch is found according to sid 
  */
-SESSION *session::get(string sid) {
+SESSION *Session::get(string sid) {
 	SESSION *s = NULL;
 	SESSION_LIST::iterator ptr;
     ptr = this->list.begin();
@@ -120,7 +124,7 @@ SESSION *session::get(string sid) {
  * @param {string} username username
  * @return {int} the status of remove operation
  */
-int session::remove(string username) {
+int Session::remove(string username) {
 	SESSION_LIST::iterator ptr;
 	ofstream o_file;
 
@@ -130,8 +134,7 @@ int session::remove(string username) {
 		if ((*ptr).username == username) {
 			this->list.erase(ptr++);
 		} else {
-			o_file << "username:" << (*ptr).username << "/"  
-				   << "uid:" << (*ptr).uid << "/" 
+			o_file << "username:" << (*ptr).username << "/"
 				   << "dev_id:" << (*ptr).dev_id << "/" 
 				   << "active_time:" << (*ptr).active_time << "/" 
 				   << "rand_num:" << (*ptr).rand_num << "/"	
@@ -145,9 +148,46 @@ int session::remove(string username) {
 }
 
 /**
+ * check whether the session is exist or not
+ * 
+ * @method exist
+ * @param {string} username username
+ * @return {bool} whether the session is exist or not
+ */
+bool Session::exist(string username) {
+	SESSION_LIST::iterator ptr;
+	bool is_exist = false;
+	do {
+		ptr = this->list.begin();
+		for (ptr = this->list.begin(); ptr != this->list.end(); ++ptr) {
+			if ((*ptr).username == username) {
+				is_exist = true;
+				break;
+			}
+		}
+	} while (0);
+	return is_exist;
+}
+
+/**
+ *  init instance
+ */
+Session* Session::instance = new Session;
+
+/**
+ * get Session instance
+ *  
+ * @method get_instance
+ * @return {Session} Session instance 
+ */
+Session* Session::get_instance() {
+	return instance;
+}
+
+/**
  * session Destructor
  */
-session::~session() {
+Session::~Session() {
 	this->list.clear();
 	memset(this->filename, 0, sizeof(this->filename));
 }

@@ -20,21 +20,8 @@
 
 #include <mysql/mysql.h>
 #include <iostream>
-#include <list>
+#include <map>
 using namespace std;
-
-/**
- * database params
- */
-struct PARAM {
-    string key;
-    string value;
-};
-
-/**
- * defined list
- */
-typedef list<PARAM> PARAMLIST;
 
 /**
  * eagleMysql Class
@@ -51,9 +38,9 @@ class eagleMysql {
     public:
         eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port);
 
-        int insert(string table, PARAMLIST list);
+        int insert(string table, map<string, string>  params);
         int remove(string table, string condition);
-        int update(string table, PARAMLIST list, string condition);
+        int update(string table, map<string, string>  params, string condition);
         bool connet();
         int excute(string sql);
         void close();
