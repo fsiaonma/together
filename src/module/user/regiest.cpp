@@ -37,7 +37,7 @@ int regiest(string username, string password, char *buf) {
 
         bool exist;
 
-        ret = e.is_exist("user", "where username = '" + username + "'", exist);
+        ret = e.is_exist("t_user", "where username = '" + username + "'", exist);
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;

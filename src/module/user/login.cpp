@@ -36,7 +36,7 @@ int login(string username, string password, string dev_id, char *buf) {
         bool exist;
 
         // check whether username and password match is database or not 
-        ret = e.is_exist("user", "where username = '" + username + "' and password = '" + password + "'", exist);
+        ret = e.is_exist("t_user", "where username = '" + username + "' and password = '" + password + "'", exist);
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;

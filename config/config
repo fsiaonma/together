@@ -9,5 +9,5 @@ UPLOAD_PATH = /upload/
 DOMAIN = localhost
 USER_NAME = root
 PASSWORD = 123456
-DATABASE = testmysql
+DATABASE = together
 PORT = 3306
