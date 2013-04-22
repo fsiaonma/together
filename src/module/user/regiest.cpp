@@ -6,7 +6,8 @@
  * @method resiest
  * @param {string} username username which is used for regiested.
  * @param {string} password password which is used for regiested.
- * @return {const char*} return respone data. 
+ * @param {char *} buf respone data.
+ * @return {int} regiest status. 
  */
 int regiest(string username, string password, char *buf) {
     string respon_data;

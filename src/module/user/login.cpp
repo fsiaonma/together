@@ -6,7 +6,8 @@
  * @method login
  * @param {string} username username which is used for login.
  * @param {string} password password which is used for login.
- * @return {const char*} return respone data. 
+ * @param {char*} respone data. 
+ * @return {int} login status.
  */
 int login(string username, string password, string dev_id, char *buf) {
     string respon_data;
@@ -90,12 +91,13 @@ int login(string username, string password, string dev_id, char *buf) {
 }
 
 /**
- * user login
+ * user logout
  *  
- * @method login
- * @param {string} username username which is used for login.
- * @param {string} password password which is used for login.
- * @return {const char*} return respone data. 
+ * @method logout
+ * @param {string} username username which is used for logout.
+ * @param {string} sid sid which is used for logout.
+ * @param {char*} buf respone data.
+ * @return {int} louout status. 
  */
 int logout(string username, string sid, char *buf) {
     string respon_data;
