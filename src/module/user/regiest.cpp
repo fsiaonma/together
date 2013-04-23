@@ -26,6 +26,7 @@ int regiest(string username, string password, char *buf) {
             http_res->set_success(0);
             msg = "username or password is null";
             LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
             break;
         }
 
@@ -45,6 +46,7 @@ int regiest(string username, string password, char *buf) {
             http_res->set_success(0);
             msg = "DB ERROR|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
             break;
         }
         // username already exist
@@ -54,6 +56,7 @@ int regiest(string username, string password, char *buf) {
             http_res->set_success(0);
             msg = "username is already exist";
             LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
             break;
         }
 
@@ -69,6 +72,7 @@ int regiest(string username, string password, char *buf) {
             http_res->set_success(0);
             msg = "REGIEST_FAIL|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
             break;
         }
 
@@ -77,16 +81,16 @@ int regiest(string username, string password, char *buf) {
         http_res->set_code(REGIEST_SUCCESS);
         http_res->set_success(1);
         msg = "regiest success";
+        LOG_INFO << msg << endl;
+        http_res->set_msg(msg);
 
         // set RegiestResponse
         user::RegiestResponse *regiest_res = new user::RegiestResponse();
         regiest_res->set_username(username);
         regiest_res->set_password(password);
         http_res->set_allocated_regiest_response(regiest_res);
-        LOG_INFO << msg << endl;
     } while(0);
 
-    http_res->set_msg(msg);
     http_res->SerializeToString(&respon_data);
     const char *p = respon_data.c_str();
     strncpy(buf, p, strlen(p) + 1);
