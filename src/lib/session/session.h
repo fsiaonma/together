@@ -46,10 +46,10 @@ typedef list<SESSION> SESSION_LIST;
 
 class Session {
 	private:
-		static Session *instance;
-		SESSION_LIST list;
 		char filename[100];
 	public:
+		SESSION_LIST list;
+		static Session *instance;
 		Session();
 		~Session();
 		static Session *get_instance();

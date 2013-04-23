@@ -160,7 +160,7 @@ Session* Session::instance = new Session();
  * @return {Session} Session instance 
  */
 Session* Session::get_instance() {
-	return Session::instance;
+	return instance;
 }
 
 /**

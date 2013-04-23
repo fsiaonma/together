@@ -77,10 +77,10 @@ int login(string username, string password, string dev_id, char *buf) {
         http_res->set_success(1);
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
-        UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
-        login_res->set_username(username);
-        login_res->set_sid(sid);
-        http_res->set_allocated_login_response(login_res);
+        // UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
+        // login_res->set_username(username);
+        // login_res->set_sid(sid);
+        // http_res->set_allocated_login_response(login_res);
     } while(0);
 	
     http_res->SerializeToString(&respon_data);
