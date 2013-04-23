@@ -104,7 +104,7 @@ const int DB_QUERY_ERR = 5003;
 
 // session status code
 const int SESSION_OK = 6000;
-const int SESSION_EXIST = 6001;
+const int SESSION_NOT_EXIST = 6001;
 
 // regiest result code
 const int REGIEST_SUCCESS = 11000;
