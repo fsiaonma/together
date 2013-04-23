@@ -52,69 +52,69 @@ handle_error(process, "bad request");
 #define _CONST_H_
 
 // 监听端口的数目
-const int LISTEN_PORT_SIZE = 3;
+static const int LISTEN_PORT_SIZE = 3;
 // 处理HTTP的类型标识
-const int LISTEN_HTTP_REQ_TYPE = 0;
+static const int LISTEN_HTTP_REQ_TYPE = 0;
 // 处理文件上传的类型标识
-const int LISTEN_UPLOAD_REQ_TYPE = 1;
+static const int LISTEN_UPLOAD_REQ_TYPE = 1;
 // 处理长连接的类型标识
-const int LISTEN_TCP_REQ_TYPE = 2;
+static const int LISTEN_TCP_REQ_TYPE = 2;
 
 // 最大socket数
-const int MAX_PORCESS = 10000;
+static const int MAX_PORCESS = 10000;
 // 处理的最大事件数
-const int MAXEVENTS = 10000;
+static const int MAXEVENTS = 10000;
 // 用于标识process的sock
-const int NO_SOCK = -1;
+static const int NO_SOCK = -1;
 // 用于标识process的fd
-const int NO_FILE = -1;
+static const int NO_FILE = -1;
 // 用于标识process的type
-const int NO_TYPE = -1;
+static const int NO_TYPE = -1;
 // 用于标识process的status
-const int NO_STATUS = -1;
+static const int NO_STATUS = -1;
 
 
 // process中status的不同状态的标识
-const int STATUS_READ = 1;
-const int STATUS_HANDLE_READ_REQUEST = 2;
-const int STATUS_SEND_RESPONSE_HEADER = 3;
-const int STATUS_SEND_RESPONSE = 4;
-const int STATUS_UPLOAD_READY = 5;
-const int STATUS_UPLOAD_FINISHED = 6;
+static const int STATUS_READ = 1;
+static const int STATUS_HANDLE_READ_REQUEST = 2;
+static const int STATUS_SEND_RESPONSE_HEADER = 3;
+static const int STATUS_SEND_RESPONSE = 4;
+static const int STATUS_UPLOAD_READY = 5;
+static const int STATUS_UPLOAD_FINISHED = 6;
 
 // 功能模块的标识码
-const int UNKNOWN_MODULE = 99;
-const int USER_MODULE = 100;
-const int ROOM_MODULE = 200;
+static const int UNKNOWN_MODULE = 99;
+static const int USER_MODULE = 100;
+static const int ROOM_MODULE = 200;
 
 // user action code.
-const int USER_REGIEST = 101;
-const int USER_LOGIN = 102;
-const int USER_LOGOUT = 103;
+static const int USER_REGIEST = 101;
+static const int USER_LOGIN = 102;
+static const int USER_LOGOUT = 103;
 
 // system status code
-const int PARAM_ERROR = 1001;
-const int DB_ERROR = 1002;
+static const int PARAM_ERROR = 1001;
+static const int DB_ERROR = 1002;
 
 // database status code
-const int DB_OK = 5000;
-const int DB_CONNECT_FAIL = 5001;
-const int DB_COUNT_ERR = 5002;
-const int DB_QUERY_ERR = 5003;
+static const int DB_OK = 5000;
+static const int DB_CONNECT_FAIL = 5001;
+static const int DB_COUNT_ERR = 5002;
+static const int DB_QUERY_ERR = 5003;
 
 // session status code
-const int SESSION_OK = 6000;
-const int SESSION_NOT_EXIST = 6001;
+static const int SESSION_OK = 6000;
+static const int SESSION_NOT_EXIST = 6001;
 
 // regiest result code
-const int REGIEST_SUCCESS = 11000;
-const int REGIEST_FAIL = 11001;
-const int USERNAME_IS_EXIST = 11002;
+static const int REGIEST_SUCCESS = 11000;
+static const int REGIEST_FAIL = 11001;
+static const int USERNAME_IS_EXIST = 11002;
 
 // login result code
-const int LOGIN_SUCCESS = 12000;
-const int USER_NOT_EXIST = 12001;
-const int LOGIN_REPLACE = 12002;
+static const int LOGIN_SUCCESS = 12000;
+static const int USER_NOT_EXIST = 12001;
+static const int LOGIN_REPLACE = 12002;
 
 #endif
 
