@@ -10,6 +10,9 @@
 #define S_REPLACE_IN 12002
 #endif
 
+#ifndef _SESSION_H_
+#define _SESSION_H_
+
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
@@ -55,3 +58,5 @@ class Session {
 		SESSION *get(string sid);
 		int remove(string username);
 };
+
+#endif

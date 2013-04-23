@@ -1,3 +1,6 @@
+#ifndef _USER_H_
+#define _USER_H_
+
 #include <mysql/mysql.h>
 #include <map>
 #include <stdlib.h>
@@ -14,3 +17,5 @@ int regiest(string username, string password, char *buf);
 int login(string username, string password, string dev_id, char *buf);
 int logout(string username, string sid, char *buf);
 int user_handler(process *process, map<string, string> param);
+
+#endif
