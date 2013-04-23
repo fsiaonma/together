@@ -90,7 +90,9 @@ int Session::set(string username, string dev_id, string &sid) {
 		// set sid
 		sid = s.sid;
 
-		result = S_OK_IN;
+        if (result != S_REPLACE_IN) {
+            result = S_OK_IN;
+        }
 	} while(0);
 
 	return result;
