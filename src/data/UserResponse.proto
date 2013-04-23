@@ -1,4 +1,5 @@
-package user;
+package UserResponse;
+import "UserData.proto";
 
 //user regiest response data
 message RegiestResponse {

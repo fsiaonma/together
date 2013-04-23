@@ -1,3 +1,4 @@
-protoc --proto_path=./ --cpp_out=./compiledData/ ./user.proto 
-protoc --proto_path=./ --cpp_out=./compiledData/ ./data.proto
+protoc --proto_path=./ --cpp_out=./compiledData/ ./Response.proto 
+protoc --proto_path=./ --cpp_out=./compiledData/ ./UserResponse.proto
+protoc --proto_path=./ --cpp_out=./compiledData/ ./UserData.proto
 

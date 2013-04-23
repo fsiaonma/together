@@ -11,7 +11,7 @@
  */
 int regiest(string username, string password, char *buf) {
     string respon_data;
-    data::HTTPResponse *http_res = new data::HTTPResponse();
+    Response::HTTPResponse *http_res = new Response ::HTTPResponse();
     string msg;
     int result;
     int ret;
@@ -64,7 +64,6 @@ int regiest(string username, string password, char *buf) {
         map<string, string> reg_params;
         reg_params["username"] = username;
         reg_params["password"] = password;
-        reg_params["birthday"] = "";
         int insert_id = -1;
         ret = e.insert("t_user", reg_params, insert_id);
         // exception
@@ -87,7 +86,7 @@ int regiest(string username, string password, char *buf) {
         http_res->set_msg(msg);
 
         // set RegiestResponse
-        user::RegiestResponse *regiest_res = new user::RegiestResponse();
+        UserResponse::RegiestResponse *regiest_res = new UserResponse::RegiestResponse();
         regiest_res->set_username(username);
         regiest_res->set_password(password);
         http_res->set_allocated_regiest_response(regiest_res);

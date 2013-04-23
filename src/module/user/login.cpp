@@ -11,7 +11,7 @@
  */
 int login(string username, string password, string dev_id, char *buf) {
     string respon_data;
-    data::HTTPResponse *http_res = new data::HTTPResponse();
+    Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
     int result;
     int ret;
@@ -78,10 +78,10 @@ int login(string username, string password, string dev_id, char *buf) {
         http_res->set_success(1);
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
-        user::RegiestResponse *login_res = new user::RegiestResponse();
+        UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
         login_res->set_username(username);
         login_res->set_sid(sid);
-        http_res->set_allocated_regiest_response(login_res);
+        http_res->set_allocated_login_response(login_res);
     } while(0);
 	
     http_res->SerializeToString(&respon_data);
@@ -105,7 +105,7 @@ int logout(string username, string sid, char *buf) {
     string respon_data;
     int result;
     string msg;
-    data::HTTPResponse *http_res = new data::HTTPResponse();
+    Response::HTTPResponse *http_res = new Response::HTTPResponse();
 
     LOG_INFO << "username is " << username << " sid is " << sid << endl;
 
