@@ -131,7 +131,6 @@ int Session::remove(string username) {
 	ofstream o_file;
 
 	o_file.open(this->filename);
-    ptr = this->list.begin();
 	for (ptr = this->list.begin(); ptr != this->list.end();) {
 		if ((*ptr).username == username) {
 			this->list.erase(ptr++);
