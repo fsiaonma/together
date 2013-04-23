@@ -61,7 +61,7 @@ int regiest(string username, string password, char *buf) {
         map<string, string> reg_params;
         reg_params["username"] = username;
         reg_params["password"] = password;
-        ret = e.insert("user", reg_params);
+        ret = e.insert("t_user", reg_params);
         // exception
         if (ret != DB_OK) {
             result = REGIEST_FAIL;
