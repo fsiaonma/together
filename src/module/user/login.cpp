@@ -121,7 +121,7 @@ int logout(string username, string sid, char *buf) {
             break;
         }
 
-        // session is already exist
+        // session is not exist
         if (!Session::get_instance()->exist(username)) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
