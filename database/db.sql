@@ -12,7 +12,7 @@ USE `together` ;
 DROP TABLE IF EXISTS `together`.`t_file` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_file` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `suffix` VARCHAR(45) NULL ,
   `md5` VARCHAR(45) NULL ,
   `uploader_id` INT NULL ,
@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `together`.`t_user` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(30) NULL ,
   `password` VARCHAR(20) NULL ,
   `nick_name` VARCHAR(30) NULL ,
@@ -52,7 +52,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `together`.`t_address` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_address` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `addr_type` INT NULL ,
   `longitude` FLOAT NULL COMMENT '经度' ,
   `latitude` FLOAT NULL COMMENT '纬度' ,
@@ -67,19 +67,19 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `together`.`t_room` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_room` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `owner_id` INT NULL ,
   `tittle` VARCHAR(255) NULL ,
   `type` INT NULL ,
-  `begin_time` TIMESTAMP NULL ,
-  `create_time` TIMESTAMP NULL ,
-  `end_time` TIMESTAMP NULL ,
-  `owner_id` INT NULL ,
-  `limit_person_num` INT NULL COMMENT '-1表示不限制' ,
   `gender_type` INT NULL COMMENT '0,1,2\n表示参加活动的性别限制类型' ,
+  `limit_person_num` INT NULL COMMENT '-1表示不限制' ,
   `preview_pic_id` INT NULL ,
   `addr_id` INT NULL COMMENT '地址表ID' ,
   `record_id` INT NULL COMMENT '录音文件id' ,
   `room_describe` VARCHAR(255) NULL COMMENT '房间描述' ,
+  `begin_time` TIMESTAMP NULL ,
+  `end_time` TIMESTAMP NULL ,
+  `create_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_room_t_address_idx` (`addr_id` ASC) ,
   INDEX `fk_t_room_t_file1_idx` (`record_id` ASC) ,
@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `together`.`t_room_user_relation` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_room_user_relation` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `room_id` INT NULL ,
   `user_id` INT NULL COMMENT '房间用户关系表' ,
   PRIMARY KEY (`id`) ,
@@ -139,7 +139,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `together`.`t_follow` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_follow` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `followed_id` INT NULL COMMENT '被关注人id' ,
   `follow_id` INT NULL COMMENT '关注人id' ,
   PRIMARY KEY (`id`) ,
