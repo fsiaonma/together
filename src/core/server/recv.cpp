@@ -314,6 +314,7 @@
 void read_upload_request(process* process)
 {
 	int s;
+	int user_id = -1;
 	LOG_INFO << "RECV|" << process->status << endl;
 	switch(process->status)
 	{
@@ -460,6 +461,20 @@ void read_upload_request(process* process)
 			}
 
 			// TODO:: session校验
+			if (param.count("sid") > 0)
+			{
+				SESSION *p_session = NULL;
+				p_session = Session::get_instance()->get(param["sid"]);
+				if (p_session == NULL) {
+					LOG_ERROR << "sid error" << endl;
+					BAD_REQUEST
+					return;
+				}
+			} else {
+				LOG_ERROR << "param sid not exist" << endl;
+				BAD_REQUEST
+				return;
+			}
 
 			// md5参数校验
 			if (! (param.count("md5") > 0 && param["md5"].length() == 32) )
@@ -468,6 +483,15 @@ void read_upload_request(process* process)
 				BAD_REQUEST
 				return;
 			}
+
+			// uid参数校验
+			if ( param.count("uid") <= 0 || Tool::S2I(param["uid"]) < 0 )
+			{
+				LOG_ERROR << "uid error" << endl;
+				BAD_REQUEST
+				return;
+			}
+			user_id = Tool::S2I(param["uid"]);
 
 			// 如果没有filedata参数
 			if (! (param.count("filedata") > 0) )
@@ -491,6 +515,8 @@ void read_upload_request(process* process)
 				process->suffix[0] = 0;
 			}
 
+			LOG_INFO << "sid|" << param["sid"] << endl;
+			LOG_INFO << "uid|" << user_id << endl;
 			LOG_INFO << "MD5|" << process->md5 << endl;
 			LOG_INFO << "suffix|" << process->suffix << endl;
 

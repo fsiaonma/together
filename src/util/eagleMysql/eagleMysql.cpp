@@ -32,12 +32,13 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
  * @method insert
  * @param {string} table table which is going to insert value in.
  * @param {PARAMLIST} list insert values.
+ * @param {int} the id of row which inserted.
  */
-int eagleMysql::insert(string table, map<string, string> params) {
+int eagleMysql::insert(string table, map<string, string> params, int &insert_id) {
     if (!connet())
         return SQL_CONNECT_FAIL;
     int ret = SQL_OK;
-	
+    
     string keys = "(", values = "(";
     map<string, string>::iterator ptr;
 
@@ -54,6 +55,7 @@ int eagleMysql::insert(string table, map<string, string> params) {
     string sql = "insert into " + table + " " + keys + " values " + values + ";";
     cout << "insert operation: " + sql << endl;
     ret = excute(sql);
+    insert_id = this->mysql.insert_id;
     this->close();
     return ret;
 }

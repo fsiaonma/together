@@ -38,7 +38,7 @@ class eagleMysql {
     public:
         eagleMysql(const char* domain, const char* userName, const char* password, const char* dataBase, int port);
 
-        int insert(string table, map<string, string>  params);
+        int insert(string table, map<string, string>  params, int &insert_id);
         int remove(string table, string condition);
         int update(string table, map<string, string>  params, string condition);
         bool connet();
