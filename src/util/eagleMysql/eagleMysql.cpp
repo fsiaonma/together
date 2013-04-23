@@ -25,7 +25,6 @@ eagleMysql::eagleMysql(const char* domain, const char* userName, const char* pas
     this->dataBase = dataBase;
     this->port = port;
 }
-
 /**
  * insert operation
  * 
@@ -46,11 +45,11 @@ int eagleMysql::insert(string table, map<string, string> params, int &insert_id)
     int size = params.size();
     for(int i = 0; i < size - 1; ++i) {
         keys += ptr->first + ", ";
-        values += "'" + ptr->second + "'" + ", ";
+        values += ptr->second + ", ";
         ++ptr;
     }
     keys += ptr->first + ")";
-    values += "'" + ptr->second + "')";
+    values += ptr->second + ")";
 
     string sql = "insert into " + table + " " + keys + " values " + values + ";";
     cout << "insert operation: " + sql << endl;
@@ -99,10 +98,10 @@ int eagleMysql::update(string table, map<string, string> params, string conditio
     ptr = params.begin();
     int size = params.size();
     for (int i = 0; i < size - 1; ++i) {
-        sql += ptr->first + "=" + "'" + ptr->second + "', ";
+        sql += ptr->first + "=" + ptr->second + ", ";
         ++ptr;
     }
-    sql += ptr->first + "=" + "'" + ptr->second + "' ";
+    sql += ptr->first + "=" + ptr->second + " ";
     sql += condition;
 
     cout << "update operation: " + sql << endl;

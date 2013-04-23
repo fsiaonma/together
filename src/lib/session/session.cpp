@@ -53,7 +53,7 @@ Session::Session() {
  * @return {string} sid
  */
 int Session::set(string username, string dev_id, string &sid) {
-	int result;
+	int result = 0;
 	SESSION s;
 	ofstream o_file;
 	SESSION_LIST::iterator ptr;
@@ -90,7 +90,7 @@ int Session::set(string username, string dev_id, string &sid) {
 		// set sid
 		sid = s.sid;
 
-        if (result != S_REPLACE_IN) {
+        if (result == 0) {
             result = S_OK_IN;
         }
 	} while(0);
@@ -149,31 +149,9 @@ int Session::remove(string username) {
 }
 
 /**
- * check whether the session is exist or not
- * 
- * @method exist
- * @param {string} username username
- * @return {bool} whether the session is exist or not
- */
-bool Session::exist(string username) {
-	SESSION_LIST::iterator ptr;
-	bool is_exist = false;
-	do {
-		ptr = this->list.begin();
-		for (ptr = this->list.begin(); ptr != this->list.end(); ++ptr) {
-			if ((*ptr).username == username) {
-				is_exist = true;
-				break;
-			}
-		}
-	} while (0);
-	return is_exist;
-}
-
-/**
  *  init instance
  */
-Session* Session::instance = new Session;
+Session* Session::instance = new Session();
 
 /**
  * get Session instance
@@ -182,7 +160,7 @@ Session* Session::instance = new Session;
  * @return {Session} Session instance 
  */
 Session* Session::get_instance() {
-	return instance;
+	return Session::instance;
 }
 
 /**

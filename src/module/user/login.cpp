@@ -63,7 +63,6 @@ int login(string username, string password, string dev_id, char *buf) {
         string sid;
         ret = Session::get_instance()->set(username, dev_id, sid);
         LOG_INFO << "sid is: " << sid << endl;
-        
         if (ret == LOGIN_REPLACE) {
             result = LOGIN_REPLACE;
             http_res->set_code(LOGIN_REPLACE);
@@ -122,7 +121,7 @@ int logout(string username, string sid, char *buf) {
         }
 
         // session is not exist
-        if (!Session::get_instance()->exist(username)) {
+        if (Session::get_instance()->get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
             http_res->set_success(0);

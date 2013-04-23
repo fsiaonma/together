@@ -53,7 +53,6 @@ class Session {
 		Session();
 		~Session();
 		static Session *get_instance();
-		bool exist(string username);
 		int set(string username, string dev_id, string &sid);
 		SESSION *get(string sid);
 		int remove(string username);

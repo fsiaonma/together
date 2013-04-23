@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <typeinfo>
 
 #ifndef STR_VALUE
 #define STR_VALUE(val) #val
@@ -39,7 +40,7 @@ public:
 	static int calc_file_MD5(char *file_name, char *md5_sum);
 	static string base64_decode(const char* Data);
 	static vector<string> split(string str, string pattern);
-	
+
 	/**
 	 * [Tool::fromString description]
 	 * Usage:
@@ -72,6 +73,27 @@ public:
 	  ostringstream s;
 	  s << t;
 	  return s.str();
+	}
+
+	/**
+	 * [Tool::mysql_filter description]
+	 * Usage:
+	 * long a = 100;
+	 * string b = mysql_filter(a) + "'";
+	 * 
+	 * @param t  [description]
+	 * @return   [description]
+	 */
+	template<typename T>
+	static string mysql_filter(const T &t) {
+		string result;
+	 	string temp = Tool::toString(t);
+		if(typeid(t).name() == typeid(string).name()) {
+			temp = "'" + temp + "'";
+		} else {
+		  	Tool::toString(t);
+		}
+		return temp;
 	}
 };
 

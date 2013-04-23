@@ -5,6 +5,5 @@ message HTTPResponse {
 	optional int32 code = 1;
 	optional bool success = 2;
 	optional string msg = 3;
-	optional UserResponse.RegiestResponse regiest_response = 4;
-	optional UserResponse.LoginResponse login_response = 5;
+	optional UserResponse.LoginResponse login_response = 4;
 }
