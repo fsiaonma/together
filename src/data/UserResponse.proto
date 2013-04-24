@@ -4,5 +4,5 @@ import "UserData.proto";
 //user login response data
 message LoginResponse {
 	optional string sid = 1;
-	optional string username = 2;
+    optional UserData.User_Info User_Info = 4;
 }

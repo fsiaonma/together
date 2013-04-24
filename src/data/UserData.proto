@@ -1,1 +1,14 @@
 package UserData;
+
+//user data
+message User_Info {
+    optional string username = 1;
+    optional string nick_name = 2;
+    optional int birthday = 3;
+    optional string signature_text = 4;
+    optional int signature_record_id = 5;
+    optional int praise_num = 6;
+    optional int visit_num = 7;
+    optional int followed_num = 8;
+    optional int follow_num = 9;
+}
