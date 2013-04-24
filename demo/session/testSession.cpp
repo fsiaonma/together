@@ -26,6 +26,7 @@ typedef list<SESSION> SESSION_LIST;
 class Session {
     private:
         static SESSION_LIST list;
+        static char filename[1024];
     public:
         static init();
         static set(string username, string dev_id, string &sid);
@@ -36,9 +37,13 @@ class Session {
  *  init instance
  */
 SESSION_LIST Session::list;
+char Session::filename[1024];
 
 int Session::init() {
     cout << "init" << endl;
+    char session_cache_path[1024];
+    strncpy(session_cache_path, "D:/My Documents/GitHub/together/src/lib/session/session_cache", 1024);
+    strcpy(filename, session_cache_path);
     return 0;
 }
 
