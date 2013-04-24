@@ -61,7 +61,7 @@ int login(string username, string password, string dev_id, char *buf) {
 
         // set session
         string sid;
-        ret = Session::get_instance()->set(username, dev_id, sid);
+        ret = Session::set(username, dev_id, sid);
         LOG_INFO << "sid is: " << sid << endl;
         if (ret == LOGIN_REPLACE) {
             result = LOGIN_REPLACE;
@@ -126,7 +126,7 @@ int login(string username, string password, string dev_id, char *buf) {
         UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
         login_res->set_sid(sid);
         http_res->set_allocated_user_info(user_info);
-    #endif;
+    #endif
     } while(0);
 	
     http_res->SerializeToString(&respon_data);
@@ -167,7 +167,7 @@ int logout(string username, string sid, char *buf) {
         }
 
         // session is not exist
-        if (Session::get_instance()->get(sid) == NULL) {
+        if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
             http_res->set_success(0);
@@ -178,7 +178,7 @@ int logout(string username, string sid, char *buf) {
         }
 
         // remove session
-        Session::get_instance()->remove(username);
+        Session::remove(username);
         result = SESSION_OK;
         http_res->set_code(SESSION_OK);
         http_res->set_success(1);

@@ -1,47 +1,19 @@
 #include "./session.h"
 
+map<string, SESSION> Session::sessions;
+char Session::filename[100];
+
 /**
  * session Construtor
  */
-Session::Session() {
-	ifstream i_file;
-	string out_text;
-	string key, value;
-	SESSION s;
-
-    this->list.clear();
-
+int Session::init() {
+	cout << "------------------------------ init" << endl;
     char prj_path[1024];
     Tool::get_project_path(prj_path, 1024);
-	char session_cache_path[strlen(prj_path) + 20];
+    char session_cache_path[strlen(prj_path) + 20];
     sprintf(session_cache_path, "%ssrc/lib/session/session_cache", prj_path);
-   	strncpy(this->filename, session_cache_path, strlen(session_cache_path) + 1);
-
-    i_file.open(this->filename, ios::in);
-    while(!i_file.eof()) {
-        getline(i_file, out_text);
-        if (out_text != "") {
-        	while ((int)out_text.find('/') != -1) {
-        		key = out_text.substr(0, out_text.find(':'));
-        		out_text = out_text.erase(0, out_text.find(':') + 1);
-        		value = out_text.substr(0, out_text.find('/'));
-        		if (key == "sid") {
-        			s.sid = value;
-        		} else if (key == "username") {
-        			s.username = value;
-        		} else if (key == "dev_id") {
-        			s.dev_id = value;
-        		} else if (key == "active_time") {
-        			s.active_time = value;
-        		} else if (key == "rand_num") {
-        			s.rand_num = value;
-        		}
-				out_text = out_text.erase(0, out_text.find('/') + 1);
-			}
-			this->list.push_back(s);
-        }
-    }
-    i_file.close();
+    strncpy(filename, session_cache_path, strlen(session_cache_path) + 1);
+    return 0;
 }
 
 /**
@@ -53,49 +25,48 @@ Session::Session() {
  * @return {string} sid
  */
 int Session::set(string username, string dev_id, string &sid) {
-	int result = 0;
-	SESSION s;
-	ofstream o_file;
-	SESSION_LIST::iterator ptr;
+	cout << "--------------------------" << sessions.size() << endl;
 
-	do {
-		// check whether username is in catch or not
-		for (ptr = this->list.begin(); ptr != this->list.end();) {
-			if ((*ptr).username == username) {
-				this->remove(username);
-				result = S_REPLACE_IN;
-				break;
-			} else {
-				++ptr;
-			}
-		}
+	init_sessions();
 
-		// store to cache
-		s.username = username;
-		s.dev_id = dev_id;
-		s.active_time = Tool::L2S(time(NULL));
-		s.rand_num = Tool::L2S(rand());
-		s.sid = Tool::md5(username + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);;
-		this->list.push_back(s);
+    int result = 0;
+    SESSION s;
+    ofstream o_file;
+    map<string, SESSION>::iterator ptr;
+    string str_temp;
 
-		// write to file
-		o_file.open(this->filename, ios::app);
-		o_file << "username:" << s.username << "/"
-			   << "dev_id:" << s.dev_id << "/" 
-			   << "active_time:" << s.active_time << "/" 
-			   << "rand_num:" << s.rand_num << "/"
-			   << "sid:" << s.sid << "/\n";
-		o_file.close();
-		
-		// set sid
-		sid = s.sid;
+    do {
+        // check whether username is in catch or not
+	    for(ptr = sessions.begin(); ptr != sessions.end(); ++ptr) {
+	    	cout << ptr->first << "....." << username << endl;
+	    	if (ptr->first == username) {
+	    		remove(username);
+	    		result = S_REPLACE_IN;
+	    		break;
+	    	}
+	    }
+
+	    str_temp =Tool::md5(username + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);
+
+        // write to file
+        o_file.open(filename, ios::app);
+        o_file << "username:" << username << "/"
+               << "dev_id:" << dev_id << "/" 
+               << "active_time:" << Tool::L2S(time(NULL)) << "/" 
+               << "rand_num:" << Tool::L2S(rand()) << "/"
+               << "sid:" << str_temp << "/\n";
+        o_file.close();
+        
+        // set sid
+        sid = str_temp;
 
         if (result == 0) {
             result = S_OK_IN;
         }
-	} while(0);
+    } while(0);
 
-	return result;
+    cout << "--------------------------" << sessions.size() << endl;
+    return result;
 }
 
 /**
@@ -106,17 +77,20 @@ int Session::set(string username, string dev_id, string &sid) {
  * @return {SESSION} SESSION whitch is found according to sid 
  */
 SESSION *Session::get(string sid) {
-	SESSION *s = NULL;
-	SESSION_LIST::iterator ptr;
-    ptr = this->list.begin();
-    for (int i = 0, len = this->list.size(); i < len; ++i) {
-        if (ptr->sid == sid) {
-        	s = &(*ptr);
-        	break;
+	cout << "---------------------------- get" << endl;
+
+	init_sessions();
+
+    SESSION *s = NULL;
+    map<string, SESSION>::iterator ptr;
+    for (ptr = sessions.begin(); ptr != sessions.end();) {
+    	if ((ptr->second).sid == sid) {
+            s = &(ptr->second);
+            break;
         }
         ++ptr;
     }
-	return s;
+    return s;
 }
 
 /**
@@ -127,46 +101,61 @@ SESSION *Session::get(string sid) {
  * @return {int} the status of remove operation
  */
 int Session::remove(string username) {
-	SESSION_LIST::iterator ptr;
-	ofstream o_file;
+	cout << "-------------------------------- remove" << endl;
 
-	o_file.open(this->filename);
-	for (ptr = this->list.begin(); ptr != this->list.end();) {
-		if ((*ptr).username == username) {
-			this->list.erase(ptr++);
-		} else {
-			o_file << "username:" << (*ptr).username << "/"
-				   << "dev_id:" << (*ptr).dev_id << "/" 
-				   << "active_time:" << (*ptr).active_time << "/" 
-				   << "rand_num:" << (*ptr).rand_num << "/"	
-				   << "sid:" << (*ptr).sid << "/\n";
-			++ptr;
-		}
-	}
-	o_file.close();
+	init_sessions();
+
+    map<string, SESSION>::iterator ptr;
+    ofstream o_file;
+
+    o_file.open(filename);
+    for (ptr = sessions.begin(); ptr != sessions.end(); ++ptr) {
+        if (ptr->first != username) {
+            o_file << "username:" << (ptr->second).username << "/"
+                   << "dev_id:" << (ptr->second).dev_id << "/" 
+                   << "active_time:" << (ptr->second).active_time << "/" 
+                   << "rand_num:" << (ptr->second).rand_num << "/" 
+                   << "sid:" << (ptr->second).sid << "/\n";
+            
+        }
+    }
+    o_file.close();
 
     return 1;
 }
 
-/**
- *  init instance
- */
-Session* Session::instance = new Session();
+int res = Session::init();
 
-/**
- * get Session instance
- *  
- * @method get_instance
- * @return {Session} Session instance 
- */
-Session* Session::get_instance() {
-	return instance;
-}
-
-/**
- * session Destructor
- */
-Session::~Session() {
-	this->list.clear();
-	memset(this->filename, 0, sizeof(this->filename));
+void Session::init_sessions() {
+	cout << "-------------------------------------- list_ctor" << endl;
+	sessions.clear();
+    ifstream i_file;
+    string out_text;
+    string key, value;
+    SESSION s;
+	i_file.open(filename, ios::in);
+    while(!i_file.eof()) {
+        getline(i_file, out_text);
+        if (out_text != "") {
+            while ((int)out_text.find('/') != -1) {
+                key = out_text.substr(0, out_text.find(':'));
+                out_text = out_text.erase(0, out_text.find(':') + 1);
+                value = out_text.substr(0, out_text.find('/'));
+                if (key == "sid") {
+                    s.sid = value;
+                } else if (key == "username") {
+                    s.username = value;
+                } else if (key == "dev_id") {
+                    s.dev_id = value;
+                } else if (key == "active_time") {
+                    s.active_time = value;
+                } else if (key == "rand_num") {
+                    s.rand_num = value;
+                }
+                out_text = out_text.erase(0, out_text.find('/') + 1);
+            }
+           	sessions[s.username] = s;
+        }
+    }
+    i_file.close();
 }

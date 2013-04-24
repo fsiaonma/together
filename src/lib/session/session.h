@@ -35,27 +35,23 @@ using namespace std;
  * @param {String} rand_num random number; 
  */
 struct SESSION {
-	string sid;
-	string username;
-	string dev_id;
-	string active_time;
-	string rand_num;
+    string sid;
+    string username;
+    string dev_id;
+    string active_time;
+    string rand_num;
 };
 
-typedef list<SESSION> SESSION_LIST;
-
 class Session {
-	private:
-		static Session *instance;
-		SESSION_LIST list;
-		char filename[100];
-	public:
-		Session();
-		~Session();
-		static Session *get_instance();
-		int set(string username, string dev_id, string &sid);
-		SESSION *get(string sid);
-		int remove(string username);
+    private:
+        static map<string, SESSION> sessions;
+        static char filename[100];
+        static void init_sessions();
+    public:
+        static int init();
+        static int set(string username, string dev_id, string &sid);
+        static SESSION *get(string sid);
+        static int remove(string username);
 };
 
 #endif

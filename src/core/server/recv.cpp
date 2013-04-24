@@ -464,7 +464,7 @@ void read_upload_request(process* process)
 			if (param.count("sid") > 0)
 			{
 				SESSION *p_session = NULL;
-				p_session = Session::get_instance()->get(param["sid"]);
+				p_session = Session::get(param["sid"]);
 				if (p_session == NULL) {
 					LOG_ERROR << "sid error" << endl;
 					BAD_REQUEST
