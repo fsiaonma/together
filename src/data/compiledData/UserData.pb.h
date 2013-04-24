@@ -20,8 +20,10 @@
 #endif
 
 #include <google/protobuf/generated_message_util.h>
+#include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
 namespace UserData {
@@ -31,14 +33,533 @@ void  protobuf_AddDesc_UserData_2eproto();
 void protobuf_AssignDesc_UserData_2eproto();
 void protobuf_ShutdownFile_UserData_2eproto();
 
+class User_Info;
 
+// ===================================================================
+
+class User_Info : public ::google::protobuf::Message {
+ public:
+  User_Info();
+  virtual ~User_Info();
+
+  User_Info(const User_Info& from);
+
+  inline User_Info& operator=(const User_Info& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const User_Info& default_instance();
+
+  void Swap(User_Info* other);
+
+  // implements Message ----------------------------------------------
+
+  User_Info* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const User_Info& from);
+  void MergeFrom(const User_Info& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string username = 1;
+  inline bool has_username() const;
+  inline void clear_username();
+  static const int kUsernameFieldNumber = 1;
+  inline const ::std::string& username() const;
+  inline void set_username(const ::std::string& value);
+  inline void set_username(const char* value);
+  inline void set_username(const char* value, size_t size);
+  inline ::std::string* mutable_username();
+  inline ::std::string* release_username();
+  inline void set_allocated_username(::std::string* username);
+
+  // optional string nick_name = 2;
+  inline bool has_nick_name() const;
+  inline void clear_nick_name();
+  static const int kNickNameFieldNumber = 2;
+  inline const ::std::string& nick_name() const;
+  inline void set_nick_name(const ::std::string& value);
+  inline void set_nick_name(const char* value);
+  inline void set_nick_name(const char* value, size_t size);
+  inline ::std::string* mutable_nick_name();
+  inline ::std::string* release_nick_name();
+  inline void set_allocated_nick_name(::std::string* nick_name);
+
+  // optional int32 birthday = 3;
+  inline bool has_birthday() const;
+  inline void clear_birthday();
+  static const int kBirthdayFieldNumber = 3;
+  inline ::google::protobuf::int32 birthday() const;
+  inline void set_birthday(::google::protobuf::int32 value);
+
+  // optional string signature_text = 4;
+  inline bool has_signature_text() const;
+  inline void clear_signature_text();
+  static const int kSignatureTextFieldNumber = 4;
+  inline const ::std::string& signature_text() const;
+  inline void set_signature_text(const ::std::string& value);
+  inline void set_signature_text(const char* value);
+  inline void set_signature_text(const char* value, size_t size);
+  inline ::std::string* mutable_signature_text();
+  inline ::std::string* release_signature_text();
+  inline void set_allocated_signature_text(::std::string* signature_text);
+
+  // optional int32 signature_record_id = 5;
+  inline bool has_signature_record_id() const;
+  inline void clear_signature_record_id();
+  static const int kSignatureRecordIdFieldNumber = 5;
+  inline ::google::protobuf::int32 signature_record_id() const;
+  inline void set_signature_record_id(::google::protobuf::int32 value);
+
+  // optional int32 praise_num = 6;
+  inline bool has_praise_num() const;
+  inline void clear_praise_num();
+  static const int kPraiseNumFieldNumber = 6;
+  inline ::google::protobuf::int32 praise_num() const;
+  inline void set_praise_num(::google::protobuf::int32 value);
+
+  // optional int32 visit_num = 7;
+  inline bool has_visit_num() const;
+  inline void clear_visit_num();
+  static const int kVisitNumFieldNumber = 7;
+  inline ::google::protobuf::int32 visit_num() const;
+  inline void set_visit_num(::google::protobuf::int32 value);
+
+  // optional int32 followed_num = 8;
+  inline bool has_followed_num() const;
+  inline void clear_followed_num();
+  static const int kFollowedNumFieldNumber = 8;
+  inline ::google::protobuf::int32 followed_num() const;
+  inline void set_followed_num(::google::protobuf::int32 value);
+
+  // optional int32 follow_num = 9;
+  inline bool has_follow_num() const;
+  inline void clear_follow_num();
+  static const int kFollowNumFieldNumber = 9;
+  inline ::google::protobuf::int32 follow_num() const;
+  inline void set_follow_num(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:UserData.User_Info)
+ private:
+  inline void set_has_username();
+  inline void clear_has_username();
+  inline void set_has_nick_name();
+  inline void clear_has_nick_name();
+  inline void set_has_birthday();
+  inline void clear_has_birthday();
+  inline void set_has_signature_text();
+  inline void clear_has_signature_text();
+  inline void set_has_signature_record_id();
+  inline void clear_has_signature_record_id();
+  inline void set_has_praise_num();
+  inline void clear_has_praise_num();
+  inline void set_has_visit_num();
+  inline void clear_has_visit_num();
+  inline void set_has_followed_num();
+  inline void clear_has_followed_num();
+  inline void set_has_follow_num();
+  inline void clear_has_follow_num();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* username_;
+  ::std::string* nick_name_;
+  ::std::string* signature_text_;
+  ::google::protobuf::int32 birthday_;
+  ::google::protobuf::int32 signature_record_id_;
+  ::google::protobuf::int32 praise_num_;
+  ::google::protobuf::int32 visit_num_;
+  ::google::protobuf::int32 followed_num_;
+  ::google::protobuf::int32 follow_num_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserData_2eproto();
+  friend void protobuf_AssignDesc_UserData_2eproto();
+  friend void protobuf_ShutdownFile_UserData_2eproto();
+
+  void InitAsDefaultInstance();
+  static User_Info* default_instance_;
+};
 // ===================================================================
 
 
 // ===================================================================
 
+// User_Info
 
-// ===================================================================
+// optional string username = 1;
+inline bool User_Info::has_username() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void User_Info::set_has_username() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void User_Info::clear_has_username() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void User_Info::clear_username() {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    username_->clear();
+  }
+  clear_has_username();
+}
+inline const ::std::string& User_Info::username() const {
+  return *username_;
+}
+inline void User_Info::set_username(const ::std::string& value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void User_Info::set_username(const char* value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void User_Info::set_username(const char* value, size_t size) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User_Info::mutable_username() {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  return username_;
+}
+inline ::std::string* User_Info::release_username() {
+  clear_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = username_;
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User_Info::set_allocated_username(::std::string* username) {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    delete username_;
+  }
+  if (username) {
+    set_has_username();
+    username_ = username;
+  } else {
+    clear_has_username();
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string nick_name = 2;
+inline bool User_Info::has_nick_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void User_Info::set_has_nick_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void User_Info::clear_has_nick_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void User_Info::clear_nick_name() {
+  if (nick_name_ != &::google::protobuf::internal::kEmptyString) {
+    nick_name_->clear();
+  }
+  clear_has_nick_name();
+}
+inline const ::std::string& User_Info::nick_name() const {
+  return *nick_name_;
+}
+inline void User_Info::set_nick_name(const ::std::string& value) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(value);
+}
+inline void User_Info::set_nick_name(const char* value) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(value);
+}
+inline void User_Info::set_nick_name(const char* value, size_t size) {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  nick_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User_Info::mutable_nick_name() {
+  set_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    nick_name_ = new ::std::string;
+  }
+  return nick_name_;
+}
+inline ::std::string* User_Info::release_nick_name() {
+  clear_has_nick_name();
+  if (nick_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = nick_name_;
+    nick_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User_Info::set_allocated_nick_name(::std::string* nick_name) {
+  if (nick_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete nick_name_;
+  }
+  if (nick_name) {
+    set_has_nick_name();
+    nick_name_ = nick_name;
+  } else {
+    clear_has_nick_name();
+    nick_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional int32 birthday = 3;
+inline bool User_Info::has_birthday() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void User_Info::set_has_birthday() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void User_Info::clear_has_birthday() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void User_Info::clear_birthday() {
+  birthday_ = 0;
+  clear_has_birthday();
+}
+inline ::google::protobuf::int32 User_Info::birthday() const {
+  return birthday_;
+}
+inline void User_Info::set_birthday(::google::protobuf::int32 value) {
+  set_has_birthday();
+  birthday_ = value;
+}
+
+// optional string signature_text = 4;
+inline bool User_Info::has_signature_text() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void User_Info::set_has_signature_text() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void User_Info::clear_has_signature_text() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void User_Info::clear_signature_text() {
+  if (signature_text_ != &::google::protobuf::internal::kEmptyString) {
+    signature_text_->clear();
+  }
+  clear_has_signature_text();
+}
+inline const ::std::string& User_Info::signature_text() const {
+  return *signature_text_;
+}
+inline void User_Info::set_signature_text(const ::std::string& value) {
+  set_has_signature_text();
+  if (signature_text_ == &::google::protobuf::internal::kEmptyString) {
+    signature_text_ = new ::std::string;
+  }
+  signature_text_->assign(value);
+}
+inline void User_Info::set_signature_text(const char* value) {
+  set_has_signature_text();
+  if (signature_text_ == &::google::protobuf::internal::kEmptyString) {
+    signature_text_ = new ::std::string;
+  }
+  signature_text_->assign(value);
+}
+inline void User_Info::set_signature_text(const char* value, size_t size) {
+  set_has_signature_text();
+  if (signature_text_ == &::google::protobuf::internal::kEmptyString) {
+    signature_text_ = new ::std::string;
+  }
+  signature_text_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User_Info::mutable_signature_text() {
+  set_has_signature_text();
+  if (signature_text_ == &::google::protobuf::internal::kEmptyString) {
+    signature_text_ = new ::std::string;
+  }
+  return signature_text_;
+}
+inline ::std::string* User_Info::release_signature_text() {
+  clear_has_signature_text();
+  if (signature_text_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = signature_text_;
+    signature_text_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User_Info::set_allocated_signature_text(::std::string* signature_text) {
+  if (signature_text_ != &::google::protobuf::internal::kEmptyString) {
+    delete signature_text_;
+  }
+  if (signature_text) {
+    set_has_signature_text();
+    signature_text_ = signature_text;
+  } else {
+    clear_has_signature_text();
+    signature_text_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional int32 signature_record_id = 5;
+inline bool User_Info::has_signature_record_id() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void User_Info::set_has_signature_record_id() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void User_Info::clear_has_signature_record_id() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void User_Info::clear_signature_record_id() {
+  signature_record_id_ = 0;
+  clear_has_signature_record_id();
+}
+inline ::google::protobuf::int32 User_Info::signature_record_id() const {
+  return signature_record_id_;
+}
+inline void User_Info::set_signature_record_id(::google::protobuf::int32 value) {
+  set_has_signature_record_id();
+  signature_record_id_ = value;
+}
+
+// optional int32 praise_num = 6;
+inline bool User_Info::has_praise_num() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void User_Info::set_has_praise_num() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void User_Info::clear_has_praise_num() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void User_Info::clear_praise_num() {
+  praise_num_ = 0;
+  clear_has_praise_num();
+}
+inline ::google::protobuf::int32 User_Info::praise_num() const {
+  return praise_num_;
+}
+inline void User_Info::set_praise_num(::google::protobuf::int32 value) {
+  set_has_praise_num();
+  praise_num_ = value;
+}
+
+// optional int32 visit_num = 7;
+inline bool User_Info::has_visit_num() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void User_Info::set_has_visit_num() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void User_Info::clear_has_visit_num() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void User_Info::clear_visit_num() {
+  visit_num_ = 0;
+  clear_has_visit_num();
+}
+inline ::google::protobuf::int32 User_Info::visit_num() const {
+  return visit_num_;
+}
+inline void User_Info::set_visit_num(::google::protobuf::int32 value) {
+  set_has_visit_num();
+  visit_num_ = value;
+}
+
+// optional int32 followed_num = 8;
+inline bool User_Info::has_followed_num() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void User_Info::set_has_followed_num() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void User_Info::clear_has_followed_num() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void User_Info::clear_followed_num() {
+  followed_num_ = 0;
+  clear_has_followed_num();
+}
+inline ::google::protobuf::int32 User_Info::followed_num() const {
+  return followed_num_;
+}
+inline void User_Info::set_followed_num(::google::protobuf::int32 value) {
+  set_has_followed_num();
+  followed_num_ = value;
+}
+
+// optional int32 follow_num = 9;
+inline bool User_Info::has_follow_num() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void User_Info::set_has_follow_num() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void User_Info::clear_has_follow_num() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void User_Info::clear_follow_num() {
+  follow_num_ = 0;
+  clear_has_follow_num();
+}
+inline ::google::protobuf::int32 User_Info::follow_num() const {
+  return follow_num_;
+}
+inline void User_Info::set_follow_num(::google::protobuf::int32 value) {
+  set_has_follow_num();
+  follow_num_ = value;
+}
 
 
 // @@protoc_insertion_point(namespace_scope)

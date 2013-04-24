@@ -20,9 +20,6 @@ namespace UserResponse {
 
 namespace {
 
-const ::google::protobuf::Descriptor* RegiestResponse_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  RegiestResponse_reflection_ = NULL;
 const ::google::protobuf::Descriptor* LoginResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   LoginResponse_reflection_ = NULL;
@@ -36,27 +33,10 @@ void protobuf_AssignDesc_UserResponse_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "UserResponse.proto");
   GOOGLE_CHECK(file != NULL);
-  RegiestResponse_descriptor_ = file->message_type(0);
-  static const int RegiestResponse_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RegiestResponse, username_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RegiestResponse, password_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RegiestResponse, sid_),
-  };
-  RegiestResponse_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      RegiestResponse_descriptor_,
-      RegiestResponse::default_instance_,
-      RegiestResponse_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RegiestResponse, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RegiestResponse, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(RegiestResponse));
-  LoginResponse_descriptor_ = file->message_type(1);
+  LoginResponse_descriptor_ = file->message_type(0);
   static const int LoginResponse_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginResponse, sid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginResponse, username_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LoginResponse, user_info_),
   };
   LoginResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -82,16 +62,12 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    RegiestResponse_descriptor_, &RegiestResponse::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     LoginResponse_descriptor_, &LoginResponse::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_UserResponse_2eproto() {
-  delete RegiestResponse::default_instance_;
-  delete RegiestResponse_reflection_;
   delete LoginResponse::default_instance_;
   delete LoginResponse_reflection_;
 }
@@ -105,15 +81,11 @@ void protobuf_AddDesc_UserResponse_2eproto() {
   ::UserData::protobuf_AddDesc_UserData_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\022UserResponse.proto\022\014UserResponse\032\016User"
-    "Data.proto\"B\n\017RegiestResponse\022\020\n\010usernam"
-    "e\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\013\n\003sid\030\003 \001(\t\"."
-    "\n\rLoginResponse\022\013\n\003sid\030\001 \001(\t\022\020\n\010username"
-    "\030\002 \001(\t", 166);
+    "Data.proto\"D\n\rLoginResponse\022\013\n\003sid\030\001 \001(\t"
+    "\022&\n\tUser_Info\030\004 \001(\0132\023.UserData.User_Info", 120);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserResponse.proto", &protobuf_RegisterTypes);
-  RegiestResponse::default_instance_ = new RegiestResponse();
   LoginResponse::default_instance_ = new LoginResponse();
-  RegiestResponse::default_instance_->InitAsDefaultInstance();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_UserResponse_2eproto);
 }
@@ -128,347 +100,8 @@ struct StaticDescriptorInitializer_UserResponse_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RegiestResponse::kUsernameFieldNumber;
-const int RegiestResponse::kPasswordFieldNumber;
-const int RegiestResponse::kSidFieldNumber;
-#endif  // !_MSC_VER
-
-RegiestResponse::RegiestResponse()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void RegiestResponse::InitAsDefaultInstance() {
-}
-
-RegiestResponse::RegiestResponse(const RegiestResponse& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void RegiestResponse::SharedCtor() {
-  _cached_size_ = 0;
-  username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  sid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-RegiestResponse::~RegiestResponse() {
-  SharedDtor();
-}
-
-void RegiestResponse::SharedDtor() {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    delete username_;
-  }
-  if (password_ != &::google::protobuf::internal::kEmptyString) {
-    delete password_;
-  }
-  if (sid_ != &::google::protobuf::internal::kEmptyString) {
-    delete sid_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void RegiestResponse::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* RegiestResponse::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return RegiestResponse_descriptor_;
-}
-
-const RegiestResponse& RegiestResponse::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
-  return *default_instance_;
-}
-
-RegiestResponse* RegiestResponse::default_instance_ = NULL;
-
-RegiestResponse* RegiestResponse::New() const {
-  return new RegiestResponse;
-}
-
-void RegiestResponse::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_username()) {
-      if (username_ != &::google::protobuf::internal::kEmptyString) {
-        username_->clear();
-      }
-    }
-    if (has_password()) {
-      if (password_ != &::google::protobuf::internal::kEmptyString) {
-        password_->clear();
-      }
-    }
-    if (has_sid()) {
-      if (sid_ != &::google::protobuf::internal::kEmptyString) {
-        sid_->clear();
-      }
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool RegiestResponse::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string username = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_username()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->username().data(), this->username().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_password;
-        break;
-      }
-
-      // optional string password = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_password:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_password()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->password().data(), this->password().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(26)) goto parse_sid;
-        break;
-      }
-
-      // optional string sid = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_sid:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_sid()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->sid().data(), this->sid().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void RegiestResponse::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional string username = 1;
-  if (has_username()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->username().data(), this->username().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->username(), output);
-  }
-
-  // optional string password = 2;
-  if (has_password()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->password().data(), this->password().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->password(), output);
-  }
-
-  // optional string sid = 3;
-  if (has_sid()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->sid().data(), this->sid().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->sid(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* RegiestResponse::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional string username = 1;
-  if (has_username()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->username().data(), this->username().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->username(), target);
-  }
-
-  // optional string password = 2;
-  if (has_password()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->password().data(), this->password().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->password(), target);
-  }
-
-  // optional string sid = 3;
-  if (has_sid()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->sid().data(), this->sid().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->sid(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int RegiestResponse::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string username = 1;
-    if (has_username()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->username());
-    }
-
-    // optional string password = 2;
-    if (has_password()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->password());
-    }
-
-    // optional string sid = 3;
-    if (has_sid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->sid());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void RegiestResponse::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const RegiestResponse* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const RegiestResponse*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void RegiestResponse::MergeFrom(const RegiestResponse& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_username()) {
-      set_username(from.username());
-    }
-    if (from.has_password()) {
-      set_password(from.password());
-    }
-    if (from.has_sid()) {
-      set_sid(from.sid());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void RegiestResponse::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void RegiestResponse::CopyFrom(const RegiestResponse& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool RegiestResponse::IsInitialized() const {
-
-  return true;
-}
-
-void RegiestResponse::Swap(RegiestResponse* other) {
-  if (other != this) {
-    std::swap(username_, other->username_);
-    std::swap(password_, other->password_);
-    std::swap(sid_, other->sid_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata RegiestResponse::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = RegiestResponse_descriptor_;
-  metadata.reflection = RegiestResponse_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
 const int LoginResponse::kSidFieldNumber;
-const int LoginResponse::kUsernameFieldNumber;
+const int LoginResponse::kUserInfoFieldNumber;
 #endif  // !_MSC_VER
 
 LoginResponse::LoginResponse()
@@ -477,6 +110,7 @@ LoginResponse::LoginResponse()
 }
 
 void LoginResponse::InitAsDefaultInstance() {
+  user_info_ = const_cast< ::UserData::User_Info*>(&::UserData::User_Info::default_instance());
 }
 
 LoginResponse::LoginResponse(const LoginResponse& from)
@@ -488,7 +122,7 @@ LoginResponse::LoginResponse(const LoginResponse& from)
 void LoginResponse::SharedCtor() {
   _cached_size_ = 0;
   sid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  user_info_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -500,10 +134,8 @@ void LoginResponse::SharedDtor() {
   if (sid_ != &::google::protobuf::internal::kEmptyString) {
     delete sid_;
   }
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    delete username_;
-  }
   if (this != default_instance_) {
+    delete user_info_;
   }
 }
 
@@ -535,10 +167,8 @@ void LoginResponse::Clear() {
         sid_->clear();
       }
     }
-    if (has_username()) {
-      if (username_ != &::google::protobuf::internal::kEmptyString) {
-        username_->clear();
-      }
+    if (has_user_info()) {
+      if (user_info_ != NULL) user_info_->::UserData::User_Info::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -563,20 +193,17 @@ bool LoginResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_username;
+        if (input->ExpectTag(34)) goto parse_User_Info;
         break;
       }
 
-      // optional string username = 2;
-      case 2: {
+      // optional .UserData.User_Info User_Info = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_username:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_username()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->username().data(), this->username().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+         parse_User_Info:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_user_info()));
         } else {
           goto handle_uninterpreted;
         }
@@ -611,13 +238,10 @@ void LoginResponse::SerializeWithCachedSizes(
       1, this->sid(), output);
   }
 
-  // optional string username = 2;
-  if (has_username()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->username().data(), this->username().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->username(), output);
+  // optional .UserData.User_Info User_Info = 4;
+  if (has_user_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->user_info(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -638,14 +262,11 @@ void LoginResponse::SerializeWithCachedSizes(
         1, this->sid(), target);
   }
 
-  // optional string username = 2;
-  if (has_username()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->username().data(), this->username().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->username(), target);
+  // optional .UserData.User_Info User_Info = 4;
+  if (has_user_info()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->user_info(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -666,11 +287,11 @@ int LoginResponse::ByteSize() const {
           this->sid());
     }
 
-    // optional string username = 2;
-    if (has_username()) {
+    // optional .UserData.User_Info User_Info = 4;
+    if (has_user_info()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->username());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->user_info());
     }
 
   }
@@ -703,8 +324,8 @@ void LoginResponse::MergeFrom(const LoginResponse& from) {
     if (from.has_sid()) {
       set_sid(from.sid());
     }
-    if (from.has_username()) {
-      set_username(from.username());
+    if (from.has_user_info()) {
+      mutable_user_info()->::UserData::User_Info::MergeFrom(from.user_info());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -730,7 +351,7 @@ bool LoginResponse::IsInitialized() const {
 void LoginResponse::Swap(LoginResponse* other) {
   if (other != this) {
     std::swap(sid_, other->sid_);
-    std::swap(username_, other->username_);
+    std::swap(user_info_, other->user_info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

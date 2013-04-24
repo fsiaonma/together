@@ -34,11 +34,10 @@ void protobuf_AssignDesc_Response_2eproto() {
       "Response.proto");
   GOOGLE_CHECK(file != NULL);
   HTTPResponse_descriptor_ = file->message_type(0);
-  static const int HTTPResponse_offsets_[5] = {
+  static const int HTTPResponse_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, regiest_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, login_response_),
   };
   HTTPResponse_reflection_ =
@@ -84,11 +83,9 @@ void protobuf_AddDesc_Response_2eproto() {
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
-    ".proto\"\250\001\n\014HTTPResponse\022\014\n\004code\030\001 \001(\005\022\017\n"
-    "\007success\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\0227\n\020regiest_r"
-    "esponse\030\004 \001(\0132\035.UserResponse.RegiestResp"
-    "onse\0223\n\016login_response\030\005 \001(\0132\033.UserRespo"
-    "nse.LoginResponse", 217);
+    ".proto\"o\n\014HTTPResponse\022\014\n\004code\030\001 \001(\005\022\017\n\007"
+    "success\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\0223\n\016login_resp"
+    "onse\030\004 \001(\0132\033.UserResponse.LoginResponse", 159);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -109,7 +106,6 @@ struct StaticDescriptorInitializer_Response_2eproto {
 const int HTTPResponse::kCodeFieldNumber;
 const int HTTPResponse::kSuccessFieldNumber;
 const int HTTPResponse::kMsgFieldNumber;
-const int HTTPResponse::kRegiestResponseFieldNumber;
 const int HTTPResponse::kLoginResponseFieldNumber;
 #endif  // !_MSC_VER
 
@@ -119,7 +115,6 @@ HTTPResponse::HTTPResponse()
 }
 
 void HTTPResponse::InitAsDefaultInstance() {
-  regiest_response_ = const_cast< ::UserResponse::RegiestResponse*>(&::UserResponse::RegiestResponse::default_instance());
   login_response_ = const_cast< ::UserResponse::LoginResponse*>(&::UserResponse::LoginResponse::default_instance());
 }
 
@@ -134,7 +129,6 @@ void HTTPResponse::SharedCtor() {
   code_ = 0;
   success_ = false;
   msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  regiest_response_ = NULL;
   login_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -148,7 +142,6 @@ void HTTPResponse::SharedDtor() {
     delete msg_;
   }
   if (this != default_instance_) {
-    delete regiest_response_;
     delete login_response_;
   }
 }
@@ -182,9 +175,6 @@ void HTTPResponse::Clear() {
       if (msg_ != &::google::protobuf::internal::kEmptyString) {
         msg_->clear();
       }
-    }
-    if (has_regiest_response()) {
-      if (regiest_response_ != NULL) regiest_response_->::UserResponse::RegiestResponse::Clear();
     }
     if (has_login_response()) {
       if (login_response_ != NULL) login_response_->::UserResponse::LoginResponse::Clear();
@@ -244,26 +234,12 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_regiest_response;
+        if (input->ExpectTag(34)) goto parse_login_response;
         break;
       }
 
-      // optional .UserResponse.RegiestResponse regiest_response = 4;
+      // optional .UserResponse.LoginResponse login_response = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_regiest_response:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_regiest_response()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(42)) goto parse_login_response;
-        break;
-      }
-
-      // optional .UserResponse.LoginResponse login_response = 5;
-      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_login_response:
@@ -313,16 +289,10 @@ void HTTPResponse::SerializeWithCachedSizes(
       3, this->msg(), output);
   }
 
-  // optional .UserResponse.RegiestResponse regiest_response = 4;
-  if (has_regiest_response()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->regiest_response(), output);
-  }
-
-  // optional .UserResponse.LoginResponse login_response = 5;
+  // optional .UserResponse.LoginResponse login_response = 4;
   if (has_login_response()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->login_response(), output);
+      4, this->login_response(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -353,18 +323,11 @@ void HTTPResponse::SerializeWithCachedSizes(
         3, this->msg(), target);
   }
 
-  // optional .UserResponse.RegiestResponse regiest_response = 4;
-  if (has_regiest_response()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->regiest_response(), target);
-  }
-
-  // optional .UserResponse.LoginResponse login_response = 5;
+  // optional .UserResponse.LoginResponse login_response = 4;
   if (has_login_response()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->login_response(), target);
+        4, this->login_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -397,14 +360,7 @@ int HTTPResponse::ByteSize() const {
           this->msg());
     }
 
-    // optional .UserResponse.RegiestResponse regiest_response = 4;
-    if (has_regiest_response()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->regiest_response());
-    }
-
-    // optional .UserResponse.LoginResponse login_response = 5;
+    // optional .UserResponse.LoginResponse login_response = 4;
     if (has_login_response()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -447,9 +403,6 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_msg()) {
       set_msg(from.msg());
     }
-    if (from.has_regiest_response()) {
-      mutable_regiest_response()->::UserResponse::RegiestResponse::MergeFrom(from.regiest_response());
-    }
     if (from.has_login_response()) {
       mutable_login_response()->::UserResponse::LoginResponse::MergeFrom(from.login_response());
     }
@@ -479,7 +432,6 @@ void HTTPResponse::Swap(HTTPResponse* other) {
     std::swap(code_, other->code_);
     std::swap(success_, other->success_);
     std::swap(msg_, other->msg_);
-    std::swap(regiest_response_, other->regiest_response_);
     std::swap(login_response_, other->login_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
