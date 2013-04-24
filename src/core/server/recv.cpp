@@ -188,6 +188,7 @@
  		}
 
 		// 解析最后一行
+		int line_feed_num = 0;
  		char param_data[200];
  		param_data[0] = 0;
  		char *pp = strstr(buf, "\n\n");
@@ -202,6 +203,8 @@
  		if (end == 0)
  		{
  			end = strchr(pp, '\0');
+ 		} else {
+ 			line_feed_num++;
  		}
  		int param_len = end - pp;
  		if (param_len > 199)
@@ -226,7 +229,7 @@
 		// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
  		if (content_length > 0)
  		{
- 			if (content_length != (int)strlen(param_data) + 1)
+ 			if (content_length != (int)strlen(param_data) + line_feed_num)
  			{
  				LOG_ERROR << "receive data size not same" << endl;
  				BAD_REQUEST
