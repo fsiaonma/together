@@ -34,127 +34,9 @@ void  protobuf_AddDesc_UserResponse_2eproto();
 void protobuf_AssignDesc_UserResponse_2eproto();
 void protobuf_ShutdownFile_UserResponse_2eproto();
 
-class RegiestResponse;
 class LoginResponse;
 
 // ===================================================================
-
-class RegiestResponse : public ::google::protobuf::Message {
- public:
-  RegiestResponse();
-  virtual ~RegiestResponse();
-
-  RegiestResponse(const RegiestResponse& from);
-
-  inline RegiestResponse& operator=(const RegiestResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const RegiestResponse& default_instance();
-
-  void Swap(RegiestResponse* other);
-
-  // implements Message ----------------------------------------------
-
-  RegiestResponse* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const RegiestResponse& from);
-  void MergeFrom(const RegiestResponse& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional string username = 1;
-  inline bool has_username() const;
-  inline void clear_username();
-  static const int kUsernameFieldNumber = 1;
-  inline const ::std::string& username() const;
-  inline void set_username(const ::std::string& value);
-  inline void set_username(const char* value);
-  inline void set_username(const char* value, size_t size);
-  inline ::std::string* mutable_username();
-  inline ::std::string* release_username();
-  inline void set_allocated_username(::std::string* username);
-
-  // optional string password = 2;
-  inline bool has_password() const;
-  inline void clear_password();
-  static const int kPasswordFieldNumber = 2;
-  inline const ::std::string& password() const;
-  inline void set_password(const ::std::string& value);
-  inline void set_password(const char* value);
-  inline void set_password(const char* value, size_t size);
-  inline ::std::string* mutable_password();
-  inline ::std::string* release_password();
-  inline void set_allocated_password(::std::string* password);
-
-  // optional string sid = 3;
-  inline bool has_sid() const;
-  inline void clear_sid();
-  static const int kSidFieldNumber = 3;
-  inline const ::std::string& sid() const;
-  inline void set_sid(const ::std::string& value);
-  inline void set_sid(const char* value);
-  inline void set_sid(const char* value, size_t size);
-  inline ::std::string* mutable_sid();
-  inline ::std::string* release_sid();
-  inline void set_allocated_sid(::std::string* sid);
-
-  // @@protoc_insertion_point(class_scope:UserResponse.RegiestResponse)
- private:
-  inline void set_has_username();
-  inline void clear_has_username();
-  inline void set_has_password();
-  inline void clear_has_password();
-  inline void set_has_sid();
-  inline void clear_has_sid();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::std::string* username_;
-  ::std::string* password_;
-  ::std::string* sid_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-
-  friend void  protobuf_AddDesc_UserResponse_2eproto();
-  friend void protobuf_AssignDesc_UserResponse_2eproto();
-  friend void protobuf_ShutdownFile_UserResponse_2eproto();
-
-  void InitAsDefaultInstance();
-  static RegiestResponse* default_instance_;
-};
-// -------------------------------------------------------------------
 
 class LoginResponse : public ::google::protobuf::Message {
  public:
@@ -222,29 +104,26 @@ class LoginResponse : public ::google::protobuf::Message {
   inline ::std::string* release_sid();
   inline void set_allocated_sid(::std::string* sid);
 
-  // optional string username = 2;
-  inline bool has_username() const;
-  inline void clear_username();
-  static const int kUsernameFieldNumber = 2;
-  inline const ::std::string& username() const;
-  inline void set_username(const ::std::string& value);
-  inline void set_username(const char* value);
-  inline void set_username(const char* value, size_t size);
-  inline ::std::string* mutable_username();
-  inline ::std::string* release_username();
-  inline void set_allocated_username(::std::string* username);
+  // optional .UserData.User_Info User_Info = 4;
+  inline bool has_user_info() const;
+  inline void clear_user_info();
+  static const int kUserInfoFieldNumber = 4;
+  inline const ::UserData::User_Info& user_info() const;
+  inline ::UserData::User_Info* mutable_user_info();
+  inline ::UserData::User_Info* release_user_info();
+  inline void set_allocated_user_info(::UserData::User_Info* user_info);
 
   // @@protoc_insertion_point(class_scope:UserResponse.LoginResponse)
  private:
   inline void set_has_sid();
   inline void clear_has_sid();
-  inline void set_has_username();
-  inline void clear_has_username();
+  inline void set_has_user_info();
+  inline void clear_has_user_info();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* sid_;
-  ::std::string* username_;
+  ::UserData::User_Info* user_info_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -260,220 +139,6 @@ class LoginResponse : public ::google::protobuf::Message {
 
 
 // ===================================================================
-
-// RegiestResponse
-
-// optional string username = 1;
-inline bool RegiestResponse::has_username() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void RegiestResponse::set_has_username() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void RegiestResponse::clear_has_username() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void RegiestResponse::clear_username() {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    username_->clear();
-  }
-  clear_has_username();
-}
-inline const ::std::string& RegiestResponse::username() const {
-  return *username_;
-}
-inline void RegiestResponse::set_username(const ::std::string& value) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(value);
-}
-inline void RegiestResponse::set_username(const char* value) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(value);
-}
-inline void RegiestResponse::set_username(const char* value, size_t size) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RegiestResponse::mutable_username() {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  return username_;
-}
-inline ::std::string* RegiestResponse::release_username() {
-  clear_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = username_;
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RegiestResponse::set_allocated_username(::std::string* username) {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    delete username_;
-  }
-  if (username) {
-    set_has_username();
-    username_ = username;
-  } else {
-    clear_has_username();
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional string password = 2;
-inline bool RegiestResponse::has_password() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void RegiestResponse::set_has_password() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void RegiestResponse::clear_has_password() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void RegiestResponse::clear_password() {
-  if (password_ != &::google::protobuf::internal::kEmptyString) {
-    password_->clear();
-  }
-  clear_has_password();
-}
-inline const ::std::string& RegiestResponse::password() const {
-  return *password_;
-}
-inline void RegiestResponse::set_password(const ::std::string& value) {
-  set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
-    password_ = new ::std::string;
-  }
-  password_->assign(value);
-}
-inline void RegiestResponse::set_password(const char* value) {
-  set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
-    password_ = new ::std::string;
-  }
-  password_->assign(value);
-}
-inline void RegiestResponse::set_password(const char* value, size_t size) {
-  set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
-    password_ = new ::std::string;
-  }
-  password_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RegiestResponse::mutable_password() {
-  set_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
-    password_ = new ::std::string;
-  }
-  return password_;
-}
-inline ::std::string* RegiestResponse::release_password() {
-  clear_has_password();
-  if (password_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = password_;
-    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RegiestResponse::set_allocated_password(::std::string* password) {
-  if (password_ != &::google::protobuf::internal::kEmptyString) {
-    delete password_;
-  }
-  if (password) {
-    set_has_password();
-    password_ = password;
-  } else {
-    clear_has_password();
-    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// optional string sid = 3;
-inline bool RegiestResponse::has_sid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void RegiestResponse::set_has_sid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void RegiestResponse::clear_has_sid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void RegiestResponse::clear_sid() {
-  if (sid_ != &::google::protobuf::internal::kEmptyString) {
-    sid_->clear();
-  }
-  clear_has_sid();
-}
-inline const ::std::string& RegiestResponse::sid() const {
-  return *sid_;
-}
-inline void RegiestResponse::set_sid(const ::std::string& value) {
-  set_has_sid();
-  if (sid_ == &::google::protobuf::internal::kEmptyString) {
-    sid_ = new ::std::string;
-  }
-  sid_->assign(value);
-}
-inline void RegiestResponse::set_sid(const char* value) {
-  set_has_sid();
-  if (sid_ == &::google::protobuf::internal::kEmptyString) {
-    sid_ = new ::std::string;
-  }
-  sid_->assign(value);
-}
-inline void RegiestResponse::set_sid(const char* value, size_t size) {
-  set_has_sid();
-  if (sid_ == &::google::protobuf::internal::kEmptyString) {
-    sid_ = new ::std::string;
-  }
-  sid_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RegiestResponse::mutable_sid() {
-  set_has_sid();
-  if (sid_ == &::google::protobuf::internal::kEmptyString) {
-    sid_ = new ::std::string;
-  }
-  return sid_;
-}
-inline ::std::string* RegiestResponse::release_sid() {
-  clear_has_sid();
-  if (sid_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = sid_;
-    sid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RegiestResponse::set_allocated_sid(::std::string* sid) {
-  if (sid_ != &::google::protobuf::internal::kEmptyString) {
-    delete sid_;
-  }
-  if (sid) {
-    set_has_sid();
-    sid_ = sid;
-  } else {
-    clear_has_sid();
-    sid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
 
 // LoginResponse
 
@@ -547,73 +212,41 @@ inline void LoginResponse::set_allocated_sid(::std::string* sid) {
   }
 }
 
-// optional string username = 2;
-inline bool LoginResponse::has_username() const {
+// optional .UserData.User_Info User_Info = 4;
+inline bool LoginResponse::has_user_info() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void LoginResponse::set_has_username() {
+inline void LoginResponse::set_has_user_info() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void LoginResponse::clear_has_username() {
+inline void LoginResponse::clear_has_user_info() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void LoginResponse::clear_username() {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    username_->clear();
-  }
-  clear_has_username();
+inline void LoginResponse::clear_user_info() {
+  if (user_info_ != NULL) user_info_->::UserData::User_Info::Clear();
+  clear_has_user_info();
 }
-inline const ::std::string& LoginResponse::username() const {
-  return *username_;
+inline const ::UserData::User_Info& LoginResponse::user_info() const {
+  return user_info_ != NULL ? *user_info_ : *default_instance_->user_info_;
 }
-inline void LoginResponse::set_username(const ::std::string& value) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(value);
+inline ::UserData::User_Info* LoginResponse::mutable_user_info() {
+  set_has_user_info();
+  if (user_info_ == NULL) user_info_ = new ::UserData::User_Info;
+  return user_info_;
 }
-inline void LoginResponse::set_username(const char* value) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(value);
+inline ::UserData::User_Info* LoginResponse::release_user_info() {
+  clear_has_user_info();
+  ::UserData::User_Info* temp = user_info_;
+  user_info_ = NULL;
+  return temp;
 }
-inline void LoginResponse::set_username(const char* value, size_t size) {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  username_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* LoginResponse::mutable_username() {
-  set_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    username_ = new ::std::string;
-  }
-  return username_;
-}
-inline ::std::string* LoginResponse::release_username() {
-  clear_has_username();
-  if (username_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
+inline void LoginResponse::set_allocated_user_info(::UserData::User_Info* user_info) {
+  delete user_info_;
+  user_info_ = user_info;
+  if (user_info) {
+    set_has_user_info();
   } else {
-    ::std::string* temp = username_;
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void LoginResponse::set_allocated_username(::std::string* username) {
-  if (username_ != &::google::protobuf::internal::kEmptyString) {
-    delete username_;
-  }
-  if (username) {
-    set_has_username();
-    username_ = username;
-  } else {
-    clear_has_username();
-    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_user_info();
   }
 }
 
