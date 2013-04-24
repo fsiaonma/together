@@ -25,7 +25,6 @@ typedef list<SESSION> SESSION_LIST;
 
 class Session {
     private:
-        static Session *instance;
         static SESSION_LIST list;
     public:
         static init();
