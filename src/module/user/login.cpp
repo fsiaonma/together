@@ -77,10 +77,56 @@ int login(string username, string password, string dev_id, char *buf) {
         http_res->set_success(1);
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
-        // UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
-        // login_res->set_username(username);
-        // login_res->set_sid(sid);
-        // http_res->set_allocated_login_response(login_res);
+
+
+    #if 0
+        UserData::User_Info *user_info = new UserData::User_Info();
+
+        MYSQL mysql;
+        string sql = "select * from t_user where username = '" + username + "';";
+        e.excute(sql);
+        mysql = e.get_mysql();
+
+        MYSQL_RES *result = NULL;
+        MYSQL_FIELD *field = NULL;
+        MYSQL_ROW row = NULL;
+
+        result = mysql_store_result(&mysql);
+        cout << "result: " << result << endl;
+
+        int fieldcount = mysql_num_fields(result);
+        cout << "fieldcount " << fieldcount << endl;
+
+        row = mysql_fetch_row(result);
+
+        for(int i = 0; i < fieldcount; i++) {
+            field = mysql_fetch_field_direct(result, i);
+            cout << field->name << "\t";
+            if (field->name == "username") {
+                user_info.set_username(row[i]);
+            } else if (field->name == "nick_name") {
+                user_info.set_nick_name(row[i]);
+            } else if (field->name == "birthday") {
+                user_info.set_birthday(row[i]);
+            } else if (field->name == "signature_text") {
+                user_info.set_signature_text(row[i]);
+            } else if (field->name == "signature_record_id") {
+                user_info.set_signature_record_id(row[i]);
+            } else if (field->name == "praise_num") {
+                user_info.set_praise_num(row[i]);
+            } else if (field->name == "visit_num") {
+                user_info.set_visit_num(row[i]);
+            } else if (field->name == "followed_num") {
+                user_info.set_followed_num(row[i]);
+            } else if (field->name == "follow_num") {
+                user_info.set_follow_num(row[i]);
+            }
+        }
+
+        UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
+        login_res->set_sid(sid);
+        http_res->set_allocated_user_info(user_info);
+    #endif;
     } while(0);
 	
     http_res->SerializeToString(&respon_data);

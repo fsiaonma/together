@@ -149,6 +149,11 @@ void eagleMysql::close() {
     mysql_close(&(this->mysql));
 }
 
+/**
+ * get mysql obejct.
+ * 
+ * @method get_mysql.
+ */
 MYSQL eagleMysql::get_mysql() {
     return this->mysql;
 }
