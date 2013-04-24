@@ -22,4 +22,7 @@ var list = [{
 },{
     name: 'how to use fstream',
     href: 'http://www.cnitblog.com/wufajiaru/archive/2012/06/28/56390.html'
+},{
+    name: 'mysql',
+    href: 'http://dev.mysql.com/doc/refman/5.1/zh/apis.html#c-api-function-overview'
 }];

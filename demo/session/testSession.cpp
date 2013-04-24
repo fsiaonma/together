@@ -14,6 +14,7 @@
 #include <list>
 #include <string>
 #include <stdlib.h>
+#include <fstream>
 
 using namespace std;
 
@@ -28,9 +29,9 @@ class Session {
         static SESSION_LIST list;
         static char filename[1024];
     public:
-        static init();
-        static set(string username, string dev_id, string &sid);
-        static remove(string username);
+        static int init();
+        static int set(string username, string dev_id, string &sid);
+        static int remove(string username);
 };
 
 /**
@@ -44,6 +45,7 @@ int Session::init() {
     char session_cache_path[1024];
     strncpy(session_cache_path, "D:/My Documents/GitHub/together/src/lib/session/session_cache", 1024);
     strcpy(filename, session_cache_path);
+    cout << filename << endl;
     return 0;
 }
 
@@ -78,6 +80,12 @@ int Session::set(string username, string dev_id, string &sid) {
         s.username = username;
         list.push_back(s);
         
+        ofstream o_file;
+        // write to file
+        o_file.open(filename, ios::app);
+        o_file << "username:" << s.username << "/\n";
+        o_file.close();
+
         // set sid
         sid = "aaa";
 
