@@ -103,163 +103,6 @@
  */
  void read_http_request(process* process)
  {
- 	#if 0
- 	int sock = process->sock;
- 	char* buf = process->buf;
- 	char read_complete = 0;
-
- 	ssize_t count;
-
- 	while (1) {
- 		count = recv(sock, buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
- 		if (count == -1) {
- 			break;
- 		} else if (count == 0) {
-	    	// 被客户端关闭连接
- 			LOG_INFO << "client " << process->sock << " close connection" << endl;
- 			del_timer(process->sock);
- 			cleanup(process);
- 			return;
- 		} else if (count > 0) {
- 			process->read_pos += count;
- 		}
- 	}
-
- 	int header_length = process->read_pos;
- 	LOG_INFO << "-----recv-----" << endl;
- 	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
- 	buf[header_length]=0;
- 	LOG_INFO << buf << endl;
-  	// 请求超长，不处理了
- 	if (header_length > process->kBufferSize - 1) {
- 		BAD_REQUEST
- 		return;
- 	}
- 	buf[header_length]=0;
- 	read_complete =(strstr(buf, "\n\n") != 0) ||(strstr(buf, "\r\n\r\n") != 0);
- 	if (read_complete) {
-    	// 重置读取位置
- 		reset_process(process);
-		// 传输格式的位置 POST的时候format_pos=4
- 		int format_pos = -1;
- 		if (strncmp(buf, "POST", 4) == 0) {
- 			format_pos = 4;
- 		}
- 		LOG_INFO << "format_pos|" << format_pos << endl;
- 		if (format_pos < 0)
- 		{
- 			BAD_REQUEST
- 			return;
- 		}
-
-		// 解析第一行
- 		const char *n_loc = strchr(buf, '\n');
- 		const char *space_loc = strchr(buf + format_pos + 1, ' ');
- 		if (n_loc <= space_loc) {
- 			LOG_ERROR << "read first line error" << endl;
- 			BAD_REQUEST
- 			return;
- 		}
-
-		// 解析出模块名
- 		char module[50];
- 		int module_len = space_loc - buf - (format_pos + 2);
- 		strncpy(module, buf + (format_pos + 2), module_len);
- 		module[module_len] = 0;
- 		LOG_INFO << "module name|" << module << endl;
-
-
-		// 如果首部有Content-Length就解析出来
- 		int content_length = -1;
- 		char temp[10];
- 		char *c = strstr(buf, HEADER_CONTENT_LENGTH);
- 		if (c != 0)
- 		{
- 			char *rn = strchr(c, '\r');
- 			if (rn == 0)
- 			{
- 				rn = strchr(c, '\n');
- 				if (rn == 0)
- 				{
- 					LOG_ERROR << "not found line break" << endl;
- 					BAD_REQUEST
- 					return;
- 				}
- 			}
- 			int l = rn - c - sizeof(HEADER_CONTENT_LENGTH) + 1;
- 			strncpy(temp, c + sizeof(HEADER_CONTENT_LENGTH) - 1, l);
- 			temp[l] = 0;
- 			LOG_INFO << "Content-Length|" << temp << endl;
- 			content_length = atoi(temp);
- 		}
-
-		// 解析最后一行
-		int line_feed_num = 0;
- 		char param_data[200];
- 		param_data[0] = 0;
- 		char *pp = strstr(buf, "\n\n");
- 		if (pp == 0)
- 		{
- 			pp = strstr(buf, "\r\n\r\n");
- 			pp += 4;
- 		} else {
- 			pp += 2;
- 		}
- 		char *end = strchr(pp, '\n');
- 		if (end == 0)
- 		{
- 			end = strchr(pp, '\0');
- 		} else {
- 			line_feed_num++;
- 		}
- 		int param_len = end - pp;
- 		if (param_len > 199)
- 		{
- 			LOG_ERROR << "param is too long" << endl;
- 			BAD_REQUEST
- 			return;
- 		}
- 		strncpy(param_data, pp, param_len);
- 		param_data[param_len] = 0;
-
- 		LOG_INFO << "param data|" << param_data << endl;
-
-		// 最后一行长度为0则视为数据出错
- 		if (param_len == 0)
- 		{
- 			LOG_ERROR << "receive data is null" << endl;
- 			BAD_REQUEST
- 			return;
- 		}
-
-		// 如果首部有Content-Length,就比较与当前接收到的数据长度是否一致
- 		if (content_length > 0)
- 		{
- 			if (content_length != (int)strlen(param_data) + line_feed_num)
- 			{
- 				LOG_ERROR << "receive data size not same" << endl;
- 				BAD_REQUEST
- 				return;
- 			} else {
- 				LOG_INFO << "receive data size same" << endl;
- 			}
- 		}
-
-		// 解析参数
- 		map<string, string> param = parse_param(param_data);
- 		if (param.empty())
- 		{
- 			LOG_ERROR << "param is null" << endl;
- 			BAD_REQUEST
- 			return;
- 		}
-
-
- 		process->response_code = 200;
- 		handle_read_request(process, module, param);
- 	}
- 	#endif
-
 	int sock = process->sock;
 	char* _buf = process->buf;
 	ssize_t count;
@@ -319,7 +162,25 @@
 	}
 
 	// get first line
-	module_name = "USER";
+	string firstline = line[0];
+
+	int first_blank = firstline.find(' ');
+	int last_blank = firstline.find_last_of(' ');
+	if (firstline.substr(0, 4) != "POST") {
+		LOG_ERROR << "http request type error" << endl;
+		BAD_REQUEST
+		return ;
+	}
+
+	if (first_blank > 0 && last_blank > 0 && (last_blank - first_blank > 2))
+	{
+		module_name = firstline.substr(first_blank + 2, last_blank - first_blank - 2);
+	} else {
+		LOG_ERROR << "module name err|" << module_name << endl;
+		BAD_REQUEST
+		return ;
+	}
+	LOG_INFO << "module_name|" << module_name << endl;
 
 	// 解析空行前(HTTP首部)的内容，如果有Content-Length这个属性就保存下来
 	vector<string> prope_list;
