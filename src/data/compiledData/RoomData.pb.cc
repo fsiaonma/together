@@ -20,9 +20,9 @@ namespace RoomData {
 
 namespace {
 
-const ::google::protobuf::Descriptor* UserInfo_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* RoomInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  UserInfo_reflection_ = NULL;
+  RoomInfo_reflection_ = NULL;
 
 }  // namespace
 
@@ -33,32 +33,32 @@ void protobuf_AssignDesc_RoomData_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "RoomData.proto");
   GOOGLE_CHECK(file != NULL);
-  UserInfo_descriptor_ = file->message_type(0);
-  static const int UserInfo_offsets_[12] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, title_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, owner_nickname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, status_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, pic_url_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, gender_type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, distance_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, join_person_count_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, limit_person_count_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, address_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, create_time_),
+  RoomInfo_descriptor_ = file->message_type(0);
+  static const int RoomInfo_offsets_[12] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, title_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_nickname_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, status_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, pic_url_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, gender_type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, distance_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, join_person_count_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, limit_person_count_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, address_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, create_time_),
   };
-  UserInfo_reflection_ =
+  RoomInfo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      UserInfo_descriptor_,
-      UserInfo::default_instance_,
-      UserInfo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserInfo, _unknown_fields_),
+      RoomInfo_descriptor_,
+      RoomInfo::default_instance_,
+      RoomInfo_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(UserInfo));
+      sizeof(RoomInfo));
 }
 
 namespace {
@@ -72,14 +72,14 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    UserInfo_descriptor_, &UserInfo::default_instance());
+    RoomInfo_descriptor_, &RoomInfo::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_RoomData_2eproto() {
-  delete UserInfo::default_instance_;
-  delete UserInfo_reflection_;
+  delete RoomInfo::default_instance_;
+  delete RoomInfo_reflection_;
 }
 
 void protobuf_AddDesc_RoomData_2eproto() {
@@ -89,7 +89,7 @@ void protobuf_AddDesc_RoomData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016RoomData.proto\022\010RoomData\"\360\001\n\010UserInfo\022"
+    "\n\016RoomData.proto\022\010RoomData\"\360\001\n\010RoomInfo\022"
     "\n\n\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\026\n\016owner_nick"
     "name\030\003 \001(\t\022\014\n\004type\030\004 \001(\005\022\016\n\006status\030\005 \001(\005"
     "\022\017\n\007pic_url\030\006 \001(\t\022\023\n\013gender_type\030\007 \001(\005\022\020"
@@ -98,8 +98,8 @@ void protobuf_AddDesc_RoomData_2eproto() {
     "ss\030\013 \001(\t\022\023\n\013create_time\030\014 \001(\t", 269);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomData.proto", &protobuf_RegisterTypes);
-  UserInfo::default_instance_ = new UserInfo();
-  UserInfo::default_instance_->InitAsDefaultInstance();
+  RoomInfo::default_instance_ = new RoomInfo();
+  RoomInfo::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RoomData_2eproto);
 }
 
@@ -113,35 +113,35 @@ struct StaticDescriptorInitializer_RoomData_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int UserInfo::kIdFieldNumber;
-const int UserInfo::kTitleFieldNumber;
-const int UserInfo::kOwnerNicknameFieldNumber;
-const int UserInfo::kTypeFieldNumber;
-const int UserInfo::kStatusFieldNumber;
-const int UserInfo::kPicUrlFieldNumber;
-const int UserInfo::kGenderTypeFieldNumber;
-const int UserInfo::kDistanceFieldNumber;
-const int UserInfo::kJoinPersonCountFieldNumber;
-const int UserInfo::kLimitPersonCountFieldNumber;
-const int UserInfo::kAddressFieldNumber;
-const int UserInfo::kCreateTimeFieldNumber;
+const int RoomInfo::kIdFieldNumber;
+const int RoomInfo::kTitleFieldNumber;
+const int RoomInfo::kOwnerNicknameFieldNumber;
+const int RoomInfo::kTypeFieldNumber;
+const int RoomInfo::kStatusFieldNumber;
+const int RoomInfo::kPicUrlFieldNumber;
+const int RoomInfo::kGenderTypeFieldNumber;
+const int RoomInfo::kDistanceFieldNumber;
+const int RoomInfo::kJoinPersonCountFieldNumber;
+const int RoomInfo::kLimitPersonCountFieldNumber;
+const int RoomInfo::kAddressFieldNumber;
+const int RoomInfo::kCreateTimeFieldNumber;
 #endif  // !_MSC_VER
 
-UserInfo::UserInfo()
+RoomInfo::RoomInfo()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void UserInfo::InitAsDefaultInstance() {
+void RoomInfo::InitAsDefaultInstance() {
 }
 
-UserInfo::UserInfo(const UserInfo& from)
+RoomInfo::RoomInfo(const RoomInfo& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void UserInfo::SharedCtor() {
+void RoomInfo::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
   title_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -158,11 +158,11 @@ void UserInfo::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-UserInfo::~UserInfo() {
+RoomInfo::~RoomInfo() {
   SharedDtor();
 }
 
-void UserInfo::SharedDtor() {
+void RoomInfo::SharedDtor() {
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     delete title_;
   }
@@ -182,28 +182,28 @@ void UserInfo::SharedDtor() {
   }
 }
 
-void UserInfo::SetCachedSize(int size) const {
+void RoomInfo::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* UserInfo::descriptor() {
+const ::google::protobuf::Descriptor* RoomInfo::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return UserInfo_descriptor_;
+  return RoomInfo_descriptor_;
 }
 
-const UserInfo& UserInfo::default_instance() {
+const RoomInfo& RoomInfo::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_RoomData_2eproto();
   return *default_instance_;
 }
 
-UserInfo* UserInfo::default_instance_ = NULL;
+RoomInfo* RoomInfo::default_instance_ = NULL;
 
-UserInfo* UserInfo::New() const {
-  return new UserInfo;
+RoomInfo* RoomInfo::New() const {
+  return new RoomInfo;
 }
 
-void UserInfo::Clear() {
+void RoomInfo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     id_ = 0;
     if (has_title()) {
@@ -244,7 +244,7 @@ void UserInfo::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool UserInfo::MergePartialFromCodedStream(
+bool RoomInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -462,7 +462,7 @@ bool UserInfo::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void UserInfo::SerializeWithCachedSizes(
+void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional int32 id = 1;
   if (has_id()) {
@@ -550,7 +550,7 @@ void UserInfo::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* UserInfo::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* RoomInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // optional int32 id = 1;
   if (has_id()) {
@@ -644,7 +644,7 @@ void UserInfo::SerializeWithCachedSizes(
   return target;
 }
 
-int UserInfo::ByteSize() const {
+int RoomInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -744,10 +744,10 @@ int UserInfo::ByteSize() const {
   return total_size;
 }
 
-void UserInfo::MergeFrom(const ::google::protobuf::Message& from) {
+void RoomInfo::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const UserInfo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const UserInfo*>(
+  const RoomInfo* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const RoomInfo*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -756,7 +756,7 @@ void UserInfo::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void UserInfo::MergeFrom(const UserInfo& from) {
+void RoomInfo::MergeFrom(const RoomInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_id()) {
@@ -801,24 +801,24 @@ void UserInfo::MergeFrom(const UserInfo& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void UserInfo::CopyFrom(const ::google::protobuf::Message& from) {
+void RoomInfo::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void UserInfo::CopyFrom(const UserInfo& from) {
+void RoomInfo::CopyFrom(const RoomInfo& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool UserInfo::IsInitialized() const {
+bool RoomInfo::IsInitialized() const {
 
   return true;
 }
 
-void UserInfo::Swap(UserInfo* other) {
+void RoomInfo::Swap(RoomInfo* other) {
   if (other != this) {
     std::swap(id_, other->id_);
     std::swap(title_, other->title_);
@@ -838,11 +838,11 @@ void UserInfo::Swap(UserInfo* other) {
   }
 }
 
-::google::protobuf::Metadata UserInfo::GetMetadata() const {
+::google::protobuf::Metadata RoomInfo::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = UserInfo_descriptor_;
-  metadata.reflection = UserInfo_reflection_;
+  metadata.descriptor = RoomInfo_descriptor_;
+  metadata.reflection = RoomInfo_reflection_;
   return metadata;
 }
 

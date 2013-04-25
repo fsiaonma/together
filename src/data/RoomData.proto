@@ -1,7 +1,7 @@
 package RoomData;
 
 //room data
-message UserInfo {
+message RoomInfo {
     optional int32 id = 1;
     optional string title = 2;
     optional string owner_nickname = 3;

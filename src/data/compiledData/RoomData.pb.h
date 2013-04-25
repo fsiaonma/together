@@ -33,18 +33,18 @@ void  protobuf_AddDesc_RoomData_2eproto();
 void protobuf_AssignDesc_RoomData_2eproto();
 void protobuf_ShutdownFile_RoomData_2eproto();
 
-class UserInfo;
+class RoomInfo;
 
 // ===================================================================
 
-class UserInfo : public ::google::protobuf::Message {
+class RoomInfo : public ::google::protobuf::Message {
  public:
-  UserInfo();
-  virtual ~UserInfo();
+  RoomInfo();
+  virtual ~RoomInfo();
 
-  UserInfo(const UserInfo& from);
+  RoomInfo(const RoomInfo& from);
 
-  inline UserInfo& operator=(const UserInfo& from) {
+  inline RoomInfo& operator=(const RoomInfo& from) {
     CopyFrom(from);
     return *this;
   }
@@ -58,17 +58,17 @@ class UserInfo : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const UserInfo& default_instance();
+  static const RoomInfo& default_instance();
 
-  void Swap(UserInfo* other);
+  void Swap(RoomInfo* other);
 
   // implements Message ----------------------------------------------
 
-  UserInfo* New() const;
+  RoomInfo* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const UserInfo& from);
-  void MergeFrom(const UserInfo& from);
+  void CopyFrom(const RoomInfo& from);
+  void MergeFrom(const RoomInfo& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -200,7 +200,7 @@ class UserInfo : public ::google::protobuf::Message {
   inline ::std::string* release_create_time();
   inline void set_allocated_create_time(::std::string* create_time);
 
-  // @@protoc_insertion_point(class_scope:RoomData.UserInfo)
+  // @@protoc_insertion_point(class_scope:RoomData.RoomInfo)
  private:
   inline void set_has_id();
   inline void clear_has_id();
@@ -250,85 +250,85 @@ class UserInfo : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_RoomData_2eproto();
 
   void InitAsDefaultInstance();
-  static UserInfo* default_instance_;
+  static RoomInfo* default_instance_;
 };
 // ===================================================================
 
 
 // ===================================================================
 
-// UserInfo
+// RoomInfo
 
 // optional int32 id = 1;
-inline bool UserInfo::has_id() const {
+inline bool RoomInfo::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void UserInfo::set_has_id() {
+inline void RoomInfo::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void UserInfo::clear_has_id() {
+inline void RoomInfo::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void UserInfo::clear_id() {
+inline void RoomInfo::clear_id() {
   id_ = 0;
   clear_has_id();
 }
-inline ::google::protobuf::int32 UserInfo::id() const {
+inline ::google::protobuf::int32 RoomInfo::id() const {
   return id_;
 }
-inline void UserInfo::set_id(::google::protobuf::int32 value) {
+inline void RoomInfo::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
 }
 
 // optional string title = 2;
-inline bool UserInfo::has_title() const {
+inline bool RoomInfo::has_title() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void UserInfo::set_has_title() {
+inline void RoomInfo::set_has_title() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void UserInfo::clear_has_title() {
+inline void RoomInfo::clear_has_title() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void UserInfo::clear_title() {
+inline void RoomInfo::clear_title() {
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     title_->clear();
   }
   clear_has_title();
 }
-inline const ::std::string& UserInfo::title() const {
+inline const ::std::string& RoomInfo::title() const {
   return *title_;
 }
-inline void UserInfo::set_title(const ::std::string& value) {
+inline void RoomInfo::set_title(const ::std::string& value) {
   set_has_title();
   if (title_ == &::google::protobuf::internal::kEmptyString) {
     title_ = new ::std::string;
   }
   title_->assign(value);
 }
-inline void UserInfo::set_title(const char* value) {
+inline void RoomInfo::set_title(const char* value) {
   set_has_title();
   if (title_ == &::google::protobuf::internal::kEmptyString) {
     title_ = new ::std::string;
   }
   title_->assign(value);
 }
-inline void UserInfo::set_title(const char* value, size_t size) {
+inline void RoomInfo::set_title(const char* value, size_t size) {
   set_has_title();
   if (title_ == &::google::protobuf::internal::kEmptyString) {
     title_ = new ::std::string;
   }
   title_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* UserInfo::mutable_title() {
+inline ::std::string* RoomInfo::mutable_title() {
   set_has_title();
   if (title_ == &::google::protobuf::internal::kEmptyString) {
     title_ = new ::std::string;
   }
   return title_;
 }
-inline ::std::string* UserInfo::release_title() {
+inline ::std::string* RoomInfo::release_title() {
   clear_has_title();
   if (title_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -338,7 +338,7 @@ inline ::std::string* UserInfo::release_title() {
     return temp;
   }
 }
-inline void UserInfo::set_allocated_title(::std::string* title) {
+inline void RoomInfo::set_allocated_title(::std::string* title) {
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     delete title_;
   }
@@ -352,53 +352,53 @@ inline void UserInfo::set_allocated_title(::std::string* title) {
 }
 
 // optional string owner_nickname = 3;
-inline bool UserInfo::has_owner_nickname() const {
+inline bool RoomInfo::has_owner_nickname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void UserInfo::set_has_owner_nickname() {
+inline void RoomInfo::set_has_owner_nickname() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void UserInfo::clear_has_owner_nickname() {
+inline void RoomInfo::clear_has_owner_nickname() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void UserInfo::clear_owner_nickname() {
+inline void RoomInfo::clear_owner_nickname() {
   if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
     owner_nickname_->clear();
   }
   clear_has_owner_nickname();
 }
-inline const ::std::string& UserInfo::owner_nickname() const {
+inline const ::std::string& RoomInfo::owner_nickname() const {
   return *owner_nickname_;
 }
-inline void UserInfo::set_owner_nickname(const ::std::string& value) {
+inline void RoomInfo::set_owner_nickname(const ::std::string& value) {
   set_has_owner_nickname();
   if (owner_nickname_ == &::google::protobuf::internal::kEmptyString) {
     owner_nickname_ = new ::std::string;
   }
   owner_nickname_->assign(value);
 }
-inline void UserInfo::set_owner_nickname(const char* value) {
+inline void RoomInfo::set_owner_nickname(const char* value) {
   set_has_owner_nickname();
   if (owner_nickname_ == &::google::protobuf::internal::kEmptyString) {
     owner_nickname_ = new ::std::string;
   }
   owner_nickname_->assign(value);
 }
-inline void UserInfo::set_owner_nickname(const char* value, size_t size) {
+inline void RoomInfo::set_owner_nickname(const char* value, size_t size) {
   set_has_owner_nickname();
   if (owner_nickname_ == &::google::protobuf::internal::kEmptyString) {
     owner_nickname_ = new ::std::string;
   }
   owner_nickname_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* UserInfo::mutable_owner_nickname() {
+inline ::std::string* RoomInfo::mutable_owner_nickname() {
   set_has_owner_nickname();
   if (owner_nickname_ == &::google::protobuf::internal::kEmptyString) {
     owner_nickname_ = new ::std::string;
   }
   return owner_nickname_;
 }
-inline ::std::string* UserInfo::release_owner_nickname() {
+inline ::std::string* RoomInfo::release_owner_nickname() {
   clear_has_owner_nickname();
   if (owner_nickname_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -408,7 +408,7 @@ inline ::std::string* UserInfo::release_owner_nickname() {
     return temp;
   }
 }
-inline void UserInfo::set_allocated_owner_nickname(::std::string* owner_nickname) {
+inline void RoomInfo::set_allocated_owner_nickname(::std::string* owner_nickname) {
   if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
     delete owner_nickname_;
   }
@@ -422,97 +422,97 @@ inline void UserInfo::set_allocated_owner_nickname(::std::string* owner_nickname
 }
 
 // optional int32 type = 4;
-inline bool UserInfo::has_type() const {
+inline bool RoomInfo::has_type() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void UserInfo::set_has_type() {
+inline void RoomInfo::set_has_type() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void UserInfo::clear_has_type() {
+inline void RoomInfo::clear_has_type() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void UserInfo::clear_type() {
+inline void RoomInfo::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::google::protobuf::int32 UserInfo::type() const {
+inline ::google::protobuf::int32 RoomInfo::type() const {
   return type_;
 }
-inline void UserInfo::set_type(::google::protobuf::int32 value) {
+inline void RoomInfo::set_type(::google::protobuf::int32 value) {
   set_has_type();
   type_ = value;
 }
 
 // optional int32 status = 5;
-inline bool UserInfo::has_status() const {
+inline bool RoomInfo::has_status() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void UserInfo::set_has_status() {
+inline void RoomInfo::set_has_status() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void UserInfo::clear_has_status() {
+inline void RoomInfo::clear_has_status() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void UserInfo::clear_status() {
+inline void RoomInfo::clear_status() {
   status_ = 0;
   clear_has_status();
 }
-inline ::google::protobuf::int32 UserInfo::status() const {
+inline ::google::protobuf::int32 RoomInfo::status() const {
   return status_;
 }
-inline void UserInfo::set_status(::google::protobuf::int32 value) {
+inline void RoomInfo::set_status(::google::protobuf::int32 value) {
   set_has_status();
   status_ = value;
 }
 
 // optional string pic_url = 6;
-inline bool UserInfo::has_pic_url() const {
+inline bool RoomInfo::has_pic_url() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void UserInfo::set_has_pic_url() {
+inline void RoomInfo::set_has_pic_url() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void UserInfo::clear_has_pic_url() {
+inline void RoomInfo::clear_has_pic_url() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void UserInfo::clear_pic_url() {
+inline void RoomInfo::clear_pic_url() {
   if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
     pic_url_->clear();
   }
   clear_has_pic_url();
 }
-inline const ::std::string& UserInfo::pic_url() const {
+inline const ::std::string& RoomInfo::pic_url() const {
   return *pic_url_;
 }
-inline void UserInfo::set_pic_url(const ::std::string& value) {
+inline void RoomInfo::set_pic_url(const ::std::string& value) {
   set_has_pic_url();
   if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
     pic_url_ = new ::std::string;
   }
   pic_url_->assign(value);
 }
-inline void UserInfo::set_pic_url(const char* value) {
+inline void RoomInfo::set_pic_url(const char* value) {
   set_has_pic_url();
   if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
     pic_url_ = new ::std::string;
   }
   pic_url_->assign(value);
 }
-inline void UserInfo::set_pic_url(const char* value, size_t size) {
+inline void RoomInfo::set_pic_url(const char* value, size_t size) {
   set_has_pic_url();
   if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
     pic_url_ = new ::std::string;
   }
   pic_url_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* UserInfo::mutable_pic_url() {
+inline ::std::string* RoomInfo::mutable_pic_url() {
   set_has_pic_url();
   if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
     pic_url_ = new ::std::string;
   }
   return pic_url_;
 }
-inline ::std::string* UserInfo::release_pic_url() {
+inline ::std::string* RoomInfo::release_pic_url() {
   clear_has_pic_url();
   if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -522,7 +522,7 @@ inline ::std::string* UserInfo::release_pic_url() {
     return temp;
   }
 }
-inline void UserInfo::set_allocated_pic_url(::std::string* pic_url) {
+inline void RoomInfo::set_allocated_pic_url(::std::string* pic_url) {
   if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
     delete pic_url_;
   }
@@ -536,141 +536,141 @@ inline void UserInfo::set_allocated_pic_url(::std::string* pic_url) {
 }
 
 // optional int32 gender_type = 7;
-inline bool UserInfo::has_gender_type() const {
+inline bool RoomInfo::has_gender_type() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void UserInfo::set_has_gender_type() {
+inline void RoomInfo::set_has_gender_type() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void UserInfo::clear_has_gender_type() {
+inline void RoomInfo::clear_has_gender_type() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void UserInfo::clear_gender_type() {
+inline void RoomInfo::clear_gender_type() {
   gender_type_ = 0;
   clear_has_gender_type();
 }
-inline ::google::protobuf::int32 UserInfo::gender_type() const {
+inline ::google::protobuf::int32 RoomInfo::gender_type() const {
   return gender_type_;
 }
-inline void UserInfo::set_gender_type(::google::protobuf::int32 value) {
+inline void RoomInfo::set_gender_type(::google::protobuf::int32 value) {
   set_has_gender_type();
   gender_type_ = value;
 }
 
 // optional double distance = 8;
-inline bool UserInfo::has_distance() const {
+inline bool RoomInfo::has_distance() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void UserInfo::set_has_distance() {
+inline void RoomInfo::set_has_distance() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void UserInfo::clear_has_distance() {
+inline void RoomInfo::clear_has_distance() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void UserInfo::clear_distance() {
+inline void RoomInfo::clear_distance() {
   distance_ = 0;
   clear_has_distance();
 }
-inline double UserInfo::distance() const {
+inline double RoomInfo::distance() const {
   return distance_;
 }
-inline void UserInfo::set_distance(double value) {
+inline void RoomInfo::set_distance(double value) {
   set_has_distance();
   distance_ = value;
 }
 
 // optional int32 join_person_count = 9;
-inline bool UserInfo::has_join_person_count() const {
+inline bool RoomInfo::has_join_person_count() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void UserInfo::set_has_join_person_count() {
+inline void RoomInfo::set_has_join_person_count() {
   _has_bits_[0] |= 0x00000100u;
 }
-inline void UserInfo::clear_has_join_person_count() {
+inline void RoomInfo::clear_has_join_person_count() {
   _has_bits_[0] &= ~0x00000100u;
 }
-inline void UserInfo::clear_join_person_count() {
+inline void RoomInfo::clear_join_person_count() {
   join_person_count_ = 0;
   clear_has_join_person_count();
 }
-inline ::google::protobuf::int32 UserInfo::join_person_count() const {
+inline ::google::protobuf::int32 RoomInfo::join_person_count() const {
   return join_person_count_;
 }
-inline void UserInfo::set_join_person_count(::google::protobuf::int32 value) {
+inline void RoomInfo::set_join_person_count(::google::protobuf::int32 value) {
   set_has_join_person_count();
   join_person_count_ = value;
 }
 
 // optional int32 limit_person_count = 10;
-inline bool UserInfo::has_limit_person_count() const {
+inline bool RoomInfo::has_limit_person_count() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
-inline void UserInfo::set_has_limit_person_count() {
+inline void RoomInfo::set_has_limit_person_count() {
   _has_bits_[0] |= 0x00000200u;
 }
-inline void UserInfo::clear_has_limit_person_count() {
+inline void RoomInfo::clear_has_limit_person_count() {
   _has_bits_[0] &= ~0x00000200u;
 }
-inline void UserInfo::clear_limit_person_count() {
+inline void RoomInfo::clear_limit_person_count() {
   limit_person_count_ = 0;
   clear_has_limit_person_count();
 }
-inline ::google::protobuf::int32 UserInfo::limit_person_count() const {
+inline ::google::protobuf::int32 RoomInfo::limit_person_count() const {
   return limit_person_count_;
 }
-inline void UserInfo::set_limit_person_count(::google::protobuf::int32 value) {
+inline void RoomInfo::set_limit_person_count(::google::protobuf::int32 value) {
   set_has_limit_person_count();
   limit_person_count_ = value;
 }
 
 // optional string address = 11;
-inline bool UserInfo::has_address() const {
+inline bool RoomInfo::has_address() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
-inline void UserInfo::set_has_address() {
+inline void RoomInfo::set_has_address() {
   _has_bits_[0] |= 0x00000400u;
 }
-inline void UserInfo::clear_has_address() {
+inline void RoomInfo::clear_has_address() {
   _has_bits_[0] &= ~0x00000400u;
 }
-inline void UserInfo::clear_address() {
+inline void RoomInfo::clear_address() {
   if (address_ != &::google::protobuf::internal::kEmptyString) {
     address_->clear();
   }
   clear_has_address();
 }
-inline const ::std::string& UserInfo::address() const {
+inline const ::std::string& RoomInfo::address() const {
   return *address_;
 }
-inline void UserInfo::set_address(const ::std::string& value) {
+inline void RoomInfo::set_address(const ::std::string& value) {
   set_has_address();
   if (address_ == &::google::protobuf::internal::kEmptyString) {
     address_ = new ::std::string;
   }
   address_->assign(value);
 }
-inline void UserInfo::set_address(const char* value) {
+inline void RoomInfo::set_address(const char* value) {
   set_has_address();
   if (address_ == &::google::protobuf::internal::kEmptyString) {
     address_ = new ::std::string;
   }
   address_->assign(value);
 }
-inline void UserInfo::set_address(const char* value, size_t size) {
+inline void RoomInfo::set_address(const char* value, size_t size) {
   set_has_address();
   if (address_ == &::google::protobuf::internal::kEmptyString) {
     address_ = new ::std::string;
   }
   address_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* UserInfo::mutable_address() {
+inline ::std::string* RoomInfo::mutable_address() {
   set_has_address();
   if (address_ == &::google::protobuf::internal::kEmptyString) {
     address_ = new ::std::string;
   }
   return address_;
 }
-inline ::std::string* UserInfo::release_address() {
+inline ::std::string* RoomInfo::release_address() {
   clear_has_address();
   if (address_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -680,7 +680,7 @@ inline ::std::string* UserInfo::release_address() {
     return temp;
   }
 }
-inline void UserInfo::set_allocated_address(::std::string* address) {
+inline void RoomInfo::set_allocated_address(::std::string* address) {
   if (address_ != &::google::protobuf::internal::kEmptyString) {
     delete address_;
   }
@@ -694,53 +694,53 @@ inline void UserInfo::set_allocated_address(::std::string* address) {
 }
 
 // optional string create_time = 12;
-inline bool UserInfo::has_create_time() const {
+inline bool RoomInfo::has_create_time() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
-inline void UserInfo::set_has_create_time() {
+inline void RoomInfo::set_has_create_time() {
   _has_bits_[0] |= 0x00000800u;
 }
-inline void UserInfo::clear_has_create_time() {
+inline void RoomInfo::clear_has_create_time() {
   _has_bits_[0] &= ~0x00000800u;
 }
-inline void UserInfo::clear_create_time() {
+inline void RoomInfo::clear_create_time() {
   if (create_time_ != &::google::protobuf::internal::kEmptyString) {
     create_time_->clear();
   }
   clear_has_create_time();
 }
-inline const ::std::string& UserInfo::create_time() const {
+inline const ::std::string& RoomInfo::create_time() const {
   return *create_time_;
 }
-inline void UserInfo::set_create_time(const ::std::string& value) {
+inline void RoomInfo::set_create_time(const ::std::string& value) {
   set_has_create_time();
   if (create_time_ == &::google::protobuf::internal::kEmptyString) {
     create_time_ = new ::std::string;
   }
   create_time_->assign(value);
 }
-inline void UserInfo::set_create_time(const char* value) {
+inline void RoomInfo::set_create_time(const char* value) {
   set_has_create_time();
   if (create_time_ == &::google::protobuf::internal::kEmptyString) {
     create_time_ = new ::std::string;
   }
   create_time_->assign(value);
 }
-inline void UserInfo::set_create_time(const char* value, size_t size) {
+inline void RoomInfo::set_create_time(const char* value, size_t size) {
   set_has_create_time();
   if (create_time_ == &::google::protobuf::internal::kEmptyString) {
     create_time_ = new ::std::string;
   }
   create_time_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* UserInfo::mutable_create_time() {
+inline ::std::string* RoomInfo::mutable_create_time() {
   set_has_create_time();
   if (create_time_ == &::google::protobuf::internal::kEmptyString) {
     create_time_ = new ::std::string;
   }
   return create_time_;
 }
-inline ::std::string* UserInfo::release_create_time() {
+inline ::std::string* RoomInfo::release_create_time() {
   clear_has_create_time();
   if (create_time_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -750,7 +750,7 @@ inline ::std::string* UserInfo::release_create_time() {
     return temp;
   }
 }
-inline void UserInfo::set_allocated_create_time(::std::string* create_time) {
+inline void RoomInfo::set_allocated_create_time(::std::string* create_time) {
   if (create_time_ != &::google::protobuf::internal::kEmptyString) {
     delete create_time_;
   }
