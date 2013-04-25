@@ -80,7 +80,7 @@ int login(string username, string password, string dev_id, char *buf) {
 
 
     #if 0
-        UserData::User_Info *user_info = new UserData::User_Info();
+        UserData::User_Info *de = new UserData::User_Info();
 
         MYSQL mysql;
         string sql = "select * from t_user where username = '" + username + "';";
@@ -102,30 +102,33 @@ int login(string username, string password, string dev_id, char *buf) {
         for(int i = 0; i < fieldcount; i++) {
             field = mysql_fetch_field_direct(result, i);
             cout << field->name << "\t";
-            if (field->name == "username") {
-                user_info.set_username(row[i]);
-            } else if (field->name == "nick_name") {
-                user_info.set_nick_name(row[i]);
-            } else if (field->name == "birthday") {
-                user_info.set_birthday(row[i]);
-            } else if (field->name == "signature_text") {
-                user_info.set_signature_text(row[i]);
-            } else if (field->name == "signature_record_id") {
-                user_info.set_signature_record_id(row[i]);
-            } else if (field->name == "praise_num") {
-                user_info.set_praise_num(row[i]);
-            } else if (field->name == "visit_num") {
-                user_info.set_visit_num(row[i]);
-            } else if (field->name == "followed_num") {
-                user_info.set_followed_num(row[i]);
-            } else if (field->name == "follow_num") {
-                user_info.set_follow_num(row[i]);
+            string key = field->name;
+            if (key == "username") {
+                user_info->set_username(row[i]);
+            } else if (key == "nick_name") {
+                user_info->set_nick_name(row[i]);
+            } else if (key == "birthday") {
+                user_info->set_birthday(Tool::S2I(row[i]));
+            } else if (key == "signature_text") {
+                user_info->set_signature_text(row[i]);
+            } else if (key == "signature_record_id") {
+                user_info->set_signature_record_id(Tool::S2I(row[i]));
+            } else if (key == "praise_num") {
+                user_info->set_praise_num(Tool::S2I(row[i]));
+            } else if (key == "visit_num") {
+                user_info->set_visit_num(Tool::S2I(row[i]));
+            } else if (key == "followed_num") {
+                user_info->set_followed_num(Tool::S2I(row[i]));
+            } else if (key == "follow_num") {
+                user_info->set_follow_num(Tool::S2I(row[i]));
             }
         }
 
         UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
+        login_res->set_allocated_user_info(user_info);
         login_res->set_sid(sid);
-        http_res->set_allocated_user_info(user_info);
+
+        http_res->set_allocated_login_response(login_res);
     #endif
     } while(0);
 	

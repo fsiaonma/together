@@ -7,7 +7,7 @@ char Session::filename[100];
  * session Construtor
  */
 int Session::init() {
-	cout << "------------------------------ init" << endl;
+	// cout << "------------------------------ init" << endl;
     char prj_path[1024];
     Tool::get_project_path(prj_path, 1024);
     char session_cache_path[strlen(prj_path) + 20];
@@ -25,7 +25,7 @@ int Session::init() {
  * @return {string} sid
  */
 int Session::set(string username, string dev_id, string &sid) {
-	cout << "--------------------------" << sessions.size() << endl;
+	// cout << "--------------------------" << sessions.size() << endl;
 
 	init_sessions();
 
@@ -38,7 +38,7 @@ int Session::set(string username, string dev_id, string &sid) {
     do {
         // check whether username is in catch or not
 	    for(ptr = sessions.begin(); ptr != sessions.end(); ++ptr) {
-	    	cout << ptr->first << "....." << username << endl;
+	    	// cout << ptr->first << "....." << username << endl;
 	    	if (ptr->first == username) {
 	    		remove(username);
 	    		result = S_REPLACE_IN;
@@ -65,7 +65,7 @@ int Session::set(string username, string dev_id, string &sid) {
         }
     } while(0);
 
-    cout << "--------------------------" << sessions.size() << endl;
+    // cout << "--------------------------" << sessions.size() << endl;
     return result;
 }
 
@@ -77,7 +77,7 @@ int Session::set(string username, string dev_id, string &sid) {
  * @return {SESSION} SESSION whitch is found according to sid 
  */
 SESSION *Session::get(string sid) {
-	cout << "---------------------------- get" << endl;
+	// cout << "---------------------------- get" << endl;
 
 	init_sessions();
 
@@ -101,7 +101,7 @@ SESSION *Session::get(string sid) {
  * @return {int} the status of remove operation
  */
 int Session::remove(string username) {
-	cout << "-------------------------------- remove" << endl;
+	// cout << "-------------------------------- remove" << endl;
 
 	init_sessions();
 
@@ -127,7 +127,7 @@ int Session::remove(string username) {
 int res = Session::init();
 
 void Session::init_sessions() {
-	cout << "-------------------------------------- list_ctor" << endl;
+	// cout << "-------------------------------------- list_ctor" << endl;
 	sessions.clear();
     ifstream i_file;
     string out_text;
