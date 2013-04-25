@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include "user.pb.h"
+#include <google/protobuf/text_format.h>
+
 using namespace std;
 
 void set(user::LoginResponse *res)
@@ -24,6 +26,10 @@ int main(int argc, char* argv[]) {
 
   uRes->set_datatype(user::UserResponse::LOGIN_RESPONSE);
   uRes->set_allocated_loginresponse(res);
+
+    string outString;
+    google::protobuf::TextFormat::PrintToString(*uRes ,&outString);
+    cout << outString << endl; 
 
   fstream output("./response.log", ios::out | ios::trunc | ios::binary);   
   
