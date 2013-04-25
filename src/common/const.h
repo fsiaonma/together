@@ -82,30 +82,42 @@ static const int STATUS_SEND_RESPONSE = 4;
 static const int STATUS_UPLOAD_READY = 5;
 static const int STATUS_UPLOAD_FINISHED = 6;
 
+// --------------- Module Code ---------------
 // 功能模块的标识码
 static const int UNKNOWN_MODULE = 99;
 static const int USER_MODULE = 100;
 static const int ROOM_MODULE = 200;
 
-// user action code.
+// --------------- Module Action Code ---------------
+// ============ USER ============
 static const int USER_REGIEST = 101;
 static const int USER_LOGIN = 102;
 static const int USER_LOGOUT = 103;
 
-// system status code
+// ============ ROOM ============
+static const int ROOM_CREATE = 201;
+static const int ROOM_SHOWLIST = 202;
+static const int ROOM_SEARCH = 203;
+
+
+// --------------- Status Code ---------------
+// ============ System ============
 static const int PARAM_ERROR = 1001;
 static const int DB_ERROR = 1002;
 
-// database status code
+// ============ DataBase ============
 static const int DB_OK = 5000;
 static const int DB_CONNECT_FAIL = 5001;
 static const int DB_COUNT_ERR = 5002;
 static const int DB_QUERY_ERR = 5003;
 
-// session status code
+// ============ Session ============
 static const int SESSION_OK = 6000;
 static const int SESSION_NOT_EXIST = 6001;
 
+
+// --------------- Function Result Code ---------------
+// ============ User ============
 // regiest result code
 static const int REGIEST_SUCCESS = 11000;
 static const int REGIEST_FAIL = 11001;
@@ -115,6 +127,8 @@ static const int USERNAME_IS_EXIST = 11002;
 static const int LOGIN_SUCCESS = 12000;
 static const int USER_NOT_EXIST = 12001;
 static const int LOGIN_REPLACE = 12002;
+
+// ============ Room ============
 
 #endif
 

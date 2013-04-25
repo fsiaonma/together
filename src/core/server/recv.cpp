@@ -67,7 +67,12 @@
  		}
  		case ROOM_MODULE:
  		{
-			//room_handler(process, req);
+ 			s = room_handler(process, param);
+ 			if (s == -1) {
+ 				LOG_ERROR << "user_handler err" << endl;
+	 			BAD_REQUEST
+	 			return;
+ 			}
  			break;
  		}
  		default:

@@ -31,4 +31,5 @@ cleanall:clean
 	rm -f $(TARGET)
 
 upload:cleanall
+	find ./ -name *~ | xargs rm -f
 	find ./ * | xargs chmod 777
