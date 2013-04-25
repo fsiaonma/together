@@ -13,7 +13,7 @@
 #include "../../util/tool/tool.h"
 #include "../../lib/session/session.h"
 
-
+int create_room(map<string, string> param, char *buf);
 int room_handler(process *process, map<string, string> param);
 
 #endif

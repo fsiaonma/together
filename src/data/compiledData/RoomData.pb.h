@@ -200,6 +200,30 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::std::string* release_create_time();
   inline void set_allocated_create_time(::std::string* create_time);
 
+  // optional string begin_time = 13;
+  inline bool has_begin_time() const;
+  inline void clear_begin_time();
+  static const int kBeginTimeFieldNumber = 13;
+  inline const ::std::string& begin_time() const;
+  inline void set_begin_time(const ::std::string& value);
+  inline void set_begin_time(const char* value);
+  inline void set_begin_time(const char* value, size_t size);
+  inline ::std::string* mutable_begin_time();
+  inline ::std::string* release_begin_time();
+  inline void set_allocated_begin_time(::std::string* begin_time);
+
+  // optional string addr_remarks = 14;
+  inline bool has_addr_remarks() const;
+  inline void clear_addr_remarks();
+  static const int kAddrRemarksFieldNumber = 14;
+  inline const ::std::string& addr_remarks() const;
+  inline void set_addr_remarks(const ::std::string& value);
+  inline void set_addr_remarks(const char* value);
+  inline void set_addr_remarks(const char* value, size_t size);
+  inline ::std::string* mutable_addr_remarks();
+  inline ::std::string* release_addr_remarks();
+  inline void set_allocated_addr_remarks(::std::string* addr_remarks);
+
   // @@protoc_insertion_point(class_scope:RoomData.RoomInfo)
  private:
   inline void set_has_id();
@@ -226,6 +250,10 @@ class RoomInfo : public ::google::protobuf::Message {
   inline void clear_has_address();
   inline void set_has_create_time();
   inline void clear_has_create_time();
+  inline void set_has_begin_time();
+  inline void clear_has_begin_time();
+  inline void set_has_addr_remarks();
+  inline void clear_has_addr_remarks();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -241,9 +269,11 @@ class RoomInfo : public ::google::protobuf::Message {
   ::google::protobuf::int32 limit_person_count_;
   ::std::string* address_;
   ::std::string* create_time_;
+  ::std::string* begin_time_;
+  ::std::string* addr_remarks_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
 
   friend void  protobuf_AddDesc_RoomData_2eproto();
   friend void protobuf_AssignDesc_RoomData_2eproto();
@@ -760,6 +790,146 @@ inline void RoomInfo::set_allocated_create_time(::std::string* create_time) {
   } else {
     clear_has_create_time();
     create_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string begin_time = 13;
+inline bool RoomInfo::has_begin_time() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void RoomInfo::set_has_begin_time() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void RoomInfo::clear_has_begin_time() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void RoomInfo::clear_begin_time() {
+  if (begin_time_ != &::google::protobuf::internal::kEmptyString) {
+    begin_time_->clear();
+  }
+  clear_has_begin_time();
+}
+inline const ::std::string& RoomInfo::begin_time() const {
+  return *begin_time_;
+}
+inline void RoomInfo::set_begin_time(const ::std::string& value) {
+  set_has_begin_time();
+  if (begin_time_ == &::google::protobuf::internal::kEmptyString) {
+    begin_time_ = new ::std::string;
+  }
+  begin_time_->assign(value);
+}
+inline void RoomInfo::set_begin_time(const char* value) {
+  set_has_begin_time();
+  if (begin_time_ == &::google::protobuf::internal::kEmptyString) {
+    begin_time_ = new ::std::string;
+  }
+  begin_time_->assign(value);
+}
+inline void RoomInfo::set_begin_time(const char* value, size_t size) {
+  set_has_begin_time();
+  if (begin_time_ == &::google::protobuf::internal::kEmptyString) {
+    begin_time_ = new ::std::string;
+  }
+  begin_time_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RoomInfo::mutable_begin_time() {
+  set_has_begin_time();
+  if (begin_time_ == &::google::protobuf::internal::kEmptyString) {
+    begin_time_ = new ::std::string;
+  }
+  return begin_time_;
+}
+inline ::std::string* RoomInfo::release_begin_time() {
+  clear_has_begin_time();
+  if (begin_time_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = begin_time_;
+    begin_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RoomInfo::set_allocated_begin_time(::std::string* begin_time) {
+  if (begin_time_ != &::google::protobuf::internal::kEmptyString) {
+    delete begin_time_;
+  }
+  if (begin_time) {
+    set_has_begin_time();
+    begin_time_ = begin_time;
+  } else {
+    clear_has_begin_time();
+    begin_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional string addr_remarks = 14;
+inline bool RoomInfo::has_addr_remarks() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void RoomInfo::set_has_addr_remarks() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void RoomInfo::clear_has_addr_remarks() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void RoomInfo::clear_addr_remarks() {
+  if (addr_remarks_ != &::google::protobuf::internal::kEmptyString) {
+    addr_remarks_->clear();
+  }
+  clear_has_addr_remarks();
+}
+inline const ::std::string& RoomInfo::addr_remarks() const {
+  return *addr_remarks_;
+}
+inline void RoomInfo::set_addr_remarks(const ::std::string& value) {
+  set_has_addr_remarks();
+  if (addr_remarks_ == &::google::protobuf::internal::kEmptyString) {
+    addr_remarks_ = new ::std::string;
+  }
+  addr_remarks_->assign(value);
+}
+inline void RoomInfo::set_addr_remarks(const char* value) {
+  set_has_addr_remarks();
+  if (addr_remarks_ == &::google::protobuf::internal::kEmptyString) {
+    addr_remarks_ = new ::std::string;
+  }
+  addr_remarks_->assign(value);
+}
+inline void RoomInfo::set_addr_remarks(const char* value, size_t size) {
+  set_has_addr_remarks();
+  if (addr_remarks_ == &::google::protobuf::internal::kEmptyString) {
+    addr_remarks_ = new ::std::string;
+  }
+  addr_remarks_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RoomInfo::mutable_addr_remarks() {
+  set_has_addr_remarks();
+  if (addr_remarks_ == &::google::protobuf::internal::kEmptyString) {
+    addr_remarks_ = new ::std::string;
+  }
+  return addr_remarks_;
+}
+inline ::std::string* RoomInfo::release_addr_remarks() {
+  clear_has_addr_remarks();
+  if (addr_remarks_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = addr_remarks_;
+    addr_remarks_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RoomInfo::set_allocated_addr_remarks(::std::string* addr_remarks) {
+  if (addr_remarks_ != &::google::protobuf::internal::kEmptyString) {
+    delete addr_remarks_;
+  }
+  if (addr_remarks) {
+    set_has_addr_remarks();
+    addr_remarks_ = addr_remarks;
+  } else {
+    clear_has_addr_remarks();
+    addr_remarks_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
