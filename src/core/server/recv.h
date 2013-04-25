@@ -14,7 +14,7 @@
 #include "../../module/user/user.h"
 #include "../../module/room/room.h"
 
-void handle_read_request(process *process, char *module, map<string, string> param);
+void handle_read_request(process *process, const char *module, map<string, string> param);
 
 map<string, string> parse_param(char *param_data);
 

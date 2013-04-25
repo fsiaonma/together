@@ -29,6 +29,5 @@ int room_handler(process *process, map<string, string> param) {
 	write_to_header(header_200_start); // start to write header
     write_to_header("\r\n");
     write_to_header(response_data); // send data
-	write_to_header(header_end); // write header end
 	return 0;
 }

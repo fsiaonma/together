@@ -36,7 +36,7 @@ struct process {
 
 int get_index_file(char *filename_buf, struct stat *pstat);
 
-int get_module_type(char *req);
+int get_module_type(const char *req);
 
 void time_update();
 

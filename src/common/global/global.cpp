@@ -35,7 +35,7 @@ int get_index_file(char *filename_buf, struct stat *pstat) {
 	return 0;
 }
 
-int get_module_type(char *req) {
+int get_module_type(const char *req) {
 	int ret = UNKNOWN_MODULE;
 	if (strcmp(req, "USER") == 0) {
 		ret = USER_MODULE;

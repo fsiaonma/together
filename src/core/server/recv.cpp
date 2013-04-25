@@ -49,7 +49,7 @@
  * @param module  [模块名]
  * @param param   [保存了请求中参数及其对应的值,map<string, string>]
  */
- void handle_read_request(process *process, char *module, map<string, string> param) {
+ void handle_read_request(process *process, const char *module, map<string, string> param) {
  	LOG_INFO << "handle_read_request" << endl;
  	int module_type = get_module_type(module);
  	int s;
@@ -103,6 +103,7 @@
  */
  void read_http_request(process* process)
  {
+ 	#if 0
  	int sock = process->sock;
  	char* buf = process->buf;
  	char read_complete = 0;
@@ -257,6 +258,130 @@
  		process->response_code = 200;
  		handle_read_request(process, module, param);
  	}
+ 	#endif
+
+	int sock = process->sock;
+	char* _buf = process->buf;
+	ssize_t count;
+	string request;
+	int content_length = 0;
+	int other_sign_num = 0;
+	string module_name;
+	// 接收HTTP请求
+	while (1) {
+		count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
+		if (count == -1) {
+			break;
+		} else if (count == 0) {
+			break;
+		} else if (count > 0) {
+			process->read_pos += count;
+			_buf[process->read_pos] = 0;
+			request.append(_buf);
+			LOG_INFO << _buf << endl;
+			LOG_INFO << "process->read_pos|" << process->read_pos << endl;
+			if (process->read_pos == process->kBufferSize)
+			{
+				process->read_pos = 0;
+			}
+		}
+	}
+	int request_len = request.length();
+	for (int i = request_len - 1; i >= 1; i--)
+	{
+		if (request[i] == '\0' || request[i] == '\r' || request[i] == '\n') {
+			other_sign_num++;
+			continue;
+		}
+		else
+			break;
+	}
+	LOG_INFO << "-----recv-----" << endl;
+	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
+
+	// 按行截取HTTP请求
+	vector<string> line = Tool::split(request, "\n");
+	int line_size = line.size();
+	int blank_linenum = 0;
+
+	// 获得空行的位置
+	for (int i = 0; i < line_size; i++)
+	{
+	    if (line[i] == "" || line[i] == "\r") {
+	        blank_linenum = i;
+	        break;
+	    }
+	}
+	if (blank_linenum == 0) {
+		LOG_ERROR << "request is null" << endl;
+		BAD_REQUEST
+		return ;
+	}
+
+	// get first line
+	module_name = "USER";
+
+	// 解析空行前(HTTP首部)的内容，如果有Content-Length这个属性就保存下来
+	vector<string> prope_list;
+	for (int i = 1; i < blank_linenum; i++)
+	{
+		prope_list = Tool::split(line[i], ": ");
+		if (prope_list[0] == "Content-Length") {
+			if (prope_list.size() == 2) {
+				content_length = Tool::S2I(prope_list[1]);
+				if (content_length < 0)
+				{
+					LOG_ERROR << "content_length err|" << prope_list[1] << endl;
+					BAD_REQUEST
+					return;
+				}
+			} else {
+				LOG_ERROR << "prope list size err" << endl;
+				BAD_REQUEST
+				return;
+			}
+		}
+	}
+	LOG_INFO << "content_length|" << content_length << endl;
+	LOG_INFO << line[blank_linenum + 1] << endl;
+
+	// 判断空行下一行(即具体参数那行)是否为空
+	if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
+		LOG_ERROR << "param line is null" << endl;
+		BAD_REQUEST
+		return;
+	}
+
+	// 比对content_length与接收参数的长度是否一致
+	if (content_length > 0)
+	{
+		if ((int)line[blank_linenum + 1].size() + other_sign_num != content_length) {
+			LOG_ERROR << "content_length not equal" << endl;
+			BAD_REQUEST
+			return;
+		}
+	}
+
+	// 解析参数行
+	vector<string> param_list = Tool::split(line[blank_linenum + 1], "&");
+	int param_list_len = param_list.size();
+	map<string, string> param;
+	for (int i = 0; i < param_list_len; i++)
+	{
+	    vector<string> _param = Tool::split(param_list[i], "=");
+	    if (_param.size() == 2)
+	    {
+	        LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
+	        param.insert(pair<string, string>(_param[0], _param[1]));
+	    } else {
+	    	LOG_ERROR << "_param size err" << endl;
+	    	BAD_REQUEST
+	    	return;
+	    }
+	}
+
+	process->response_code = 200;
+ 	handle_read_request(process, module_name.c_str(), param);
  }
 
 /**
