@@ -25,6 +25,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "UserResponse.pb.h"
+#include "RoomResponse.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace Response {

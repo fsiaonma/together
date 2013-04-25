@@ -1,0 +1,17 @@
+package RoomData;
+
+//room data
+message UserInfo {
+    optional int32 id = 1;
+    optional string title = 2;
+    optional string owner_nickname = 3;
+    optional int32 type = 4;
+    optional int32 status = 5;
+    optional string pic_url = 6;
+    optional int32 gender_type = 7;
+    optional double distance = 8;
+    optional int32 join_person_count = 9;
+    optional int32 limit_person_count = 10;
+    optional string address = 11;
+    optional string create_time = 12;
+}

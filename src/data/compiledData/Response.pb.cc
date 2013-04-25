@@ -81,11 +81,13 @@ void protobuf_AddDesc_Response_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
+  ::RoomResponse::protobuf_AddDesc_RoomResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
-    ".proto\"o\n\014HTTPResponse\022\014\n\004code\030\001 \001(\005\022\017\n\007"
-    "success\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\0223\n\016login_resp"
-    "onse\030\004 \001(\0132\033.UserResponse.LoginResponse", 159);
+    ".proto\032\022RoomResponse.proto\"o\n\014HTTPRespon"
+    "se\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n\003msg"
+    "\030\003 \001(\t\0223\n\016login_response\030\004 \001(\0132\033.UserRes"
+    "ponse.LoginResponse", 179);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();

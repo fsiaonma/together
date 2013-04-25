@@ -1,5 +1,6 @@
 package Response;
 import "UserResponse.proto";
+import "RoomResponse.proto";
 
 message HTTPResponse {
 	optional int32 code = 1;
