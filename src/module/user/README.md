@@ -27,3 +27,77 @@ user
 
 + 个人动态，好友动态，好友推荐。
 + 参加过的房间 和 创建过的房间。
+
+相关接口：
+--------------
+
+### 注册：
++ 传入参数：
+
+>     操作代号：action=101
+>     用户名：username
+>     密码：password
+>
+>     eg: aciton=101&username=sam&password=123456
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+### 登陆：
++ 传入参数：
+
+>     操作代号：action=102
+>     用户名：username
+>     密码：password
+>     设备id：dev_id
+>
+>     eg: aciton=102&username=sam&password=123456&dev_id=123
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+>     登陆 protobuf 信息：LoginResponse
+
+### 登出：
++ 传入参数：
+
+>     操作代号：action=103
+>     用户名：username
+>     session id: sid
+>
+>     eg: action=103&username=test_regiest&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
