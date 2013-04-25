@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/epoll.h>
+#include <google/protobuf/text_format.h>
 #include "../const.h"
 
 using namespace std;
@@ -39,6 +40,18 @@ int get_index_file(char *filename_buf, struct stat *pstat);
 int get_module_type(const char *req);
 
 void time_update();
+
+template<typename T>
+void print_proto(const T *t)
+{
+	#if DEBUG
+	    cout << "-------------- " << "print proto data" << " --------------" << endl; 
+		string outString;
+	    google::protobuf::TextFormat::PrintToString(*t ,&outString);
+	    cout << outString << endl; 
+	    cout << "-------------- " << "end" << " --------------" << endl; 
+	#endif
+}
 
 #endif
 

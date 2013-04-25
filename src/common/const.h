@@ -48,6 +48,10 @@ handle_error(process, "bad request");
 #define MD5_LEN 32
 #endif
 
+#ifndef DEBUG
+#define DEBUG 1
+#endif
+
 #ifndef _CONST_H_
 #define _CONST_H_
 

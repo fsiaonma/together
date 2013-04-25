@@ -78,7 +78,6 @@ int login(string username, string password, string dev_id, char *buf) {
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
 
-
     #if 0
         UserData::User_Info *de = new UserData::User_Info();
 
@@ -131,6 +130,7 @@ int login(string username, string password, string dev_id, char *buf) {
         http_res->set_allocated_login_response(login_res);
     #endif
     } while(0);
+    print_proto(http_res);
 	
     http_res->SerializeToString(&respon_data);
     const char *p = respon_data.c_str();

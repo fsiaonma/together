@@ -13,12 +13,12 @@ using namespace std;
 
 enum enLogLevel
 {
-    TRACE,
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR,
-    FATAL,
+    TRACE_LOG,
+    DEBUG_LOG,
+    INFO_LOG,
+    WARN_LOG,
+    ERROR_LOG,
+    FATAL_LOG,
 };
 
 extern const char* LogLevel[];
@@ -64,25 +64,25 @@ private:
 #endif
 
 #ifndef LOG_TRACE 
-#define LOG_TRACE Logger(TRACE, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_TRACE Logger(TRACE_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
 
 #ifndef LOG_DEBUG 
-#define LOG_DEBUG Logger(DEBUG, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_DEBUG Logger(DEBUG_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
 
 #ifndef LOG_INFO 
-#define LOG_INFO Logger(INFO, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_INFO Logger(INFO_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
 
 #ifndef LOG_WARN 
-#define LOG_WARN Logger(WARN, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_WARN Logger(WARN_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
 
 #ifndef LOG_ERROR 
-#define LOG_ERROR Logger(ERROR, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_ERROR Logger(ERROR_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
 
 #ifndef LOG_FATAL 
-#define LOG_FATAL Logger(FATAL, __FILE__, __FUNCTION__, __LINE__).stream()
+#define LOG_FATAL Logger(FATAL_LOG, __FILE__, __FUNCTION__, __LINE__).stream()
 #endif
