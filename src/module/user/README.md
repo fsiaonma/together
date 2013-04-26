@@ -67,14 +67,28 @@ user
 >     返回信息：msg
 >     查看操作对应的 protobuf 信息：DetailResponse
 
-### 修改用户信息：（讨论）
+### 设置用户信息:
++ 传入参数：
 
-### 填写用户信息：（讨论）
+>     操作代号：action=105
+>     设置用户的用户昵称（可选）：nick_name
+>     设置用户的生日（可选）：birthday
+>     设置用户的文字签名（可选）：signature_text
+>     设置用户的录音签名 id （可选）：signature_record_id
+>     session id: sid
+>
+>     eg: action=104&username=tony&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
 
 ### 赞操作：
 + 传入参数：
 
->     操作代号：action=107
+>     操作代号：action=106
 >     需要赞的用户的用户名：username
 >     session id: sid
 >
@@ -89,7 +103,7 @@ user
 ### 关注操作：
 + 传入参数：
 
->     操作代号：action=108
+>     操作代号：action=107
 >     需要关注的用户的用户名：username
 >     session id: sid
 >
