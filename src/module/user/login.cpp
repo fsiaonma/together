@@ -79,7 +79,7 @@ int login(string username, string password, string dev_id, char *buf) {
         http_res->set_msg(msg);
 
     #if 0
-        UserData::User_Info *de = new UserData::User_Info();
+        UserData::User_Info *user_info = new UserData::User_Info();
 
         MYSQL mysql;
         string sql = "select * from t_user where username = '" + username + "';";
@@ -91,11 +91,7 @@ int login(string username, string password, string dev_id, char *buf) {
         MYSQL_ROW row = NULL;
 
         result = mysql_store_result(&mysql);
-        cout << "result: " << result << endl;
-
         int fieldcount = mysql_num_fields(result);
-        cout << "fieldcount " << fieldcount << endl;
-
         row = mysql_fetch_row(result);
 
         for(int i = 0; i < fieldcount; i++) {

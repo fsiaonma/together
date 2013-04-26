@@ -41,6 +41,38 @@ int user_handler(process *process, map<string, string> param) {
             logout(param["username"], param["sid"], response_data);
             break ;
         }
+        case USER_GET_INFO: {
+            if (param.count("username") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "username or sid is not exist" << endl;
+                return -1;
+            }
+            get_user_info(param["username"], param["sid"], response_data);
+            break ;
+        }
+        case USER_SET_INFO: {
+            if (param.count("sid") == 0) {
+                LOG_ERROR << "sid is not exist" << endl;
+                return -1;
+            }
+            set_user_info(param, param["sid"], response_data);
+            break ;
+        }
+        case USER_PRISE: {
+            if (param.count("username") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "username or sid is not exist" << endl;
+                return -1;
+            }
+            prise(param["username"], param["sid"], response_data);
+            break ;
+        }
+        case USER_FOLLOW: {
+            if (param.count("username") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "username or sid is not exist" << endl;
+                return -1;
+            }
+            follow(param["username"], param["sid"], response_data);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

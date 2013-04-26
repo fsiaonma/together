@@ -100,6 +100,11 @@ static const int ROOM_MODULE = 200;
 static const int USER_REGIEST = 101;
 static const int USER_LOGIN = 102;
 static const int USER_LOGOUT = 103;
+static const int USER_GET_INFO = 104;
+static const int USER_SET_INFO = 105;
+static const int USER_PRISE = 106;
+static const int USER_FOLLOW = 107;
+
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
