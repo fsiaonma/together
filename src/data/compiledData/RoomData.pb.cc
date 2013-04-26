@@ -23,6 +23,9 @@ namespace {
 const ::google::protobuf::Descriptor* RoomInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RoomInfo_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Address_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Address_reflection_ = NULL;
 
 }  // namespace
 
@@ -35,8 +38,9 @@ void protobuf_AssignDesc_RoomData_2eproto() {
   GOOGLE_CHECK(file != NULL);
   RoomInfo_descriptor_ = file->message_type(0);
   static const int RoomInfo_offsets_[14] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, room_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, title_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_nickname_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, status_),
@@ -45,10 +49,9 @@ void protobuf_AssignDesc_RoomData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, distance_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, join_person_count_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, limit_person_count_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, address_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, create_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, begin_time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, addr_remarks_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, address_),
   };
   RoomInfo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -61,6 +64,25 @@ void protobuf_AssignDesc_RoomData_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(RoomInfo));
+  Address_descriptor_ = file->message_type(1);
+  static const int Address_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, addr_type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, longitude_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, latitude_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, detail_addr_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, addr_remark_),
+  };
+  Address_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Address_descriptor_,
+      Address::default_instance_,
+      Address_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Address, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Address));
 }
 
 namespace {
@@ -75,6 +97,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     RoomInfo_descriptor_, &RoomInfo::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    Address_descriptor_, &Address::default_instance());
 }
 
 }  // namespace
@@ -82,6 +106,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_RoomData_2eproto() {
   delete RoomInfo::default_instance_;
   delete RoomInfo_reflection_;
+  delete Address::default_instance_;
+  delete Address_reflection_;
 }
 
 void protobuf_AddDesc_RoomData_2eproto() {
@@ -91,18 +117,23 @@ void protobuf_AddDesc_RoomData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016RoomData.proto\022\010RoomData\"\232\002\n\010RoomInfo\022"
-    "\n\n\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\026\n\016owner_nick"
-    "name\030\003 \001(\t\022\014\n\004type\030\004 \001(\005\022\016\n\006status\030\005 \001(\005"
-    "\022\017\n\007pic_url\030\006 \001(\t\022\023\n\013gender_type\030\007 \001(\005\022\020"
-    "\n\010distance\030\010 \001(\001\022\031\n\021join_person_count\030\t "
-    "\001(\005\022\032\n\022limit_person_count\030\n \001(\005\022\017\n\007addre"
-    "ss\030\013 \001(\t\022\023\n\013create_time\030\014 \001(\t\022\022\n\nbegin_t"
-    "ime\030\r \001(\t\022\024\n\014addr_remarks\030\016 \001(\t", 311);
+    "\n\016RoomData.proto\022\010RoomData\"\256\002\n\010RoomInfo\022"
+    "\017\n\007room_id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\020\n\010owner"
+    "_id\030\003 \001(\t\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
+    "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\017\n\007pic_url\030\007 \001(\t"
+    "\022\023\n\013gender_type\030\010 \001(\005\022\020\n\010distance\030\t \001(\001\022"
+    "\031\n\021join_person_count\030\n \001(\005\022\032\n\022limit_pers"
+    "on_count\030\013 \001(\005\022\023\n\013create_time\030\014 \001(\t\022\022\n\nb"
+    "egin_time\030\r \001(\t\022\"\n\007address\030\016 \001(\0132\021.RoomD"
+    "ata.Address\"k\n\007Address\022\021\n\taddr_type\030\001 \001("
+    "\005\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitude\030\003 \001(\001\022\023"
+    "\n\013detail_addr\030\004 \001(\t\022\023\n\013addr_remark\030\005 \001(\t", 440);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomData.proto", &protobuf_RegisterTypes);
   RoomInfo::default_instance_ = new RoomInfo();
+  Address::default_instance_ = new Address();
   RoomInfo::default_instance_->InitAsDefaultInstance();
+  Address::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RoomData_2eproto);
 }
 
@@ -116,8 +147,9 @@ struct StaticDescriptorInitializer_RoomData_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RoomInfo::kIdFieldNumber;
+const int RoomInfo::kRoomIdFieldNumber;
 const int RoomInfo::kTitleFieldNumber;
+const int RoomInfo::kOwnerIdFieldNumber;
 const int RoomInfo::kOwnerNicknameFieldNumber;
 const int RoomInfo::kTypeFieldNumber;
 const int RoomInfo::kStatusFieldNumber;
@@ -126,10 +158,9 @@ const int RoomInfo::kGenderTypeFieldNumber;
 const int RoomInfo::kDistanceFieldNumber;
 const int RoomInfo::kJoinPersonCountFieldNumber;
 const int RoomInfo::kLimitPersonCountFieldNumber;
-const int RoomInfo::kAddressFieldNumber;
 const int RoomInfo::kCreateTimeFieldNumber;
 const int RoomInfo::kBeginTimeFieldNumber;
-const int RoomInfo::kAddrRemarksFieldNumber;
+const int RoomInfo::kAddressFieldNumber;
 #endif  // !_MSC_VER
 
 RoomInfo::RoomInfo()
@@ -138,6 +169,7 @@ RoomInfo::RoomInfo()
 }
 
 void RoomInfo::InitAsDefaultInstance() {
+  address_ = const_cast< ::RoomData::Address*>(&::RoomData::Address::default_instance());
 }
 
 RoomInfo::RoomInfo(const RoomInfo& from)
@@ -148,8 +180,9 @@ RoomInfo::RoomInfo(const RoomInfo& from)
 
 void RoomInfo::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0;
+  room_id_ = 0;
   title_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  owner_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   owner_nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   type_ = 0;
   status_ = 0;
@@ -158,10 +191,9 @@ void RoomInfo::SharedCtor() {
   distance_ = 0;
   join_person_count_ = 0;
   limit_person_count_ = 0;
-  address_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   create_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   begin_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  addr_remarks_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  address_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -173,14 +205,14 @@ void RoomInfo::SharedDtor() {
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     delete title_;
   }
+  if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete owner_id_;
+  }
   if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
     delete owner_nickname_;
   }
   if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
     delete pic_url_;
-  }
-  if (address_ != &::google::protobuf::internal::kEmptyString) {
-    delete address_;
   }
   if (create_time_ != &::google::protobuf::internal::kEmptyString) {
     delete create_time_;
@@ -188,10 +220,8 @@ void RoomInfo::SharedDtor() {
   if (begin_time_ != &::google::protobuf::internal::kEmptyString) {
     delete begin_time_;
   }
-  if (addr_remarks_ != &::google::protobuf::internal::kEmptyString) {
-    delete addr_remarks_;
-  }
   if (this != default_instance_) {
+    delete address_;
   }
 }
 
@@ -218,10 +248,15 @@ RoomInfo* RoomInfo::New() const {
 
 void RoomInfo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0;
+    room_id_ = 0;
     if (has_title()) {
       if (title_ != &::google::protobuf::internal::kEmptyString) {
         title_->clear();
+      }
+    }
+    if (has_owner_id()) {
+      if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
+        owner_id_->clear();
       }
     }
     if (has_owner_nickname()) {
@@ -237,16 +272,11 @@ void RoomInfo::Clear() {
       }
     }
     gender_type_ = 0;
-    distance_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    distance_ = 0;
     join_person_count_ = 0;
     limit_person_count_ = 0;
-    if (has_address()) {
-      if (address_ != &::google::protobuf::internal::kEmptyString) {
-        address_->clear();
-      }
-    }
     if (has_create_time()) {
       if (create_time_ != &::google::protobuf::internal::kEmptyString) {
         create_time_->clear();
@@ -257,10 +287,8 @@ void RoomInfo::Clear() {
         begin_time_->clear();
       }
     }
-    if (has_addr_remarks()) {
-      if (addr_remarks_ != &::google::protobuf::internal::kEmptyString) {
-        addr_remarks_->clear();
-      }
+    if (has_address()) {
+      if (address_ != NULL) address_->::RoomData::Address::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -273,14 +301,14 @@ bool RoomInfo::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 id = 1;
+      // optional int32 room_id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-          set_has_id();
+                 input, &room_id_)));
+          set_has_room_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -301,12 +329,29 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_owner_nickname;
+        if (input->ExpectTag(26)) goto parse_owner_id;
         break;
       }
 
-      // optional string owner_nickname = 3;
+      // optional string owner_id = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_owner_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_owner_id()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->owner_id().data(), this->owner_id().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_owner_nickname;
+        break;
+      }
+
+      // optional string owner_nickname = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_owner_nickname:
@@ -318,12 +363,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(32)) goto parse_type;
+        if (input->ExpectTag(40)) goto parse_type;
         break;
       }
 
-      // optional int32 type = 4;
-      case 4: {
+      // optional int32 type = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_type:
@@ -334,12 +379,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(40)) goto parse_status;
+        if (input->ExpectTag(48)) goto parse_status;
         break;
       }
 
-      // optional int32 status = 5;
-      case 5: {
+      // optional int32 status = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_status:
@@ -350,12 +395,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(50)) goto parse_pic_url;
+        if (input->ExpectTag(58)) goto parse_pic_url;
         break;
       }
 
-      // optional string pic_url = 6;
-      case 6: {
+      // optional string pic_url = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_pic_url:
@@ -367,12 +412,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(56)) goto parse_gender_type;
+        if (input->ExpectTag(64)) goto parse_gender_type;
         break;
       }
 
-      // optional int32 gender_type = 7;
-      case 7: {
+      // optional int32 gender_type = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_gender_type:
@@ -383,12 +428,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(65)) goto parse_distance;
+        if (input->ExpectTag(73)) goto parse_distance;
         break;
       }
 
-      // optional double distance = 8;
-      case 8: {
+      // optional double distance = 9;
+      case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_distance:
@@ -399,12 +444,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(72)) goto parse_join_person_count;
+        if (input->ExpectTag(80)) goto parse_join_person_count;
         break;
       }
 
-      // optional int32 join_person_count = 9;
-      case 9: {
+      // optional int32 join_person_count = 10;
+      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_join_person_count:
@@ -415,12 +460,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(80)) goto parse_limit_person_count;
+        if (input->ExpectTag(88)) goto parse_limit_person_count;
         break;
       }
 
-      // optional int32 limit_person_count = 10;
-      case 10: {
+      // optional int32 limit_person_count = 11;
+      case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_limit_person_count:
@@ -428,23 +473,6 @@ bool RoomInfo::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &limit_person_count_)));
           set_has_limit_person_count();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(90)) goto parse_address;
-        break;
-      }
-
-      // optional string address = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_address:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_address()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->address().data(), this->address().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -482,20 +510,17 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(114)) goto parse_addr_remarks;
+        if (input->ExpectTag(114)) goto parse_address;
         break;
       }
 
-      // optional string addr_remarks = 14;
+      // optional .RoomData.Address address = 14;
       case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_addr_remarks:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_addr_remarks()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->addr_remarks().data(), this->addr_remarks().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+         parse_address:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_address()));
         } else {
           goto handle_uninterpreted;
         }
@@ -521,9 +546,9 @@ bool RoomInfo::MergePartialFromCodedStream(
 
 void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional int32 id = 1;
-  if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+  // optional int32 room_id = 1;
+  if (has_room_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->room_id(), output);
   }
 
   // optional string title = 2;
@@ -535,61 +560,61 @@ void RoomInfo::SerializeWithCachedSizes(
       2, this->title(), output);
   }
 
-  // optional string owner_nickname = 3;
+  // optional string owner_id = 3;
+  if (has_owner_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->owner_id().data(), this->owner_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->owner_id(), output);
+  }
+
+  // optional string owner_nickname = 4;
   if (has_owner_nickname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->owner_nickname().data(), this->owner_nickname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->owner_nickname(), output);
+      4, this->owner_nickname(), output);
   }
 
-  // optional int32 type = 4;
+  // optional int32 type = 5;
   if (has_type()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->type(), output);
   }
 
-  // optional int32 status = 5;
+  // optional int32 status = 6;
   if (has_status()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->status(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->status(), output);
   }
 
-  // optional string pic_url = 6;
+  // optional string pic_url = 7;
   if (has_pic_url()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->pic_url().data(), this->pic_url().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      6, this->pic_url(), output);
+      7, this->pic_url(), output);
   }
 
-  // optional int32 gender_type = 7;
+  // optional int32 gender_type = 8;
   if (has_gender_type()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->gender_type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->gender_type(), output);
   }
 
-  // optional double distance = 8;
+  // optional double distance = 9;
   if (has_distance()) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(8, this->distance(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(9, this->distance(), output);
   }
 
-  // optional int32 join_person_count = 9;
+  // optional int32 join_person_count = 10;
   if (has_join_person_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->join_person_count(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->join_person_count(), output);
   }
 
-  // optional int32 limit_person_count = 10;
+  // optional int32 limit_person_count = 11;
   if (has_limit_person_count()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->limit_person_count(), output);
-  }
-
-  // optional string address = 11;
-  if (has_address()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->address().data(), this->address().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      11, this->address(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->limit_person_count(), output);
   }
 
   // optional string create_time = 12;
@@ -610,13 +635,10 @@ void RoomInfo::SerializeWithCachedSizes(
       13, this->begin_time(), output);
   }
 
-  // optional string addr_remarks = 14;
-  if (has_addr_remarks()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->addr_remarks().data(), this->addr_remarks().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      14, this->addr_remarks(), output);
+  // optional .RoomData.Address address = 14;
+  if (has_address()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      14, this->address(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -627,9 +649,9 @@ void RoomInfo::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* RoomInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 id = 1;
-  if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  // optional int32 room_id = 1;
+  if (has_room_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->room_id(), target);
   }
 
   // optional string title = 2;
@@ -642,64 +664,64 @@ void RoomInfo::SerializeWithCachedSizes(
         2, this->title(), target);
   }
 
-  // optional string owner_nickname = 3;
+  // optional string owner_id = 3;
+  if (has_owner_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->owner_id().data(), this->owner_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->owner_id(), target);
+  }
+
+  // optional string owner_nickname = 4;
   if (has_owner_nickname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->owner_nickname().data(), this->owner_nickname().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->owner_nickname(), target);
+        4, this->owner_nickname(), target);
   }
 
-  // optional int32 type = 4;
+  // optional int32 type = 5;
   if (has_type()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->type(), target);
   }
 
-  // optional int32 status = 5;
+  // optional int32 status = 6;
   if (has_status()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->status(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->status(), target);
   }
 
-  // optional string pic_url = 6;
+  // optional string pic_url = 7;
   if (has_pic_url()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->pic_url().data(), this->pic_url().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->pic_url(), target);
+        7, this->pic_url(), target);
   }
 
-  // optional int32 gender_type = 7;
+  // optional int32 gender_type = 8;
   if (has_gender_type()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->gender_type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->gender_type(), target);
   }
 
-  // optional double distance = 8;
+  // optional double distance = 9;
   if (has_distance()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(8, this->distance(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(9, this->distance(), target);
   }
 
-  // optional int32 join_person_count = 9;
+  // optional int32 join_person_count = 10;
   if (has_join_person_count()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->join_person_count(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->join_person_count(), target);
   }
 
-  // optional int32 limit_person_count = 10;
+  // optional int32 limit_person_count = 11;
   if (has_limit_person_count()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->limit_person_count(), target);
-  }
-
-  // optional string address = 11;
-  if (has_address()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->address().data(), this->address().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        11, this->address(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->limit_person_count(), target);
   }
 
   // optional string create_time = 12;
@@ -722,14 +744,11 @@ void RoomInfo::SerializeWithCachedSizes(
         13, this->begin_time(), target);
   }
 
-  // optional string addr_remarks = 14;
-  if (has_addr_remarks()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->addr_remarks().data(), this->addr_remarks().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        14, this->addr_remarks(), target);
+  // optional .RoomData.Address address = 14;
+  if (has_address()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        14, this->address(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -743,11 +762,11 @@ int RoomInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 id = 1;
-    if (has_id()) {
+    // optional int32 room_id = 1;
+    if (has_room_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->id());
+          this->room_id());
     }
 
     // optional string title = 2;
@@ -757,67 +776,67 @@ int RoomInfo::ByteSize() const {
           this->title());
     }
 
-    // optional string owner_nickname = 3;
+    // optional string owner_id = 3;
+    if (has_owner_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->owner_id());
+    }
+
+    // optional string owner_nickname = 4;
     if (has_owner_nickname()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->owner_nickname());
     }
 
-    // optional int32 type = 4;
+    // optional int32 type = 5;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->type());
     }
 
-    // optional int32 status = 5;
+    // optional int32 status = 6;
     if (has_status()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->status());
     }
 
-    // optional string pic_url = 6;
+    // optional string pic_url = 7;
     if (has_pic_url()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->pic_url());
     }
 
-    // optional int32 gender_type = 7;
+    // optional int32 gender_type = 8;
     if (has_gender_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->gender_type());
     }
 
-    // optional double distance = 8;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional double distance = 9;
     if (has_distance()) {
       total_size += 1 + 8;
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 join_person_count = 9;
+    // optional int32 join_person_count = 10;
     if (has_join_person_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->join_person_count());
     }
 
-    // optional int32 limit_person_count = 10;
+    // optional int32 limit_person_count = 11;
     if (has_limit_person_count()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->limit_person_count());
-    }
-
-    // optional string address = 11;
-    if (has_address()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->address());
     }
 
     // optional string create_time = 12;
@@ -834,11 +853,11 @@ int RoomInfo::ByteSize() const {
           this->begin_time());
     }
 
-    // optional string addr_remarks = 14;
-    if (has_addr_remarks()) {
+    // optional .RoomData.Address address = 14;
+    if (has_address()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->addr_remarks());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->address());
     }
 
   }
@@ -868,11 +887,14 @@ void RoomInfo::MergeFrom(const ::google::protobuf::Message& from) {
 void RoomInfo::MergeFrom(const RoomInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_id()) {
-      set_id(from.id());
+    if (from.has_room_id()) {
+      set_room_id(from.room_id());
     }
     if (from.has_title()) {
       set_title(from.title());
+    }
+    if (from.has_owner_id()) {
+      set_owner_id(from.owner_id());
     }
     if (from.has_owner_nickname()) {
       set_owner_nickname(from.owner_nickname());
@@ -889,19 +911,16 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
     if (from.has_gender_type()) {
       set_gender_type(from.gender_type());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_distance()) {
       set_distance(from.distance());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_join_person_count()) {
       set_join_person_count(from.join_person_count());
     }
     if (from.has_limit_person_count()) {
       set_limit_person_count(from.limit_person_count());
-    }
-    if (from.has_address()) {
-      set_address(from.address());
     }
     if (from.has_create_time()) {
       set_create_time(from.create_time());
@@ -909,8 +928,8 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
     if (from.has_begin_time()) {
       set_begin_time(from.begin_time());
     }
-    if (from.has_addr_remarks()) {
-      set_addr_remarks(from.addr_remarks());
+    if (from.has_address()) {
+      mutable_address()->::RoomData::Address::MergeFrom(from.address());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -935,8 +954,9 @@ bool RoomInfo::IsInitialized() const {
 
 void RoomInfo::Swap(RoomInfo* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(room_id_, other->room_id_);
     std::swap(title_, other->title_);
+    std::swap(owner_id_, other->owner_id_);
     std::swap(owner_nickname_, other->owner_nickname_);
     std::swap(type_, other->type_);
     std::swap(status_, other->status_);
@@ -945,10 +965,9 @@ void RoomInfo::Swap(RoomInfo* other) {
     std::swap(distance_, other->distance_);
     std::swap(join_person_count_, other->join_person_count_);
     std::swap(limit_person_count_, other->limit_person_count_);
-    std::swap(address_, other->address_);
     std::swap(create_time_, other->create_time_);
     std::swap(begin_time_, other->begin_time_);
-    std::swap(addr_remarks_, other->addr_remarks_);
+    std::swap(address_, other->address_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -960,6 +979,404 @@ void RoomInfo::Swap(RoomInfo* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = RoomInfo_descriptor_;
   metadata.reflection = RoomInfo_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int Address::kAddrTypeFieldNumber;
+const int Address::kLongitudeFieldNumber;
+const int Address::kLatitudeFieldNumber;
+const int Address::kDetailAddrFieldNumber;
+const int Address::kAddrRemarkFieldNumber;
+#endif  // !_MSC_VER
+
+Address::Address()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Address::InitAsDefaultInstance() {
+}
+
+Address::Address(const Address& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Address::SharedCtor() {
+  _cached_size_ = 0;
+  addr_type_ = 0;
+  longitude_ = 0;
+  latitude_ = 0;
+  detail_addr_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  addr_remark_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Address::~Address() {
+  SharedDtor();
+}
+
+void Address::SharedDtor() {
+  if (detail_addr_ != &::google::protobuf::internal::kEmptyString) {
+    delete detail_addr_;
+  }
+  if (addr_remark_ != &::google::protobuf::internal::kEmptyString) {
+    delete addr_remark_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void Address::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Address::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Address_descriptor_;
+}
+
+const Address& Address::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_RoomData_2eproto();
+  return *default_instance_;
+}
+
+Address* Address::default_instance_ = NULL;
+
+Address* Address::New() const {
+  return new Address;
+}
+
+void Address::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    addr_type_ = 0;
+    longitude_ = 0;
+    latitude_ = 0;
+    if (has_detail_addr()) {
+      if (detail_addr_ != &::google::protobuf::internal::kEmptyString) {
+        detail_addr_->clear();
+      }
+    }
+    if (has_addr_remark()) {
+      if (addr_remark_ != &::google::protobuf::internal::kEmptyString) {
+        addr_remark_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Address::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 addr_type = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &addr_type_)));
+          set_has_addr_type();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(17)) goto parse_longitude;
+        break;
+      }
+
+      // optional double longitude = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_longitude:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &longitude_)));
+          set_has_longitude();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(25)) goto parse_latitude;
+        break;
+      }
+
+      // optional double latitude = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_latitude:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &latitude_)));
+          set_has_latitude();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_detail_addr;
+        break;
+      }
+
+      // optional string detail_addr = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_detail_addr:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_detail_addr()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->detail_addr().data(), this->detail_addr().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(42)) goto parse_addr_remark;
+        break;
+      }
+
+      // optional string addr_remark = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_addr_remark:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_addr_remark()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->addr_remark().data(), this->addr_remark().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Address::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional int32 addr_type = 1;
+  if (has_addr_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->addr_type(), output);
+  }
+
+  // optional double longitude = 2;
+  if (has_longitude()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(2, this->longitude(), output);
+  }
+
+  // optional double latitude = 3;
+  if (has_latitude()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->latitude(), output);
+  }
+
+  // optional string detail_addr = 4;
+  if (has_detail_addr()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->detail_addr().data(), this->detail_addr().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      4, this->detail_addr(), output);
+  }
+
+  // optional string addr_remark = 5;
+  if (has_addr_remark()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->addr_remark().data(), this->addr_remark().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      5, this->addr_remark(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Address::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional int32 addr_type = 1;
+  if (has_addr_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->addr_type(), target);
+  }
+
+  // optional double longitude = 2;
+  if (has_longitude()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(2, this->longitude(), target);
+  }
+
+  // optional double latitude = 3;
+  if (has_latitude()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->latitude(), target);
+  }
+
+  // optional string detail_addr = 4;
+  if (has_detail_addr()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->detail_addr().data(), this->detail_addr().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->detail_addr(), target);
+  }
+
+  // optional string addr_remark = 5;
+  if (has_addr_remark()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->addr_remark().data(), this->addr_remark().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        5, this->addr_remark(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Address::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional int32 addr_type = 1;
+    if (has_addr_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->addr_type());
+    }
+
+    // optional double longitude = 2;
+    if (has_longitude()) {
+      total_size += 1 + 8;
+    }
+
+    // optional double latitude = 3;
+    if (has_latitude()) {
+      total_size += 1 + 8;
+    }
+
+    // optional string detail_addr = 4;
+    if (has_detail_addr()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->detail_addr());
+    }
+
+    // optional string addr_remark = 5;
+    if (has_addr_remark()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->addr_remark());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Address::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Address* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Address*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Address::MergeFrom(const Address& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_addr_type()) {
+      set_addr_type(from.addr_type());
+    }
+    if (from.has_longitude()) {
+      set_longitude(from.longitude());
+    }
+    if (from.has_latitude()) {
+      set_latitude(from.latitude());
+    }
+    if (from.has_detail_addr()) {
+      set_detail_addr(from.detail_addr());
+    }
+    if (from.has_addr_remark()) {
+      set_addr_remark(from.addr_remark());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Address::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Address::CopyFrom(const Address& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Address::IsInitialized() const {
+
+  return true;
+}
+
+void Address::Swap(Address* other) {
+  if (other != this) {
+    std::swap(addr_type_, other->addr_type_);
+    std::swap(longitude_, other->longitude_);
+    std::swap(latitude_, other->latitude_);
+    std::swap(detail_addr_, other->detail_addr_);
+    std::swap(addr_remark_, other->addr_remark_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Address::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Address_descriptor_;
+  metadata.reflection = Address_reflection_;
   return metadata;
 }
 

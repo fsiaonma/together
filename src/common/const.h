@@ -86,6 +86,9 @@ static const int STATUS_SEND_RESPONSE = 4;
 static const int STATUS_UPLOAD_READY = 5;
 static const int STATUS_UPLOAD_FINISHED = 6;
 
+// others
+static const int GENDERTYPE_NUM = 3;
+
 // --------------- Module Code ---------------
 // 功能模块的标识码
 static const int UNKNOWN_MODULE = 99;

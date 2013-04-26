@@ -18,7 +18,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_file` (
   `uploader_id` INT NULL ,
   `upload_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
@@ -30,7 +31,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `username` VARCHAR(30) NULL ,
   `password` VARCHAR(20) NULL ,
-  `nick_name` VARCHAR(30) NULL ,
+  `nickname` VARCHAR(30) NULL ,
   `birthday` TIMESTAMP NULL ,
   `signature_text` VARCHAR(255) NULL COMMENT '个性签名(文字)' ,
   `signature_record_id` INT NULL COMMENT '个性签名(语音文件ID)' ,
@@ -43,7 +44,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
     REFERENCES `together`.`t_file` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
@@ -59,7 +61,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_address` (
   `detail_addr` VARCHAR(255) NULL COMMENT '详细地址' ,
   `addr_remark` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
@@ -77,9 +80,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_room` (
   `preview_pic_id` INT NULL ,
   `addr_id` INT NULL COMMENT '地址表ID' ,
   `record_id` INT NULL COMMENT '录音文件id' ,
-  `room_describe` VARCHAR(255) NULL COMMENT '房间描述' ,
   `begin_time` TIMESTAMP NULL ,
-  `end_time` TIMESTAMP NULL ,
   `create_time` TIMESTAMP NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_room_t_address_idx` (`addr_id` ASC) ,
@@ -106,7 +107,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_room` (
     REFERENCES `together`.`t_user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
@@ -131,7 +133,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_room_user_relation` (
     REFERENCES `together`.`t_user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
@@ -156,7 +159,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_follow` (
     REFERENCES `together`.`t_user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 USE `together` ;
 

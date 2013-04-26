@@ -38,13 +38,12 @@ int create_room(map<string, string> param, char *buf)
         LOG_INFO << "userId:" << param["userId"] << "|nickName:" << param["nickName"] << endl;
         LOG_INFO << "limitPersonNum:" << param["limitPersonNum"] << "|genderType:" << param["genderType"] << endl;
         LOG_INFO << "longitude:" << param["longitude"] << "|latitude:" << param["latitude"] << endl;
-        LOG_INFO << "detailAddr:" << param["detailAddr"] << "|roomDescribe:" << param["roomDescribe"] << endl;
-        LOG_INFO << "addrRemark:" << param["addrRemark"] << "|picId:" << param["picId"] << "|recordId:" << param["recordId"] << endl;
+        LOG_INFO << "detailAddr:" << param["detailAddr"] << "|addrRemark:" << param["addrRemark"] << endl;
+        LOG_INFO << "picId:" << param["picId"] << "|recordId:" << param["recordId"] << endl;
 
         string title = param["title"];
         int type = Tool::S2I(param["type"]);
         string begin_time = param["beginTime"];
-        string end_time = param["endTime"];
         int user_id = Tool::S2I(param["userId"]);
         string nick_name = param["nickName"];
         string limit_person_num = param["limitPersonNum"];
@@ -52,14 +51,14 @@ int create_room(map<string, string> param, char *buf)
         long longitude = Tool::fromString<long>(param["longitude"]);
         long latitude = Tool::fromString<long>(param["latitude"]);
         string detail_addr = param["detailAddr"];
-        string room_describe = param["roomDescribe"];
         string addr_remark = param["addrRemark"];
         int pic_id = Tool::S2I(param["picId"]);
         int record_id = Tool::S2I(param["recordId"]);
 
-        if (Tool::trim(title).empty() || type < 0 || Tool::trim(begin_time).empty() || Tool::trim(end_time).empty() || user_id < 0
+        if (Tool::trim(title).empty() || type < 0 || Tool::trim(begin_time).empty() ||  user_id < 0
             || Tool::trim(nick_name).empty() || Tool::trim(limit_person_num).empty() || gender_type < 0 || longitude < 0
-            || latitude < 0 || Tool::trim(detail_addr).empty() || Tool::trim(room_describe).empty() || Tool::trim(addr_remark).empty() || pic_id < 0 || record_id < 0)
+            || latitude < 0 || Tool::trim(detail_addr).empty() || Tool::trim(addr_remark).empty() || pic_id < 0 || record_id < 0
+            || !(gender_type >= 0 && gender_type < GENDERTYPE_NUM))
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
@@ -107,9 +106,7 @@ int create_room(map<string, string> param, char *buf)
         insert_room_params["preview_pic_id"] = Tool::mysql_filter(pic_id);
         insert_room_params["addr_id"] = Tool::mysql_filter(addr_insert_id);
         insert_room_params["record_id"] = Tool::mysql_filter(record_id);
-        insert_room_params["room_describe"] = Tool::mysql_filter(room_describe);
-        insert_room_params["begin_time"] = Tool::mysql_filter(begin_time);
-        insert_room_params["end_time"] = Tool::mysql_filter(end_time);
+        insert_room_params["begin_time"] = begin_time;
         insert_room_params["create_time"] = Tool::mysql_filter(20010101010101);
 
         int room_insert_id = -1;
