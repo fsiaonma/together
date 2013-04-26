@@ -133,6 +133,7 @@ static const int USER_NOT_EXIST = 12001;
 static const int LOGIN_REPLACE = 12002;
 
 // ============ Room ============
+static const int CREATE_ROOM_SUCCESS = 21000;
 
 #endif
 

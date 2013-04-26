@@ -10,6 +10,7 @@ int room_handler(process *process, map<string, string> param) {
     LOG_INFO << "action_type: " << action_type << endl;
     switch (action_type) {
     	case ROOM_CREATE: {
+            create_room(param, response_data);
     	    break ;
     	}
     	case ROOM_SHOWLIST: {

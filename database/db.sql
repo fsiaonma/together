@@ -57,6 +57,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_address` (
   `longitude` FLOAT NULL COMMENT '经度' ,
   `latitude` FLOAT NULL COMMENT '纬度' ,
   `detail_addr` VARCHAR(255) NULL COMMENT '详细地址' ,
+  `addr_remark` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -69,7 +70,7 @@ DROP TABLE IF EXISTS `together`.`t_room` ;
 CREATE  TABLE IF NOT EXISTS `together`.`t_room` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `owner_id` INT NULL ,
-  `tittle` VARCHAR(255) NULL ,
+  `title` VARCHAR(255) NULL ,
   `type` INT NULL ,
   `gender_type` INT NULL COMMENT '0,1,2\n表示参加活动的性别限制类型' ,
   `limit_person_num` INT NULL COMMENT '-1表示不限制' ,
