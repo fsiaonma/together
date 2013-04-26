@@ -1,6 +1,108 @@
 user
 ======
 
+接口文档：
+--------------
+
+### 注册：
++ 传入参数：
+
+>     操作代号：action=101
+>     用户名：username
+>     密码：password
+>
+>     eg: aciton=101&username=sam&password=123456
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+### 登陆：
++ 传入参数：
+
+>     操作代号：action=102
+>     用户名：username
+>     密码：password
+>     设备id：dev_id
+>
+>     eg: aciton=102&username=sam&password=123456&dev_id=123
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+>     登陆操作对应的 protobuf 信息：LoginResponse
+
+### 登出：
++ 传入参数：
+
+>     操作代号：action=103
+>     用户名：username
+>     session id: sid
+>
+>     eg: action=103&username=test_regiest&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+### 查看用户信息：
++ 传入参数：
+
+>     操作代号：action=104
+>     需要查看的用户的用户名：username
+>     session id: sid
+>
+>     eg: action=104&username=tony&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+>     查看操作对应的 protobuf 信息：DetailResponse
+
+### 修改用户信息：（讨论）
+
+### 填写用户信息：（讨论）
+
+### 赞操作：
++ 传入参数：
+
+>     操作代号：action=107
+>     需要赞的用户的用户名：username
+>     session id: sid
+>
+>     eg: action=107&username=fsiaonma&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+### 关注操作：
++ 传入参数：
+
+>     操作代号：action=108
+>     需要关注的用户的用户名：username
+>     session id: sid
+>
+>     eg: action=108&username=fsiaonma&sid=ef9aadcea02583a798d48870e2512c7c
+
++ 返回参数：
+
+>     请求状态码：code
+>     成功标识：success
+>     返回信息：msg
+
+
+
 用户系统功能
 --------------
 
@@ -27,3 +129,28 @@ user
 
 + 个人动态，好友动态，好友推荐。
 + 参加过的房间 和 创建过的房间。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
