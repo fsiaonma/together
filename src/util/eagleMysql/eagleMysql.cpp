@@ -123,6 +123,10 @@ bool eagleMysql::connet() {
         cout << "Failed to connect to database: Error :" << mysql_error(&mysql) << endl;  
         return false;
     }
+    if (!mysql_set_character_set(&(this->mysql), "utf8_general_ci")) {
+        cout << "set character set fail" << endl;
+        return false;
+    }
     return true;
 }
 

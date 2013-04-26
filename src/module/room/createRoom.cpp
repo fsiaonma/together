@@ -33,10 +33,13 @@ int create_room(map<string, string> param, char *buf)
             break;
         }
 
-        LOG_INFO << "title:" << param["title"] << "|type:" << param["type"] << "|beginTime:" << param["beginTime"] << '|endTime:' << param["endTime"]
-        << "|userId:" << param["userId"] << "|nickName:" << param["nickName"] << "|limitPersonNum:" << param["limitPersonNum"] << "|genderType:" << param["genderType"]
-        << "|longitude:" << param["longitude"] << "|latitude:" << param["latitude"] << "|detailAddr:" << param["detailAddr"] << "|roomDescribe:" << param["roomDescribe"]
-        << "|addrRemark:" << param["addrRemark"] << "|picId:" << param["picId"] << "|recordId:" << param["recordId"] << endl;
+        LOG_INFO << "title:" << param["title"] << "|type:" << param["type"] << endl;
+        LOG_INFO << "beginTime:" << param["beginTime"] << "|endTime:" << param["endTime"] << endl;
+        LOG_INFO << "userId:" << param["userId"] << "|nickName:" << param["nickName"] << endl;
+        LOG_INFO << "limitPersonNum:" << param["limitPersonNum"] << "|genderType:" << param["genderType"] << endl;
+        LOG_INFO << "longitude:" << param["longitude"] << "|latitude:" << param["latitude"] << endl;
+        LOG_INFO << "detailAddr:" << param["detailAddr"] << "|roomDescribe:" << param["roomDescribe"] << endl;
+        LOG_INFO << "addrRemark:" << param["addrRemark"] << "|picId:" << param["picId"] << "|recordId:" << param["recordId"] << endl;
 
         string title = param["title"];
         int type = Tool::S2I(param["type"]);
@@ -74,7 +77,7 @@ int create_room(map<string, string> param, char *buf)
 
         // save the address info to database
         map<string, string> insert_addr_params;
-        insert_addr_params["addr_type"] = Tool::mysql_filter(1);
+        insert_addr_params["addr_type"] = Tool::mysql_filter(type);
         insert_addr_params["longitude"] = Tool::mysql_filter(longitude);
         insert_addr_params["latitude"] = Tool::mysql_filter(latitude);
         insert_addr_params["detail_addr"] = Tool::mysql_filter(detail_addr);

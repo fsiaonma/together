@@ -572,6 +572,19 @@ void read_upload_request(process* process)
 					write_to_header(header_end);
 					process->status = STATUS_SEND_RESPONSE_HEADER;
 
+
+			        // database params
+			        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+			        map<string, string> insert_params;
+			        insert_params["suffix"] = Tool::mysql_filter(Tool::toString(process->suffix));
+			        insert_params["md5"] = Tool::mysql_filter(Tool::toString(process->md5));
+			        insert_params["uploader_id"] = Tool::mysql_filter(user_id);
+
+			        int file_insert_id = -1;
+			        int ret = e.insert("t_file", insert_params, file_insert_id);
+
+
 					// 修改此 sock 的监听状态，改为监视写状态
 					event.data.fd = process->sock;
 					event.events = EPOLLOUT;
@@ -580,6 +593,18 @@ void read_upload_request(process* process)
 						LOG_ERROR << "epoll_ctl error" << endl;
 						abort();
 					}
+			        // exception
+			        if (ret != DB_OK) 
+			        {
+			        	// delete file
+			        	if(remove(file_name))
+			        	{
+			        		LOG_ERROR << "DB_ERROR|remove file error" << endl;
+			        	} else {
+			        		LOG_ERROR << "DB_ERROR|insert into t_file error" << endl;
+			        	}
+			        	BAD_REQUEST
+			        }
 				} else {
 					// MD5不一致
 					LOG_ERROR << "Fail! MD5 sum is inconsistent" << endl;
