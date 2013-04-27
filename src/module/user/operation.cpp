@@ -23,7 +23,7 @@ int prise(string username, string sid, char *buf) {
         if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "username or sid is null";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -34,7 +34,7 @@ int prise(string username, string sid, char *buf) {
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -75,7 +75,7 @@ int follow(string username, string sid, char *buf) {
         if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "username or sid is null";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -86,7 +86,7 @@ int follow(string username, string sid, char *buf) {
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);

@@ -9,7 +9,7 @@
  * @param {char*} respone data. 
  * @return {int} get_user_info status.
  */
-int get_user_info(string username, string sid, char *buf) {
+int view_user_info(string username, string sid, char *buf) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -23,7 +23,7 @@ int get_user_info(string username, string sid, char *buf) {
         if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "username or sid is null";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -34,14 +34,51 @@ int get_user_info(string username, string sid, char *buf) {
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
             break;
         }
 
-        //TODO: get username info
+    //TODO: view username info
+    #if 0
+        UserData::User_Info *user_info = new UserData::User_Info();
+        _get_user_info(username, user_info);
+
+        if (username != Session::get(sid) -> username) {
+            Config *c = Config::get_instance();
+            map<string, string> config = c->get_config();
+            eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+                config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+            // increase visit number
+            map<string, string> visit_params;
+            visit_params["visit_num"] = Tool::mysql_filter(user_info.get_user_info() + 1);
+            int insert_id = -1;
+            ret = e.insert("t_user", visit_params, insert_id);
+            // exception
+            if (ret != DB_OK) {
+                r result = DB_ERROR;
+                http_res->set_code(DB_ERROR);
+                http_res->set_success(false);
+                msg = "DB ERROR|" + Tool::toString(ret);
+                LOG_ERROR << msg << endl;
+                http_res->set_msg(msg);
+                break;
+            }
+        }
+
+        http_res->set_code(VIEW_INFO_SUCCESS);
+        http_res->set_success(true);
+        msg = "view user info success";
+        LOG_ERROR << msg << endl;
+        http_res->set_msg(msg);
+
+        UserResponse::DetailResponse *detail_res = new UserResponse::DetailResponse();
+        detail_res->set_allocated_user_info(user_info);
+        http_res->set_allocated_detail_response(detail_res);
+    #endif
     } while(0);
 
     http_res->SerializeToString(&respon_data);
@@ -75,7 +112,7 @@ int set_user_info(map<string, string> param, string sid, char *buf) {
         if (Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "sid is null";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -86,7 +123,7 @@ int set_user_info(map<string, string> param, string sid, char *buf) {
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);

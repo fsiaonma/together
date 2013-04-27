@@ -23,7 +23,7 @@ int regiest(string username, string password, char *buf) {
         if (Tool::trim(username).empty() || Tool::trim(password).empty()) {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "username or password is null";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -43,7 +43,7 @@ int regiest(string username, string password, char *buf) {
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "DB ERROR|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -53,7 +53,7 @@ int regiest(string username, string password, char *buf) {
         if (exist) {
             result = USERNAME_IS_EXIST;
             http_res->set_code(USERNAME_IS_EXIST);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "username is already exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -70,7 +70,7 @@ int regiest(string username, string password, char *buf) {
         if (ret != DB_OK) {
             result = REGIEST_FAIL;
             http_res->set_code(REGIEST_FAIL);
-            http_res->set_success(0);
+            http_res->set_success(false);
             msg = "REGIEST_FAIL|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -80,7 +80,7 @@ int regiest(string username, string password, char *buf) {
         // set HTTPResponse
         result = REGIEST_SUCCESS;
         http_res->set_code(REGIEST_SUCCESS);
-        http_res->set_success(1);
+        http_res->set_success(true);
         msg = "regiest success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);

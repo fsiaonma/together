@@ -41,7 +41,7 @@ int user_handler(process *process, map<string, string> param) {
             logout(param["username"], param["sid"], response_data);
             break ;
         }
-        case USER_GET_INFO: {
+        case USER_VIEW_INFO: {
             if (param.count("username") == 0 || param.count("sid") == 0) {
                 LOG_ERROR << "username or sid is not exist" << endl;
                 return -1;

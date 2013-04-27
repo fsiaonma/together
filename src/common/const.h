@@ -100,7 +100,7 @@ static const int ROOM_MODULE = 200;
 static const int USER_REGIEST = 101;
 static const int USER_LOGIN = 102;
 static const int USER_LOGOUT = 103;
-static const int USER_GET_INFO = 104;
+static const int USER_VIEW_INFO = 104;
 static const int USER_SET_INFO = 105;
 static const int USER_PRISE = 106;
 static const int USER_FOLLOW = 107;
@@ -139,6 +139,12 @@ static const int USERNAME_IS_EXIST = 11002;
 static const int LOGIN_SUCCESS = 12000;
 static const int USER_NOT_EXIST = 12001;
 static const int LOGIN_REPLACE = 12002;
+
+// logout result code
+static const int LOGOUT_SUCCESS = 13000;
+
+// view info result code
+static const int VIEW_INFO_SUCCESS = 14000;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;

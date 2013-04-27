@@ -4,5 +4,10 @@ import "UserData.proto";
 //user login response data
 message LoginResponse {
 	optional string sid = 1;
-    optional UserData.User_Info User_Info = 4;
+    optional UserData.User_Info User_Info = 2;
+}
+
+//view user response data
+msessage DetailResponse {
+    optional UserData.User_Info User_Info = 1;
 }
