@@ -35,12 +35,19 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
   `birthday` TIMESTAMP NULL ,
   `signature_text` VARCHAR(255) NULL COMMENT '个性签名(文字)' ,
   `signature_record_id` INT NULL COMMENT '个性签名(语音文件ID)' ,
+  `pic_id` INT NULL ,
   `praise_num` INT NULL COMMENT '赞次数' ,
   `visit_num` INT NULL COMMENT '访问次数' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_user_t_file1_idx` (`signature_record_id` ASC) ,
+  INDEX `fk_t_user_t_file2_idx` (`pic_id` ASC) ,
   CONSTRAINT `fk_t_user_t_file1`
     FOREIGN KEY (`signature_record_id` )
+    REFERENCES `together`.`t_file` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_user_t_file2`
+    FOREIGN KEY (`pic_id` )
     REFERENCES `together`.`t_file` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

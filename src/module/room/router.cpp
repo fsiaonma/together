@@ -14,6 +14,7 @@ int room_handler(process *process, map<string, string> param) {
     	    break ;
     	}
     	case ROOM_SHOWLIST: {
+            show_room_list(param, response_data);
     		break ;
     	}
         case ROOM_SEARCH: {

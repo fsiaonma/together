@@ -35,6 +35,7 @@ void protobuf_AssignDesc_UserResponse_2eproto();
 void protobuf_ShutdownFile_UserResponse_2eproto();
 
 class LoginResponse;
+class DetailResponse;
 
 // ===================================================================
 
@@ -104,10 +105,10 @@ class LoginResponse : public ::google::protobuf::Message {
   inline ::std::string* release_sid();
   inline void set_allocated_sid(::std::string* sid);
 
-  // optional .UserData.User_Info User_Info = 4;
+  // optional .UserData.User_Info User_Info = 2;
   inline bool has_user_info() const;
   inline void clear_user_info();
-  static const int kUserInfoFieldNumber = 4;
+  static const int kUserInfoFieldNumber = 2;
   inline const ::UserData::User_Info& user_info() const;
   inline ::UserData::User_Info* mutable_user_info();
   inline ::UserData::User_Info* release_user_info();
@@ -134,6 +135,90 @@ class LoginResponse : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static LoginResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class DetailResponse : public ::google::protobuf::Message {
+ public:
+  DetailResponse();
+  virtual ~DetailResponse();
+
+  DetailResponse(const DetailResponse& from);
+
+  inline DetailResponse& operator=(const DetailResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const DetailResponse& default_instance();
+
+  void Swap(DetailResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  DetailResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const DetailResponse& from);
+  void MergeFrom(const DetailResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .UserData.User_Info User_Info = 1;
+  inline bool has_user_info() const;
+  inline void clear_user_info();
+  static const int kUserInfoFieldNumber = 1;
+  inline const ::UserData::User_Info& user_info() const;
+  inline ::UserData::User_Info* mutable_user_info();
+  inline ::UserData::User_Info* release_user_info();
+  inline void set_allocated_user_info(::UserData::User_Info* user_info);
+
+  // @@protoc_insertion_point(class_scope:UserResponse.DetailResponse)
+ private:
+  inline void set_has_user_info();
+  inline void clear_has_user_info();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::UserData::User_Info* user_info_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static DetailResponse* default_instance_;
 };
 // ===================================================================
 
@@ -212,7 +297,7 @@ inline void LoginResponse::set_allocated_sid(::std::string* sid) {
   }
 }
 
-// optional .UserData.User_Info User_Info = 4;
+// optional .UserData.User_Info User_Info = 2;
 inline bool LoginResponse::has_user_info() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -241,6 +326,48 @@ inline ::UserData::User_Info* LoginResponse::release_user_info() {
   return temp;
 }
 inline void LoginResponse::set_allocated_user_info(::UserData::User_Info* user_info) {
+  delete user_info_;
+  user_info_ = user_info;
+  if (user_info) {
+    set_has_user_info();
+  } else {
+    clear_has_user_info();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// DetailResponse
+
+// optional .UserData.User_Info User_Info = 1;
+inline bool DetailResponse::has_user_info() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void DetailResponse::set_has_user_info() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void DetailResponse::clear_has_user_info() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void DetailResponse::clear_user_info() {
+  if (user_info_ != NULL) user_info_->::UserData::User_Info::Clear();
+  clear_has_user_info();
+}
+inline const ::UserData::User_Info& DetailResponse::user_info() const {
+  return user_info_ != NULL ? *user_info_ : *default_instance_->user_info_;
+}
+inline ::UserData::User_Info* DetailResponse::mutable_user_info() {
+  set_has_user_info();
+  if (user_info_ == NULL) user_info_ = new ::UserData::User_Info;
+  return user_info_;
+}
+inline ::UserData::User_Info* DetailResponse::release_user_info() {
+  clear_has_user_info();
+  ::UserData::User_Info* temp = user_info_;
+  user_info_ = NULL;
+  return temp;
+}
+inline void DetailResponse::set_allocated_user_info(::UserData::User_Info* user_info) {
   delete user_info_;
   user_info_ = user_info;
   if (user_info) {

@@ -20,6 +20,8 @@ map<string, string> parse_param(char *param_data);
 
 void read_http_request(process* process);
 
+void download_file(process* process, int fileId);
+
 int recv_file(process* process, const char* filename);
 
 void read_upload_request(process* process);

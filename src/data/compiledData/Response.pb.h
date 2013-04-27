@@ -128,6 +128,15 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::UserResponse::LoginResponse* release_login_response();
   inline void set_allocated_login_response(::UserResponse::LoginResponse* login_response);
 
+  // optional .UserResponse.DetailResponse detail_response = 5;
+  inline bool has_detail_response() const;
+  inline void clear_detail_response();
+  static const int kDetailResponseFieldNumber = 5;
+  inline const ::UserResponse::DetailResponse& detail_response() const;
+  inline ::UserResponse::DetailResponse* mutable_detail_response();
+  inline ::UserResponse::DetailResponse* release_detail_response();
+  inline void set_allocated_detail_response(::UserResponse::DetailResponse* detail_response);
+
   // @@protoc_insertion_point(class_scope:Response.HTTPResponse)
  private:
   inline void set_has_code();
@@ -138,6 +147,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_msg();
   inline void set_has_login_response();
   inline void clear_has_login_response();
+  inline void set_has_detail_response();
+  inline void clear_has_detail_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -145,9 +156,10 @@ class HTTPResponse : public ::google::protobuf::Message {
   bool success_;
   ::std::string* msg_;
   ::UserResponse::LoginResponse* login_response_;
+  ::UserResponse::DetailResponse* detail_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -312,6 +324,44 @@ inline void HTTPResponse::set_allocated_login_response(::UserResponse::LoginResp
     set_has_login_response();
   } else {
     clear_has_login_response();
+  }
+}
+
+// optional .UserResponse.DetailResponse detail_response = 5;
+inline bool HTTPResponse::has_detail_response() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void HTTPResponse::set_has_detail_response() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void HTTPResponse::clear_has_detail_response() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void HTTPResponse::clear_detail_response() {
+  if (detail_response_ != NULL) detail_response_->::UserResponse::DetailResponse::Clear();
+  clear_has_detail_response();
+}
+inline const ::UserResponse::DetailResponse& HTTPResponse::detail_response() const {
+  return detail_response_ != NULL ? *detail_response_ : *default_instance_->detail_response_;
+}
+inline ::UserResponse::DetailResponse* HTTPResponse::mutable_detail_response() {
+  set_has_detail_response();
+  if (detail_response_ == NULL) detail_response_ = new ::UserResponse::DetailResponse;
+  return detail_response_;
+}
+inline ::UserResponse::DetailResponse* HTTPResponse::release_detail_response() {
+  clear_has_detail_response();
+  ::UserResponse::DetailResponse* temp = detail_response_;
+  detail_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_detail_response(::UserResponse::DetailResponse* detail_response) {
+  delete detail_response_;
+  detail_response_ = detail_response;
+  if (detail_response) {
+    set_has_detail_response();
+  } else {
+    clear_has_detail_response();
   }
 }
 

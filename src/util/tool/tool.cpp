@@ -128,7 +128,6 @@ int Tool::get_project_path(char *buf, int count) {
         }
         temp_buf += "together/";
         Tool::S2C(temp_buf, buf);
-        cout << buf << endl;
     }
     
     return result;
