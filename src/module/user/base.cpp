@@ -3,6 +3,11 @@
 int _get_user_info(string username, UserData::User_Info *user_info) {
     MYSQL mysql;
     string sql = "select * from t_user where username = '" + username + "';";
+    // database params
+    Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+    
     e.excute(sql);
     mysql = e.get_mysql();
 
@@ -16,7 +21,7 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
 
     for(int i = 0; i < fieldcount; i++) {
         field = mysql_fetch_field_direct(result, i);
-        cout << field->name << "\t";
+        LOG_DEBUG << field->name << "\t";
         string key = field->name;
         if (key == "username") {
             user_info->set_username(row[i]);

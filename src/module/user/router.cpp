@@ -46,7 +46,7 @@ int user_handler(process *process, map<string, string> param) {
                 LOG_ERROR << "username or sid is not exist" << endl;
                 return -1;
             }
-            get_user_info(param["username"], param["sid"], response_data);
+            view_user_info(param["username"], param["sid"], response_data);
             break ;
         }
         case USER_SET_INFO: {

@@ -1,13 +1,13 @@
 #include "user.h"
 
 /**
- * get user info
+ * view user info
  *  
- * @method get_user_info
+ * @method view_user_info
  * @param {string} username username which is used for getting user info.
  * @param {string} sid sid which is used for getting user info.
  * @param {char*} respone data. 
- * @return {int} get_user_info status.
+ * @return {int} view_user_info status.
  */
 int view_user_info(string username, string sid, char *buf) {
     string respon_data;
