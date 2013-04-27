@@ -11,3 +11,8 @@ message LoginResponse {
 message DetailResponse {
     optional UserData.User_Info User_Info = 1;
 }
+
+//is user exist response data
+message UsernameExistResponse {
+    optional bool is_exist = 1;
+}

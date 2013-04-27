@@ -104,6 +104,7 @@ static const int USER_VIEW_INFO = 104;
 static const int USER_SET_INFO = 105;
 static const int USER_PRISE = 106;
 static const int USER_FOLLOW = 107;
+static const int USER_IS_EXIST = 108;
 
 
 // ============ ROOM ============
@@ -145,6 +146,9 @@ static const int LOGOUT_SUCCESS = 13000;
 
 // view info result code
 static const int VIEW_INFO_SUCCESS = 14000;
+
+// check username is exist code
+static const int USERNAME_AVAILABLE = 18000;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;

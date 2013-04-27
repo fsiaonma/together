@@ -73,6 +73,14 @@ int user_handler(process *process, map<string, string> param) {
             follow(param["username"], param["sid"], response_data);
             break ;
         }
+        case USER_IS_EXIST: {
+            if (param.count("username") == 0) {
+                LOG_ERROR << "username is not exist" << endl;
+                return -1;
+            }
+            username_is_exist(param["username"], response_data);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;
