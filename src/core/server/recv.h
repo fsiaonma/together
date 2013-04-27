@@ -2,6 +2,7 @@
 #define _RECV_H_
 
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <map>
 #include <errno.h>
 

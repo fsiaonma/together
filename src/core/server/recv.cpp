@@ -247,7 +247,7 @@
 	    	BAD_REQUEST
 	    	return;
 		}
-		download_file(process, Tool::S2I(param["fileId"]));
+		download_file(process, 1);
 	} else {
  		handle_read_request(process, module_name.c_str(), param);
 	}
@@ -262,6 +262,7 @@
  	LOG_INFO << "download fileId|" << fileId << endl;
  	// get file info from database
  	bool is_succ = false;
+	int s;
  	string msg = "";
  	MYSQL mysql;
 
@@ -290,23 +291,78 @@
 
 	    LOG_INFO << rowcount << "|" << fieldcount << endl;
 
+	    string md5, suffix, user_id;
+
 	    if (rowcount == 1)
 	    {
 	    	for(int i = 0; i < fieldcount; i++) {
 	            if (row[i] != NULL) {
-	                LOG_INFO << row[i] << endl;
+	            	field = mysql_fetch_field_direct(result, i);
+        			string key = field->name;
+        			if (key == "md5")
+        				md5 = row[i];
+        			else if (key == "suffix")
+        				suffix = row[i];
+        			else if (key == "uploader_id")
+        				user_id = row[i];
 	            }
         	}
+        	LOG_INFO << "get file info from database succ" << endl;
 	    } else {
 	    	msg = "get file info from database fail";
 	    	break;
 	    }
+	    if (Tool::trim(md5).empty() || Tool::trim(suffix).empty() || Tool::S2I(user_id) < 0)
+	    {
+	    	msg = "md5 or suffix or user_id is illeagal";
+	    	break;
+	    }
+	    LOG_INFO << "md5:" << md5 << "|" << "suffix:" << suffix << "|" << "user_id" << user_id << endl;
+	    // get file info
+	    string file_path = config["UPLOAD_PATH"] + md5 + "_" + user_id + suffix;
+	    LOG_INFO << "download filename:" << file_path << endl;
+
+	    // struct _stat info;
+    	// _stat(file_path.c_str(), &info);
+    	struct stat filestat;
+		s = lstat(file_path.c_str(), &filestat);
+		if (s == -1)
+		{
+			msg = "get file info error";
+			break;
+		}
+    	int file_size = filestat.st_size;
+    	LOG_INFO << "filesize:" << file_size << endl;
+
+    	int fd = open(file_path.c_str(), O_RDONLY);
+		process->fd = fd;
+		process->total_length = file_size;
+		is_succ = true;
+
+		process->buf[0] = 0;
+		reset_process(process);
+		write_to_header(header_200_start);
+		char tempstring[30];
+		snprintf(tempstring, sizeof(tempstring), "Content-Length: %ld\r\n", filestat.st_size);
+		write_to_header(tempstring);
+		write_to_header(header_end);
+		LOG_INFO << process->buf << endl;
+
 	    // mysql_free_result(result);
  	} while(0);
  	e.close();
  	if (is_succ)
  	{
-
+ 		LOG_INFO << "send file ready success" << endl;
+	 	process->status = STATUS_SEND_RESPONSE_HEADER;
+		// 修改此 sock 的监听状态，改为监视写状态
+	 	event.data.fd = process->sock;
+	 	event.events = EPOLLOUT;
+	 	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
+	 	if (s == -1) {
+	 		LOG_ERROR << "epoll_ctl error" << endl;
+	 		abort();
+	 	}
  	} else {
  		LOG_ERROR << msg << endl;
  		BAD_REQUEST
