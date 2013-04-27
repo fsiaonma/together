@@ -143,7 +143,7 @@ int username_is_exist(string username, char *buf) {
         http_res->set_code(USERNAME_AVAILABLE);
         http_res->set_success(false);
         msg = "username is available";
-        LOG_ERROR << msg << endl;
+        LOG_INFO << msg << endl;
         http_res->set_msg(msg);
     } while(0);
 

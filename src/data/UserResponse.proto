@@ -9,7 +9,8 @@ message LoginResponse {
 
 //view user response data
 message DetailResponse {
-    optional UserData.User_Info User_Info = 1;
+	optional bool is_follow = 1;
+    optional UserData.User_Info User_Info = 2;
 }
 
 //is user exist response data

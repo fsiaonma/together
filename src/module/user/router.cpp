@@ -42,11 +42,11 @@ int user_handler(process *process, map<string, string> param) {
             break ;
         }
         case USER_VIEW_INFO: {
-            if (param.count("username") == 0 || param.count("sid") == 0) {
-                LOG_ERROR << "username or sid is not exist" << endl;
+            if (param.count("username") == 0) {
+                LOG_ERROR << "username is not exist" << endl;
                 return -1;
             }
-            view_user_info(param["username"], param["sid"], response_data);
+            view_user_info(Tool::S2I(param["uid"]), param["username"], param["sid"], response_data);
             break ;
         }
         case USER_SET_INFO: {
@@ -57,22 +57,22 @@ int user_handler(process *process, map<string, string> param) {
             set_user_info(param, param["sid"], response_data);
             break ;
         }
-        case USER_PRISE: {
-            if (param.count("username") == 0 || param.count("sid") == 0) {
-                LOG_ERROR << "username or sid is not exist" << endl;
-                return -1;
-            }
-            prise(param["username"], param["sid"], response_data);
-            break ;
-        }
-        case USER_FOLLOW: {
-            if (param.count("username") == 0 || param.count("sid") == 0) {
-                LOG_ERROR << "username or sid is not exist" << endl;
-                return -1;
-            }
-            follow(param["username"], param["sid"], response_data);
-            break ;
-        }
+        // case USER_PRISE: {
+        //     if (param.count("username") == 0 || param.count("sid") == 0) {
+        //         LOG_ERROR << "username or sid is not exist" << endl;
+        //         return -1;
+        //     }
+        //     prise(param["username"], param["sid"], response_data);
+        //     break ;
+        // }
+        // case USER_FOLLOW: {
+        //     if (param.count("username") == 0 || param.count("sid") == 0) {
+        //         LOG_ERROR << "username or sid is not exist" << endl;
+        //         return -1;
+        //     }
+        //     follow(param["username"], param["sid"], response_data);
+        //     break ;
+        // }
         case USER_IS_EXIST: {
             if (param.count("username") == 0) {
                 LOG_ERROR << "username is not exist" << endl;

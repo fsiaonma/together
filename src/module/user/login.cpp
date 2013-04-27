@@ -78,13 +78,12 @@ int login(string username, string password, string dev_id, char *buf) {
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
 
-        #if 0
+        #if 1
             UserData::User_Info *user_info = new UserData::User_Info();
             _get_user_info(username, user_info);
             UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
             login_res->set_allocated_user_info(user_info);
             login_res->set_sid(sid);
-
             http_res->set_allocated_login_response(login_res);
         #endif
     } while(0);

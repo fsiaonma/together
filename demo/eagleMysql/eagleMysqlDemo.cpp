@@ -19,25 +19,31 @@ int main() {
     int insert_id = -1;
 
     // insert
-    // map<string, string> insert_params;
-    // string update_password = "123456789";
-    // string param = "参数";
-    // insert_params["username"] = Tool::mysql_filter(param);
-    // e.insert("t_user", insert_params, insert_id);
+    map<string, string> insert_params;
+    string param = "参数";
+    insert_params["username"] = Tool::mysql_filter(param);
+    e.insert("t_user", insert_params, insert_id);
 
+    // count
+    int count;
+    e.count("t_user", "where username = '参数';", count);
+    cout << "count: " << count << endl;
 
-	// // remove
- //    e.remove("t_user", "where username = 'insert_test'");
+	// remove
+    e.remove("t_user", "where username = '参数'");
 
- //    // updata
-    // map<string, string> update_insert_params;
-    // update_insert_params["username"] = Tool::mysql_filter("update_insert_test");
-    // update_insert_params["password"] = Tool::mysql_filter("654321");
-    // e.insert("t_user", update_insert_params, insert_id);
+    // updata
+    map<string, string> update_insert_params;
+    string update_insert_test = "update_insert_test";
+    string password = "123456";
+    update_insert_params["username"] = Tool::mysql_filter(update_insert_test);
+    update_insert_params["password"] = Tool::mysql_filter(password);
+    e.insert("t_user", update_insert_params, insert_id);
 
-    // map<string, string> update_params;
-    // update_params["password"] = Tool::mysql_filter("testupdate");
-    // e.update("t_user", update_params, "where username = 'update_insert_test'");
+    map<string, string> update_params;
+    string testupdate = "testupdate";
+    update_params["password"] = Tool::mysql_filter(testupdate);
+    e.update("t_user", update_params, "where username = 'update_insert_test'");
 
 	//excute
     e.connet();
@@ -72,5 +78,6 @@ int main() {
         row = mysql_fetch_row(result);
     }
     e.close();
+
 	return 0;
 }

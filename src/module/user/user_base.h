@@ -1,0 +1,20 @@
+#ifndef _USER_BASE_H_
+#define _USER_BASE_H_
+
+#include <mysql/mysql.h>
+#include <map>
+#include <stdlib.h>
+
+#include "../../common/config/config.h"
+#include "../../util/eagleMysql/eagleMysql.h"
+#include "../../common/global/global.h"
+#include "../../util/log/log.h"
+#include "../../data/compiledData/Response.pb.h"
+#include "../../util/tool/tool.h"
+#include "../../lib/session/session.h"
+
+int _get_user_info(string username, UserData::User_Info *user_info);
+int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res);
+
+
+#endif

@@ -2,13 +2,14 @@ package UserData;
 
 //user data
 message User_Info {
-    optional string username = 1;
-    optional string nick_name = 2;
-    optional int32 birthday = 3;
-    optional string signature_text = 4;
-    optional int32 signature_record_id = 5;
-    optional int32 praise_num = 6;
-    optional int32 visit_num = 7;
-    optional int32 followed_num = 8;
-    optional int32 follow_num = 9;
+    optional int32 uid = 1;
+    optional string username = 2;
+    optional string nick_name = 3;
+    optional int32 birthday = 4;
+    optional string signature_text = 5;
+    optional int32 signature_record_id = 6;
+    optional int32 praise_num = 7;
+    optional int32 visit_num = 8;
+    optional int32 followed_num = 9;
+    optional int32 follow_num = 10;
 }

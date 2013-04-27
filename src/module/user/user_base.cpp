@@ -1,4 +1,4 @@
-#include "user.h"
+#include "./user_base.h"
 
 /**
  * get user info
@@ -12,12 +12,13 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
     int uid;
     int count;
     MYSQL mysql;
-    
+
     // database params
     Config *c = Config::get_instance();
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
+    e.connet();
     e.excute("select * from t_user where username = '" + username + "';");
     mysql = e.get_mysql();
 
@@ -31,10 +32,16 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
 
     for(int i = 0; i < fieldcount; i++) {
         field = mysql_fetch_field_direct(result, i);
-        LOG_DEBUG << field->name << "\t";
+        LOG_INFO << field->name << endl;
         string key = field->name;
+
+        if (row[i] == NULL) {
+            continue;
+        }
+        
         if (key == "id") {
-            uid = row[i];
+            uid = Tool::S2I(row[i]);
+            user_info->set_uid(uid);
         } else if (key == "username") {
             user_info->set_username(row[i]);
         } else if (key == "nick_name") {
@@ -52,11 +59,15 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
         }
     }
 
-    e.count("t_follow", "where follow_id = '" + uid + "';", count);
+    e.count("t_follow", "where follow_id = " + Tool::mysql_filter(uid) + ";", count);
     user_info->set_follow_num(count);
 
-    e.count("t_follow", "where followed_id = '" + uid + "';", count);
+    e.count("t_follow", "where followed_id = " + Tool::mysql_filter(uid) + ";", count);
     user_info->set_followed_num(count);
+
+    print_proto(user_info);
+
+    e.close();
 
     return 0;
 }
@@ -69,7 +80,7 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
  * @param {bool} success success which is used for setting http head.
  * @param {string} msg msg which is used for setting http head.
  * @param {Response::HTTPResponse*} http_res respone data.
- * @return {int} _get_user_info status. 
+ * @return {int} _set_http_head status. 
  */
 int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res) {
     http_res->set_code(code);

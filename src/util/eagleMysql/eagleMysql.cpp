@@ -199,22 +199,21 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
  * @method count.
  * @return {int} ret status
  */
-// int eagleMysql::count(string table, string condition, int &count) {
-//     int ret = SQL_OK;
-//     exist = false;
-//     if (!connet())
-//         return SQL_CONNECT_FAIL;
+int eagleMysql::count(string table, string condition, int &count) {
+    int ret = SQL_OK;
+    if (!connet())
+        return SQL_CONNECT_FAIL;
 
-//     excute("select count(1) from " + table + " " + condition + ";");
-//     MYSQL_RES *result = mysql_store_result(&(this->mysql));
-//     MYSQL_ROW rowdata = mysql_fetch_row(result);
-//     if (rowdata) {
-//         count = atoi(rowdata[0]);
-//     } else {
-//         ret = SQL_COUNT_ERR;
-//     }
-//     cout << "count is : " << count << endl;
-//     mysql_free_result(result);
-//     this->close();
-//     return ret;
-// }
+    excute("select count(1) from " + table + " " + condition + ";");
+    MYSQL_RES *result = mysql_store_result(&(this->mysql));
+    MYSQL_ROW rowdata = mysql_fetch_row(result);
+    if (rowdata) {
+        count = atoi(rowdata[0]);
+    } else {
+        ret = SQL_COUNT_ERR;
+    }
+    cout << "count is : " << count << endl;
+    mysql_free_result(result);
+    this->close();
+    return ret;
+}

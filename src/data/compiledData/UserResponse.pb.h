@@ -36,6 +36,7 @@ void protobuf_ShutdownFile_UserResponse_2eproto();
 
 class LoginResponse;
 class DetailResponse;
+class UsernameExistResponse;
 
 // ===================================================================
 
@@ -192,10 +193,17 @@ class DetailResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .UserData.User_Info User_Info = 1;
+  // optional bool is_follow = 1;
+  inline bool has_is_follow() const;
+  inline void clear_is_follow();
+  static const int kIsFollowFieldNumber = 1;
+  inline bool is_follow() const;
+  inline void set_is_follow(bool value);
+
+  // optional .UserData.User_Info User_Info = 2;
   inline bool has_user_info() const;
   inline void clear_user_info();
-  static const int kUserInfoFieldNumber = 1;
+  static const int kUserInfoFieldNumber = 2;
   inline const ::UserData::User_Info& user_info() const;
   inline ::UserData::User_Info* mutable_user_info();
   inline ::UserData::User_Info* release_user_info();
@@ -203,12 +211,97 @@ class DetailResponse : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:UserResponse.DetailResponse)
  private:
+  inline void set_has_is_follow();
+  inline void clear_has_is_follow();
   inline void set_has_user_info();
   inline void clear_has_user_info();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::UserData::User_Info* user_info_;
+  bool is_follow_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static DetailResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class UsernameExistResponse : public ::google::protobuf::Message {
+ public:
+  UsernameExistResponse();
+  virtual ~UsernameExistResponse();
+
+  UsernameExistResponse(const UsernameExistResponse& from);
+
+  inline UsernameExistResponse& operator=(const UsernameExistResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UsernameExistResponse& default_instance();
+
+  void Swap(UsernameExistResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  UsernameExistResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UsernameExistResponse& from);
+  void MergeFrom(const UsernameExistResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional bool is_exist = 1;
+  inline bool has_is_exist() const;
+  inline void clear_is_exist();
+  static const int kIsExistFieldNumber = 1;
+  inline bool is_exist() const;
+  inline void set_is_exist(bool value);
+
+  // @@protoc_insertion_point(class_scope:UserResponse.UsernameExistResponse)
+ private:
+  inline void set_has_is_exist();
+  inline void clear_has_is_exist();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  bool is_exist_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -218,7 +311,7 @@ class DetailResponse : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_UserResponse_2eproto();
 
   void InitAsDefaultInstance();
-  static DetailResponse* default_instance_;
+  static UsernameExistResponse* default_instance_;
 };
 // ===================================================================
 
@@ -339,15 +432,37 @@ inline void LoginResponse::set_allocated_user_info(::UserData::User_Info* user_i
 
 // DetailResponse
 
-// optional .UserData.User_Info User_Info = 1;
-inline bool DetailResponse::has_user_info() const {
+// optional bool is_follow = 1;
+inline bool DetailResponse::has_is_follow() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void DetailResponse::set_has_user_info() {
+inline void DetailResponse::set_has_is_follow() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void DetailResponse::clear_has_user_info() {
+inline void DetailResponse::clear_has_is_follow() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void DetailResponse::clear_is_follow() {
+  is_follow_ = false;
+  clear_has_is_follow();
+}
+inline bool DetailResponse::is_follow() const {
+  return is_follow_;
+}
+inline void DetailResponse::set_is_follow(bool value) {
+  set_has_is_follow();
+  is_follow_ = value;
+}
+
+// optional .UserData.User_Info User_Info = 2;
+inline bool DetailResponse::has_user_info() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void DetailResponse::set_has_user_info() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void DetailResponse::clear_has_user_info() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void DetailResponse::clear_user_info() {
   if (user_info_ != NULL) user_info_->::UserData::User_Info::Clear();
@@ -375,6 +490,32 @@ inline void DetailResponse::set_allocated_user_info(::UserData::User_Info* user_
   } else {
     clear_has_user_info();
   }
+}
+
+// -------------------------------------------------------------------
+
+// UsernameExistResponse
+
+// optional bool is_exist = 1;
+inline bool UsernameExistResponse::has_is_exist() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UsernameExistResponse::set_has_is_exist() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UsernameExistResponse::clear_has_is_exist() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UsernameExistResponse::clear_is_exist() {
+  is_exist_ = false;
+  clear_has_is_exist();
+}
+inline bool UsernameExistResponse::is_exist() const {
+  return is_exist_;
+}
+inline void UsernameExistResponse::set_is_exist(bool value) {
+  set_has_is_exist();
+  is_exist_ = value;
 }
 
 

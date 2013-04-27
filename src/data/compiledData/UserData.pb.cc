@@ -34,7 +34,8 @@ void protobuf_AssignDesc_UserData_2eproto() {
       "UserData.proto");
   GOOGLE_CHECK(file != NULL);
   User_Info_descriptor_ = file->message_type(0);
-  static const int User_Info_offsets_[9] = {
+  static const int User_Info_offsets_[10] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, uid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, username_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, nick_name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, birthday_),
@@ -86,12 +87,13 @@ void protobuf_AddDesc_UserData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016UserData.proto\022\010UserData\"\310\001\n\tUser_Info"
-    "\022\020\n\010username\030\001 \001(\t\022\021\n\tnick_name\030\002 \001(\t\022\020\n"
-    "\010birthday\030\003 \001(\005\022\026\n\016signature_text\030\004 \001(\t\022"
-    "\033\n\023signature_record_id\030\005 \001(\005\022\022\n\npraise_n"
-    "um\030\006 \001(\005\022\021\n\tvisit_num\030\007 \001(\005\022\024\n\014followed_"
-    "num\030\010 \001(\005\022\022\n\nfollow_num\030\t \001(\005", 229);
+    "\n\016UserData.proto\022\010UserData\"\325\001\n\tUser_Info"
+    "\022\013\n\003uid\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\021\n\tnick_"
+    "name\030\003 \001(\t\022\020\n\010birthday\030\004 \001(\005\022\026\n\016signatur"
+    "e_text\030\005 \001(\t\022\033\n\023signature_record_id\030\006 \001("
+    "\005\022\022\n\npraise_num\030\007 \001(\005\022\021\n\tvisit_num\030\010 \001(\005"
+    "\022\024\n\014followed_num\030\t \001(\005\022\022\n\nfollow_num\030\n \001"
+    "(\005", 242);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserData.proto", &protobuf_RegisterTypes);
   User_Info::default_instance_ = new User_Info();
@@ -109,6 +111,7 @@ struct StaticDescriptorInitializer_UserData_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int User_Info::kUidFieldNumber;
 const int User_Info::kUsernameFieldNumber;
 const int User_Info::kNickNameFieldNumber;
 const int User_Info::kBirthdayFieldNumber;
@@ -136,6 +139,7 @@ User_Info::User_Info(const User_Info& from)
 
 void User_Info::SharedCtor() {
   _cached_size_ = 0;
+  uid_ = 0;
   username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   nick_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   birthday_ = 0;
@@ -189,6 +193,7 @@ User_Info* User_Info::New() const {
 
 void User_Info::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    uid_ = 0;
     if (has_username()) {
       if (username_ != &::google::protobuf::internal::kEmptyString) {
         username_->clear();
@@ -208,9 +213,9 @@ void User_Info::Clear() {
     signature_record_id_ = 0;
     praise_num_ = 0;
     visit_num_ = 0;
-    followed_num_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    followed_num_ = 0;
     follow_num_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -223,10 +228,26 @@ bool User_Info::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string username = 1;
+      // optional int32 uid = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &uid_)));
+          set_has_uid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_username;
+        break;
+      }
+
+      // optional string username = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_username:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_username()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8String(
@@ -235,12 +256,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_nick_name;
+        if (input->ExpectTag(26)) goto parse_nick_name;
         break;
       }
 
-      // optional string nick_name = 2;
-      case 2: {
+      // optional string nick_name = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_nick_name:
@@ -252,12 +273,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(24)) goto parse_birthday;
+        if (input->ExpectTag(32)) goto parse_birthday;
         break;
       }
 
-      // optional int32 birthday = 3;
-      case 3: {
+      // optional int32 birthday = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_birthday:
@@ -268,12 +289,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_signature_text;
+        if (input->ExpectTag(42)) goto parse_signature_text;
         break;
       }
 
-      // optional string signature_text = 4;
-      case 4: {
+      // optional string signature_text = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_signature_text:
@@ -285,12 +306,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(40)) goto parse_signature_record_id;
+        if (input->ExpectTag(48)) goto parse_signature_record_id;
         break;
       }
 
-      // optional int32 signature_record_id = 5;
-      case 5: {
+      // optional int32 signature_record_id = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_signature_record_id:
@@ -301,12 +322,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(48)) goto parse_praise_num;
+        if (input->ExpectTag(56)) goto parse_praise_num;
         break;
       }
 
-      // optional int32 praise_num = 6;
-      case 6: {
+      // optional int32 praise_num = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_praise_num:
@@ -317,12 +338,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(56)) goto parse_visit_num;
+        if (input->ExpectTag(64)) goto parse_visit_num;
         break;
       }
 
-      // optional int32 visit_num = 7;
-      case 7: {
+      // optional int32 visit_num = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_visit_num:
@@ -333,12 +354,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(64)) goto parse_followed_num;
+        if (input->ExpectTag(72)) goto parse_followed_num;
         break;
       }
 
-      // optional int32 followed_num = 8;
-      case 8: {
+      // optional int32 followed_num = 9;
+      case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_followed_num:
@@ -349,12 +370,12 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(72)) goto parse_follow_num;
+        if (input->ExpectTag(80)) goto parse_follow_num;
         break;
       }
 
-      // optional int32 follow_num = 9;
-      case 9: {
+      // optional int32 follow_num = 10;
+      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_follow_num:
@@ -387,61 +408,66 @@ bool User_Info::MergePartialFromCodedStream(
 
 void User_Info::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional string username = 1;
+  // optional int32 uid = 1;
+  if (has_uid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->uid(), output);
+  }
+
+  // optional string username = 2;
   if (has_username()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->username().data(), this->username().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->username(), output);
+      2, this->username(), output);
   }
 
-  // optional string nick_name = 2;
+  // optional string nick_name = 3;
   if (has_nick_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->nick_name().data(), this->nick_name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->nick_name(), output);
+      3, this->nick_name(), output);
   }
 
-  // optional int32 birthday = 3;
+  // optional int32 birthday = 4;
   if (has_birthday()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->birthday(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->birthday(), output);
   }
 
-  // optional string signature_text = 4;
+  // optional string signature_text = 5;
   if (has_signature_text()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->signature_text().data(), this->signature_text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->signature_text(), output);
+      5, this->signature_text(), output);
   }
 
-  // optional int32 signature_record_id = 5;
+  // optional int32 signature_record_id = 6;
   if (has_signature_record_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->signature_record_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->signature_record_id(), output);
   }
 
-  // optional int32 praise_num = 6;
+  // optional int32 praise_num = 7;
   if (has_praise_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->praise_num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->praise_num(), output);
   }
 
-  // optional int32 visit_num = 7;
+  // optional int32 visit_num = 8;
   if (has_visit_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->visit_num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->visit_num(), output);
   }
 
-  // optional int32 followed_num = 8;
+  // optional int32 followed_num = 9;
   if (has_followed_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->followed_num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->followed_num(), output);
   }
 
-  // optional int32 follow_num = 9;
+  // optional int32 follow_num = 10;
   if (has_follow_num()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->follow_num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->follow_num(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -452,64 +478,69 @@ void User_Info::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* User_Info::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional string username = 1;
+  // optional int32 uid = 1;
+  if (has_uid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->uid(), target);
+  }
+
+  // optional string username = 2;
   if (has_username()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->username().data(), this->username().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->username(), target);
+        2, this->username(), target);
   }
 
-  // optional string nick_name = 2;
+  // optional string nick_name = 3;
   if (has_nick_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->nick_name().data(), this->nick_name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->nick_name(), target);
+        3, this->nick_name(), target);
   }
 
-  // optional int32 birthday = 3;
+  // optional int32 birthday = 4;
   if (has_birthday()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->birthday(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->birthday(), target);
   }
 
-  // optional string signature_text = 4;
+  // optional string signature_text = 5;
   if (has_signature_text()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->signature_text().data(), this->signature_text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->signature_text(), target);
+        5, this->signature_text(), target);
   }
 
-  // optional int32 signature_record_id = 5;
+  // optional int32 signature_record_id = 6;
   if (has_signature_record_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->signature_record_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->signature_record_id(), target);
   }
 
-  // optional int32 praise_num = 6;
+  // optional int32 praise_num = 7;
   if (has_praise_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->praise_num(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->praise_num(), target);
   }
 
-  // optional int32 visit_num = 7;
+  // optional int32 visit_num = 8;
   if (has_visit_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->visit_num(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->visit_num(), target);
   }
 
-  // optional int32 followed_num = 8;
+  // optional int32 followed_num = 9;
   if (has_followed_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->followed_num(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->followed_num(), target);
   }
 
-  // optional int32 follow_num = 9;
+  // optional int32 follow_num = 10;
   if (has_follow_num()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->follow_num(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->follow_num(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -523,65 +554,72 @@ int User_Info::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string username = 1;
+    // optional int32 uid = 1;
+    if (has_uid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->uid());
+    }
+
+    // optional string username = 2;
     if (has_username()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->username());
     }
 
-    // optional string nick_name = 2;
+    // optional string nick_name = 3;
     if (has_nick_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->nick_name());
     }
 
-    // optional int32 birthday = 3;
+    // optional int32 birthday = 4;
     if (has_birthday()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->birthday());
     }
 
-    // optional string signature_text = 4;
+    // optional string signature_text = 5;
     if (has_signature_text()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->signature_text());
     }
 
-    // optional int32 signature_record_id = 5;
+    // optional int32 signature_record_id = 6;
     if (has_signature_record_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->signature_record_id());
     }
 
-    // optional int32 praise_num = 6;
+    // optional int32 praise_num = 7;
     if (has_praise_num()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->praise_num());
     }
 
-    // optional int32 visit_num = 7;
+    // optional int32 visit_num = 8;
     if (has_visit_num()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->visit_num());
     }
 
-    // optional int32 followed_num = 8;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 followed_num = 9;
     if (has_followed_num()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->followed_num());
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 follow_num = 9;
+    // optional int32 follow_num = 10;
     if (has_follow_num()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -615,6 +653,9 @@ void User_Info::MergeFrom(const ::google::protobuf::Message& from) {
 void User_Info::MergeFrom(const User_Info& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_uid()) {
+      set_uid(from.uid());
+    }
     if (from.has_username()) {
       set_username(from.username());
     }
@@ -636,11 +677,11 @@ void User_Info::MergeFrom(const User_Info& from) {
     if (from.has_visit_num()) {
       set_visit_num(from.visit_num());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_followed_num()) {
       set_followed_num(from.followed_num());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_follow_num()) {
       set_follow_num(from.follow_num());
     }
@@ -667,6 +708,7 @@ bool User_Info::IsInitialized() const {
 
 void User_Info::Swap(User_Info* other) {
   if (other != this) {
+    std::swap(uid_, other->uid_);
     std::swap(username_, other->username_);
     std::swap(nick_name_, other->nick_name_);
     std::swap(birthday_, other->birthday_);
