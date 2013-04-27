@@ -34,11 +34,12 @@ void protobuf_AssignDesc_Response_2eproto() {
       "Response.proto");
   GOOGLE_CHECK(file != NULL);
   HTTPResponse_descriptor_ = file->message_type(0);
-  static const int HTTPResponse_offsets_[4] = {
+  static const int HTTPResponse_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, login_response_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, detail_response_),
   };
   HTTPResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -84,10 +85,11 @@ void protobuf_AddDesc_Response_2eproto() {
   ::RoomResponse::protobuf_AddDesc_RoomResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
-    ".proto\032\022RoomResponse.proto\"o\n\014HTTPRespon"
-    "se\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n\003msg"
-    "\030\003 \001(\t\0223\n\016login_response\030\004 \001(\0132\033.UserRes"
-    "ponse.LoginResponse", 179);
+    ".proto\032\022RoomResponse.proto\"\246\001\n\014HTTPRespo"
+    "nse\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n\003ms"
+    "g\030\003 \001(\t\0223\n\016login_response\030\004 \001(\0132\033.UserRe"
+    "sponse.LoginResponse\0225\n\017detail_response\030"
+    "\005 \001(\0132\034.UserResponse.DetailResponse", 235);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -109,6 +111,7 @@ const int HTTPResponse::kCodeFieldNumber;
 const int HTTPResponse::kSuccessFieldNumber;
 const int HTTPResponse::kMsgFieldNumber;
 const int HTTPResponse::kLoginResponseFieldNumber;
+const int HTTPResponse::kDetailResponseFieldNumber;
 #endif  // !_MSC_VER
 
 HTTPResponse::HTTPResponse()
@@ -118,6 +121,7 @@ HTTPResponse::HTTPResponse()
 
 void HTTPResponse::InitAsDefaultInstance() {
   login_response_ = const_cast< ::UserResponse::LoginResponse*>(&::UserResponse::LoginResponse::default_instance());
+  detail_response_ = const_cast< ::UserResponse::DetailResponse*>(&::UserResponse::DetailResponse::default_instance());
 }
 
 HTTPResponse::HTTPResponse(const HTTPResponse& from)
@@ -132,6 +136,7 @@ void HTTPResponse::SharedCtor() {
   success_ = false;
   msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   login_response_ = NULL;
+  detail_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -145,6 +150,7 @@ void HTTPResponse::SharedDtor() {
   }
   if (this != default_instance_) {
     delete login_response_;
+    delete detail_response_;
   }
 }
 
@@ -180,6 +186,9 @@ void HTTPResponse::Clear() {
     }
     if (has_login_response()) {
       if (login_response_ != NULL) login_response_->::UserResponse::LoginResponse::Clear();
+    }
+    if (has_detail_response()) {
+      if (detail_response_ != NULL) detail_response_->::UserResponse::DetailResponse::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -250,6 +259,20 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(42)) goto parse_detail_response;
+        break;
+      }
+
+      // optional .UserResponse.DetailResponse detail_response = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_detail_response:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_detail_response()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -297,6 +320,12 @@ void HTTPResponse::SerializeWithCachedSizes(
       4, this->login_response(), output);
   }
 
+  // optional .UserResponse.DetailResponse detail_response = 5;
+  if (has_detail_response()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->detail_response(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -330,6 +359,13 @@ void HTTPResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->login_response(), target);
+  }
+
+  // optional .UserResponse.DetailResponse detail_response = 5;
+  if (has_detail_response()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->detail_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -367,6 +403,13 @@ int HTTPResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->login_response());
+    }
+
+    // optional .UserResponse.DetailResponse detail_response = 5;
+    if (has_detail_response()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->detail_response());
     }
 
   }
@@ -408,6 +451,9 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_login_response()) {
       mutable_login_response()->::UserResponse::LoginResponse::MergeFrom(from.login_response());
     }
+    if (from.has_detail_response()) {
+      mutable_detail_response()->::UserResponse::DetailResponse::MergeFrom(from.detail_response());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -435,6 +481,7 @@ void HTTPResponse::Swap(HTTPResponse* other) {
     std::swap(success_, other->success_);
     std::swap(msg_, other->msg_);
     std::swap(login_response_, other->login_response_);
+    std::swap(detail_response_, other->detail_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

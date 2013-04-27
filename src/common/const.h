@@ -148,6 +148,7 @@ static const int VIEW_INFO_SUCCESS = 14000;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;
+static const int SHOW_ROOM_LIST_SUCCESS = 21001;
 
 #endif
 

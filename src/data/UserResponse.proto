@@ -8,6 +8,6 @@ message LoginResponse {
 }
 
 //view user response data
-msessage DetailResponse {
+message DetailResponse {
     optional UserData.User_Info User_Info = 1;
 }

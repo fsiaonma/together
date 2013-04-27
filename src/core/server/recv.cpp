@@ -242,7 +242,76 @@
 	}
 
 	process->response_code = 200;
- 	handle_read_request(process, module_name.c_str(), param);
+	if (module_name == "download") {
+		if (param.count("fileId") == 0) {
+	    	BAD_REQUEST
+	    	return;
+		}
+		download_file(process, Tool::S2I(param["fileId"]));
+	} else {
+ 		handle_read_request(process, module_name.c_str(), param);
+	}
+ }
+
+ void download_file(process* process, int fileId)
+ {
+ 	if (fileId < 0) {
+ 		BAD_REQUEST
+ 		return;
+ 	}
+ 	LOG_INFO << "download fileId|" << fileId << endl;
+ 	// get file info from database
+ 	bool is_succ = false;
+ 	string msg = "";
+ 	MYSQL mysql;
+
+    Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+ 	e.connet();
+ 	do
+ 	{
+	    string sql = "select * from t_file where id = " + Tool::toString(fileId) + ";";
+	    LOG_INFO << sql << endl;
+
+	    e.excute(sql);
+	    mysql = e.get_mysql();
+
+	    LOG_INFO << "11qqqw" << endl;
+
+	    MYSQL_RES *result = NULL;
+	    MYSQL_FIELD *field = NULL;
+	    MYSQL_ROW row = NULL;
+
+	    result = mysql_store_result(&mysql);
+	    int rowcount = mysql_num_rows(result);
+	    int fieldcount = mysql_num_fields(result);
+	    row = mysql_fetch_row(result);
+
+	    LOG_INFO << rowcount << "|" << fieldcount << endl;
+
+	    if (rowcount == 1)
+	    {
+	    	for(int i = 0; i < fieldcount; i++) {
+	            if (row[i] != NULL) {
+	                LOG_INFO << row[i] << endl;
+	            }
+        	}
+	    } else {
+	    	msg = "get file info from database fail";
+	    	break;
+	    }
+	    // mysql_free_result(result);
+ 	} while(0);
+ 	e.close();
+ 	if (is_succ)
+ 	{
+
+ 	} else {
+ 		LOG_ERROR << msg << endl;
+ 		BAD_REQUEST
+ 		return ;
+ 	}
  }
 
 /**
@@ -519,7 +588,7 @@ void read_upload_request(process* process)
 			int len = strTmpResult.length();
 			Config *c = Config::get_instance();
 			map<string, string> config = c->get_config();
-			string filename = config["UPLOAD_PATH"] + param["md5"] + param["suffix"];
+			string filename = config["UPLOAD_PATH"] + param["md5"] + "_" + Tool::toString(user_id) + param["suffix"];
 
 			// 写入文件
 			const char *file_data = strTmpResult.c_str();
@@ -554,7 +623,7 @@ void read_upload_request(process* process)
 			char file_name[256];
 			Config *c = Config::get_instance();
 			map<string, string> config = c->get_config();
-			sprintf(file_name, "%s%s%s", config["UPLOAD_PATH"].c_str(), process->md5, process->suffix);
+			sprintf(file_name, "%s%s_%d%s", config["UPLOAD_PATH"].c_str(), process->md5, user_id, process->suffix);
 			// 保存的文件的MD5
 			if (Tool::calc_file_MD5(file_name, md5))
 			{
