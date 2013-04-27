@@ -247,7 +247,7 @@
 	    	BAD_REQUEST
 	    	return;
 		}
-		download_file(process, 1);
+		download_file(process, Tool::S2I(param["fileId"]));
 	} else {
  		handle_read_request(process, module_name.c_str(), param);
 	}
