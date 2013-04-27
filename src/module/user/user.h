@@ -27,6 +27,6 @@ int follow(string username, string sid, char *buf);
 int user_handler(process *process, map<string, string> param);
 
 // int _get_user_info(string username, char *buf);
-// _set_http_head(int code, bool success, string msg, string &result, Response::HTTPResponse *http_res);
+// int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res)
 
 #endif

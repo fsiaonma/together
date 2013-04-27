@@ -1,5 +1,13 @@
 #include "user.h"
 
+/**
+ * get user info
+ *  
+ * @method _get_user_info (private)
+ * @param {string} username username which is used for getting user info.
+ * @param {UserData::User_Info*} user_info respone data.
+ * @return {int} _get_user_info status. 
+ */
 int _get_user_info(string username, UserData::User_Info *user_info) {
     int uid;
     int count;
@@ -53,7 +61,17 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
     return 0;
 }
 
-int _set_http_head(int code, bool success, string msg, string &result, Response::HTTPResponse *http_res) {
+/**
+ * set http head
+ *  
+ * @method _set_http_head (private)
+ * @param {int} code code which is used for setting http head.
+ * @param {bool} success success which is used for setting http head.
+ * @param {string} msg msg which is used for setting http head.
+ * @param {Response::HTTPResponse*} http_res respone data.
+ * @return {int} _get_user_info status. 
+ */
+int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res) {
     http_res->set_code(code);
     http_res->set_success(success);
     http_res->set_msg(msg);
