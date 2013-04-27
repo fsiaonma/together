@@ -144,8 +144,11 @@ static const int LOGIN_REPLACE = 12002;
 // logout result code
 static const int LOGOUT_SUCCESS = 13000;
 
-// view info result code
-static const int VIEW_INFO_SUCCESS = 14000;
+// view user info result code
+static const int VIEW_USER_INFO_SUCCESS = 14000;
+
+// set user info result code
+static const int SET_USER_INFO_SUCCESS = 15000; 
 
 // check username is exist code
 static const int USERNAME_AVAILABLE = 18000;

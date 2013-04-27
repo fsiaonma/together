@@ -168,7 +168,7 @@ MYSQL eagleMysql::get_mysql() {
  * @param {string} table the table of judging whether the value is exist or not. 
  * @param {string} condition the condition of judging whether the value is exist or not.
  * @method is_exist.
- * @return {int} is_exist
+ * @return {int} is_exist status
  */
 int eagleMysql::is_exist(string table, string condition, bool &exist) {
     int ret = SQL_OK;
@@ -190,3 +190,31 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
     this->close();
     return ret;
 }
+
+/**
+ * select count
+ *  
+ * @param {string} table the table for selectting count. 
+ * @param {string} condition the condition for selectting count.
+ * @method count.
+ * @return {int} ret status
+ */
+// int eagleMysql::count(string table, string condition, int &count) {
+//     int ret = SQL_OK;
+//     exist = false;
+//     if (!connet())
+//         return SQL_CONNECT_FAIL;
+
+//     excute("select count(1) from " + table + " " + condition + ";");
+//     MYSQL_RES *result = mysql_store_result(&(this->mysql));
+//     MYSQL_ROW rowdata = mysql_fetch_row(result);
+//     if (rowdata) {
+//         count = atoi(rowdata[0]);
+//     } else {
+//         ret = SQL_COUNT_ERR;
+//     }
+//     cout << "count is : " << count << endl;
+//     mysql_free_result(result);
+//     this->close();
+//     return ret;
+// }

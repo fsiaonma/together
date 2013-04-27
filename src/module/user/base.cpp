@@ -1,14 +1,16 @@
 #include "user.h"
 
 int _get_user_info(string username, UserData::User_Info *user_info) {
+    int uid;
+    int count;
     MYSQL mysql;
-    string sql = "select * from t_user where username = '" + username + "';";
+    
     // database params
     Config *c = Config::get_instance();
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
-    
-    e.excute(sql);
+
+    e.excute("select * from t_user where username = '" + username + "';");
     mysql = e.get_mysql();
 
     MYSQL_RES *result = NULL;
@@ -23,7 +25,9 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
         field = mysql_fetch_field_direct(result, i);
         LOG_DEBUG << field->name << "\t";
         string key = field->name;
-        if (key == "username") {
+        if (key == "id") {
+            uid = row[i];
+        } else if (key == "username") {
             user_info->set_username(row[i]);
         } else if (key == "nick_name") {
             user_info->set_nick_name(row[i]);
@@ -37,12 +41,21 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
             user_info->set_praise_num(Tool::S2I(row[i]));
         } else if (key == "visit_num") {
             user_info->set_visit_num(Tool::S2I(row[i]));
-        } else if (key == "followed_num") {
-            user_info->set_followed_num(Tool::S2I(row[i]));
-        } else if (key == "follow_num") {
-            user_info->set_follow_num(Tool::S2I(row[i]));
         }
     }
 
+    e.count("t_follow", "where follow_id = '" + uid + "';", count);
+    user_info->set_follow_num(count);
+
+    e.count("t_follow", "where followed_id = '" + uid + "';", count);
+    user_info->set_followed_num(count);
+
+    return 0;
+}
+
+int _set_http_head(int code, bool success, string msg, string &result, Response::HTTPResponse *http_res) {
+    http_res->set_code(code);
+    http_res->set_success(success);
+    http_res->set_msg(msg);
     return 0;
 }

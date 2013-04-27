@@ -47,6 +47,7 @@ class eagleMysql {
 
         MYSQL get_mysql();
         int is_exist(string table, string condition, bool &exist);
+        // int count(string table, string condition, int &count);
 };
 
 #endif

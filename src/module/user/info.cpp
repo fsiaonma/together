@@ -41,7 +41,7 @@ int view_user_info(string username, string sid, char *buf) {
             break;
         }
 
-    //TODO: view username info
+    //TODO: view username info and increase visit number
     #if 0
         UserData::User_Info *user_info = new UserData::User_Info();
         _get_user_info(username, user_info);
@@ -59,7 +59,7 @@ int view_user_info(string username, string sid, char *buf) {
             ret = e.insert("t_user", visit_params, insert_id);
             // exception
             if (ret != DB_OK) {
-                r result = DB_ERROR;
+                result = DB_ERROR;
                 http_res->set_code(DB_ERROR);
                 http_res->set_success(false);
                 msg = "DB ERROR|" + Tool::toString(ret);
@@ -68,8 +68,9 @@ int view_user_info(string username, string sid, char *buf) {
                 break;
             }
         }
-
-        http_res->set_code(VIEW_INFO_SUCCESS);
+        
+        result = VIEW_USER_INFO_SUCCESS;
+        http_res->set_code(VIEW_USER_INFO_SUCCESS);
         http_res->set_success(true);
         msg = "view user info success";
         LOG_ERROR << msg << endl;
@@ -98,7 +99,7 @@ int view_user_info(string username, string sid, char *buf) {
  * @param {char*} respone data. 
  * @return {int} set_user_info status.
  */
-int set_user_info(map<string, string> param, string sid, char *buf) {
+int set_user_info(map<string, string> params, string sid, char *buf) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -130,7 +131,41 @@ int set_user_info(map<string, string> param, string sid, char *buf) {
             break;
         }
         
-        //TODO: set username info
+    //TODO: set user info
+    #if 0
+        map<string, string> update_params;
+
+        Config *c = Config::get_instance();
+        map<string, string> config = c->get_config();
+        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+            config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+        map<string, string>::iterator ptr;
+        for(ptr = params.begin(); ptr != params.end(); ++ptr) {
+            if (ptr->first != "action") {
+                update_params[ptr->first] = Tool::mysql_filter(ptr->second);
+            }
+        }
+
+        ret = e.update("t_user", update_params, "where username = '" + Session::get(sid)->username + "'");
+        // exception
+        if (ret != DB_OK) {
+            result = DB_ERROR;
+            http_res->set_code(DB_ERROR);
+            http_res->set_success(false);
+            msg = "DB ERROR|" + Tool::toString(ret);
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
+
+        result = SET_USER_INFO_SUCCESS;
+        http_res->set_code(SET_USER_INFO_SUCCESS);
+        http_res->set_success(true);
+        msg = "set user info success";
+        LOG_ERROR << msg << endl;
+        http_res->set_msg(msg);
+    #endif
     } while(0);
 
     http_res->SerializeToString(&respon_data);
