@@ -48,8 +48,8 @@ int create_room(map<string, string> param, char *buf)
         string nick_name = param["nickName"];
         string limit_person_num = param["limitPersonNum"];
         int gender_type = Tool::S2I(param["genderType"]);
-        long longitude = Tool::fromString<long>(param["longitude"]);
-        long latitude = Tool::fromString<long>(param["latitude"]);
+        double longitude = Tool::fromString<double>(param["longitude"]);
+        double latitude = Tool::fromString<double>(param["latitude"]);
         string detail_addr = param["detailAddr"];
         string addr_remark = param["addrRemark"];
         int pic_id = Tool::S2I(param["picId"]);
@@ -77,8 +77,8 @@ int create_room(map<string, string> param, char *buf)
         // save the address info to database
         map<string, string> insert_addr_params;
         insert_addr_params["addr_type"] = Tool::mysql_filter(type);
-        insert_addr_params["longitude"] = Tool::mysql_filter(longitude);
-        insert_addr_params["latitude"] = Tool::mysql_filter(latitude);
+        insert_addr_params["longitude"] = param["longitude"];
+        insert_addr_params["latitude"] = param["latitude"];
         insert_addr_params["detail_addr"] = Tool::mysql_filter(detail_addr);
         insert_addr_params["addr_remark"] = Tool::mysql_filter(addr_remark);
 
@@ -108,6 +108,7 @@ int create_room(map<string, string> param, char *buf)
         insert_room_params["record_id"] = Tool::mysql_filter(record_id);
         insert_room_params["begin_time"] = begin_time;
         insert_room_params["create_time"] = Tool::mysql_filter(20010101010101);
+        insert_room_params["room_status"] = "0";
 
         int room_insert_id = -1;
         ret = e.insert("t_room", insert_room_params, room_insert_id);

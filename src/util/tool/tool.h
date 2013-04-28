@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <math.h>
 #include <typeinfo>
 
 #ifndef STR_VALUE
@@ -26,6 +27,10 @@
 using namespace std;
 
 
+const double EARTH_RADIUS = 6378.137;
+const double PI = 3.141592653;
+
+
 class Tool
 {
 public:
@@ -41,6 +46,12 @@ public:
 	static string base64_decode(const char* Data);
 	static vector<string> split(string str, string pattern);
 
+
+	static double rad(double d) {
+		return d * PI / 180.0;
+	}
+	static double calc_distance(double lat1, double lng1, double lat2, double lng2);
+
 	/**
 	 * [Tool::fromString description]
 	 * Usage:
@@ -52,9 +63,13 @@ public:
 	 */
 	template<typename T>
 	static T fromString(const std::string& s) {
-	  std::istringstream is(s);
+	  // std::istringstream is(s);
 	  T t;
-	  is >> t;
+	  // is >> t;
+	  std::stringstream sstr;
+	  sstr << s;
+	  sstr >> t;
+	  sstr.clear();
 	  return t;
 	}
 

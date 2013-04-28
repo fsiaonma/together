@@ -239,4 +239,17 @@ vector<string> Tool::split(string str, string pattern)
     return result;
 }
 
+double Tool::calc_distance(double lat1, double lng1, double lat2, double lng2)
+{
+    double radLat1 = Tool::rad(lat1);
+    double radLat2 = Tool::rad(lat2);
+    double a = radLat1 - radLat2;
+    double b = Tool::rad(lng1) - Tool::rad(lng2);
+    double s = 2 * asin(sqrt(pow(sin(a/2),2) + cos(radLat1)*cos(radLat2)*pow(sin(b/2),2)));
+
+    s = s * EARTH_RADIUS;
+    s = floor(s * 10000) / 10;
+    return s;
+}
+
 

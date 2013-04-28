@@ -63,8 +63,8 @@ DROP TABLE IF EXISTS `together`.`t_address` ;
 CREATE  TABLE IF NOT EXISTS `together`.`t_address` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `addr_type` INT NULL ,
-  `longitude` FLOAT NULL COMMENT '经度' ,
-  `latitude` FLOAT NULL COMMENT '纬度' ,
+  `longitude` DOUBLE NULL COMMENT '经度' ,
+  `latitude` DOUBLE NULL COMMENT '纬度' ,
   `detail_addr` VARCHAR(255) NULL COMMENT '详细地址' ,
   `addr_remark` VARCHAR(255) NULL ,
   PRIMARY KEY (`id`) )
