@@ -8,7 +8,7 @@ message RoomInfo {
     optional string owner_nickname = 4;
     optional int32 type = 5;
     optional int32 status = 6;
-    optional string pic_url = 7;
+    optional int32 pic_id = 7;
     optional int32 gender_type = 8;
     optional double distance = 9;
     optional int32 join_person_count = 10;

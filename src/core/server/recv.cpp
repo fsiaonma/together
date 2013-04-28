@@ -116,6 +116,8 @@
 		if (count == -1) {
 			break;
 		} else if (count == 0) {
+	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
+			cleanup(process);
 			break;
 		} else if (count > 0) {
 			process->read_pos += count;
@@ -139,6 +141,7 @@
 		else
 			break;
 	}
+	LOG_INFO << "other_sign_num|" << other_sign_num << endl;
 	LOG_INFO << "-----recv-----" << endl;
 	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
 

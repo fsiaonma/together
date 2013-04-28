@@ -83,6 +83,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_room` (
   `title` VARCHAR(255) NULL ,
   `type` INT NULL ,
   `gender_type` INT NULL COMMENT '0,1,2\n表示参加活动的性别限制类型' ,
+  `room_status` INT NULL COMMENT '房间状态' ,
   `limit_person_num` INT NULL COMMENT '-1表示不限制' ,
   `preview_pic_id` INT NULL ,
   `addr_id` INT NULL COMMENT '地址表ID' ,

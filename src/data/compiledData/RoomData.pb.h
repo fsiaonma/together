@@ -149,17 +149,12 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 status() const;
   inline void set_status(::google::protobuf::int32 value);
 
-  // optional string pic_url = 7;
-  inline bool has_pic_url() const;
-  inline void clear_pic_url();
-  static const int kPicUrlFieldNumber = 7;
-  inline const ::std::string& pic_url() const;
-  inline void set_pic_url(const ::std::string& value);
-  inline void set_pic_url(const char* value);
-  inline void set_pic_url(const char* value, size_t size);
-  inline ::std::string* mutable_pic_url();
-  inline ::std::string* release_pic_url();
-  inline void set_allocated_pic_url(::std::string* pic_url);
+  // optional int32 pic_id = 7;
+  inline bool has_pic_id() const;
+  inline void clear_pic_id();
+  static const int kPicIdFieldNumber = 7;
+  inline ::google::protobuf::int32 pic_id() const;
+  inline void set_pic_id(::google::protobuf::int32 value);
 
   // optional int32 gender_type = 8;
   inline bool has_gender_type() const;
@@ -236,8 +231,8 @@ class RoomInfo : public ::google::protobuf::Message {
   inline void clear_has_type();
   inline void set_has_status();
   inline void clear_has_status();
-  inline void set_has_pic_url();
-  inline void clear_has_pic_url();
+  inline void set_has_pic_id();
+  inline void clear_has_pic_id();
   inline void set_has_gender_type();
   inline void clear_has_gender_type();
   inline void set_has_distance();
@@ -260,15 +255,15 @@ class RoomInfo : public ::google::protobuf::Message {
   ::google::protobuf::int32 room_id_;
   ::google::protobuf::int32 type_;
   ::std::string* owner_nickname_;
-  ::std::string* pic_url_;
   ::google::protobuf::int32 status_;
-  ::google::protobuf::int32 gender_type_;
+  ::google::protobuf::int32 pic_id_;
   double distance_;
+  ::google::protobuf::int32 gender_type_;
   ::google::protobuf::int32 join_person_count_;
-  ::google::protobuf::int32 limit_person_count_;
   ::std::string* create_time_;
   ::std::string* begin_time_;
   ::RoomData::Address* address_;
+  ::google::protobuf::int32 limit_person_count_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
@@ -695,74 +690,26 @@ inline void RoomInfo::set_status(::google::protobuf::int32 value) {
   status_ = value;
 }
 
-// optional string pic_url = 7;
-inline bool RoomInfo::has_pic_url() const {
+// optional int32 pic_id = 7;
+inline bool RoomInfo::has_pic_id() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void RoomInfo::set_has_pic_url() {
+inline void RoomInfo::set_has_pic_id() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void RoomInfo::clear_has_pic_url() {
+inline void RoomInfo::clear_has_pic_id() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void RoomInfo::clear_pic_url() {
-  if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
-    pic_url_->clear();
-  }
-  clear_has_pic_url();
+inline void RoomInfo::clear_pic_id() {
+  pic_id_ = 0;
+  clear_has_pic_id();
 }
-inline const ::std::string& RoomInfo::pic_url() const {
-  return *pic_url_;
+inline ::google::protobuf::int32 RoomInfo::pic_id() const {
+  return pic_id_;
 }
-inline void RoomInfo::set_pic_url(const ::std::string& value) {
-  set_has_pic_url();
-  if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
-    pic_url_ = new ::std::string;
-  }
-  pic_url_->assign(value);
-}
-inline void RoomInfo::set_pic_url(const char* value) {
-  set_has_pic_url();
-  if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
-    pic_url_ = new ::std::string;
-  }
-  pic_url_->assign(value);
-}
-inline void RoomInfo::set_pic_url(const char* value, size_t size) {
-  set_has_pic_url();
-  if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
-    pic_url_ = new ::std::string;
-  }
-  pic_url_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RoomInfo::mutable_pic_url() {
-  set_has_pic_url();
-  if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
-    pic_url_ = new ::std::string;
-  }
-  return pic_url_;
-}
-inline ::std::string* RoomInfo::release_pic_url() {
-  clear_has_pic_url();
-  if (pic_url_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = pic_url_;
-    pic_url_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RoomInfo::set_allocated_pic_url(::std::string* pic_url) {
-  if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
-    delete pic_url_;
-  }
-  if (pic_url) {
-    set_has_pic_url();
-    pic_url_ = pic_url;
-  } else {
-    clear_has_pic_url();
-    pic_url_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline void RoomInfo::set_pic_id(::google::protobuf::int32 value) {
+  set_has_pic_id();
+  pic_id_ = value;
 }
 
 // optional int32 gender_type = 8;

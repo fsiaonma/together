@@ -17,9 +17,9 @@ void send_response_header(process *process) {
 		send(process->sock, process->buf, strlen(process->buf), 0);
 		send_response(process);
 		// TODO::
-		if (process->type == LISTEN_HTTP_REQ_TYPE)
-			update_timer(process->sock, current_msec);
-		else if (process->type == LISTEN_UPLOAD_REQ_TYPE)
+		if (process->type == LISTEN_HTTP_REQ_TYPE || process->type == LISTEN_UPLOAD_REQ_TYPE)
+		// 	update_timer(process->sock, current_msec);
+		// else if (process->type == LISTEN_UPLOAD_REQ_TYPE)
 			cleanup(process);
 	}
 }

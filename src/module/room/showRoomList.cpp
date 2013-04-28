@@ -10,7 +10,15 @@ int show_room_list(map<string, string> param, char *buf)
 
     do
     {
+        string room_type = Tool::trim(param["roomType"]);
+        string longitude = Tool::trim(param["longitude"]);
+        string latitude = Tool::trim(param["latitude"]);
+        int page_size = Tool::S2I(param["pageSize"]);
+        int page_no = Tool::S2I(param["pageNo"]);
+        int order_by = Tool::S2I(param["orderBy"]);
+
         
+
     } while(0);
     print_proto(http_res);
 

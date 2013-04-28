@@ -44,7 +44,7 @@ void protobuf_AssignDesc_RoomData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_nickname_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, status_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, pic_url_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, pic_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, gender_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, distance_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, join_person_count_),
@@ -117,17 +117,17 @@ void protobuf_AddDesc_RoomData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016RoomData.proto\022\010RoomData\"\256\002\n\010RoomInfo\022"
+    "\n\016RoomData.proto\022\010RoomData\"\255\002\n\010RoomInfo\022"
     "\017\n\007room_id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\020\n\010owner"
     "_id\030\003 \001(\t\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
-    "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\017\n\007pic_url\030\007 \001(\t"
-    "\022\023\n\013gender_type\030\010 \001(\005\022\020\n\010distance\030\t \001(\001\022"
-    "\031\n\021join_person_count\030\n \001(\005\022\032\n\022limit_pers"
-    "on_count\030\013 \001(\005\022\023\n\013create_time\030\014 \001(\t\022\022\n\nb"
-    "egin_time\030\r \001(\t\022\"\n\007address\030\016 \001(\0132\021.RoomD"
-    "ata.Address\"k\n\007Address\022\021\n\taddr_type\030\001 \001("
-    "\005\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitude\030\003 \001(\001\022\023"
-    "\n\013detail_addr\030\004 \001(\t\022\023\n\013addr_remark\030\005 \001(\t", 440);
+    "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\016\n\006pic_id\030\007 \001(\005\022"
+    "\023\n\013gender_type\030\010 \001(\005\022\020\n\010distance\030\t \001(\001\022\031"
+    "\n\021join_person_count\030\n \001(\005\022\032\n\022limit_perso"
+    "n_count\030\013 \001(\005\022\023\n\013create_time\030\014 \001(\t\022\022\n\nbe"
+    "gin_time\030\r \001(\t\022\"\n\007address\030\016 \001(\0132\021.RoomDa"
+    "ta.Address\"k\n\007Address\022\021\n\taddr_type\030\001 \001(\005"
+    "\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitude\030\003 \001(\001\022\023\n"
+    "\013detail_addr\030\004 \001(\t\022\023\n\013addr_remark\030\005 \001(\t", 439);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomData.proto", &protobuf_RegisterTypes);
   RoomInfo::default_instance_ = new RoomInfo();
@@ -153,7 +153,7 @@ const int RoomInfo::kOwnerIdFieldNumber;
 const int RoomInfo::kOwnerNicknameFieldNumber;
 const int RoomInfo::kTypeFieldNumber;
 const int RoomInfo::kStatusFieldNumber;
-const int RoomInfo::kPicUrlFieldNumber;
+const int RoomInfo::kPicIdFieldNumber;
 const int RoomInfo::kGenderTypeFieldNumber;
 const int RoomInfo::kDistanceFieldNumber;
 const int RoomInfo::kJoinPersonCountFieldNumber;
@@ -186,7 +186,7 @@ void RoomInfo::SharedCtor() {
   owner_nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   type_ = 0;
   status_ = 0;
-  pic_url_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  pic_id_ = 0;
   gender_type_ = 0;
   distance_ = 0;
   join_person_count_ = 0;
@@ -210,9 +210,6 @@ void RoomInfo::SharedDtor() {
   }
   if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
     delete owner_nickname_;
-  }
-  if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
-    delete pic_url_;
   }
   if (create_time_ != &::google::protobuf::internal::kEmptyString) {
     delete create_time_;
@@ -266,11 +263,7 @@ void RoomInfo::Clear() {
     }
     type_ = 0;
     status_ = 0;
-    if (has_pic_url()) {
-      if (pic_url_ != &::google::protobuf::internal::kEmptyString) {
-        pic_url_->clear();
-      }
-    }
+    pic_id_ = 0;
     gender_type_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
@@ -395,20 +388,19 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(58)) goto parse_pic_url;
+        if (input->ExpectTag(56)) goto parse_pic_id;
         break;
       }
 
-      // optional string pic_url = 7;
+      // optional int32 pic_id = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_pic_url:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_pic_url()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->pic_url().data(), this->pic_url().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_pic_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &pic_id_)));
+          set_has_pic_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -588,13 +580,9 @@ void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->status(), output);
   }
 
-  // optional string pic_url = 7;
-  if (has_pic_url()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pic_url().data(), this->pic_url().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      7, this->pic_url(), output);
+  // optional int32 pic_id = 7;
+  if (has_pic_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->pic_id(), output);
   }
 
   // optional int32 gender_type = 8;
@@ -694,14 +682,9 @@ void RoomInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->status(), target);
   }
 
-  // optional string pic_url = 7;
-  if (has_pic_url()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pic_url().data(), this->pic_url().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->pic_url(), target);
+  // optional int32 pic_id = 7;
+  if (has_pic_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->pic_id(), target);
   }
 
   // optional int32 gender_type = 8;
@@ -804,11 +787,11 @@ int RoomInfo::ByteSize() const {
           this->status());
     }
 
-    // optional string pic_url = 7;
-    if (has_pic_url()) {
+    // optional int32 pic_id = 7;
+    if (has_pic_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->pic_url());
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->pic_id());
     }
 
     // optional int32 gender_type = 8;
@@ -905,8 +888,8 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
     if (from.has_status()) {
       set_status(from.status());
     }
-    if (from.has_pic_url()) {
-      set_pic_url(from.pic_url());
+    if (from.has_pic_id()) {
+      set_pic_id(from.pic_id());
     }
     if (from.has_gender_type()) {
       set_gender_type(from.gender_type());
@@ -960,7 +943,7 @@ void RoomInfo::Swap(RoomInfo* other) {
     std::swap(owner_nickname_, other->owner_nickname_);
     std::swap(type_, other->type_);
     std::swap(status_, other->status_);
-    std::swap(pic_url_, other->pic_url_);
+    std::swap(pic_id_, other->pic_id_);
     std::swap(gender_type_, other->gender_type_);
     std::swap(distance_, other->distance_);
     std::swap(join_person_count_, other->join_person_count_);
