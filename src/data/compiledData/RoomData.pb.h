@@ -184,10 +184,17 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 limit_person_count() const;
   inline void set_limit_person_count(::google::protobuf::int32 value);
 
-  // optional string create_time = 12;
+  // optional int32 record_id = 12;
+  inline bool has_record_id() const;
+  inline void clear_record_id();
+  static const int kRecordIdFieldNumber = 12;
+  inline ::google::protobuf::int32 record_id() const;
+  inline void set_record_id(::google::protobuf::int32 value);
+
+  // optional string create_time = 13;
   inline bool has_create_time() const;
   inline void clear_create_time();
-  static const int kCreateTimeFieldNumber = 12;
+  static const int kCreateTimeFieldNumber = 13;
   inline const ::std::string& create_time() const;
   inline void set_create_time(const ::std::string& value);
   inline void set_create_time(const char* value);
@@ -196,10 +203,10 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::std::string* release_create_time();
   inline void set_allocated_create_time(::std::string* create_time);
 
-  // optional string begin_time = 13;
+  // optional string begin_time = 14;
   inline bool has_begin_time() const;
   inline void clear_begin_time();
-  static const int kBeginTimeFieldNumber = 13;
+  static const int kBeginTimeFieldNumber = 14;
   inline const ::std::string& begin_time() const;
   inline void set_begin_time(const ::std::string& value);
   inline void set_begin_time(const char* value);
@@ -208,10 +215,10 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::std::string* release_begin_time();
   inline void set_allocated_begin_time(::std::string* begin_time);
 
-  // optional .RoomData.Address address = 14;
+  // optional .RoomData.Address address = 15;
   inline bool has_address() const;
   inline void clear_address();
-  static const int kAddressFieldNumber = 14;
+  static const int kAddressFieldNumber = 15;
   inline const ::RoomData::Address& address() const;
   inline ::RoomData::Address* mutable_address();
   inline ::RoomData::Address* release_address();
@@ -241,6 +248,8 @@ class RoomInfo : public ::google::protobuf::Message {
   inline void clear_has_join_person_count();
   inline void set_has_limit_person_count();
   inline void clear_has_limit_person_count();
+  inline void set_has_record_id();
+  inline void clear_has_record_id();
   inline void set_has_create_time();
   inline void clear_has_create_time();
   inline void set_has_begin_time();
@@ -260,13 +269,14 @@ class RoomInfo : public ::google::protobuf::Message {
   double distance_;
   ::google::protobuf::int32 gender_type_;
   ::google::protobuf::int32 join_person_count_;
+  ::google::protobuf::int32 limit_person_count_;
+  ::google::protobuf::int32 record_id_;
   ::std::string* create_time_;
   ::std::string* begin_time_;
   ::RoomData::Address* address_;
-  ::google::protobuf::int32 limit_person_count_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(15 + 31) / 32];
 
   friend void  protobuf_AddDesc_RoomData_2eproto();
   friend void protobuf_AssignDesc_RoomData_2eproto();
@@ -800,15 +810,37 @@ inline void RoomInfo::set_limit_person_count(::google::protobuf::int32 value) {
   limit_person_count_ = value;
 }
 
-// optional string create_time = 12;
-inline bool RoomInfo::has_create_time() const {
+// optional int32 record_id = 12;
+inline bool RoomInfo::has_record_id() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
-inline void RoomInfo::set_has_create_time() {
+inline void RoomInfo::set_has_record_id() {
   _has_bits_[0] |= 0x00000800u;
 }
-inline void RoomInfo::clear_has_create_time() {
+inline void RoomInfo::clear_has_record_id() {
   _has_bits_[0] &= ~0x00000800u;
+}
+inline void RoomInfo::clear_record_id() {
+  record_id_ = 0;
+  clear_has_record_id();
+}
+inline ::google::protobuf::int32 RoomInfo::record_id() const {
+  return record_id_;
+}
+inline void RoomInfo::set_record_id(::google::protobuf::int32 value) {
+  set_has_record_id();
+  record_id_ = value;
+}
+
+// optional string create_time = 13;
+inline bool RoomInfo::has_create_time() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void RoomInfo::set_has_create_time() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void RoomInfo::clear_has_create_time() {
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void RoomInfo::clear_create_time() {
   if (create_time_ != &::google::protobuf::internal::kEmptyString) {
@@ -870,15 +902,15 @@ inline void RoomInfo::set_allocated_create_time(::std::string* create_time) {
   }
 }
 
-// optional string begin_time = 13;
+// optional string begin_time = 14;
 inline bool RoomInfo::has_begin_time() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 inline void RoomInfo::set_has_begin_time() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
 }
 inline void RoomInfo::clear_has_begin_time() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void RoomInfo::clear_begin_time() {
   if (begin_time_ != &::google::protobuf::internal::kEmptyString) {
@@ -940,15 +972,15 @@ inline void RoomInfo::set_allocated_begin_time(::std::string* begin_time) {
   }
 }
 
-// optional .RoomData.Address address = 14;
+// optional .RoomData.Address address = 15;
 inline bool RoomInfo::has_address() const {
-  return (_has_bits_[0] & 0x00002000u) != 0;
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
 inline void RoomInfo::set_has_address() {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00004000u;
 }
 inline void RoomInfo::clear_has_address() {
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 inline void RoomInfo::clear_address() {
   if (address_ != NULL) address_->::RoomData::Address::Clear();

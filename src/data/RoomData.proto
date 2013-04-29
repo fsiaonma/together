@@ -13,9 +13,10 @@ message RoomInfo {
     optional double distance = 9;
     optional int32 join_person_count = 10;
     optional int32 limit_person_count = 11;
-    optional string create_time = 12;
-    optional string begin_time = 13;
-    optional Address address = 14;
+    optional int32 record_id = 12;
+    optional string create_time = 13;
+    optional string begin_time = 14;
+    optional Address address = 15;
 }
 
 message Address {

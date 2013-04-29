@@ -14,4 +14,4 @@ config.o: ../../src/common/config/config.cpp ../../src/common/config/config.h
 	g++ -c ../../src/common/config/config.cpp -o config.o
 
 clean:
-	rm ./*.o
+	rm -f ./*.o ./eagleMysqlDemo

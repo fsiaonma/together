@@ -37,7 +37,7 @@ void protobuf_AssignDesc_RoomData_2eproto() {
       "RoomData.proto");
   GOOGLE_CHECK(file != NULL);
   RoomInfo_descriptor_ = file->message_type(0);
-  static const int RoomInfo_offsets_[14] = {
+  static const int RoomInfo_offsets_[15] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, room_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, title_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_id_),
@@ -49,6 +49,7 @@ void protobuf_AssignDesc_RoomData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, distance_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, join_person_count_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, limit_person_count_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, record_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, create_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, begin_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, address_),
@@ -117,17 +118,18 @@ void protobuf_AddDesc_RoomData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016RoomData.proto\022\010RoomData\"\255\002\n\010RoomInfo\022"
+    "\n\016RoomData.proto\022\010RoomData\"\300\002\n\010RoomInfo\022"
     "\017\n\007room_id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\020\n\010owner"
     "_id\030\003 \001(\t\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
     "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\016\n\006pic_id\030\007 \001(\005\022"
     "\023\n\013gender_type\030\010 \001(\005\022\020\n\010distance\030\t \001(\001\022\031"
     "\n\021join_person_count\030\n \001(\005\022\032\n\022limit_perso"
-    "n_count\030\013 \001(\005\022\023\n\013create_time\030\014 \001(\t\022\022\n\nbe"
-    "gin_time\030\r \001(\t\022\"\n\007address\030\016 \001(\0132\021.RoomDa"
-    "ta.Address\"k\n\007Address\022\021\n\taddr_type\030\001 \001(\005"
-    "\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitude\030\003 \001(\001\022\023\n"
-    "\013detail_addr\030\004 \001(\t\022\023\n\013addr_remark\030\005 \001(\t", 439);
+    "n_count\030\013 \001(\005\022\021\n\trecord_id\030\014 \001(\005\022\023\n\013crea"
+    "te_time\030\r \001(\t\022\022\n\nbegin_time\030\016 \001(\t\022\"\n\007add"
+    "ress\030\017 \001(\0132\021.RoomData.Address\"k\n\007Address"
+    "\022\021\n\taddr_type\030\001 \001(\005\022\021\n\tlongitude\030\002 \001(\001\022\020"
+    "\n\010latitude\030\003 \001(\001\022\023\n\013detail_addr\030\004 \001(\t\022\023\n"
+    "\013addr_remark\030\005 \001(\t", 458);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomData.proto", &protobuf_RegisterTypes);
   RoomInfo::default_instance_ = new RoomInfo();
@@ -158,6 +160,7 @@ const int RoomInfo::kGenderTypeFieldNumber;
 const int RoomInfo::kDistanceFieldNumber;
 const int RoomInfo::kJoinPersonCountFieldNumber;
 const int RoomInfo::kLimitPersonCountFieldNumber;
+const int RoomInfo::kRecordIdFieldNumber;
 const int RoomInfo::kCreateTimeFieldNumber;
 const int RoomInfo::kBeginTimeFieldNumber;
 const int RoomInfo::kAddressFieldNumber;
@@ -191,6 +194,7 @@ void RoomInfo::SharedCtor() {
   distance_ = 0;
   join_person_count_ = 0;
   limit_person_count_ = 0;
+  record_id_ = 0;
   create_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   begin_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   address_ = NULL;
@@ -270,6 +274,7 @@ void RoomInfo::Clear() {
     distance_ = 0;
     join_person_count_ = 0;
     limit_person_count_ = 0;
+    record_id_ = 0;
     if (has_create_time()) {
       if (create_time_ != &::google::protobuf::internal::kEmptyString) {
         create_time_->clear();
@@ -468,12 +473,28 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(98)) goto parse_create_time;
+        if (input->ExpectTag(96)) goto parse_record_id;
         break;
       }
 
-      // optional string create_time = 12;
+      // optional int32 record_id = 12;
       case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_record_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &record_id_)));
+          set_has_record_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(106)) goto parse_create_time;
+        break;
+      }
+
+      // optional string create_time = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_create_time:
@@ -485,12 +506,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(106)) goto parse_begin_time;
+        if (input->ExpectTag(114)) goto parse_begin_time;
         break;
       }
 
-      // optional string begin_time = 13;
-      case 13: {
+      // optional string begin_time = 14;
+      case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_begin_time:
@@ -502,12 +523,12 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(114)) goto parse_address;
+        if (input->ExpectTag(122)) goto parse_address;
         break;
       }
 
-      // optional .RoomData.Address address = 14;
-      case 14: {
+      // optional .RoomData.Address address = 15;
+      case 15: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_address:
@@ -605,28 +626,33 @@ void RoomInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->limit_person_count(), output);
   }
 
-  // optional string create_time = 12;
+  // optional int32 record_id = 12;
+  if (has_record_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->record_id(), output);
+  }
+
+  // optional string create_time = 13;
   if (has_create_time()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->create_time().data(), this->create_time().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      12, this->create_time(), output);
+      13, this->create_time(), output);
   }
 
-  // optional string begin_time = 13;
+  // optional string begin_time = 14;
   if (has_begin_time()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->begin_time().data(), this->begin_time().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      13, this->begin_time(), output);
+      14, this->begin_time(), output);
   }
 
-  // optional .RoomData.Address address = 14;
+  // optional .RoomData.Address address = 15;
   if (has_address()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      14, this->address(), output);
+      15, this->address(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -707,31 +733,36 @@ void RoomInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->limit_person_count(), target);
   }
 
-  // optional string create_time = 12;
+  // optional int32 record_id = 12;
+  if (has_record_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->record_id(), target);
+  }
+
+  // optional string create_time = 13;
   if (has_create_time()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->create_time().data(), this->create_time().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        12, this->create_time(), target);
+        13, this->create_time(), target);
   }
 
-  // optional string begin_time = 13;
+  // optional string begin_time = 14;
   if (has_begin_time()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->begin_time().data(), this->begin_time().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->begin_time(), target);
+        14, this->begin_time(), target);
   }
 
-  // optional .RoomData.Address address = 14;
+  // optional .RoomData.Address address = 15;
   if (has_address()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        14, this->address(), target);
+        15, this->address(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -822,21 +853,28 @@ int RoomInfo::ByteSize() const {
           this->limit_person_count());
     }
 
-    // optional string create_time = 12;
+    // optional int32 record_id = 12;
+    if (has_record_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->record_id());
+    }
+
+    // optional string create_time = 13;
     if (has_create_time()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->create_time());
     }
 
-    // optional string begin_time = 13;
+    // optional string begin_time = 14;
     if (has_begin_time()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->begin_time());
     }
 
-    // optional .RoomData.Address address = 14;
+    // optional .RoomData.Address address = 15;
     if (has_address()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -905,6 +943,9 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
     if (from.has_limit_person_count()) {
       set_limit_person_count(from.limit_person_count());
     }
+    if (from.has_record_id()) {
+      set_record_id(from.record_id());
+    }
     if (from.has_create_time()) {
       set_create_time(from.create_time());
     }
@@ -948,6 +989,7 @@ void RoomInfo::Swap(RoomInfo* other) {
     std::swap(distance_, other->distance_);
     std::swap(join_person_count_, other->join_person_count_);
     std::swap(limit_person_count_, other->limit_person_count_);
+    std::swap(record_id_, other->record_id_);
     std::swap(create_time_, other->create_time_);
     std::swap(begin_time_, other->begin_time_);
     std::swap(address_, other->address_);

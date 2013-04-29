@@ -67,7 +67,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_address` (
   `latitude` DOUBLE NULL COMMENT '纬度' ,
   `detail_addr` VARCHAR(255) NULL COMMENT '详细地址' ,
   `addr_remark` VARCHAR(255) NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  INDEX `lat_lng` (`longitude` ASC, `latitude` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1000;
 

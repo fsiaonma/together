@@ -17,7 +17,6 @@ int main() {
             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
     int insert_id = -1;
-
     // insert
     map<string, string> insert_params;
     string param = "参数";
@@ -44,8 +43,30 @@ int main() {
     string testupdate = "testupdate";
     update_params["password"] = Tool::mysql_filter(testupdate);
     e.update("t_user", update_params, "where username = 'update_insert_test'");
-
 	//excute
+#if 0
+string er = "6366.564864";
+string lat = "23.04147";
+string lng = "113.374";
+string dist = "50";
+string lat_length = "(20003.93/180)";
+string lat_left = lat + "-(" + dist + "/" +  lat_length + ")";
+string lat_right = lat + "+(" + dist + "/" +  lat_length + ")";
+string lng_left = lng + "-" + dist + "/abs(cos(radians(" + lat + "))*" + lat_length + ")";
+string lng_right = lng + "+" + dist + "/abs(cos(radians(" + lat + "))*" + lat_length + ")";
+string condition = " and r.type = 1 ";
+
+string dis_sql = "SELECT r.id, r.owner_id, u.nickname, r.title, r.type, r.room_status, "
+"  r.preview_pic_id, r.gender_type, count(rel.id) as join_person_num, r.limit_person_num,  r.record_id, r.create_time, r.begin_time, a.latitude, a.longitude," + 
+er + "*2*ASIN(SQRT(POWER(SIN((" + lat + " - a.latitude)*pi()/180 / 2), 2)" + 
+" +  COS(" + lat + " * pi()/180) * COS(a.latitude * pi()/180) *  POWER(SIN((" + lng + " - a.longitude) * pi()" + 
+"/180 / 2), 2) )) as dist FROM t_address a, t_room r left join t_room_user_relation rel on (r.id = rel.room_id), t_user u WHERE a.latitude BETWEEN " + lat_left + " AND " + lat_right +
+" AND a.longitude BETWEEN " + lng_left + "AND " + lng_right + " AND r.addr_id = a.id and r.owner_id = u.id  "
+ + condition + " having dist < " + dist + " ORDER BY dist limit 0,2;";
+
+cout << dis_sql << endl;
+#endif
+
     e.connet();
 
     MYSQL mysql;
