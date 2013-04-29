@@ -123,7 +123,7 @@
 			process->read_pos += count;
 			_buf[process->read_pos] = 0;
 			request.append(_buf);
-			LOG_INFO << _buf << endl;
+			LOG_DEBUG << _buf << endl;
 			LOG_INFO << "process->read_pos|" << process->read_pos << endl;
 			if (process->read_pos == process->kBufferSize)
 			{
@@ -460,7 +460,7 @@ void read_upload_request(process* process)
 					process->read_pos += count;
 					_buf[process->read_pos] = 0;
 					request.append(_buf);
-					LOG_INFO << _buf << endl;
+					LOG_DEBUG << _buf << endl;
 					LOG_INFO << "process->read_pos|" << process->read_pos << endl;
 					if (process->read_pos == process->kBufferSize)
 					{
