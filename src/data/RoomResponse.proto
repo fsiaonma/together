@@ -1,2 +1,7 @@
 package RoomResponse;
+import "data.proto";
 import "RoomData.proto";
+
+message ShowRoomListResponse {
+	optional Data.List room_list = 1;
+}

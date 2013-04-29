@@ -4,7 +4,7 @@ package RoomData;
 message RoomInfo {
     optional int32 room_id = 1;
     optional string title = 2;
-    optional string owner_id = 3;
+    optional int32 owner_id = 3;
     optional string owner_nickname = 4;
     optional int32 type = 5;
     optional int32 status = 6;

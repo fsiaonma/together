@@ -1,0 +1,8 @@
+package Data;
+import "RoomData.proto";
+
+// list
+message List {
+	optional bool is_end = 1;
+    repeated RoomData.RoomInfo room_info_list = 2;
+}

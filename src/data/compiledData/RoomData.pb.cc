@@ -120,7 +120,7 @@ void protobuf_AddDesc_RoomData_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016RoomData.proto\022\010RoomData\"\300\002\n\010RoomInfo\022"
     "\017\n\007room_id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\020\n\010owner"
-    "_id\030\003 \001(\t\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
+    "_id\030\003 \001(\005\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
     "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\016\n\006pic_id\030\007 \001(\005\022"
     "\023\n\013gender_type\030\010 \001(\005\022\020\n\010distance\030\t \001(\001\022\031"
     "\n\021join_person_count\030\n \001(\005\022\032\n\022limit_perso"
@@ -185,7 +185,7 @@ void RoomInfo::SharedCtor() {
   _cached_size_ = 0;
   room_id_ = 0;
   title_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  owner_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  owner_id_ = 0;
   owner_nickname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   type_ = 0;
   status_ = 0;
@@ -208,9 +208,6 @@ RoomInfo::~RoomInfo() {
 void RoomInfo::SharedDtor() {
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     delete title_;
-  }
-  if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
-    delete owner_id_;
   }
   if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
     delete owner_nickname_;
@@ -255,11 +252,7 @@ void RoomInfo::Clear() {
         title_->clear();
       }
     }
-    if (has_owner_id()) {
-      if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
-        owner_id_->clear();
-      }
-    }
+    owner_id_ = 0;
     if (has_owner_nickname()) {
       if (owner_nickname_ != &::google::protobuf::internal::kEmptyString) {
         owner_nickname_->clear();
@@ -327,20 +320,19 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_owner_id;
+        if (input->ExpectTag(24)) goto parse_owner_id;
         break;
       }
 
-      // optional string owner_id = 3;
+      // optional int32 owner_id = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_owner_id:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_owner_id()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->owner_id().data(), this->owner_id().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &owner_id_)));
+          set_has_owner_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -573,13 +565,9 @@ void RoomInfo::SerializeWithCachedSizes(
       2, this->title(), output);
   }
 
-  // optional string owner_id = 3;
+  // optional int32 owner_id = 3;
   if (has_owner_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->owner_id().data(), this->owner_id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->owner_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->owner_id(), output);
   }
 
   // optional string owner_nickname = 4;
@@ -678,14 +666,9 @@ void RoomInfo::SerializeWithCachedSizes(
         2, this->title(), target);
   }
 
-  // optional string owner_id = 3;
+  // optional int32 owner_id = 3;
   if (has_owner_id()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->owner_id().data(), this->owner_id().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->owner_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->owner_id(), target);
   }
 
   // optional string owner_nickname = 4;
@@ -790,10 +773,10 @@ int RoomInfo::ByteSize() const {
           this->title());
     }
 
-    // optional string owner_id = 3;
+    // optional int32 owner_id = 3;
     if (has_owner_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->owner_id());
     }
 

@@ -9,4 +9,5 @@ message HTTPResponse {
 	optional UserResponse.LoginResponse login_response = 4;
     optional UserResponse.DetailResponse detail_response = 5;
     optional UserResponse.UsernameExistResponse exist_response = 6;
+    optional RoomResponse.ShowRoomListResponse room_list_response = 7;
 }

@@ -111,17 +111,12 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::std::string* release_title();
   inline void set_allocated_title(::std::string* title);
 
-  // optional string owner_id = 3;
+  // optional int32 owner_id = 3;
   inline bool has_owner_id() const;
   inline void clear_owner_id();
   static const int kOwnerIdFieldNumber = 3;
-  inline const ::std::string& owner_id() const;
-  inline void set_owner_id(const ::std::string& value);
-  inline void set_owner_id(const char* value);
-  inline void set_owner_id(const char* value, size_t size);
-  inline ::std::string* mutable_owner_id();
-  inline ::std::string* release_owner_id();
-  inline void set_allocated_owner_id(::std::string* owner_id);
+  inline ::google::protobuf::int32 owner_id() const;
+  inline void set_owner_id(::google::protobuf::int32 value);
 
   // optional string owner_nickname = 4;
   inline bool has_owner_nickname() const;
@@ -260,20 +255,20 @@ class RoomInfo : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* title_;
-  ::std::string* owner_id_;
   ::google::protobuf::int32 room_id_;
-  ::google::protobuf::int32 type_;
+  ::google::protobuf::int32 owner_id_;
   ::std::string* owner_nickname_;
+  ::google::protobuf::int32 type_;
   ::google::protobuf::int32 status_;
   ::google::protobuf::int32 pic_id_;
-  double distance_;
   ::google::protobuf::int32 gender_type_;
+  double distance_;
   ::google::protobuf::int32 join_person_count_;
   ::google::protobuf::int32 limit_person_count_;
-  ::google::protobuf::int32 record_id_;
   ::std::string* create_time_;
   ::std::string* begin_time_;
   ::RoomData::Address* address_;
+  ::google::protobuf::int32 record_id_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(15 + 31) / 32];
@@ -516,7 +511,7 @@ inline void RoomInfo::set_allocated_title(::std::string* title) {
   }
 }
 
-// optional string owner_id = 3;
+// optional int32 owner_id = 3;
 inline bool RoomInfo::has_owner_id() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -527,63 +522,15 @@ inline void RoomInfo::clear_has_owner_id() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void RoomInfo::clear_owner_id() {
-  if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
-    owner_id_->clear();
-  }
+  owner_id_ = 0;
   clear_has_owner_id();
 }
-inline const ::std::string& RoomInfo::owner_id() const {
-  return *owner_id_;
-}
-inline void RoomInfo::set_owner_id(const ::std::string& value) {
-  set_has_owner_id();
-  if (owner_id_ == &::google::protobuf::internal::kEmptyString) {
-    owner_id_ = new ::std::string;
-  }
-  owner_id_->assign(value);
-}
-inline void RoomInfo::set_owner_id(const char* value) {
-  set_has_owner_id();
-  if (owner_id_ == &::google::protobuf::internal::kEmptyString) {
-    owner_id_ = new ::std::string;
-  }
-  owner_id_->assign(value);
-}
-inline void RoomInfo::set_owner_id(const char* value, size_t size) {
-  set_has_owner_id();
-  if (owner_id_ == &::google::protobuf::internal::kEmptyString) {
-    owner_id_ = new ::std::string;
-  }
-  owner_id_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* RoomInfo::mutable_owner_id() {
-  set_has_owner_id();
-  if (owner_id_ == &::google::protobuf::internal::kEmptyString) {
-    owner_id_ = new ::std::string;
-  }
+inline ::google::protobuf::int32 RoomInfo::owner_id() const {
   return owner_id_;
 }
-inline ::std::string* RoomInfo::release_owner_id() {
-  clear_has_owner_id();
-  if (owner_id_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = owner_id_;
-    owner_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void RoomInfo::set_allocated_owner_id(::std::string* owner_id) {
-  if (owner_id_ != &::google::protobuf::internal::kEmptyString) {
-    delete owner_id_;
-  }
-  if (owner_id) {
-    set_has_owner_id();
-    owner_id_ = owner_id;
-  } else {
-    clear_has_owner_id();
-    owner_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline void RoomInfo::set_owner_id(::google::protobuf::int32 value) {
+  set_has_owner_id();
+  owner_id_ = value;
 }
 
 // optional string owner_nickname = 4;

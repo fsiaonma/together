@@ -21,7 +21,7 @@ extern epoll_event event;
 extern int current_total_processes;
 
 struct process {
-	static const int kBufferSize = 1024;
+	static const int kBufferSize = 2048;
 	int sock;
 	int status;
 	int response_code;
