@@ -57,22 +57,22 @@ int user_handler(process *process, map<string, string> param) {
             set_user_info(param, param["sid"], response_data);
             break ;
         }
-        // case USER_PRISE: {
-        //     if (param.count("username") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "username or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     prise(param["username"], param["sid"], response_data);
-        //     break ;
-        // }
-        // case USER_FOLLOW: {
-        //     if (param.count("username") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "username or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     follow(param["username"], param["sid"], response_data);
-        //     break ;
-        // }
+        case USER_PRISE: {
+            if (param.count("username") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "username or sid is not exist" << endl;
+                return -1;
+            }
+            prise(param["username"], param["sid"], response_data);
+            break ;
+        }
+        case USER_FOLLOW: {
+            if (param.count("follow_id") == 0 || param.count("followed_id") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "follow_id or followed_id or sid is not exist" << endl;
+                return -1;
+            }
+            follow(Tool::S2I(param["follow_id"]), Tool::S2I(param["followed_id"]), param["sid"], response_data);
+            break ;
+        }
         case USER_IS_EXIST: {
             if (param.count("username") == 0) {
                 LOG_ERROR << "username is not exist" << endl;

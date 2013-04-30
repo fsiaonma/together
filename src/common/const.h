@@ -150,6 +150,15 @@ static const int VIEW_USER_INFO_SUCCESS = 14000;
 // set user info result code
 static const int SET_USER_INFO_SUCCESS = 15000; 
 
+// set user prise result code
+static const int USER_PRISE_SUCCESS = 16000;
+static const int USER_PRISE_FAIL = 16001;
+
+// set user follow result code
+static const int USER_FOLLOW_SUCCESS = 17000;
+static const int USER_ALREADY_FOLLOW = 17001;
+static const int USER_FOLLOW_FAIL = 17002;
+
 // check username is exist code
 static const int USERNAME_AVAILABLE = 18000;
 

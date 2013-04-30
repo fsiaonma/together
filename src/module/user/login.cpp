@@ -22,11 +22,7 @@ int login(string username, string password, string dev_id, char *buf) {
         // username or password not be found
         if (Tool::trim(username).empty() || Tool::trim(password).empty() || Tool::trim(dev_id).empty()) {
             result = PARAM_ERROR;
-            http_res->set_code(PARAM_ERROR);
-            http_res->set_success(false);
-            msg = "username or password or dev_id is null";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username or password or dev_id is null", http_res);
             break;
         }
 
@@ -41,21 +37,13 @@ int login(string username, string password, string dev_id, char *buf) {
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;
-            http_res->set_code(DB_ERROR);
-            http_res->set_success(false);
-            msg = "DB ERROR|" + Tool::toString(ret);
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
         // user not exist
         if (!exist) {
             result = USER_NOT_EXIST;
-            http_res->set_code(USER_NOT_EXIST);
-            http_res->set_success(false);
-            msg = "user not exist";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "user not exist", http_res);
             break;
         }
 
@@ -65,28 +53,20 @@ int login(string username, string password, string dev_id, char *buf) {
         LOG_INFO << "sid is: " << sid << endl;
         if (ret == LOGIN_REPLACE) {
             result = LOGIN_REPLACE;
-            http_res->set_code(LOGIN_REPLACE);
-            msg = "login success and replace session";
+            _set_http_head(result, true, "login success and replace session", http_res);
         } else {
-            result = REGIEST_SUCCESS;
-            http_res->set_code(LOGIN_SUCCESS);
-            msg = "login success";
+            result = LOGIN_SUCCESS;
+            _set_http_head(result, true, "login success", http_res);
         }
 
-        // set HTTPResponse
-        http_res->set_success(true);
-        LOG_INFO << msg << endl;
-        http_res->set_msg(msg);
-
-        #if 1
-            UserData::User_Info *user_info = new UserData::User_Info();
-            _get_user_info(username, user_info);
-            UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
-            login_res->set_allocated_user_info(user_info);
-            login_res->set_sid(sid);
-            http_res->set_allocated_login_response(login_res);
-        #endif
+        UserData::User_Info *user_info = new UserData::User_Info();
+        _get_user_info(username, user_info);
+        UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
+        login_res->set_allocated_user_info(user_info);
+        login_res->set_sid(sid);
+        http_res->set_allocated_login_response(login_res);
     } while(0);
+
     print_proto(http_res);
 	
     http_res->SerializeToString(&respon_data);
@@ -118,34 +98,24 @@ int logout(string username, string sid, char *buf) {
         // username or password is not be found
         if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
-            http_res->set_code(PARAM_ERROR);
-            http_res->set_success(false);
-            msg = "username or sid is null";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username or sid is null", http_res);
             break;
         }
 
         // session is not exist
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
-            http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(false);
-            msg = "session not exist";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "session not exist", http_res);
             break;
         }
 
         // remove session
         Session::remove(username);
         result = LOGOUT_SUCCESS;
-        http_res->set_code(LOGOUT_SUCCESS);
-        http_res->set_success(true);
-        msg = "remove session success";
-        LOG_INFO << msg << endl;
-        http_res->set_msg(msg);
+        _set_http_head(result, true, "remove session success", http_res);
     } while(0);
+
+    print_proto(http_res);
 
     http_res->SerializeToString(&respon_data);
     const char *p = respon_data.c_str();

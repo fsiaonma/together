@@ -22,11 +22,7 @@ int regiest(string username, string password, char *buf) {
         // username or password not be found
         if (Tool::trim(username).empty() || Tool::trim(password).empty()) {
             result = PARAM_ERROR;
-            http_res->set_code(PARAM_ERROR);
-            http_res->set_success(false);
-            msg = "username or password is null";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username or password is null", http_res);
             break;
         }
 
@@ -42,21 +38,13 @@ int regiest(string username, string password, char *buf) {
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;
-            http_res->set_code(DB_ERROR);
-            http_res->set_success(false);
-            msg = "DB ERROR|" + Tool::toString(ret);
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
         // username already exist
         if (exist) {
             result = USERNAME_IS_EXIST;
-            http_res->set_code(USERNAME_IS_EXIST);
-            http_res->set_success(false);
-            msg = "username is already exist";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username is already exist", http_res);
             break;
         }
 
@@ -69,22 +57,15 @@ int regiest(string username, string password, char *buf) {
         // exception
         if (ret != DB_OK) {
             result = REGIEST_FAIL;
-            http_res->set_code(REGIEST_FAIL);
-            http_res->set_success(false);
-            msg = "REGIEST_FAIL|" + Tool::toString(ret);
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "REGIEST_FAIL|" + Tool::toString(ret), http_res);
             break;
         }
 
         // set HTTPResponse
         result = REGIEST_SUCCESS;
-        http_res->set_code(REGIEST_SUCCESS);
-        http_res->set_success(true);
-        msg = "regiest success";
-        LOG_INFO << msg << endl;
-        http_res->set_msg(msg);
+        _set_http_head(result, true, "regiest success", http_res);
     } while(0);
+
     print_proto(http_res);
 
     http_res->SerializeToString(&respon_data);
@@ -121,31 +102,21 @@ int username_is_exist(string username, char *buf) {
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;
-            http_res->set_code(DB_ERROR);
-            http_res->set_success(false);
-            msg = "DB ERROR|" + Tool::toString(ret);
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
         // username already exist
         if (exist) {
             result = USERNAME_IS_EXIST;
-            http_res->set_code(USERNAME_IS_EXIST);
-            http_res->set_success(false);
-            msg = "username is already exist";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username is already exist", http_res);
             break;
         }
 
         result = USERNAME_AVAILABLE;
-        http_res->set_code(USERNAME_AVAILABLE);
-        http_res->set_success(false);
-        msg = "username is available";
-        LOG_INFO << msg << endl;
-        http_res->set_msg(msg);
+        _set_http_head(result, true, "username is available", http_res);
     } while(0);
+
+    print_proto(http_res);
 
     http_res->SerializeToString(&respon_data);
     const char *p = respon_data.c_str();

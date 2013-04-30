@@ -59,6 +59,8 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
         }
     }
 
+    e.close();
+
     e.count("t_follow", "where follow_id = " + Tool::mysql_filter(uid) + ";", count);
     user_info->set_follow_num(count);
 
@@ -66,8 +68,6 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
     user_info->set_followed_num(count);
 
     print_proto(user_info);
-
-    e.close();
 
     return 0;
 }

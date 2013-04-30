@@ -4,6 +4,7 @@
  * view user info
  *  
  * @method view_user_info
+ * @param {int} uid uid which is used for mark the user.
  * @param {string} username username which is used for getting user info.
  * @param {string} sid sid which is used for getting user info.
  * @param {char*} respone data. 
@@ -22,11 +23,7 @@ int view_user_info(int uid, string username, string sid, char *buf) {
         // username or password is not be found
         if (Tool::trim(username).empty()) {
             result = PARAM_ERROR;
-            http_res->set_code(PARAM_ERROR);
-            http_res->set_success(false);
-            msg = "username is null";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "username is null", http_res);
             break;
         }
 
@@ -53,11 +50,7 @@ int view_user_info(int uid, string username, string sid, char *buf) {
             // exception
             if (ret != DB_OK) {
                 result = DB_ERROR;
-                http_res->set_code(DB_ERROR);
-                http_res->set_success(false);
-                msg = "DB ERROR|" + Tool::toString(ret);
-                LOG_ERROR << msg << endl;
-                http_res->set_msg(msg);
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
                 break;
             }
         }
@@ -71,21 +64,15 @@ int view_user_info(int uid, string username, string sid, char *buf) {
             // exception
             if (ret != DB_OK) {
                 result = DB_ERROR;
-                http_res->set_code(DB_ERROR);
-                http_res->set_success(false);
-                msg = "DB ERROR|" + Tool::toString(ret);
-                LOG_ERROR << msg << endl;
-                http_res->set_msg(msg);
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
                 break;
             }
             detail_res->set_is_follow(exist);
         }
 
         result = VIEW_USER_INFO_SUCCESS;
-        msg = "view user info success";
-        LOG_INFO << msg << endl;
+        _set_http_head(result, true, "view user info success", http_res);
 
-        _set_http_head(result, true, msg, http_res);
         detail_res->set_allocated_user_info(user_info);
         http_res->set_allocated_detail_response(detail_res);
     } while(0);
@@ -122,22 +109,14 @@ int set_user_info(map<string, string> params, string sid, char *buf) {
         // username or password is not be found
         if (Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
-            http_res->set_code(PARAM_ERROR);
-            http_res->set_success(false);
-            msg = "sid is null";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "sid is null", http_res);
             break;
         }
 
         // session is not exist
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
-            http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(false);
-            msg = "session not exist";
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "session not exist", http_res);
             break;
         }
         
@@ -159,20 +138,12 @@ int set_user_info(map<string, string> params, string sid, char *buf) {
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;
-            http_res->set_code(DB_ERROR);
-            http_res->set_success(false);
-            msg = "DB ERROR|" + Tool::toString(ret);
-            LOG_ERROR << msg << endl;
-            http_res->set_msg(msg);
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
 
         result = SET_USER_INFO_SUCCESS;
-        http_res->set_code(SET_USER_INFO_SUCCESS);
-        http_res->set_success(true);
-        msg = "set user info success";
-        LOG_ERROR << msg << endl;
-        http_res->set_msg(msg);
+        _set_http_head(result, true, "set user info success", http_res);
     } while(0);
 
     print_proto(http_res);
