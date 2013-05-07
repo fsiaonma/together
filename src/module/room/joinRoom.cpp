@@ -140,7 +140,6 @@ int join_room(map<string, string> param, char *buf)
         msg = "join room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
-        mysql_query(&mysql, "COMMIT ");
 
     } while(0);
     print_proto(http_res);

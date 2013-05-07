@@ -38,6 +38,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
   `pic_id` INT NULL ,
   `praise_num` INT NULL COMMENT '赞次数' ,
   `visit_num` INT NULL COMMENT '访问次数' ,
+  `sex` INT NULL COMMENT '0为男\n1为女' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_user_t_file1_idx` (`signature_record_id` ASC) ,
   INDEX `fk_t_user_t_file2_idx` (`pic_id` ASC) ,
