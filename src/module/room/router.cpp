@@ -25,6 +25,10 @@ int room_handler(process *process, map<string, string> param) {
             quit_room(param, response_data);
             break ;
         }
+        case ROOM_PEOPLE_LIST: {
+            show_room_peo_list(param, response_data);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

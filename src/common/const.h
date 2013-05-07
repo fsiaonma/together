@@ -112,6 +112,7 @@ static const int ROOM_CREATE = 201;
 static const int ROOM_SHOWLIST = 202;
 static const int ROOM_JOIN = 203;
 static const int ROOM_QUIT = 204;
+static const int ROOM_PEOPLE_LIST = 205;
 
 
 // --------------- Status Code ---------------
@@ -184,6 +185,8 @@ static const int JOIN_ROOM_OVERLIMITNUM = 21005;
 static const int QUIT_ROOM_SUCCESS = 21006;
 static const int QUIT_ROOM_USER_OR_ROOM_NOEXIST = 21007;
 static const int QUIT_ROOM_NOTJOINED = 21008;
+
+static const int SHOW_ROOM_PEO_LIST_SUCCESS = 21009;
 
 #endif
 

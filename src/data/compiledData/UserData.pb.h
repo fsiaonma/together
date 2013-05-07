@@ -176,6 +176,20 @@ class User_Info : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 follow_num() const;
   inline void set_follow_num(::google::protobuf::int32 value);
 
+  // optional int32 sex = 11;
+  inline bool has_sex() const;
+  inline void clear_sex();
+  static const int kSexFieldNumber = 11;
+  inline ::google::protobuf::int32 sex() const;
+  inline void set_sex(::google::protobuf::int32 value);
+
+  // optional int32 pic_id = 12;
+  inline bool has_pic_id() const;
+  inline void clear_pic_id();
+  static const int kPicIdFieldNumber = 12;
+  inline ::google::protobuf::int32 pic_id() const;
+  inline void set_pic_id(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:UserData.User_Info)
  private:
   inline void set_has_uid();
@@ -198,6 +212,10 @@ class User_Info : public ::google::protobuf::Message {
   inline void clear_has_followed_num();
   inline void set_has_follow_num();
   inline void clear_has_follow_num();
+  inline void set_has_sex();
+  inline void clear_has_sex();
+  inline void set_has_pic_id();
+  inline void clear_has_pic_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -211,9 +229,11 @@ class User_Info : public ::google::protobuf::Message {
   ::google::protobuf::int32 visit_num_;
   ::google::protobuf::int32 followed_num_;
   ::google::protobuf::int32 follow_num_;
+  ::google::protobuf::int32 sex_;
+  ::google::protobuf::int32 pic_id_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
 
   friend void  protobuf_AddDesc_UserData_2eproto();
   friend void protobuf_AssignDesc_UserData_2eproto();
@@ -591,6 +611,50 @@ inline ::google::protobuf::int32 User_Info::follow_num() const {
 inline void User_Info::set_follow_num(::google::protobuf::int32 value) {
   set_has_follow_num();
   follow_num_ = value;
+}
+
+// optional int32 sex = 11;
+inline bool User_Info::has_sex() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void User_Info::set_has_sex() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void User_Info::clear_has_sex() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void User_Info::clear_sex() {
+  sex_ = 0;
+  clear_has_sex();
+}
+inline ::google::protobuf::int32 User_Info::sex() const {
+  return sex_;
+}
+inline void User_Info::set_sex(::google::protobuf::int32 value) {
+  set_has_sex();
+  sex_ = value;
+}
+
+// optional int32 pic_id = 12;
+inline bool User_Info::has_pic_id() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void User_Info::set_has_pic_id() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void User_Info::clear_has_pic_id() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void User_Info::clear_pic_id() {
+  pic_id_ = 0;
+  clear_has_pic_id();
+}
+inline ::google::protobuf::int32 User_Info::pic_id() const {
+  return pic_id_;
+}
+inline void User_Info::set_pic_id(::google::protobuf::int32 value) {
+  set_has_pic_id();
+  pic_id_ = value;
 }
 
 

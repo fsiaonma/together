@@ -12,4 +12,6 @@ message User_Info {
     optional int32 visit_num = 8;
     optional int32 followed_num = 9;
     optional int32 follow_num = 10;
+    optional int32 sex = 11;
+    optional int32 pic_id = 12;
 }

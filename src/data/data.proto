@@ -1,9 +1,10 @@
 package Data;
 import "RoomData.proto";
+import "UserData.proto";
 
 // list
 message List {
 	optional bool is_end = 1;
     repeated RoomData.RoomInfo room_info_list = 2;
-    repeated RoomData.UserInfo user_info_list = 3;;
+    repeated UserData.User_Info user_info = 3;
 }

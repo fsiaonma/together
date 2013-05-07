@@ -26,11 +26,3 @@ message Address {
     optional string detail_addr = 4;
     optional string addr_remark = 5;
 }
-
-message UserInfo {
-    optional int32 user_id = 1;
-    optional string user_name = 2;
-    optional string nickname = 3;
-    optional int32 sex = 4;
-    optional int32 pic_id = 5;
-}

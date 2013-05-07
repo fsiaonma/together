@@ -34,7 +34,7 @@ void protobuf_AssignDesc_UserData_2eproto() {
       "UserData.proto");
   GOOGLE_CHECK(file != NULL);
   User_Info_descriptor_ = file->message_type(0);
-  static const int User_Info_offsets_[10] = {
+  static const int User_Info_offsets_[12] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, uid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, username_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, nick_name_),
@@ -45,6 +45,8 @@ void protobuf_AssignDesc_UserData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, visit_num_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, followed_num_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, follow_num_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, sex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(User_Info, pic_id_),
   };
   User_Info_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -87,13 +89,13 @@ void protobuf_AddDesc_UserData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016UserData.proto\022\010UserData\"\325\001\n\tUser_Info"
+    "\n\016UserData.proto\022\010UserData\"\362\001\n\tUser_Info"
     "\022\013\n\003uid\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\021\n\tnick_"
     "name\030\003 \001(\t\022\020\n\010birthday\030\004 \001(\005\022\026\n\016signatur"
     "e_text\030\005 \001(\t\022\033\n\023signature_record_id\030\006 \001("
     "\005\022\022\n\npraise_num\030\007 \001(\005\022\021\n\tvisit_num\030\010 \001(\005"
     "\022\024\n\014followed_num\030\t \001(\005\022\022\n\nfollow_num\030\n \001"
-    "(\005", 242);
+    "(\005\022\013\n\003sex\030\013 \001(\005\022\016\n\006pic_id\030\014 \001(\005", 271);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserData.proto", &protobuf_RegisterTypes);
   User_Info::default_instance_ = new User_Info();
@@ -121,6 +123,8 @@ const int User_Info::kPraiseNumFieldNumber;
 const int User_Info::kVisitNumFieldNumber;
 const int User_Info::kFollowedNumFieldNumber;
 const int User_Info::kFollowNumFieldNumber;
+const int User_Info::kSexFieldNumber;
+const int User_Info::kPicIdFieldNumber;
 #endif  // !_MSC_VER
 
 User_Info::User_Info()
@@ -149,6 +153,8 @@ void User_Info::SharedCtor() {
   visit_num_ = 0;
   followed_num_ = 0;
   follow_num_ = 0;
+  sex_ = 0;
+  pic_id_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -217,6 +223,8 @@ void User_Info::Clear() {
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     followed_num_ = 0;
     follow_num_ = 0;
+    sex_ = 0;
+    pic_id_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -386,6 +394,38 @@ bool User_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(88)) goto parse_sex;
+        break;
+      }
+
+      // optional int32 sex = 11;
+      case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_sex:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &sex_)));
+          set_has_sex();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(96)) goto parse_pic_id;
+        break;
+      }
+
+      // optional int32 pic_id = 12;
+      case 12: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_pic_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &pic_id_)));
+          set_has_pic_id();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -470,6 +510,16 @@ void User_Info::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->follow_num(), output);
   }
 
+  // optional int32 sex = 11;
+  if (has_sex()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->sex(), output);
+  }
+
+  // optional int32 pic_id = 12;
+  if (has_pic_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->pic_id(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -541,6 +591,16 @@ void User_Info::SerializeWithCachedSizes(
   // optional int32 follow_num = 10;
   if (has_follow_num()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->follow_num(), target);
+  }
+
+  // optional int32 sex = 11;
+  if (has_sex()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->sex(), target);
+  }
+
+  // optional int32 pic_id = 12;
+  if (has_pic_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->pic_id(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -626,6 +686,20 @@ int User_Info::ByteSize() const {
           this->follow_num());
     }
 
+    // optional int32 sex = 11;
+    if (has_sex()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->sex());
+    }
+
+    // optional int32 pic_id = 12;
+    if (has_pic_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->pic_id());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -685,6 +759,12 @@ void User_Info::MergeFrom(const User_Info& from) {
     if (from.has_follow_num()) {
       set_follow_num(from.follow_num());
     }
+    if (from.has_sex()) {
+      set_sex(from.sex());
+    }
+    if (from.has_pic_id()) {
+      set_pic_id(from.pic_id());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -718,6 +798,8 @@ void User_Info::Swap(User_Info* other) {
     std::swap(visit_num_, other->visit_num_);
     std::swap(followed_num_, other->followed_num_);
     std::swap(follow_num_, other->follow_num_);
+    std::swap(sex_, other->sex_);
+    std::swap(pic_id_, other->pic_id_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
