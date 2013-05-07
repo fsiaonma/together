@@ -49,6 +49,9 @@ int login(string username, string password, string dev_id, char *buf) {
 
         // set session
         string sid;
+        int uid;
+
+        // _get_uid(username, &uid);
         ret = Session::set(username, dev_id, sid);
         LOG_INFO << "sid is: " << sid << endl;
         if (ret == LOGIN_REPLACE) {
@@ -123,4 +126,29 @@ int logout(string username, string sid, char *buf) {
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;
+}
+
+// private method for get uid by username
+int _get_uid(string username, int uid) {
+    Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+    e.connet();
+
+    e.excute("select id from t_user where username = '" + username + "';");
+    mysql = e.get_mysql();
+
+    MYSQL_RES *result = NULL;
+    MYSQL_FIELD *field = NULL;
+    MYSQL_ROW row = NULL;
+
+    result = mysql_store_result(&mysql);
+    int fieldcount = mysql_num_fields(result);
+
+    row = mysql_fetch_row(result);
+    uid = Tool::S2I(row[0]);
+
+    e.close();
+    return 1;
 }

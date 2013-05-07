@@ -1,19 +1,24 @@
 package UserResponse;
 import "UserData.proto";
 
-//user login response data
+// user login
 message LoginResponse {
 	optional string sid = 1;
     optional UserData.User_Info User_Info = 2;
 }
 
-//view user response data
+// view user
 message DetailResponse {
 	optional bool is_follow = 1;
     optional UserData.User_Info User_Info = 2;
 }
 
-//is user exist response data
+// is user exist
 message UsernameExistResponse {
     optional bool is_exist = 1;
+}
+
+// user list
+message UserList {
+    repeated UserData.User_Info user_list = 1;
 }

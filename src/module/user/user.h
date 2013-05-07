@@ -25,6 +25,8 @@ int set_user_info(map<string, string> params, string sid, char *buf);
 int prise(string username, string sid, char *buf);
 int follow(int follow_id, int followed_ed, string sid, char *buf);
 
+// int get_follow_list(int uid, char *buf);
+
 int user_handler(process *process, map<string, string> param);
 
 #endif
