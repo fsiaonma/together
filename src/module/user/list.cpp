@@ -23,6 +23,7 @@ int get_follow_list(int uid, char *buf) {
         
         e.connet();
         e.excute("select * from t_follow where follow_id = " + Tool::mysql_filter(uid) + ";");
+        MYSQL mysql;
         mysql = e.get_mysql();
 
         MYSQL_RES *result = NULL;
@@ -42,29 +43,29 @@ int get_follow_list(int uid, char *buf) {
                 continue;
             }
             
-            if (key == "id") {
-                uid = Tool::S2I(row[i]);
-                user_info->set_uid(uid);
-            } else if (key == "username") {
-                user_info->set_username(row[i]);
-            } else if (key == "nick_name") {
-                user_info->set_nick_name(row[i]);
-            } else if (key == "birthday") {
-                user_info->set_birthday(Tool::S2I(row[i]));
-            } else if (key == "signature_text") {
-                user_info->set_signature_text(row[i]);
-            } else if (key == "signature_record_id") {
-                user_info->set_signature_record_id(Tool::S2I(row[i]));
-            } else if (key == "praise_num") {
-                user_info->set_praise_num(Tool::S2I(row[i]));
-            } else if (key == "visit_num") {
-                user_info->set_visit_num(Tool::S2I(row[i]));
-            }
-        }
+            // if (key == "id") {
+            //     uid = Tool::S2I(row[i]);
+            //     user_info->set_uid(uid);
+            // } else if (key == "username") {
+            //     user_info->set_username(row[i]);
+            // } else if (key == "nick_name") {
+            //     user_info->set_nick_name(row[i]);
+            // } else if (key == "birthday") {
+            //     user_info->set_birthday(Tool::S2I(row[i]));
+            // } else if (key == "signature_text") {
+            //     user_info->set_signature_text(row[i]);
+            // } else if (key == "signature_record_id") {
+            //     user_info->set_signature_record_id(Tool::S2I(row[i]));
+            // } else if (key == "praise_num") {
+            //     user_info->set_praise_num(Tool::S2I(row[i]));
+            // } else if (key == "visit_num") {
+            //     user_info->set_visit_num(Tool::S2I(row[i]));
+            // }
+        } 
 
         e.close();
 
-    }
+    }while(0);
 
     return 0;
 }

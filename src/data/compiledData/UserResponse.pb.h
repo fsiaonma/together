@@ -37,6 +37,7 @@ void protobuf_ShutdownFile_UserResponse_2eproto();
 class LoginResponse;
 class DetailResponse;
 class UsernameExistResponse;
+class UserList;
 
 // ===================================================================
 
@@ -313,6 +314,91 @@ class UsernameExistResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static UsernameExistResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class UserList : public ::google::protobuf::Message {
+ public:
+  UserList();
+  virtual ~UserList();
+
+  UserList(const UserList& from);
+
+  inline UserList& operator=(const UserList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserList& default_instance();
+
+  void Swap(UserList* other);
+
+  // implements Message ----------------------------------------------
+
+  UserList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UserList& from);
+  void MergeFrom(const UserList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .UserData.User_Info user_list = 1;
+  inline int user_list_size() const;
+  inline void clear_user_list();
+  static const int kUserListFieldNumber = 1;
+  inline const ::UserData::User_Info& user_list(int index) const;
+  inline ::UserData::User_Info* mutable_user_list(int index);
+  inline ::UserData::User_Info* add_user_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >&
+      user_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
+      mutable_user_list();
+
+  // @@protoc_insertion_point(class_scope:UserResponse.UserList)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::RepeatedPtrField< ::UserData::User_Info > user_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static UserList* default_instance_;
+};
 // ===================================================================
 
 
@@ -516,6 +602,35 @@ inline bool UsernameExistResponse::is_exist() const {
 inline void UsernameExistResponse::set_is_exist(bool value) {
   set_has_is_exist();
   is_exist_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// UserList
+
+// repeated .UserData.User_Info user_list = 1;
+inline int UserList::user_list_size() const {
+  return user_list_.size();
+}
+inline void UserList::clear_user_list() {
+  user_list_.Clear();
+}
+inline const ::UserData::User_Info& UserList::user_list(int index) const {
+  return user_list_.Get(index);
+}
+inline ::UserData::User_Info* UserList::mutable_user_list(int index) {
+  return user_list_.Mutable(index);
+}
+inline ::UserData::User_Info* UserList::add_user_list() {
+  return user_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >&
+UserList::user_list() const {
+  return user_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
+UserList::mutable_user_list() {
+  return &user_list_;
 }
 
 

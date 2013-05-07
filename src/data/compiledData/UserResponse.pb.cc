@@ -29,6 +29,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UsernameExistResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UsernameExistResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* UserList_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  UserList_reflection_ = NULL;
 
 }  // namespace
 
@@ -86,6 +89,21 @@ void protobuf_AssignDesc_UserResponse_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UsernameExistResponse));
+  UserList_descriptor_ = file->message_type(3);
+  static const int UserList_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserList, user_list_),
+  };
+  UserList_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      UserList_descriptor_,
+      UserList::default_instance_,
+      UserList_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserList, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserList, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(UserList));
 }
 
 namespace {
@@ -104,6 +122,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     DetailResponse_descriptor_, &DetailResponse::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UsernameExistResponse_descriptor_, &UsernameExistResponse::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    UserList_descriptor_, &UserList::default_instance());
 }
 
 }  // namespace
@@ -115,6 +135,8 @@ void protobuf_ShutdownFile_UserResponse_2eproto() {
   delete DetailResponse_reflection_;
   delete UsernameExistResponse::default_instance_;
   delete UsernameExistResponse_reflection_;
+  delete UserList::default_instance_;
+  delete UserList_reflection_;
 }
 
 void protobuf_AddDesc_UserResponse_2eproto() {
@@ -130,15 +152,19 @@ void protobuf_AddDesc_UserResponse_2eproto() {
     "\022&\n\tUser_Info\030\002 \001(\0132\023.UserData.User_Info"
     "\"K\n\016DetailResponse\022\021\n\tis_follow\030\001 \001(\010\022&\n"
     "\tUser_Info\030\002 \001(\0132\023.UserData.User_Info\")\n"
-    "\025UsernameExistResponse\022\020\n\010is_exist\030\001 \001(\010", 240);
+    "\025UsernameExistResponse\022\020\n\010is_exist\030\001 \001(\010"
+    "\"2\n\010UserList\022&\n\tuser_list\030\001 \003(\0132\023.UserDa"
+    "ta.User_Info", 292);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserResponse.proto", &protobuf_RegisterTypes);
   LoginResponse::default_instance_ = new LoginResponse();
   DetailResponse::default_instance_ = new DetailResponse();
   UsernameExistResponse::default_instance_ = new UsernameExistResponse();
+  UserList::default_instance_ = new UserList();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   DetailResponse::default_instance_->InitAsDefaultInstance();
   UsernameExistResponse::default_instance_->InitAsDefaultInstance();
+  UserList::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_UserResponse_2eproto);
 }
 
@@ -872,6 +898,209 @@ void UsernameExistResponse::Swap(UsernameExistResponse* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = UsernameExistResponse_descriptor_;
   metadata.reflection = UsernameExistResponse_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int UserList::kUserListFieldNumber;
+#endif  // !_MSC_VER
+
+UserList::UserList()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void UserList::InitAsDefaultInstance() {
+}
+
+UserList::UserList(const UserList& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void UserList::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+UserList::~UserList() {
+  SharedDtor();
+}
+
+void UserList::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void UserList::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserList::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return UserList_descriptor_;
+}
+
+const UserList& UserList::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
+  return *default_instance_;
+}
+
+UserList* UserList::default_instance_ = NULL;
+
+UserList* UserList::New() const {
+  return new UserList;
+}
+
+void UserList::Clear() {
+  user_list_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool UserList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .UserData.User_Info user_list = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_user_list()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(10)) goto parse_user_list;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void UserList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // repeated .UserData.User_Info user_list = 1;
+  for (int i = 0; i < this->user_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->user_list(i), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* UserList::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated .UserData.User_Info user_list = 1;
+  for (int i = 0; i < this->user_list_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->user_list(i), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int UserList::ByteSize() const {
+  int total_size = 0;
+
+  // repeated .UserData.User_Info user_list = 1;
+  total_size += 1 * this->user_list_size();
+  for (int i = 0; i < this->user_list_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->user_list(i));
+  }
+
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserList::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const UserList* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const UserList*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void UserList::MergeFrom(const UserList& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  user_list_.MergeFrom(from.user_list_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void UserList::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserList::CopyFrom(const UserList& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserList::IsInitialized() const {
+
+  return true;
+}
+
+void UserList::Swap(UserList* other) {
+  if (other != this) {
+    user_list_.Swap(&other->user_list_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata UserList::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = UserList_descriptor_;
+  metadata.reflection = UserList_reflection_;
   return metadata;
 }
 

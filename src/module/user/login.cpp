@@ -137,6 +137,7 @@ int _get_uid(string username, int uid) {
     e.connet();
 
     e.excute("select id from t_user where username = '" + username + "';");
+    MYSQL mysql;
     mysql = e.get_mysql();
 
     MYSQL_RES *result = NULL;
