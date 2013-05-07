@@ -111,6 +111,18 @@ class List : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >*
       mutable_room_info_list();
 
+  // repeated .RoomData.UserInfo user_info_list = 3;
+  inline int user_info_list_size() const;
+  inline void clear_user_info_list();
+  static const int kUserInfoListFieldNumber = 3;
+  inline const ::RoomData::UserInfo& user_info_list(int index) const;
+  inline ::RoomData::UserInfo* mutable_user_info_list(int index);
+  inline ::RoomData::UserInfo* add_user_info_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::RoomData::UserInfo >&
+      user_info_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::RoomData::UserInfo >*
+      mutable_user_info_list();
+
   // @@protoc_insertion_point(class_scope:Data.List)
  private:
   inline void set_has_is_end();
@@ -119,10 +131,11 @@ class List : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_list_;
+  ::google::protobuf::RepeatedPtrField< ::RoomData::UserInfo > user_info_list_;
   bool is_end_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
@@ -183,6 +196,31 @@ List::room_info_list() const {
 inline ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >*
 List::mutable_room_info_list() {
   return &room_info_list_;
+}
+
+// repeated .RoomData.UserInfo user_info_list = 3;
+inline int List::user_info_list_size() const {
+  return user_info_list_.size();
+}
+inline void List::clear_user_info_list() {
+  user_info_list_.Clear();
+}
+inline const ::RoomData::UserInfo& List::user_info_list(int index) const {
+  return user_info_list_.Get(index);
+}
+inline ::RoomData::UserInfo* List::mutable_user_info_list(int index) {
+  return user_info_list_.Mutable(index);
+}
+inline ::RoomData::UserInfo* List::add_user_info_list() {
+  return user_info_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::RoomData::UserInfo >&
+List::user_info_list() const {
+  return user_info_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::RoomData::UserInfo >*
+List::mutable_user_info_list() {
+  return &user_info_list_;
 }
 
 

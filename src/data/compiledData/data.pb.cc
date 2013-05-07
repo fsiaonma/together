@@ -34,9 +34,10 @@ void protobuf_AssignDesc_data_2eproto() {
       "data.proto");
   GOOGLE_CHECK(file != NULL);
   List_descriptor_ = file->message_type(0);
-  static const int List_offsets_[2] = {
+  static const int List_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, is_end_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, room_info_list_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_info_list_),
   };
   List_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -80,9 +81,10 @@ void protobuf_AddDesc_data_2eproto() {
 
   ::RoomData::protobuf_AddDesc_RoomData_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\ndata.proto\022\004Data\032\016RoomData.proto\"B\n\004Li"
+    "\n\ndata.proto\022\004Data\032\016RoomData.proto\"n\n\004Li"
     "st\022\016\n\006is_end\030\001 \001(\010\022*\n\016room_info_list\030\002 \003"
-    "(\0132\022.RoomData.RoomInfo", 102);
+    "(\0132\022.RoomData.RoomInfo\022*\n\016user_info_list"
+    "\030\003 \003(\0132\022.RoomData.UserInfo", 146);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   List::default_instance_ = new List();
@@ -102,6 +104,7 @@ struct StaticDescriptorInitializer_data_2eproto {
 #ifndef _MSC_VER
 const int List::kIsEndFieldNumber;
 const int List::kRoomInfoListFieldNumber;
+const int List::kUserInfoListFieldNumber;
 #endif  // !_MSC_VER
 
 List::List()
@@ -159,6 +162,7 @@ void List::Clear() {
     is_end_ = false;
   }
   room_info_list_.Clear();
+  user_info_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -195,6 +199,21 @@ bool List::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_room_info_list;
+        if (input->ExpectTag(26)) goto parse_user_info_list;
+        break;
+      }
+
+      // repeated .RoomData.UserInfo user_info_list = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_info_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_user_info_list()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_user_info_list;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -228,6 +247,12 @@ void List::SerializeWithCachedSizes(
       2, this->room_info_list(i), output);
   }
 
+  // repeated .RoomData.UserInfo user_info_list = 3;
+  for (int i = 0; i < this->user_info_list_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->user_info_list(i), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -246,6 +271,13 @@ void List::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->room_info_list(i), target);
+  }
+
+  // repeated .RoomData.UserInfo user_info_list = 3;
+  for (int i = 0; i < this->user_info_list_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->user_info_list(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -271,6 +303,14 @@ int List::ByteSize() const {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->room_info_list(i));
+  }
+
+  // repeated .RoomData.UserInfo user_info_list = 3;
+  total_size += 1 * this->user_info_list_size();
+  for (int i = 0; i < this->user_info_list_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->user_info_list(i));
   }
 
   if (!unknown_fields().empty()) {
@@ -299,6 +339,7 @@ void List::MergeFrom(const ::google::protobuf::Message& from) {
 void List::MergeFrom(const List& from) {
   GOOGLE_CHECK_NE(&from, this);
   room_info_list_.MergeFrom(from.room_info_list_);
+  user_info_list_.MergeFrom(from.user_info_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_is_end()) {
       set_is_end(from.is_end());
@@ -328,6 +369,7 @@ void List::Swap(List* other) {
   if (other != this) {
     std::swap(is_end_, other->is_end_);
     room_info_list_.Swap(&other->room_info_list_);
+    user_info_list_.Swap(&other->user_info_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
