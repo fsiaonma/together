@@ -19,7 +19,7 @@ int login(string username, string password, string dev_id, char *buf);
 int logout(string username, string sid, char *buf);
 int username_is_exist(string username, char *buf);
 
-int view_user_info(int uid, string username, string sid, char *buf);
+int view_user_info(int self_uid, int visit_uid, string sid, char *buf);
 int set_user_info(map<string, string> params, string sid, char *buf);
 
 int prise(string username, string sid, char *buf);
@@ -29,4 +29,5 @@ int follow(int follow_id, int followed_ed, string sid, char *buf);
 
 int user_handler(process *process, map<string, string> param);
 
+int _get_uid(string username, int &uid);
 #endif

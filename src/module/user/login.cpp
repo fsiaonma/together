@@ -51,8 +51,9 @@ int login(string username, string password, string dev_id, char *buf) {
         string sid;
         int uid;
 
-        // _get_uid(username, &uid);
-        ret = Session::set(username, dev_id, sid);
+        _get_uid(username, uid);
+
+        ret = Session::set(Tool::toString(uid), dev_id, sid);
         LOG_INFO << "sid is: " << sid << endl;
         if (ret == LOGIN_REPLACE) {
             result = LOGIN_REPLACE;
@@ -63,7 +64,7 @@ int login(string username, string password, string dev_id, char *buf) {
         }
 
         UserData::User_Info *user_info = new UserData::User_Info();
-        _get_user_info(username, user_info);
+        _get_user_info(uid, user_info);
         UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
         login_res->set_allocated_user_info(user_info);
         login_res->set_sid(sid);
@@ -129,7 +130,8 @@ int logout(string username, string sid, char *buf) {
 }
 
 // private method for get uid by username
-int _get_uid(string username, int uid) {
+int _get_uid(string username, int &uid) {
+    MYSQL mysql;
     Config *c = Config::get_instance();
     map<string, string> config = c->get_config();
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
@@ -137,15 +139,14 @@ int _get_uid(string username, int uid) {
     e.connet();
 
     e.excute("select id from t_user where username = '" + username + "';");
-    MYSQL mysql;
+    
     mysql = e.get_mysql();
-
     MYSQL_RES *result = NULL;
-    MYSQL_FIELD *field = NULL;
+    // MYSQL_FIELD *field = NULL;
     MYSQL_ROW row = NULL;
 
     result = mysql_store_result(&mysql);
-    int fieldcount = mysql_num_fields(result);
+    // int fieldcount = mysql_num_fields(result);
 
     row = mysql_fetch_row(result);
     uid = Tool::S2I(row[0]);

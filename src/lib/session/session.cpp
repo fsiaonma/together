@@ -19,11 +19,11 @@ int Session::init() {
  * set session
  *  
  * @method set
- * @param {string} username username
+ * @param {string} uid uid
  * @param {string} dev_id device id 
  * @return {string} sid
  */
-int Session::set(string username, string dev_id, string &sid) {
+int Session::set(string uid, string dev_id, string &sid) {
 	init_sessions();
 
     int result = 0;
@@ -35,18 +35,18 @@ int Session::set(string username, string dev_id, string &sid) {
     do {
         // check whether username is in catch or not
 	    for(ptr = sessions.begin(); ptr != sessions.end(); ++ptr) {
-	    	if (ptr->first == username) {
-	    		remove(username);
+	    	if (ptr->first == uid) {
+	    		remove(uid);
 	    		result = S_REPLACE_IN;
 	    		break;
 	    	}
 	    }
 
-	    str_temp =Tool::md5(username + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);
+	    str_temp =Tool::md5(uid + "_" + dev_id + "_" + s.active_time + '_' + s.rand_num);
 
         // write to file
         o_file.open(filename, ios::app);
-        o_file << "username:" << username << "/"
+        o_file << "uid:" << uid << "/"
                << "dev_id:" << dev_id << "/" 
                << "active_time:" << Tool::L2S(time(NULL)) << "/" 
                << "rand_num:" << Tool::L2S(rand()) << "/"
@@ -87,13 +87,13 @@ SESSION *Session::get(string sid) {
 }
 
 /**
- * remove session by username
+ * remove session by uid
  *  
  * @method remove
- * @param {string} username username
+ * @param {string} uid uid
  * @return {int} the status of remove operation
  */
-int Session::remove(string username) {
+int Session::remove(string uid) {
 	init_sessions();
 
     map<string, SESSION>::iterator ptr;
@@ -101,8 +101,8 @@ int Session::remove(string username) {
 
     o_file.open(filename);
     for (ptr = sessions.begin(); ptr != sessions.end(); ++ptr) {
-        if (ptr->first != username) {
-            o_file << "username:" << (ptr->second).username << "/"
+        if (ptr->first != uid) {
+            o_file << "uid:" << (ptr->second).uid << "/"
                    << "dev_id:" << (ptr->second).dev_id << "/" 
                    << "active_time:" << (ptr->second).active_time << "/" 
                    << "rand_num:" << (ptr->second).rand_num << "/" 
@@ -133,8 +133,8 @@ void Session::init_sessions() {
                 value = out_text.substr(0, out_text.find('/'));
                 if (key == "sid") {
                     s.sid = value;
-                } else if (key == "username") {
-                    s.username = value;
+                } else if (key == "uid") {
+                    s.uid = value;
                 } else if (key == "dev_id") {
                     s.dev_id = value;
                 } else if (key == "active_time") {
@@ -144,7 +144,7 @@ void Session::init_sessions() {
                 }
                 out_text = out_text.erase(0, out_text.find('/') + 1);
             }
-           	sessions[s.username] = s;
+           	sessions[s.uid] = s;
         }
     }
     i_file.close();

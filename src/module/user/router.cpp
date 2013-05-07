@@ -42,11 +42,11 @@ int user_handler(process *process, map<string, string> param) {
             break ;
         }
         case USER_VIEW_INFO: {
-            if (param.count("username") == 0) {
-                LOG_ERROR << "username is not exist" << endl;
+            if (param.count("self_uid") == 0 || param.count("visit_uid") == 0) {
+                LOG_ERROR << "self_uid or visit_uid is not exist" << endl;
                 return -1;
             }
-            view_user_info(Tool::S2I(param["uid"]), param["username"], param["sid"], response_data);
+            view_user_info(Tool::S2I(param["self_uid"]), Tool::S2I(param["visit_uid"]), param["sid"], response_data);
             break ;
         }
         case USER_SET_INFO: {

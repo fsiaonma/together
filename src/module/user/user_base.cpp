@@ -8,8 +8,7 @@
  * @param {UserData::User_Info*} user_info respone data.
  * @return {int} _get_user_info status. 
  */
-int _get_user_info(string username, UserData::User_Info *user_info) {
-    int uid;
+int _get_user_info(int uid, UserData::User_Info *user_info) {
     int count;
     MYSQL mysql;
 
@@ -19,7 +18,7 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
     e.connet();
-    e.excute("select * from t_user where username = '" + username + "';");
+    e.excute("select * from t_user where id = " + Tool::mysql_filter(uid) + ";");
     mysql = e.get_mysql();
 
     MYSQL_RES *result = NULL;
@@ -40,7 +39,6 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
         }
         
         if (key == "id") {
-            uid = Tool::S2I(row[i]);
             user_info->set_uid(uid);
         } else if (key == "username") {
             user_info->set_username(row[i]);
@@ -62,10 +60,14 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
     e.close();
 
     e.count("t_follow", "where follow_id = " + Tool::mysql_filter(uid) + ";", count);
-    user_info->set_follow_num(count);
-
+    if (count != 0) {
+        user_info->set_follow_num(count);
+    }
+    
     e.count("t_follow", "where followed_id = " + Tool::mysql_filter(uid) + ";", count);
-    user_info->set_followed_num(count);
+    if (count != 0) {
+        user_info->set_followed_num(count);  
+    }
 
     print_proto(user_info);
 
@@ -84,7 +86,9 @@ int _get_user_info(string username, UserData::User_Info *user_info) {
  */
 int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res) {
     http_res->set_code(code);
-    http_res->set_success(success);
+    if (success) {
+        http_res->set_success(success);
+    }
     http_res->set_msg(msg);
     return 0;
 }

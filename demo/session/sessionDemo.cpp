@@ -6,10 +6,10 @@ int main() {
 	// Session *session = Session::get_instance();
 
 	string str;
-	Session::set("sam", "99002020202020", str);
-	Session::set("sam", "99002020202020dawdawd", str);
-	Session::set("tony", "99002020202020", str);
-	Session::set("sam", "99002020202020", str);
+	Session::set("1", "99002020202020", str);
+	Session::set("1", "99002020202020dawdawd", str);
+	Session::set("2", "99002020202020", str);
+	Session::set("1", "99002020202020", str);
  	
  	SESSION *session_B;
  	string sid;
@@ -24,7 +24,7 @@ int main() {
 	string test_sidA;
 	Session::set("oo", "34324434234", test_sidA);
 	SESSION *session_C = Session::get(test_sidA);
-	Session::remove((*session_C).username);
+	Session::remove((*session_C).uid);
 
 	return 0;
 }
