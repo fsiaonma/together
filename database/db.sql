@@ -213,7 +213,7 @@ set ret = 5199;
 
 #判断用户,房间是否存在
 select count(1) into v_user_num from t_user where id = user_id;
-select count(1) into v_room_num from t_room where id = room_id;
+select count(1) into v_room_num from t_room where id = room_id and room_status = 0;
 if v_user_num = 0 or v_room_num = 0 then
 	#set DB_PR_PARAM_ERR
 	set ret = 5100;
@@ -263,6 +263,7 @@ DELIMITER $$
 USE `together`$$
 
 
+# call pr_quit_room(1000,2,@ret);
 create procedure pr_quit_room 
 (  
 in i_room_id int   
@@ -288,7 +289,7 @@ set ret = 5199;
 
 #判断用户,房间是否存在
 select count(1) into v_user_num from t_user where id = i_user_id;
-select count(1) into v_room_num from t_room where id = i_room_id;
+select count(1) into v_room_num from t_room where id = i_room_id and room_status = 0;
 if v_user_num = 0 or v_room_num = 0 then
 	#set DB_PR_PARAM_ERR
 	set ret = 5100;

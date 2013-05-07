@@ -110,7 +110,8 @@ static const int USER_IS_EXIST = 108;
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
 static const int ROOM_SHOWLIST = 202;
-static const int ROOM_SEARCH = 203;
+static const int ROOM_JOIN = 203;
+static const int ROOM_QUIT = 204;
 
 
 // --------------- Status Code ---------------
@@ -130,7 +131,7 @@ static const int DB_PR_JOIN_ROOM_SUCCESS = 5101;
 static const int DB_PR_JOIN_ROOM_HAVEBEENJOINED = 5102;
 static const int DB_PR_JOIN_ROOM_OVERLIMITNUM = 5103;
 static const int DB_PR_QUIT_ROOM_SUCCESS = 5104;
-static const int DB_PR_QUIT_ROOM_NOTEXIST = 5105;
+static const int DB_PR_QUIT_ROOM_NOTJOINED = 5105;
 
 // ============ Session ============
 static const int SESSION_OK = 6000;
@@ -172,7 +173,17 @@ static const int USERNAME_AVAILABLE = 18000;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;
+
 static const int SHOW_ROOM_LIST_SUCCESS = 21001;
+
+static const int JOIN_ROOM_SUCCESS = 21002;
+static const int JOIN_ROOM_USER_OR_ROOM_NOEXIST = 21003;
+static const int JOIN_ROOM_HAVEBEENJOINED = 21004;
+static const int JOIN_ROOM_OVERLIMITNUM = 21005;
+
+static const int QUIT_ROOM_SUCCESS = 21006;
+static const int QUIT_ROOM_USER_OR_ROOM_NOEXIST = 21007;
+static const int QUIT_ROOM_NOTJOINED = 21008;
 
 #endif
 

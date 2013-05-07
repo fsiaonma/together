@@ -17,7 +17,12 @@ int room_handler(process *process, map<string, string> param) {
             show_room_list(param, response_data);
     		break ;
     	}
-        case ROOM_SEARCH: {
+        case ROOM_JOIN: {
+            join_room(param, response_data);
+            break ;
+        }
+        case ROOM_QUIT: {
+            quit_room(param, response_data);
             break ;
         }
         default: {
