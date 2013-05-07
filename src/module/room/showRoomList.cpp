@@ -57,7 +57,7 @@ int show_room_list(map<string, string> param, char *buf)
         string lng_right = lng + "+" + dist + "/abs(cos(radians(" + lat + "))*" + lat_length + ")";
 
         string dis_sql = "SELECT r.id, r.owner_id, u.nickname, r.title, r.type, r.room_status, "
-        "  r.preview_pic_id, r.gender_type,  r.limit_person_num,  r.record_id, r.create_time, r.begin_time, a.latitude, a.longitude," + 
+        "  r.preview_pic_id, r.gender_type,  r.limit_person_num,  r.record_id, r.create_time, r.begin_time, a.latitude, a.longitude, a.detail_addr, a.addr_remark, " + 
         er + "*2*ASIN(SQRT(POWER(SIN((" + lat + " - a.latitude)*pi()/180 / 2), 2)" + 
         " +  COS(" + lat + " * pi()/180) * COS(a.latitude * pi()/180) *  POWER(SIN((" + lng + " - a.longitude) * pi()" + 
         "/180 / 2), 2) )) as dist, "
@@ -207,6 +207,10 @@ int show_room_list(map<string, string> param, char *buf)
                     addr->set_latitude(Tool::fromString<double>(row[i]));
                 } else if (key == "longitude") {
                     addr->set_longitude(Tool::fromString<double>(row[i]));
+                } else if (key == "detail_addr") {
+                    addr->set_detail_addr(row[i]);
+                } else if (key == "addr_remark") {
+                    addr->set_addr_remark(row[i]);
                 }
             }
             row = mysql_fetch_row(rst);
@@ -237,6 +241,7 @@ int show_room_list(map<string, string> param, char *buf)
     http_res->SerializeToString(&respon_data);
     const char *p = respon_data.c_str();
     strncpy(buf, p, strlen(p) + 1);
+
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;
