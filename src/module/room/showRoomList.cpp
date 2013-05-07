@@ -33,7 +33,7 @@ int show_room_list(map<string, string> param, char *buf)
         LOG_INFO << "room_type:" << room_type << "|" << "longitude:" << lng << "|" << 
         "latitude:" << lat << "|" << "pageNo:" << page_no << "|" << "pageSize:" << page_size << endl;
 
-        // sql_condition = sql_condition + " and r.type = " + room_type + " ";
+        sql_condition = sql_condition + " and r.type = " + room_type + " ";
         int begin_pos = (page_no - 1) * page_size;
         
         // inessential
@@ -174,7 +174,6 @@ int show_room_list(map<string, string> param, char *buf)
                 string key = field->name;
                 if (row[i] == NULL)
                     continue;
-                // LOG_DEBUG << key << ":" << row[i] << endl;
                 if (key == "id") {
                     room_info->set_room_id(Tool::fromString<int>(row[i]));
                 } else if (key == "title") {
@@ -214,7 +213,6 @@ int show_room_list(map<string, string> param, char *buf)
                 }
             }
             row = mysql_fetch_row(rst);
-            // LOG_DEBUG << "-----------------------" << endl;
             data_num++;
             room_info->set_allocated_address(addr);
         }

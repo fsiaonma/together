@@ -123,6 +123,14 @@ static const int DB_OK = 5000;
 static const int DB_CONNECT_FAIL = 5001;
 static const int DB_COUNT_ERR = 5002;
 static const int DB_QUERY_ERR = 5003;
+// ----- procedure status code -----
+static const int DB_PR_PARAM_ERR = 5100;
+static const int DB_PR_ERR = 5199;
+static const int DB_PR_JOIN_ROOM_SUCCESS = 5101;
+static const int DB_PR_JOIN_ROOM_HAVEBEENJOINED = 5102;
+static const int DB_PR_JOIN_ROOM_OVERLIMITNUM = 5103;
+static const int DB_PR_QUIT_ROOM_SUCCESS = 5104;
+static const int DB_PR_QUIT_ROOM_NOTEXIST = 5105;
 
 // ============ Session ============
 static const int SESSION_OK = 6000;
