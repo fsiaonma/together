@@ -9,7 +9,7 @@
  * @param {char*} respone data. 
  * @return {int} login status.
  */
-int login(string username, string password, string dev_id, char *buf) {
+int login(string username, string password, string dev_id, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -73,9 +73,14 @@ int login(string username, string password, string dev_id, char *buf) {
 
     print_proto(http_res);
 	
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;
@@ -90,7 +95,7 @@ int login(string username, string password, string dev_id, char *buf) {
  * @param {char*} buf respone data.
  * @return {int} louout status. 
  */
-int logout(string username, string sid, char *buf) {
+int logout(string username, string sid, char *buf, int &send_len) {
     string respon_data;
     int result;
     string msg;
@@ -121,9 +126,14 @@ int logout(string username, string sid, char *buf) {
 
     print_proto(http_res);
 
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;

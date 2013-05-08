@@ -4,25 +4,25 @@
  * prise user
  *  
  * @method prise
- * @param {string} username username which is used for getting user info.
+ * @param {int} uid uid which is used for getting user info.
  * @param {string} sid sid which is used for getting user info.
  * @param {char*} respone data. 
  * @return {int} prise status.
  */
-int prise(string username, string sid, char *buf) {
+int prise(int uid, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
     int result;
     int ret;
 
-    LOG_INFO << "username is " << username << " sid is " << sid << endl;
+    LOG_INFO << "uid is " << uid << " sid is " << sid << endl;
 
     do {    
         // username or password is not be found
-        if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
+        if (uid <= 0 || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
-            _set_http_head(result, false, "username or sid is null", http_res);
+            _set_http_head(result, false, "uid or sid is null", http_res);
             break;
         }
 
@@ -30,6 +30,13 @@ int prise(string username, string sid, char *buf) {
         if (Session::get(sid) == NULL) {
             result = SESSION_NOT_EXIST;
             _set_http_head(result, false, "session not exist", http_res);
+            break;
+        }
+
+        // cant prise himself
+        if (Tool::S2I(Session::get(sid)->uid) == uid) {
+            result = USER_CANT_PRISE_HIMSELF;
+            _set_http_head(result, false, "cant prise himself", http_res);
             break;
         }
 
@@ -46,7 +53,7 @@ int prise(string username, string sid, char *buf) {
         	_set_http_head(result, false, "sql connet fail", http_res);
         }
 
-        ret = e.excute("select praise_num from t_user where username = " + Tool::mysql_filter(username) + ";");
+        ret = e.excute("select praise_num from t_user where id = " + Tool::mysql_filter(uid) + ";");
         if (ret != DB_OK) {
 	    	result = DB_ERROR;
 	    	_set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
@@ -68,7 +75,7 @@ int prise(string username, string sid, char *buf) {
 
 	    e.close();
 
-        ret = e.update("t_user", update_params, "where username = '" + username + "'");
+        ret = e.update("t_user", update_params, "where id = " + Tool::mysql_filter(uid) + "");
    		// exception
         if (ret != DB_OK) {
             result = USER_PRISE_FAIL;
@@ -82,9 +89,14 @@ int prise(string username, string sid, char *buf) {
 
     print_proto(http_res);
 
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;
@@ -100,7 +112,7 @@ int prise(string username, string sid, char *buf) {
  * @param {char*} respone data. 
  * @return {int} follow status.
  */
-int follow(int follow_id, int followed_id, string sid, char *buf) {
+int follow(int follow_id, int followed_id, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -168,9 +180,14 @@ int follow(int follow_id, int followed_id, string sid, char *buf) {
 
     print_proto(http_res);
 
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;

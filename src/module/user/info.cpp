@@ -10,7 +10,7 @@
  * @param {char*} respone data. 
  * @return {int} view_user_info status.
  */
-int view_user_info(int self_uid, int visit_uid, string sid, char *buf) {
+int view_user_info(int self_uid, int visit_uid, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -81,9 +81,14 @@ int view_user_info(int self_uid, int visit_uid, string sid, char *buf) {
 
     print_proto(http_res);
 
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;
@@ -98,7 +103,7 @@ int view_user_info(int self_uid, int visit_uid, string sid, char *buf) {
  * @param {char*} respone data. 
  * @return {int} set_user_info status.
  */
-int set_user_info(map<string, string> params, string sid, char *buf) {
+int set_user_info(map<string, string> params, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -150,9 +155,14 @@ int set_user_info(map<string, string> params, string sid, char *buf) {
 
     print_proto(http_res);
 
+    // http_res->SerializeToString(&respon_data);
+    // const char *p = respon_data.c_str();
+    // strncpy(buf, p, strlen(p) + 1);
+    // google::protobuf::ShutdownProtobufLibrary();
+
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;

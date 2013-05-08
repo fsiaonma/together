@@ -14,18 +14,18 @@
 #include "../../lib/session/session.h"
 #include "./user_base.h"
 
-int regiest(string username, string password, char *buf);
-int login(string username, string password, string dev_id, char *buf);
-int logout(string username, string sid, char *buf);
-int username_is_exist(string username, char *buf);
+int regiest(string username, string password, char *buf, int &send_len);
+int login(string username, string password, string dev_id, char *buf, int &send_len);
+int logout(string username, string sid, char *buf, int &send_len);
+int username_is_exist(string username, char *buf, int &send_len);
 
-int view_user_info(int self_uid, int visit_uid, string sid, char *buf);
-int set_user_info(map<string, string> params, string sid, char *buf);
+int view_user_info(int self_uid, int visit_uid, string sid, char *buf, int &send_len);
+int set_user_info(map<string, string> params, string sid, char *buf, int &send_len);
 
-int prise(string username, string sid, char *buf);
-int follow(int follow_id, int followed_ed, string sid, char *buf);
+int prise(int uid, string sid, char *buf, int &send_len);
+int follow(int follow_id, int followed_ed, string sid, char *buf, int &send_len);
 
-// get_follow_list(int page_no, int page_size, int uid, string sid, char *buf);
+int get_follow_list(int page_no, int page_size, int uid, string sid, char *buf, int &send_len);
 
 int user_handler(process *process, map<string, string> param);
 

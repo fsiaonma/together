@@ -50,7 +50,7 @@ handle_error(process, "bad request");
 #endif
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 #ifndef _CONST_H_
@@ -166,6 +166,7 @@ static const int SET_USER_INFO_SUCCESS = 15000;
 // set user prise result code
 static const int USER_PRISE_SUCCESS = 16000;
 static const int USER_PRISE_FAIL = 16001;
+static const int USER_CANT_PRISE_HIMSELF = 16002;
 
 // set user follow result code
 static const int USER_FOLLOW_SUCCESS = 17000;

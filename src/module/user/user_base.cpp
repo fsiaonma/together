@@ -61,14 +61,10 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
     e.close();
 
     e.count("t_follow", "where follow_id = " + Tool::mysql_filter(uid) + ";", count);
-    if (count != 0) {
-        user_info->set_follow_num(count);
-    }
+    user_info->set_follow_num(count);
     
     e.count("t_follow", "where followed_id = " + Tool::mysql_filter(uid) + ";", count);
-    if (count != 0) {
-        user_info->set_followed_num(count);  
-    }
+    user_info->set_followed_num(count);  
 
     print_proto(user_info);
 
@@ -87,9 +83,7 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
  */
 int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res) {
     http_res->set_code(code);
-    if (success) {
-        http_res->set_success(success);
-    }
+    http_res->set_success(success);
     http_res->set_msg(msg);
     return 0;
 }
