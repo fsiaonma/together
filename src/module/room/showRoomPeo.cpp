@@ -15,28 +15,28 @@ int show_room_peo_list(map<string, string> param, char *buf)
 
     do
     {
-        // // param sid not exist
-        // if (param.count("sid") == 0)
-        // {
-        //     result = PARAM_ERROR;
-        //     http_res->set_code(PARAM_ERROR);
-        //     http_res->set_success(0);
-        //     msg = "param sid not exist";
-        //     LOG_ERROR << msg << endl;
-        //     http_res->set_msg(msg);
-        //     break;
-        // }
+        // param sid not exist
+        if (param.count("sid") == 0)
+        {
+            result = PARAM_ERROR;
+            http_res->set_code(PARAM_ERROR);
+            http_res->set_success(0);
+            msg = "param sid not exist";
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
 
-        // // session is not exist
-        // if (Session::get(Tool::trim(param["sid"])) == NULL) {
-        //     result = SESSION_NOT_EXIST;
-        //     http_res->set_code(SESSION_NOT_EXIST);
-        //     http_res->set_success(0);
-        //     msg = "session not exist";
-        //     LOG_ERROR << msg << endl;
-        //     http_res->set_msg(msg);
-        //     break;
-        // }
+        // session is not exist
+        if (Session::get(Tool::trim(param["sid"])) == NULL) {
+            result = SESSION_NOT_EXIST;
+            http_res->set_code(SESSION_NOT_EXIST);
+            http_res->set_success(0);
+            msg = "session not exist";
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
         
         int room_id = Tool::S2I(param["roomId"]);
         int page_size = Tool::S2I(param["pageSize"]);
