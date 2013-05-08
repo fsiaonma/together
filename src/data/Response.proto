@@ -12,4 +12,6 @@ message HTTPResponse {
     optional RoomResponse.ShowRoomListResponse room_list_response = 7;
     optional RoomResponse.RoomPeopleListResponse room_people_list_response = 8;
     optional RoomResponse.RoomInfoResponse room_info_response = 9;
+    optional UserResponse.FollowListResponse follow_list_response = 10;
+    optional UserResponse.FollowedListResponse followed_list_response = 11;
 }
