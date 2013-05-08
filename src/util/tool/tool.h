@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <time.h>
 #include <typeinfo>
 
 #ifndef STR_VALUE
@@ -41,6 +42,7 @@ public:
 	static int calc_file_MD5(char *file_name, char *md5_sum);
 	static string base64_decode(const char* Data);
 	static vector<string> split(string str, string pattern);
+	static string now_time();
 
 	/**
 	 * [Tool::fromString description]

@@ -107,7 +107,7 @@ int create_room(map<string, string> param, char *buf)
         insert_room_params["addr_id"] = Tool::mysql_filter(addr_insert_id);
         insert_room_params["record_id"] = Tool::mysql_filter(record_id);
         insert_room_params["begin_time"] = begin_time;
-        insert_room_params["create_time"] = Tool::mysql_filter(20010101010101);
+        insert_room_params["create_time"] = Tool::now_time();
         insert_room_params["room_status"] = "0";
 
         int room_insert_id = -1;

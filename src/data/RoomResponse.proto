@@ -9,3 +9,7 @@ message ShowRoomListResponse {
 message RoomPeopleListResponse {
 	optional Data.List people_list = 1;
 }
+
+message RoomInfoResponse {
+	optional RoomData.RoomInfo room_info = 1;
+}

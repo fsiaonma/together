@@ -37,6 +37,7 @@ void protobuf_ShutdownFile_RoomResponse_2eproto();
 
 class ShowRoomListResponse;
 class RoomPeopleListResponse;
+class RoomInfoResponse;
 
 // ===================================================================
 
@@ -206,6 +207,90 @@ class RoomPeopleListResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static RoomPeopleListResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class RoomInfoResponse : public ::google::protobuf::Message {
+ public:
+  RoomInfoResponse();
+  virtual ~RoomInfoResponse();
+
+  RoomInfoResponse(const RoomInfoResponse& from);
+
+  inline RoomInfoResponse& operator=(const RoomInfoResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RoomInfoResponse& default_instance();
+
+  void Swap(RoomInfoResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  RoomInfoResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const RoomInfoResponse& from);
+  void MergeFrom(const RoomInfoResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .RoomData.RoomInfo room_info = 1;
+  inline bool has_room_info() const;
+  inline void clear_room_info();
+  static const int kRoomInfoFieldNumber = 1;
+  inline const ::RoomData::RoomInfo& room_info() const;
+  inline ::RoomData::RoomInfo* mutable_room_info();
+  inline ::RoomData::RoomInfo* release_room_info();
+  inline void set_allocated_room_info(::RoomData::RoomInfo* room_info);
+
+  // @@protoc_insertion_point(class_scope:RoomResponse.RoomInfoResponse)
+ private:
+  inline void set_has_room_info();
+  inline void clear_has_room_info();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::RoomData::RoomInfo* room_info_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RoomResponse_2eproto();
+  friend void protobuf_AssignDesc_RoomResponse_2eproto();
+  friend void protobuf_ShutdownFile_RoomResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static RoomInfoResponse* default_instance_;
+};
 // ===================================================================
 
 
@@ -290,6 +375,48 @@ inline void RoomPeopleListResponse::set_allocated_people_list(::Data::List* peop
     set_has_people_list();
   } else {
     clear_has_people_list();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// RoomInfoResponse
+
+// optional .RoomData.RoomInfo room_info = 1;
+inline bool RoomInfoResponse::has_room_info() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RoomInfoResponse::set_has_room_info() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RoomInfoResponse::clear_has_room_info() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RoomInfoResponse::clear_room_info() {
+  if (room_info_ != NULL) room_info_->::RoomData::RoomInfo::Clear();
+  clear_has_room_info();
+}
+inline const ::RoomData::RoomInfo& RoomInfoResponse::room_info() const {
+  return room_info_ != NULL ? *room_info_ : *default_instance_->room_info_;
+}
+inline ::RoomData::RoomInfo* RoomInfoResponse::mutable_room_info() {
+  set_has_room_info();
+  if (room_info_ == NULL) room_info_ = new ::RoomData::RoomInfo;
+  return room_info_;
+}
+inline ::RoomData::RoomInfo* RoomInfoResponse::release_room_info() {
+  clear_has_room_info();
+  ::RoomData::RoomInfo* temp = room_info_;
+  room_info_ = NULL;
+  return temp;
+}
+inline void RoomInfoResponse::set_allocated_room_info(::RoomData::RoomInfo* room_info) {
+  delete room_info_;
+  room_info_ = room_info;
+  if (room_info) {
+    set_has_room_info();
+  } else {
+    clear_has_room_info();
   }
 }
 

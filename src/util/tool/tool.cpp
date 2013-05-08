@@ -238,3 +238,16 @@ vector<string> Tool::split(string str, string pattern)
     }
     return result;
 }
+
+/**
+ * [Tool::now_time get now system time]
+ * @return [now time string]
+ */
+string Tool::now_time()
+{
+    time_t t = time(NULL);
+    char buf[32];
+    strftime(buf, sizeof(buf), "%Y%m%d%H%M%S",localtime(&t));
+    string str(buf);
+    return str;
+}

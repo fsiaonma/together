@@ -29,6 +29,10 @@ int room_handler(process *process, map<string, string> param) {
             show_room_peo_list(param, response_data);
             break ;
         }
+        case SHOW_ROOM_INFO: {
+            show_room_info(param, response_data);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

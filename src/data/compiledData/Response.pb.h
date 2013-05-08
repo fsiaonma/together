@@ -164,6 +164,15 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::RoomResponse::RoomPeopleListResponse* release_room_people_list_response();
   inline void set_allocated_room_people_list_response(::RoomResponse::RoomPeopleListResponse* room_people_list_response);
 
+  // optional .RoomResponse.RoomInfoResponse room_info_response = 9;
+  inline bool has_room_info_response() const;
+  inline void clear_room_info_response();
+  static const int kRoomInfoResponseFieldNumber = 9;
+  inline const ::RoomResponse::RoomInfoResponse& room_info_response() const;
+  inline ::RoomResponse::RoomInfoResponse* mutable_room_info_response();
+  inline ::RoomResponse::RoomInfoResponse* release_room_info_response();
+  inline void set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response);
+
   // @@protoc_insertion_point(class_scope:Response.HTTPResponse)
  private:
   inline void set_has_code();
@@ -182,6 +191,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_room_list_response();
   inline void set_has_room_people_list_response();
   inline void clear_has_room_people_list_response();
+  inline void set_has_room_info_response();
+  inline void clear_has_room_info_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -193,9 +204,10 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::UserResponse::UsernameExistResponse* exist_response_;
   ::RoomResponse::ShowRoomListResponse* room_list_response_;
   ::RoomResponse::RoomPeopleListResponse* room_people_list_response_;
+  ::RoomResponse::RoomInfoResponse* room_info_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -512,6 +524,44 @@ inline void HTTPResponse::set_allocated_room_people_list_response(::RoomResponse
     set_has_room_people_list_response();
   } else {
     clear_has_room_people_list_response();
+  }
+}
+
+// optional .RoomResponse.RoomInfoResponse room_info_response = 9;
+inline bool HTTPResponse::has_room_info_response() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void HTTPResponse::set_has_room_info_response() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void HTTPResponse::clear_has_room_info_response() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void HTTPResponse::clear_room_info_response() {
+  if (room_info_response_ != NULL) room_info_response_->::RoomResponse::RoomInfoResponse::Clear();
+  clear_has_room_info_response();
+}
+inline const ::RoomResponse::RoomInfoResponse& HTTPResponse::room_info_response() const {
+  return room_info_response_ != NULL ? *room_info_response_ : *default_instance_->room_info_response_;
+}
+inline ::RoomResponse::RoomInfoResponse* HTTPResponse::mutable_room_info_response() {
+  set_has_room_info_response();
+  if (room_info_response_ == NULL) room_info_response_ = new ::RoomResponse::RoomInfoResponse;
+  return room_info_response_;
+}
+inline ::RoomResponse::RoomInfoResponse* HTTPResponse::release_room_info_response() {
+  clear_has_room_info_response();
+  ::RoomResponse::RoomInfoResponse* temp = room_info_response_;
+  room_info_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response) {
+  delete room_info_response_;
+  room_info_response_ = room_info_response;
+  if (room_info_response) {
+    set_has_room_info_response();
+  } else {
+    clear_has_room_info_response();
   }
 }
 

@@ -113,6 +113,7 @@ static const int ROOM_SHOWLIST = 202;
 static const int ROOM_JOIN = 203;
 static const int ROOM_QUIT = 204;
 static const int ROOM_PEOPLE_LIST = 205;
+static const int SHOW_ROOM_INFO = 206;
 
 
 // --------------- Status Code ---------------
@@ -187,6 +188,9 @@ static const int QUIT_ROOM_USER_OR_ROOM_NOEXIST = 21007;
 static const int QUIT_ROOM_NOTJOINED = 21008;
 
 static const int SHOW_ROOM_PEO_LIST_SUCCESS = 21009;
+
+static const int SHOW_ROOM_INFO_SUCCESS = 21010;
+static const int SHOW_ROOM_INFO_ROOM_NOTEXIST = 21011;
 
 #endif
 

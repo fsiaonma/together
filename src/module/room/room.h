@@ -18,6 +18,7 @@ int show_room_list(map<string, string> param, char *buf);
 int join_room(map<string, string> param, char *buf);
 int quit_room(map<string, string> param, char *buf);
 int show_room_peo_list(map<string, string> param, char *buf);
+int show_room_info(map<string, string> param, char *buf);
 int room_handler(process *process, map<string, string> param);
 
 #endif
