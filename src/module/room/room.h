@@ -13,12 +13,12 @@
 #include "../../util/tool/tool.h"
 #include "../../lib/session/session.h"
 
-int create_room(map<string, string> param, char *buf);
-int show_room_list(map<string, string> param, char *buf);
-int join_room(map<string, string> param, char *buf);
-int quit_room(map<string, string> param, char *buf);
-int show_room_peo_list(map<string, string> param, char *buf);
-int show_room_info(map<string, string> param, char *buf);
+int create_room(map<string, string> param, char *buf, int &send_len);
+int show_room_list(map<string, string> param, char *buf, int &send_len);
+int join_room(map<string, string> param, char *buf, int &send_len);
+int quit_room(map<string, string> param, char *buf, int &send_len);
+int show_room_peo_list(map<string, string> param, char *buf, int &send_len);
+int show_room_info(map<string, string> param, char *buf, int &send_len);
 int room_handler(process *process, map<string, string> param);
 
 #endif

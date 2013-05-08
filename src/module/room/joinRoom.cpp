@@ -1,6 +1,6 @@
 #include "room.h"
 
-int join_room(map<string, string> param, char *buf)
+int join_room(map<string, string> param, char *buf, int &send_len)
 {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
@@ -147,8 +147,8 @@ int join_room(map<string, string> param, char *buf)
     e.close();
 
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;

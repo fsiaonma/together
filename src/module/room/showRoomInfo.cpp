@@ -1,6 +1,6 @@
 #include "room.h"
 
-int show_room_info(map<string, string> param, char *buf)
+int show_room_info(map<string, string> param, char *buf, int &send_len)
 {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
@@ -15,28 +15,28 @@ int show_room_info(map<string, string> param, char *buf)
 
     do
     {
-        // // param sid not exist
-        // if (param.count("sid") == 0)
-        // {
-        //     result = PARAM_ERROR;
-        //     http_res->set_code(PARAM_ERROR);
-        //     http_res->set_success(0);
-        //     msg = "param sid not exist";
-        //     LOG_ERROR << msg << endl;
-        //     http_res->set_msg(msg);
-        //     break;
-        // }
+        // param sid not exist
+        if (param.count("sid") == 0)
+        {
+            result = PARAM_ERROR;
+            http_res->set_code(PARAM_ERROR);
+            http_res->set_success(0);
+            msg = "param sid not exist";
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
 
-        // // session is not exist
-        // if (Session::get(Tool::trim(param["sid"])) == NULL) {
-        //     result = SESSION_NOT_EXIST;
-        //     http_res->set_code(SESSION_NOT_EXIST);
-        //     http_res->set_success(0);
-        //     msg = "session not exist";
-        //     LOG_ERROR << msg << endl;
-        //     http_res->set_msg(msg);
-        //     break;
-        // }
+        // session is not exist
+        if (Session::get(Tool::trim(param["sid"])) == NULL) {
+            result = SESSION_NOT_EXIST;
+            http_res->set_code(SESSION_NOT_EXIST);
+            http_res->set_success(0);
+            msg = "session not exist";
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
         
         int room_id = Tool::S2I(param["roomId"]);
 
@@ -164,8 +164,8 @@ int show_room_info(map<string, string> param, char *buf)
     e.close();
 
     http_res->SerializeToString(&respon_data);
-    const char *p = respon_data.c_str();
-    strncpy(buf, p, strlen(p) + 1);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
     google::protobuf::ShutdownProtobufLibrary();
 
     return result;

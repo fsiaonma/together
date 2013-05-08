@@ -24,6 +24,7 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "data.pb.h"
 #include "UserData.pb.h"
 // @@protoc_insertion_point(includes)
 
@@ -37,7 +38,8 @@ void protobuf_ShutdownFile_UserResponse_2eproto();
 class LoginResponse;
 class DetailResponse;
 class UsernameExistResponse;
-class UserList;
+class FollowListResponse;
+class FollowedListResponse;
 
 // ===================================================================
 
@@ -316,14 +318,14 @@ class UsernameExistResponse : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class UserList : public ::google::protobuf::Message {
+class FollowListResponse : public ::google::protobuf::Message {
  public:
-  UserList();
-  virtual ~UserList();
+  FollowListResponse();
+  virtual ~FollowListResponse();
 
-  UserList(const UserList& from);
+  FollowListResponse(const FollowListResponse& from);
 
-  inline UserList& operator=(const UserList& from) {
+  inline FollowListResponse& operator=(const FollowListResponse& from) {
     CopyFrom(from);
     return *this;
   }
@@ -337,17 +339,17 @@ class UserList : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const UserList& default_instance();
+  static const FollowListResponse& default_instance();
 
-  void Swap(UserList* other);
+  void Swap(FollowListResponse* other);
 
   // implements Message ----------------------------------------------
 
-  UserList* New() const;
+  FollowListResponse* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const UserList& from);
-  void MergeFrom(const UserList& from);
+  void CopyFrom(const FollowListResponse& from);
+  void MergeFrom(const FollowListResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -370,24 +372,23 @@ class UserList : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .UserData.User_Info user_list = 1;
-  inline int user_list_size() const;
-  inline void clear_user_list();
-  static const int kUserListFieldNumber = 1;
-  inline const ::UserData::User_Info& user_list(int index) const;
-  inline ::UserData::User_Info* mutable_user_list(int index);
-  inline ::UserData::User_Info* add_user_list();
-  inline const ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >&
-      user_list() const;
-  inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
-      mutable_user_list();
+  // optional .Data.List people_list = 1;
+  inline bool has_people_list() const;
+  inline void clear_people_list();
+  static const int kPeopleListFieldNumber = 1;
+  inline const ::Data::List& people_list() const;
+  inline ::Data::List* mutable_people_list();
+  inline ::Data::List* release_people_list();
+  inline void set_allocated_people_list(::Data::List* people_list);
 
-  // @@protoc_insertion_point(class_scope:UserResponse.UserList)
+  // @@protoc_insertion_point(class_scope:UserResponse.FollowListResponse)
  private:
+  inline void set_has_people_list();
+  inline void clear_has_people_list();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::UserData::User_Info > user_list_;
+  ::Data::List* people_list_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -397,7 +398,91 @@ class UserList : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_UserResponse_2eproto();
 
   void InitAsDefaultInstance();
-  static UserList* default_instance_;
+  static FollowListResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class FollowedListResponse : public ::google::protobuf::Message {
+ public:
+  FollowedListResponse();
+  virtual ~FollowedListResponse();
+
+  FollowedListResponse(const FollowedListResponse& from);
+
+  inline FollowedListResponse& operator=(const FollowedListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FollowedListResponse& default_instance();
+
+  void Swap(FollowedListResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  FollowedListResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const FollowedListResponse& from);
+  void MergeFrom(const FollowedListResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .Data.List people_list = 1;
+  inline bool has_people_list() const;
+  inline void clear_people_list();
+  static const int kPeopleListFieldNumber = 1;
+  inline const ::Data::List& people_list() const;
+  inline ::Data::List* mutable_people_list();
+  inline ::Data::List* release_people_list();
+  inline void set_allocated_people_list(::Data::List* people_list);
+
+  // @@protoc_insertion_point(class_scope:UserResponse.FollowedListResponse)
+ private:
+  inline void set_has_people_list();
+  inline void clear_has_people_list();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::Data::List* people_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static FollowedListResponse* default_instance_;
 };
 // ===================================================================
 
@@ -606,31 +691,86 @@ inline void UsernameExistResponse::set_is_exist(bool value) {
 
 // -------------------------------------------------------------------
 
-// UserList
+// FollowListResponse
 
-// repeated .UserData.User_Info user_list = 1;
-inline int UserList::user_list_size() const {
-  return user_list_.size();
+// optional .Data.List people_list = 1;
+inline bool FollowListResponse::has_people_list() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void UserList::clear_user_list() {
-  user_list_.Clear();
+inline void FollowListResponse::set_has_people_list() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline const ::UserData::User_Info& UserList::user_list(int index) const {
-  return user_list_.Get(index);
+inline void FollowListResponse::clear_has_people_list() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::UserData::User_Info* UserList::mutable_user_list(int index) {
-  return user_list_.Mutable(index);
+inline void FollowListResponse::clear_people_list() {
+  if (people_list_ != NULL) people_list_->::Data::List::Clear();
+  clear_has_people_list();
 }
-inline ::UserData::User_Info* UserList::add_user_list() {
-  return user_list_.Add();
+inline const ::Data::List& FollowListResponse::people_list() const {
+  return people_list_ != NULL ? *people_list_ : *default_instance_->people_list_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >&
-UserList::user_list() const {
-  return user_list_;
+inline ::Data::List* FollowListResponse::mutable_people_list() {
+  set_has_people_list();
+  if (people_list_ == NULL) people_list_ = new ::Data::List;
+  return people_list_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
-UserList::mutable_user_list() {
-  return &user_list_;
+inline ::Data::List* FollowListResponse::release_people_list() {
+  clear_has_people_list();
+  ::Data::List* temp = people_list_;
+  people_list_ = NULL;
+  return temp;
+}
+inline void FollowListResponse::set_allocated_people_list(::Data::List* people_list) {
+  delete people_list_;
+  people_list_ = people_list;
+  if (people_list) {
+    set_has_people_list();
+  } else {
+    clear_has_people_list();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// FollowedListResponse
+
+// optional .Data.List people_list = 1;
+inline bool FollowedListResponse::has_people_list() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void FollowedListResponse::set_has_people_list() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void FollowedListResponse::clear_has_people_list() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void FollowedListResponse::clear_people_list() {
+  if (people_list_ != NULL) people_list_->::Data::List::Clear();
+  clear_has_people_list();
+}
+inline const ::Data::List& FollowedListResponse::people_list() const {
+  return people_list_ != NULL ? *people_list_ : *default_instance_->people_list_;
+}
+inline ::Data::List* FollowedListResponse::mutable_people_list() {
+  set_has_people_list();
+  if (people_list_ == NULL) people_list_ = new ::Data::List;
+  return people_list_;
+}
+inline ::Data::List* FollowedListResponse::release_people_list() {
+  clear_has_people_list();
+  ::Data::List* temp = people_list_;
+  people_list_ = NULL;
+  return temp;
+}
+inline void FollowedListResponse::set_allocated_people_list(::Data::List* people_list) {
+  delete people_list_;
+  people_list_ = people_list;
+  if (people_list) {
+    set_has_people_list();
+  } else {
+    clear_has_people_list();
+  }
 }
 
 

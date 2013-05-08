@@ -21,7 +21,7 @@ extern epoll_event event;
 extern int current_total_processes;
 
 struct process {
-	static const int kBufferSize = 2048;
+	static const int kBufferSize = 4096;
 	int sock;
 	int status;
 	int response_code;
@@ -33,6 +33,7 @@ struct process {
 	char md5[MD5_LEN + 1];
 	char suffix[11];
 	int type;
+	int send_length;
 };
 
 int get_index_file(char *filename_buf, struct stat *pstat);

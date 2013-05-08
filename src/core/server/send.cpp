@@ -9,12 +9,18 @@ void send_response_header(process *process) {
 	LOG_INFO << "send" << endl;
 	if (process->response_code != 200) {
     	// 非 200 不进入 send_response
-		send(process->sock, process->buf, strlen(process->buf), 0);  
+		if (process->send_length > 0)
+			send(process->sock, process->buf, process->send_length, 0);  
+		else 
+			send(process->sock, process->buf, strlen(process->buf), 0);  
 		cleanup(process);
 		//update_timer(process->sock, current_msec);
 	} else {
 		// 写入完毕
-		send(process->sock, process->buf, strlen(process->buf), 0);
+		if (process->send_length > 0)
+			send(process->sock, process->buf, process->send_length, 0);  
+		else 
+			send(process->sock, process->buf, strlen(process->buf), 0);  
 		send_response(process);
 		// TODO::
 		if (process->type == LISTEN_HTTP_REQ_TYPE || process->type == LISTEN_UPLOAD_REQ_TYPE)

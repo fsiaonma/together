@@ -173,6 +173,24 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::RoomResponse::RoomInfoResponse* release_room_info_response();
   inline void set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response);
 
+  // optional .UserResponse.FollowListResponse follow_list_response = 10;
+  inline bool has_follow_list_response() const;
+  inline void clear_follow_list_response();
+  static const int kFollowListResponseFieldNumber = 10;
+  inline const ::UserResponse::FollowListResponse& follow_list_response() const;
+  inline ::UserResponse::FollowListResponse* mutable_follow_list_response();
+  inline ::UserResponse::FollowListResponse* release_follow_list_response();
+  inline void set_allocated_follow_list_response(::UserResponse::FollowListResponse* follow_list_response);
+
+  // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+  inline bool has_followed_list_response() const;
+  inline void clear_followed_list_response();
+  static const int kFollowedListResponseFieldNumber = 11;
+  inline const ::UserResponse::FollowedListResponse& followed_list_response() const;
+  inline ::UserResponse::FollowedListResponse* mutable_followed_list_response();
+  inline ::UserResponse::FollowedListResponse* release_followed_list_response();
+  inline void set_allocated_followed_list_response(::UserResponse::FollowedListResponse* followed_list_response);
+
   // @@protoc_insertion_point(class_scope:Response.HTTPResponse)
  private:
   inline void set_has_code();
@@ -193,6 +211,10 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_room_people_list_response();
   inline void set_has_room_info_response();
   inline void clear_has_room_info_response();
+  inline void set_has_follow_list_response();
+  inline void clear_has_follow_list_response();
+  inline void set_has_followed_list_response();
+  inline void clear_has_followed_list_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -205,9 +227,11 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::RoomResponse::ShowRoomListResponse* room_list_response_;
   ::RoomResponse::RoomPeopleListResponse* room_people_list_response_;
   ::RoomResponse::RoomInfoResponse* room_info_response_;
+  ::UserResponse::FollowListResponse* follow_list_response_;
+  ::UserResponse::FollowedListResponse* followed_list_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -562,6 +586,82 @@ inline void HTTPResponse::set_allocated_room_info_response(::RoomResponse::RoomI
     set_has_room_info_response();
   } else {
     clear_has_room_info_response();
+  }
+}
+
+// optional .UserResponse.FollowListResponse follow_list_response = 10;
+inline bool HTTPResponse::has_follow_list_response() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void HTTPResponse::set_has_follow_list_response() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void HTTPResponse::clear_has_follow_list_response() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void HTTPResponse::clear_follow_list_response() {
+  if (follow_list_response_ != NULL) follow_list_response_->::UserResponse::FollowListResponse::Clear();
+  clear_has_follow_list_response();
+}
+inline const ::UserResponse::FollowListResponse& HTTPResponse::follow_list_response() const {
+  return follow_list_response_ != NULL ? *follow_list_response_ : *default_instance_->follow_list_response_;
+}
+inline ::UserResponse::FollowListResponse* HTTPResponse::mutable_follow_list_response() {
+  set_has_follow_list_response();
+  if (follow_list_response_ == NULL) follow_list_response_ = new ::UserResponse::FollowListResponse;
+  return follow_list_response_;
+}
+inline ::UserResponse::FollowListResponse* HTTPResponse::release_follow_list_response() {
+  clear_has_follow_list_response();
+  ::UserResponse::FollowListResponse* temp = follow_list_response_;
+  follow_list_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_follow_list_response(::UserResponse::FollowListResponse* follow_list_response) {
+  delete follow_list_response_;
+  follow_list_response_ = follow_list_response;
+  if (follow_list_response) {
+    set_has_follow_list_response();
+  } else {
+    clear_has_follow_list_response();
+  }
+}
+
+// optional .UserResponse.FollowedListResponse followed_list_response = 11;
+inline bool HTTPResponse::has_followed_list_response() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void HTTPResponse::set_has_followed_list_response() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void HTTPResponse::clear_has_followed_list_response() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void HTTPResponse::clear_followed_list_response() {
+  if (followed_list_response_ != NULL) followed_list_response_->::UserResponse::FollowedListResponse::Clear();
+  clear_has_followed_list_response();
+}
+inline const ::UserResponse::FollowedListResponse& HTTPResponse::followed_list_response() const {
+  return followed_list_response_ != NULL ? *followed_list_response_ : *default_instance_->followed_list_response_;
+}
+inline ::UserResponse::FollowedListResponse* HTTPResponse::mutable_followed_list_response() {
+  set_has_followed_list_response();
+  if (followed_list_response_ == NULL) followed_list_response_ = new ::UserResponse::FollowedListResponse;
+  return followed_list_response_;
+}
+inline ::UserResponse::FollowedListResponse* HTTPResponse::release_followed_list_response() {
+  clear_has_followed_list_response();
+  ::UserResponse::FollowedListResponse* temp = followed_list_response_;
+  followed_list_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_followed_list_response(::UserResponse::FollowedListResponse* followed_list_response) {
+  delete followed_list_response_;
+  followed_list_response_ = followed_list_response;
+  if (followed_list_response) {
+    set_has_followed_list_response();
+  } else {
+    clear_has_followed_list_response();
   }
 }
 

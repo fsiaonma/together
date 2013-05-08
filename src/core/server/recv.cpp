@@ -50,6 +50,7 @@
  * @param param   [保存了请求中参数及其对应的值,map<string, string>]
  */
  void handle_read_request(process *process, const char *module, map<string, string> param) {
+    memset(process->buf, 0, process->kBufferSize); 
  	LOG_INFO << "handle_read_request" << endl;
  	int module_type = get_module_type(module);
  	int s;
