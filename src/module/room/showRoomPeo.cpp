@@ -20,7 +20,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param sid not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -31,7 +30,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (Session::get(Tool::trim(param["sid"])) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -46,7 +44,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param error";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -59,7 +56,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (!e.connet()) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -75,7 +71,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|excute count user|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -91,7 +86,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         } else {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|no data";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -108,7 +102,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (!e.connet()) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -125,7 +118,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR| |" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -144,7 +136,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
 
         RoomResponse::RoomPeopleListResponse *room_peo_list_res = new RoomResponse::RoomPeopleListResponse();
         Data::List *people_list = new Data::List();
-        int data_num = 0;
+        int data_num = begin_pos;
         while(NULL != row) 
         {
             UserData::User_Info *user_info = people_list->add_user_info();
@@ -173,8 +165,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         }
         if (data_num == total_num) {
             people_list->set_is_end(true);
-        } else {
-            people_list->set_is_end(false);
         }
         room_peo_list_res->set_allocated_people_list(people_list);
         http_res->set_allocated_room_people_list_response(room_peo_list_res);
@@ -184,7 +174,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         // success
         result = SHOW_ROOM_PEO_LIST_SUCCESS;
         http_res->set_code(SHOW_ROOM_PEO_LIST_SUCCESS);
-        http_res->set_success(1);
+        http_res->set_success(true);
         msg = "show room peo list success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);

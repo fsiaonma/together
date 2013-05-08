@@ -22,7 +22,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param sid not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -33,7 +32,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         if (Session::get(Tool::trim(param["sid"])) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -47,7 +45,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param error";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -58,7 +55,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         if (!e.connet()) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -79,7 +75,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|join room call pr|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -95,7 +90,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "call pr_join_room err|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -105,7 +99,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = JOIN_ROOM_USER_OR_ROOM_NOEXIST;
             http_res->set_code(JOIN_ROOM_USER_OR_ROOM_NOEXIST);
-            http_res->set_success(0);
             msg = "user or room not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -115,7 +108,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = JOIN_ROOM_HAVEBEENJOINED;
             http_res->set_code(JOIN_ROOM_HAVEBEENJOINED);
-            http_res->set_success(0);
             msg = "have been joined room";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -125,7 +117,6 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         {
             result = JOIN_ROOM_OVERLIMITNUM;
             http_res->set_code(JOIN_ROOM_OVERLIMITNUM);
-            http_res->set_success(0);
             msg = "already over limit num";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -136,7 +127,7 @@ int join_room(map<string, string> param, char *buf, int &send_len)
         // success
         result = JOIN_ROOM_SUCCESS;
         http_res->set_code(JOIN_ROOM_SUCCESS);
-        http_res->set_success(1);
+        http_res->set_success(true);
         msg = "join room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);

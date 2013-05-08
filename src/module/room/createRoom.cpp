@@ -15,7 +15,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param sid not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -26,7 +25,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         if (Session::get(Tool::trim(param["sid"])) == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
-            http_res->set_success(0);
             msg = "session not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -62,7 +60,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param error";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -88,7 +85,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|insert into t_address|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -124,7 +120,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
                     {
                         result = DB_ERROR;
                         http_res->set_code(DB_ERROR);
-                        http_res->set_success(0);
                         msg = "DB ERROR|delete address|" + Tool::toString(ret);
                         LOG_ERROR << msg << endl;
                         http_res->set_msg(msg);
@@ -135,7 +130,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
 
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|insert into room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -145,7 +139,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         // success
         result = CREATE_ROOM_SUCCESS;
         http_res->set_code(CREATE_ROOM_SUCCESS);
-        http_res->set_success(1);
+        http_res->set_success(true);
         msg = "insert room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
