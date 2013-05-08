@@ -23,7 +23,6 @@ int show_room_list(map<string, string> param, char *buf)
         {
             result = PARAM_ERROR;
             http_res->set_code(PARAM_ERROR);
-            http_res->set_success(0);
             msg = "param error";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -86,7 +85,6 @@ int show_room_list(map<string, string> param, char *buf)
         if (!e.connet()) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|get room list info|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -101,7 +99,6 @@ int show_room_list(map<string, string> param, char *buf)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|excute dis_sql_total|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -117,7 +114,6 @@ int show_room_list(map<string, string> param, char *buf)
         } else {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|no data";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -131,7 +127,6 @@ int show_room_list(map<string, string> param, char *buf)
         if (!e.connet()) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|get room list info|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -145,7 +140,6 @@ int show_room_list(map<string, string> param, char *buf)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            http_res->set_success(0);
             msg = "DB ERROR|excute dis_sql error|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
@@ -163,7 +157,7 @@ int show_room_list(map<string, string> param, char *buf)
 
         RoomResponse::ShowRoomListResponse *room_list_res = new RoomResponse::ShowRoomListResponse();
         Data::List *room_list = new Data::List();
-        int data_num = 0;
+        int data_num = begin_pos;
         while(NULL != row) 
         {
             RoomData::RoomInfo *room_info = room_list->add_room_info_list();
@@ -218,8 +212,6 @@ int show_room_list(map<string, string> param, char *buf)
         }
         if (data_num == total_num) {
             room_list->set_is_end(true);
-        } else {
-            room_list->set_is_end(false);
         }
         room_list_res->set_allocated_room_list(room_list);
         http_res->set_allocated_room_list_response(room_list_res);
@@ -229,7 +221,7 @@ int show_room_list(map<string, string> param, char *buf)
         // success
         result = SHOW_ROOM_LIST_SUCCESS;
         http_res->set_code(SHOW_ROOM_LIST_SUCCESS);
-        http_res->set_success(1);
+        http_res->set_success(true);
         msg = "show room list success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
