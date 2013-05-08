@@ -187,7 +187,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
                 } else if (key == "dist") {
                     room_info->set_distance(Tool::fromString<double>(row[i]));
                 } else if (key == "join_person_num") {
-                    room_info->set_join_person_count(Tool::fromString<int>(row[i]));
+                    room_info->set_join_person_count(Tool::fromString<int>(row[i]) + 1);
                 } else if (key == "limit_person_num") {
                     room_info->set_limit_person_count(Tool::fromString<int>(row[i]));
                 } else if (key == "record_id") {

@@ -135,6 +135,7 @@ static const int DB_PR_JOIN_ROOM_HAVEBEENJOINED = 5102;
 static const int DB_PR_JOIN_ROOM_OVERLIMITNUM = 5103;
 static const int DB_PR_QUIT_ROOM_SUCCESS = 5104;
 static const int DB_PR_QUIT_ROOM_NOTJOINED = 5105;
+static const int DB_PR_QUIT_ROOM_ISOWNER = 5106;
 
 // ============ Session ============
 static const int SESSION_OK = 6000;
@@ -190,11 +191,12 @@ static const int JOIN_ROOM_OVERLIMITNUM = 21005;
 static const int QUIT_ROOM_SUCCESS = 21006;
 static const int QUIT_ROOM_USER_OR_ROOM_NOEXIST = 21007;
 static const int QUIT_ROOM_NOTJOINED = 21008;
+static const int QUIT_ROOM_ISOWNER = 21009;
 
-static const int SHOW_ROOM_PEO_LIST_SUCCESS = 21009;
+static const int SHOW_ROOM_PEO_LIST_SUCCESS = 21010;
 
-static const int SHOW_ROOM_INFO_SUCCESS = 21010;
-static const int SHOW_ROOM_INFO_ROOM_NOTEXIST = 21011;
+static const int SHOW_ROOM_INFO_SUCCESS = 21011;
+static const int SHOW_ROOM_INFO_ROOM_NOTEXIST = 21012;
 
 #endif
 

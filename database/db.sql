@@ -228,7 +228,7 @@ else
 		SELECT r.limit_person_num, 
 		(select count(1) from together.t_room_user_relation rel where rel.room_id = r.id) into v_limit_person_num, v_join_person_num FROM together.t_room r limit 1;
 		# 当参加人数不限 或 参加人数小于上限
-		if v_limit_person_num = -1 or v_join_person_num < v_limit_person_num then
+		if v_limit_person_num = -1 or (v_join_person_num + 1) < v_limit_person_num then
 			# 关闭事务的自动提交
 			set autocommit = 0;
 			# 插入到房间人员关系表
@@ -262,8 +262,6 @@ DROP procedure IF EXISTS `together`.`pr_quit_room`;
 
 DELIMITER $$
 USE `together`$$
-
-
 # call pr_quit_room(1000,2,@ret);
 create procedure pr_quit_room 
 (  
@@ -278,6 +276,8 @@ declare v_room_num int;
 declare v_user_num int;
 #用于判断用户是否已经加入该房间
 declare v_isjoin_num int;
+#用于判断用户是否为房主
+declare v_isowner_num int;
 
 # 标记事务是否出错
 declare t_error int default 0;
@@ -288,6 +288,7 @@ declare continue handler for sqlexception set t_error=1;
 # set DB_PR_ERR
 set ret = 5199;
 
+
 #判断用户,房间是否存在
 select count(1) into v_user_num from t_user where id = i_user_id;
 select count(1) into v_room_num from t_room where id = i_room_id and room_status = 0;
@@ -295,21 +296,27 @@ if v_user_num = 0 or v_room_num = 0 then
 	#set DB_PR_PARAM_ERR
 	set ret = 5100;
 else
-	# 判断当前用户是否已加入房间
-	select count(1) into v_isjoin_num from t_room_user_relation rel where rel.room_id = i_room_id and rel.user_id = i_user_id;
-	if v_isjoin_num = 0 then
-		set ret = 5105;
+	#判断用户是否为房主
+	select count(1) into v_isowner_num from t_room where owner_id = i_user_id;
+	if v_isowner_num > 0 then
+		set ret = 5106;
 	else
-		# 关闭事务的自动提交
-		set autocommit = 0;
-		# 删除房间人员关系表的记录
-		delete from t_room_user_relation where room_id = i_room_id and user_id = i_user_id;
-		if t_error=1 then  
-			set ret = 5199;
-			rollback; # 事务回滚  
-		else  
-			set ret = 5104;
-			commit; # 事务提交
+		# 判断当前用户是否已加入房间
+		select count(1) into v_isjoin_num from t_room_user_relation rel where rel.room_id = i_room_id and rel.user_id = i_user_id;
+		if v_isjoin_num = 0 then
+			set ret = 5105;
+		else
+			# 关闭事务的自动提交
+			set autocommit = 0;
+			# 删除房间人员关系表的记录
+			delete from t_room_user_relation where room_id = i_room_id and user_id = i_user_id;
+			if t_error=1 then  
+				set ret = 5199;
+				rollback; # 事务回滚  
+			else  
+				set ret = 5104;
+				commit; # 事务提交
+			end if;
 		end if;
 	end if;
 end if;

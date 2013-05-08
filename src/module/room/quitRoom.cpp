@@ -112,6 +112,16 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             http_res->set_msg(msg);
             break;
         }
+        if (db_ret == DB_PR_QUIT_ROOM_ISOWNER)
+        {
+            result = QUIT_ROOM_ISOWNER;
+            http_res->set_code(QUIT_ROOM_ISOWNER);
+            msg = "user is owner cannot quit";
+            LOG_ERROR << msg << endl;
+            http_res->set_msg(msg);
+            break;
+        }
+
 
 
         // success
