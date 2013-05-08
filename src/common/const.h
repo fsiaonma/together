@@ -23,6 +23,7 @@
 #ifndef BAD_REQUEST
 #define BAD_REQUEST process->response_code = 400; \
 process->status = STATUS_SEND_RESPONSE_HEADER; \
+memset(process->buf, 0, process->kBufferSize); \
 strncpy(process->buf, header_400, sizeof(header_400)); \
 send_response_header(process); \
 handle_error(process, "bad request");
