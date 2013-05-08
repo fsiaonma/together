@@ -81,6 +81,15 @@ int user_handler(process *process, map<string, string> param) {
             username_is_exist(param["username"], response_data);
             break ;
         }
+        // case GET_FOLLOW_LIST: {
+        //     if (param.count("page_no") == 0 || param.count("page_size") == 0 || param.count("uid") == 0 || param.count("sid") == 0) {
+        //         LOG_ERROR << "page_no or page_size or uid or sid is not exist" << endl;
+        //         return -1;
+        //     }
+        //     username_is_exist(param["username"], response_data);
+        //     get_follow_list(Tool::S2I(param["page_no"]), Tool::S2I(param["page_size"]), Tool::S2I(param["uid"]), param["sid"], response_data);
+        //     break ;
+        // }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

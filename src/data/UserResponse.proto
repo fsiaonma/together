@@ -1,4 +1,5 @@
 package UserResponse;
+import "data.proto";
 import "UserData.proto";
 
 // user login
@@ -18,7 +19,12 @@ message UsernameExistResponse {
     optional bool is_exist = 1;
 }
 
-// user list
-message UserList {
-    repeated UserData.User_Info user_list = 1;
+// follow list
+message FollowListResponse {
+    optional Data.List people_list = 1;
+}
+
+// followed list
+message FollowedListResponse {
+    optional Data.List people_list = 1;
 }

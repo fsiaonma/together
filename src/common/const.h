@@ -106,7 +106,7 @@ static const int USER_SET_INFO = 105;
 static const int USER_PRISE = 106;
 static const int USER_FOLLOW = 107;
 static const int USER_IS_EXIST = 108;
-
+static const int GET_FOLLOW_LIST = 109;
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
@@ -173,6 +173,9 @@ static const int USER_FOLLOW_FAIL = 17002;
 
 // check username is exist code
 static const int USERNAME_AVAILABLE = 18000;
+
+// get follow list code
+static const int GET_FOLLOW_LIST_SUCCESS = 19000;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;

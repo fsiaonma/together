@@ -18,6 +18,7 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
     eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
 
     e.connet();
+    
     e.excute("select * from t_user where id = " + Tool::mysql_filter(uid) + ";");
     mysql = e.get_mysql();
 
