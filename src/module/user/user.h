@@ -24,7 +24,7 @@ int set_user_info(map<string, string> params, string sid, char *buf, int &send_l
 
 int prise(int uid, string sid, char *buf, int &send_len);
 int follow(int followed_id, string sid, char *buf, int &send_len);
-int unfollow(int followed_id, string sid, char *buf, int &send_len);
+int unfollow(int unfollowed_id, string sid, char *buf, int &send_len);
 
 int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send_len);
 int get_followed_list(int page_no, int page_size, string sid, char *buf, int &send_len);

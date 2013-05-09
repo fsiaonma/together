@@ -139,6 +139,14 @@ int follow(int followed_id, string sid, char *buf, int &send_len) {
 
         // check whether already or not
         int follow_id = Tool::S2I(Session::get(sid)->uid);
+
+        // check whether follow_id == followed_id
+        if (follow_id == followed_id) {
+            result = USER_CANT_FOLLOW_HIMSELF;
+            _set_http_head(result, false, "can't follow himself", http_res);
+            break;
+        }
+
         ret = e.is_exist("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
         	+ " and followed_id=" + Tool::mysql_filter(followed_id) + ";", exist);
         // exception
@@ -191,20 +199,20 @@ int follow(int followed_id, string sid, char *buf, int &send_len) {
  * @param {char*} respone data. 
  * @return {int} unfollow status.
  */
-int unfollow(int followed_id, string sid, char *buf, int &send_len) {
+int unfollow(int unfollowed_id, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
     int result;
     int ret;
 
-    LOG_INFO << "followed_id is " << followed_id << " sid is " << sid << endl;
+    LOG_INFO << "unfollowed_id is " << unfollowed_id << " sid is " << sid << endl;
 
     do {    
         // followed_id or sid is not be found
-        if (followed_id <= 0 || Tool::trim(sid).empty()) {
+        if (unfollowed_id <= 0 || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
-            _set_http_head(result, false, "followed_id or sid is not be found", http_res);
+            _set_http_head(result, false, "unfollowed_id or sid is not be found", http_res);
             break;
         }
 
@@ -225,7 +233,7 @@ int unfollow(int followed_id, string sid, char *buf, int &send_len) {
         // check whether already or not
         int follow_id = Tool::S2I(Session::get(sid)->uid);
         ret = e.is_exist("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
-         + " and followed_id=" + Tool::mysql_filter(followed_id) + ";", exist);
+         + " and followed_id=" + Tool::mysql_filter(unfollowed_id) + ";", exist);
         // exception
         if (ret != DB_OK) {
             result = DB_ERROR;
@@ -242,9 +250,9 @@ int unfollow(int followed_id, string sid, char *buf, int &send_len) {
         // do unfollow
         map<string, string> follow_params;
         follow_params["follow_id"] = Tool::mysql_filter(follow_id);
-        follow_params["followed_id"] = Tool::mysql_filter(followed_id);
+        follow_params["followed_id"] = Tool::mysql_filter(unfollowed_id);
         ret = e.remove("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
-         + " and followed_id=" + Tool::mysql_filter(followed_id) + ";");
+         + " and followed_id=" + Tool::mysql_filter(unfollowed_id) + ";");
         // exception
         if (ret != DB_OK) {
             result = USER_UNFOLLOW_FAIL;

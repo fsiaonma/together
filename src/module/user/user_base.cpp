@@ -38,12 +38,12 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
         if (row[i] == NULL) {
             continue;
         }
-        
+
         if (key == "id") {
             user_info->set_uid(uid);
         } else if (key == "username") {
             user_info->set_username(row[i]);
-        } else if (key == "nick_name") {
+        } else if (key == "nickname") {
             user_info->set_nick_name(row[i]);
         } else if (key == "birthday") {
             user_info->set_birthday(row[i]);

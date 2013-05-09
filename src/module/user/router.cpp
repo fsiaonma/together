@@ -99,11 +99,11 @@ int user_handler(process *process, map<string, string> param) {
             break ;
         }
         case USER_UNFOLLOW: {
-            if (param.count("followed_id") == 0 || param.count("sid") == 0) {
-                LOG_ERROR << "followed_id or sid is not exist" << endl;
+            if (param.count("unfollowed_id") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "unfollowed_id or sid is not exist" << endl;
                 return -1;
             }
-            unfollow(Tool::S2I(param["followed_id"]), param["sid"], response_data, send_len);
+            unfollow(Tool::S2I(param["unfollowed_id"]), param["sid"], response_data, send_len);
             break ;
         }
         default: {
