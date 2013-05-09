@@ -89,41 +89,42 @@ int login(string username, string password, string dev_id, char *buf, int &send_
  * @param {char*} buf respone data.
  * @return {int} louout status. 
  */
-// int logout(string sid, char *buf, int &send_len) {
-//     string respon_data;
-//     int result;
-//     string msg;
-//     Response::HTTPResponse *http_res = new Response::HTTPResponse();
+int logout(string sid, char *buf, int &send_len) {
+    string respon_data;
+    int result;
+    string msg;
+    Response::HTTPResponse *http_res = new Response::HTTPResponse();
 
-//     LOG_INFO << " sid is " << sid << endl;
+    LOG_INFO << " sid is " << sid << endl;
 
-//     do {    
-//         //sid is not be found
-//         if (Tool::trim(sid).empty()) {
-//             result = PARAM_ERROR;
-//             _set_http_head(result, false, "sid is null", http_res);
-//             break;
-//         }
+    do {    
+        //sid is not be found
+        if (Tool::trim(sid).empty()) {
+            result = PARAM_ERROR;
+            _set_http_head(result, false, "sid is null", http_res);
+            break;
+        }
 
-//         // session is not exist
-//         if (Session::get(sid) == NULL) {
-//             result = SESSION_NOT_EXIST;
-//             _set_http_head(result, false, "session not exist", http_res);
-//             break;
-//         }
+        // session is not exist
+        if (Session::get(sid) == NULL) {
+            result = SESSION_NOT_EXIST;
+            _set_http_head(result, false, "session not exist", http_res);
+            break;
+        }
 
-//         // remove session
-//         Session::remove(Session.get(sid)->uid);
-//         result = LOGOUT_SUCCESS;
-//         _set_http_head(result, true, "remove session success", http_res);
-//     } while(0);
+        // remove session
+        cout << Session::get(sid)->uid << endl;
+        Session::remove(Session::get(sid)->uid);
+        result = LOGOUT_SUCCESS;
+        _set_http_head(result, true, "remove session success", http_res);
+    } while(0);
 
-//     print_proto(http_res);
+    print_proto(http_res);
 
-//     http_res->SerializeToString(&respon_data);
-//     memcpy(buf, respon_data.c_str(), respon_data.length());
-//     send_len = respon_data.length();
-//     google::protobuf::ShutdownProtobufLibrary();
+    http_res->SerializeToString(&respon_data);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
+    google::protobuf::ShutdownProtobufLibrary();
 
-//     return result;
-// }
+    return result;
+}

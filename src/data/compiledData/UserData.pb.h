@@ -122,12 +122,17 @@ class User_Info : public ::google::protobuf::Message {
   inline ::std::string* release_nick_name();
   inline void set_allocated_nick_name(::std::string* nick_name);
 
-  // optional int32 birthday = 4;
+  // optional string birthday = 4;
   inline bool has_birthday() const;
   inline void clear_birthday();
   static const int kBirthdayFieldNumber = 4;
-  inline ::google::protobuf::int32 birthday() const;
-  inline void set_birthday(::google::protobuf::int32 value);
+  inline const ::std::string& birthday() const;
+  inline void set_birthday(const ::std::string& value);
+  inline void set_birthday(const char* value);
+  inline void set_birthday(const char* value, size_t size);
+  inline ::std::string* mutable_birthday();
+  inline ::std::string* release_birthday();
+  inline void set_allocated_birthday(::std::string* birthday);
 
   // optional string signature_text = 5;
   inline bool has_signature_text() const;
@@ -220,11 +225,11 @@ class User_Info : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* username_;
-  ::google::protobuf::int32 uid_;
-  ::google::protobuf::int32 birthday_;
   ::std::string* nick_name_;
-  ::std::string* signature_text_;
+  ::google::protobuf::int32 uid_;
   ::google::protobuf::int32 signature_record_id_;
+  ::std::string* birthday_;
+  ::std::string* signature_text_;
   ::google::protobuf::int32 praise_num_;
   ::google::protobuf::int32 visit_num_;
   ::google::protobuf::int32 followed_num_;
@@ -411,7 +416,7 @@ inline void User_Info::set_allocated_nick_name(::std::string* nick_name) {
   }
 }
 
-// optional int32 birthday = 4;
+// optional string birthday = 4;
 inline bool User_Info::has_birthday() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -422,15 +427,63 @@ inline void User_Info::clear_has_birthday() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void User_Info::clear_birthday() {
-  birthday_ = 0;
+  if (birthday_ != &::google::protobuf::internal::kEmptyString) {
+    birthday_->clear();
+  }
   clear_has_birthday();
 }
-inline ::google::protobuf::int32 User_Info::birthday() const {
+inline const ::std::string& User_Info::birthday() const {
+  return *birthday_;
+}
+inline void User_Info::set_birthday(const ::std::string& value) {
+  set_has_birthday();
+  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
+    birthday_ = new ::std::string;
+  }
+  birthday_->assign(value);
+}
+inline void User_Info::set_birthday(const char* value) {
+  set_has_birthday();
+  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
+    birthday_ = new ::std::string;
+  }
+  birthday_->assign(value);
+}
+inline void User_Info::set_birthday(const char* value, size_t size) {
+  set_has_birthday();
+  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
+    birthday_ = new ::std::string;
+  }
+  birthday_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User_Info::mutable_birthday() {
+  set_has_birthday();
+  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
+    birthday_ = new ::std::string;
+  }
   return birthday_;
 }
-inline void User_Info::set_birthday(::google::protobuf::int32 value) {
-  set_has_birthday();
-  birthday_ = value;
+inline ::std::string* User_Info::release_birthday() {
+  clear_has_birthday();
+  if (birthday_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = birthday_;
+    birthday_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User_Info::set_allocated_birthday(::std::string* birthday) {
+  if (birthday_ != &::google::protobuf::internal::kEmptyString) {
+    delete birthday_;
+  }
+  if (birthday) {
+    set_has_birthday();
+    birthday_ = birthday;
+  } else {
+    clear_has_birthday();
+    birthday_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // optional string signature_text = 5;

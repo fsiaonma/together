@@ -34,22 +34,22 @@ int user_handler(process *process, map<string, string> param) {
             login(param["username"], param["password"], param["dev_id"], response_data, send_len);
     		break ;
     	}
-        // case USER_LOGOUT: {
-        //     if (param.count("sid") == 0) {
-        //         LOG_ERROR << "sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     logout(param["sid"], response_data, send_len);
-        //     break ;
-        // }
-        // case USER_VIEW_INFO: {
-        //     if (param.count("visit_uid") == 0) {
-        //         LOG_ERROR << "visit_uid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     view_user_info(Tool::S2I(param["visit_uid"]), param["sid"], response_data, send_len);
-        //     break ;
-        // }
+        case USER_LOGOUT: {
+            if (param.count("sid") == 0) {
+                LOG_ERROR << "sid is not exist" << endl;
+                return -1;
+            }
+            logout(param["sid"], response_data, send_len);
+            break ;
+        }
+        case USER_VIEW_INFO: {
+            if (param.count("visit_uid") == 0) {
+                LOG_ERROR << "visit_uid is not exist" << endl;
+                return -1;
+            }
+            view_user_info(Tool::S2I(param["visit_uid"]), param["sid"], response_data, send_len);
+            break ;
+        }
         case USER_SET_INFO: {
             if (param.count("sid") == 0) {
                 LOG_ERROR << "sid is not exist" << endl;
@@ -66,14 +66,14 @@ int user_handler(process *process, map<string, string> param) {
             prise(Tool::S2I(param["uid"]), param["sid"], response_data, send_len);
             break ;
         }
-        // case USER_FOLLOW: {
-        //     if (param.count("followed_id") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "followed_id or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     follow(Tool::S2I(param["followed_id"]), param["sid"], response_data, send_len);
-        //     break ;
-        // }
+        case USER_FOLLOW: {
+            if (param.count("followed_id") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "followed_id or sid is not exist" << endl;
+                return -1;
+            }
+            follow(Tool::S2I(param["followed_id"]), param["sid"], response_data, send_len);
+            break ;
+        }
         case USER_IS_EXIST: {
             if (param.count("username") == 0) {
                 LOG_ERROR << "username is not exist" << endl;
@@ -82,30 +82,30 @@ int user_handler(process *process, map<string, string> param) {
             username_is_exist(param["username"], response_data, send_len);
             break ;
         }
-        // case GET_FOLLOW_LIST: {
-        //     if (param.count("page_no") == 0 || param.count("page_size") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "page_no or page_size or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     get_follow_list(Tool::S2I(param["page_no"]), Tool::S2I(param["page_size"]), param["sid"], response_data, send_len);
-        //     break ;
-        // }
-        // case GET_FOLLOWED_LIST: {
-        //     if (param.count("page_no") == 0 || param.count("page_size") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "page_no or page_size or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     get_followed_list(Tool::S2I(param["page_no"]), Tool::S2I(param["page_size"]), param["sid"], response_data, send_len);
-        //     break ;
-        // }
-        // case USER_UNFOLLOW: {
-        //     if (param.count("followed_id") == 0 || param.count("sid") == 0) {
-        //         LOG_ERROR << "followed_id or sid is not exist" << endl;
-        //         return -1;
-        //     }
-        //     unfollow(Tool::S2I(param["followed_id"]), param["sid"], response_data, send_len);
-        //     break ;
-        // }
+        case GET_FOLLOW_LIST: {
+            if (param.count("page_no") == 0 || param.count("page_size") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "page_no or page_size or sid is not exist" << endl;
+                return -1;
+            }
+            get_follow_list(Tool::S2I(param["page_no"]), Tool::S2I(param["page_size"]), param["sid"], response_data, send_len);
+            break ;
+        }
+        case GET_FOLLOWED_LIST: {
+            if (param.count("page_no") == 0 || param.count("page_size") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "page_no or page_size or sid is not exist" << endl;
+                return -1;
+            }
+            get_followed_list(Tool::S2I(param["page_no"]), Tool::S2I(param["page_size"]), param["sid"], response_data, send_len);
+            break ;
+        }
+        case USER_UNFOLLOW: {
+            if (param.count("followed_id") == 0 || param.count("sid") == 0) {
+                LOG_ERROR << "followed_id or sid is not exist" << endl;
+                return -1;
+            }
+            unfollow(Tool::S2I(param["followed_id"]), param["sid"], response_data, send_len);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;
