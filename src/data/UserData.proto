@@ -5,7 +5,7 @@ message User_Info {
     optional int32 uid = 1;
     optional string username = 2;
     optional string nick_name = 3;
-    optional int32 birthday = 4;
+    optional string birthday = 4;
     optional string signature_text = 5;
     optional int32 signature_record_id = 6;
     optional int32 praise_num = 7;
