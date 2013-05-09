@@ -9,7 +9,7 @@
  * @return {int} return operation status.
  */
 int user_handler(process *process, map<string, string> param) {
-	char response_data[1024];
+	char response_data[3500];
     if (param.count("action") == 0) {
         LOG_ERROR << "action type is not exist" << endl;
         return -1;
