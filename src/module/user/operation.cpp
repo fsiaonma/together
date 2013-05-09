@@ -4,7 +4,7 @@
  * prise user
  *  
  * @method prise
- * @param {int} uid uid which is used for getting user info.
+ * @param {int} uid uid which is used for mark the parse user.
  * @param {string} sid sid which is used for getting user info.
  * @param {char*} respone data. 
  * @return {int} prise status.
@@ -89,11 +89,6 @@ int prise(int uid, string sid, char *buf, int &send_len) {
 
     print_proto(http_res);
 
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
-
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();
@@ -106,89 +101,170 @@ int prise(int uid, string sid, char *buf, int &send_len) {
  * follow user
  *  
  * @method follow
- * @param {int} follow_id uid which is used for mark the user.
  * @param {int} followed_id follow_id which is used for mark the followed user.
  * @param {string} sid sid which is used for following user.
  * @param {char*} respone data. 
  * @return {int} follow status.
  */
-int follow(int follow_id, int followed_id, string sid, char *buf, int &send_len) {
-    string respon_data;
-    Response::HTTPResponse *http_res = new Response::HTTPResponse();
-    string msg;
-    int result;
-    int ret;
+// int follow(int followed_id, string sid, char *buf, int &send_len) {
+//     string respon_data;
+//     Response::HTTPResponse *http_res = new Response::HTTPResponse();
+//     string msg;
+//     int result;
+//     int ret;
 
-    LOG_INFO << "follow_id is " << follow_id << "followed_id is " << followed_id << " sid is " << sid << endl;
+//     LOG_INFO << "followed_id is " << followed_id << " sid is " << sid << endl;
 
-    do {    
-        // username or password is not be found
-        if (follow_id <= 0 || followed_id <= 0 || Tool::trim(sid).empty()) {
-            result = PARAM_ERROR;
-            _set_http_head(result, false, "uid or followed_id or sid is null", http_res);
-            break;
-        }
+//     do {    
+//         // followed_id or sid is not be found
+//         if (followed_id <= 0 || Tool::trim(sid).empty()) {
+//             result = PARAM_ERROR;
+//             _set_http_head(result, false, "followed_id or sid is not be found", http_res);
+//             break;
+//         }
 
-        // session is not exist
-        if (Session::get(sid) == NULL) {
-            result = SESSION_NOT_EXIST;
-            _set_http_head(result, false, "session not exist", http_res);
-            break;
-        }
+//         // session is not exist
+//         if (Session::get(sid) == NULL) {
+//             result = SESSION_NOT_EXIST;
+//             _set_http_head(result, false, "session is not exist", http_res);
+//             break;
+//         }
 
-        // follow user
-        Config *c = Config::get_instance();
-        map<string, string> config = c->get_config();
-        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
-            config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
-        bool exist;
+//         // follow user
+//         Config *c = Config::get_instance();
+//         map<string, string> config = c->get_config();
+//         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+//             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+//         bool exist;
 
-        // check whether already or not
-        ret = e.is_exist("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
-        	+ " and followed_id=" + Tool::mysql_filter(followed_id) + ";", exist);
-        // exception
-        if (ret != DB_OK) {
-            result = DB_ERROR;
-            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-            break;
-        }
-        // username already exist
-        if (exist) {
-            result = USER_ALREADY_FOLLOW;
-            _set_http_head(result, false, "user already follow", http_res);
-            break;
-        }
+//         // check whether already or not
+//         int follow_id = Tool::S2I(Session::get(sid)->uid);
+//         ret = e.is_exist("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
+//         	+ " and followed_id=" + Tool::mysql_filter(followed_id) + ";", exist);
+//         // exception
+//         if (ret != DB_OK) {
+//             result = DB_ERROR;
+//             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+//             break;
+//         }
+//         // user already follow
+//         if (exist) {
+//             result = USER_ALREADY_FOLLOW;
+//             _set_http_head(result, false, "user already follow", http_res);
+//             break;
+//         }
 
-        // do follow
-        map<string, string> follow_params;
-        follow_params["follow_id"] = Tool::mysql_filter(follow_id);
-        follow_params["followed_id"] = Tool::mysql_filter(followed_id);
-        int insert_id = -1;
-        ret = e.insert("t_follow", follow_params, insert_id);
-        // exception
-        if (ret != DB_OK) {
-            result = USER_FOLLOW_FAIL;
-            _set_http_head(result, false, "follow fail", http_res);
-            break;
-        }
+//         // do follow
+//         map<string, string> follow_params;
+//         follow_params["follow_id"] = Tool::mysql_filter(follow_id);
+//         follow_params["followed_id"] = Tool::mysql_filter(followed_id);
+//         int insert_id = -1;
+//         ret = e.insert("t_follow", follow_params, insert_id);
+//         // exception
+//         if (ret != DB_OK) {
+//             result = USER_FOLLOW_FAIL;
+//             _set_http_head(result, false, "follow fail", http_res);
+//             break;
+//         }
 
-        // set HTTPResponse
-        result = USER_FOLLOW_SUCCESS;
-        _set_http_head(result, true, "follow success", http_res);
+//         // set HTTPResponse
+//         result = USER_FOLLOW_SUCCESS;
+//         _set_http_head(result, true, "follow success", http_res);
+//     } while(0);
 
-    } while(0);
+//     print_proto(http_res);
 
-    print_proto(http_res);
+//     http_res->SerializeToString(&respon_data);
+//     memcpy(buf, respon_data.c_str(), respon_data.length());
+//     send_len = respon_data.length();
+//     google::protobuf::ShutdownProtobufLibrary();
 
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
+//     return result;
+// }
 
-    http_res->SerializeToString(&respon_data);
-    memcpy(buf, respon_data.c_str(), respon_data.length());
-    send_len = respon_data.length();
-    google::protobuf::ShutdownProtobufLibrary();
+/**
+ * unfollow user
+ *  
+ * @method unfollow
+ * @param {int} followed_id follow_id which is used for mark the unfollow user.
+ * @param {string} sid sid which is used for unfollowing user.
+ * @param {char*} respone data. 
+ * @return {int} unfollow status.
+ */
+// int unfollow(int followed_id, string sid, char *buf, int &send_len) {
+//     string respon_data;
+//     Response::HTTPResponse *http_res = new Response::HTTPResponse();
+//     string msg;
+//     int result;
+//     int ret;
 
-    return result;
-}
+//     LOG_INFO << "followed_id is " << followed_id << " sid is " << sid << endl;
+
+//     do {    
+//         // followed_id or sid is not be found
+//         if (followed_id <= 0 || Tool::trim(sid).empty()) {
+//             result = PARAM_ERROR;
+//             _set_http_head(result, false, "followed_id or sid is not be found", http_res);
+//             break;
+//         }
+
+//         // session is not exist
+//         if (Session::get(sid) == NULL) {
+//             result = SESSION_NOT_EXIST;
+//             _set_http_head(result, false, "session is not exist", http_res);
+//             break;
+//         }
+
+//         // follow user
+//         Config *c = Config::get_instance();
+//         map<string, string> config = c->get_config();
+//         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+//             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+//         bool exist;
+
+//         // check whether already or not
+//         int follow_id = Tool::S2I(Session::get(sid)->uid);
+//         ret = e.is_exist("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
+//          + " and followed_id=" + Tool::mysql_filter(followed_id) + ";", exist);
+//         // exception
+//         if (ret != DB_OK) {
+//             result = DB_ERROR;
+//             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+//             break;
+//         }
+//         // user haven't been followed
+//         if (!exist) {
+//             result = USER_HAVENT_FOLLOW;
+//             _set_http_head(result, false, "user haven't been followed", http_res);
+//             break;
+//         }
+
+//         // do unfollow
+//         map<string, string> follow_params;
+//         follow_params["follow_id"] = Tool::mysql_filter(follow_id);
+//         follow_params["followed_id"] = Tool::mysql_filter(followed_id);
+//         int insert_id = -1;
+//         ret = e.remove("t_follow", "where follow_id=" + Tool::mysql_filter(follow_id)  
+//          + " and followed_id=" + Tool::mysql_filter(followed_id) + ";");
+//         // exception
+//         if (ret != DB_OK) {
+//             result = USER_UNFOLLOW_FAIL;
+//             _set_http_head(result, false, "unfollow fail", http_res);
+//             break;
+//         }
+
+//         // set HTTPResponse
+//         result = USER_UNFOLLOW_SUCCESS;
+//         _set_http_head(result, true, "unfollow success", http_res);
+//     } while(0);
+
+//     print_proto(http_res);
+
+//     http_res->SerializeToString(&respon_data);
+//     memcpy(buf, respon_data.c_str(), respon_data.length());
+//     send_len = respon_data.length();
+//     google::protobuf::ShutdownProtobufLibrary();
+
+//     return result;
+// }
+

@@ -16,18 +16,18 @@
 
 int regiest(string username, string password, char *buf, int &send_len);
 int login(string username, string password, string dev_id, char *buf, int &send_len);
-int logout(string username, string sid, char *buf, int &send_len);
+// int logout(string username, string sid, char *buf, int &send_len);
 int username_is_exist(string username, char *buf, int &send_len);
 
-int view_user_info(int self_uid, int visit_uid, string sid, char *buf, int &send_len);
+// int view_user_info(int self_uid, int visit_uid, string sid, char *buf, int &send_len);
 int set_user_info(map<string, string> params, string sid, char *buf, int &send_len);
 
 int prise(int uid, string sid, char *buf, int &send_len);
-int follow(int follow_id, int followed_ed, string sid, char *buf, int &send_len);
+// int follow(int followed_id, string sid, char *buf, int &send_len);
+// int unfollow(int followed_id, string sid, char *buf, int &send_len);
 
-int get_follow_list(int page_no, int page_size, int uid, string sid, char *buf, int &send_len);
+// int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send_len);
+// int get_followed_list(int page_no, int page_size, string sid, char *buf, int &send_len);
 
 int user_handler(process *process, map<string, string> param);
-
-int _get_uid(string username, int &uid);
 #endif

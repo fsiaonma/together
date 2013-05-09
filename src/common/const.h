@@ -107,6 +107,8 @@ static const int USER_PRISE = 106;
 static const int USER_FOLLOW = 107;
 static const int USER_IS_EXIST = 108;
 static const int GET_FOLLOW_LIST = 109;
+static const int GET_FOLLOWED_LIST = 111;
+static const int USER_UNFOLLOW = 112;
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
@@ -178,6 +180,14 @@ static const int USERNAME_AVAILABLE = 18000;
 
 // get follow list code
 static const int GET_FOLLOW_LIST_SUCCESS = 19000;
+
+// get followed list code
+static const int GET_FOLLOWED_LIST_SUCCESS = 11100;
+
+// unfollow user code
+static const int USER_UNFOLLOW_SUCCESS = 11200;
+static const int USER_HAVENT_FOLLOW = 11201;
+static const int USER_UNFOLLOW_FAIL = 11202;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;

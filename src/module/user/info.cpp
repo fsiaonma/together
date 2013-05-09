@@ -4,95 +4,88 @@
  * view user info
  *  
  * @method view_user_info
- * @param {int} self_uid self_uid which is used for mark the user.
  * @param {string} visit_uid visit_uid which is used for getting user info.
  * @param {string} sid sid which is used for getting user info.
  * @param {char*} respone data. 
  * @return {int} view_user_info status.
  */
-int view_user_info(int self_uid, int visit_uid, string sid, char *buf, int &send_len) {
-    string respon_data;
-    Response::HTTPResponse *http_res = new Response::HTTPResponse();
-    string msg;
-    int result;
-    int ret;
+// int view_user_info(int visit_uid, string sid, char *buf, int &send_len) {
+//     string respon_data;
+//     Response::HTTPResponse *http_res = new Response::HTTPResponse();
+//     string msg;
+//     int result;
+//     int ret;
 
-    LOG_INFO << "self_uid is " << self_uid << "visit_uid is " << visit_uid << " sid is " << sid << endl;
+//     LOG_INFO << "visit_uid is " << visit_uid << " sid is " << sid << endl;
 
-    do {    
-        // self_uid or visit_uid is not be found
-        if (self_uid <= 0 || visit_uid <= 0) {
-            result = PARAM_ERROR;
-            _set_http_head(result, false, "self_uid or visit_uid is null", http_res);
-            break;
-        }
+//     do {    
+//         // visit_uid is not be found
+//         if (visit_uid <= 0) {
+//             result = PARAM_ERROR;
+//             _set_http_head(result, false, "visit_uid is null", http_res);
+//             break;
+//         }
 
-        UserData::User_Info *user_info = new UserData::User_Info();
-        UserResponse::DetailResponse *detail_res = new UserResponse::DetailResponse();
+//         UserData::User_Info *user_info = new UserData::User_Info();
+//         UserResponse::DetailResponse *detail_res = new UserResponse::DetailResponse();
 
-        _get_user_info(visit_uid, user_info);
+//         _get_user_info(visit_uid, user_info);
 
-        Config *c = Config::get_instance();
-        map<string, string> config = c->get_config();
-        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
-            config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+//         Config *c = Config::get_instance();
+//         map<string, string> config = c->get_config();
+//         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+//             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
         
-        // increase visit num
-        if (!Tool::trim(sid).empty() && self_uid != Tool::S2I(Session::get(sid) -> uid)) {
-            // increase visit number
-            map<string, string> visit_params;
-            int visit_num = 0;
-            if (user_info->visit_num()) {
-                visit_num = user_info->visit_num() + 1;
-            }
-            visit_params["visit_num"] = Tool::mysql_filter(visit_num);
-            ret = e.update("t_user", visit_params, "where id = " + Tool::mysql_filter(visit_uid) + ";");
-            // exception
-            if (ret != DB_OK) {
-                result = DB_ERROR;
-                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-                break;
-            }
-        }
+//         // increase visit num
+//         if (!Tool::trim(sid).empty() && visit_uid != Tool::S2I(Session::get(sid) -> uid)) {
+//             // increase visit number
+//             map<string, string> visit_params;
+//             int visit_num = 0;
+//             if (user_info->visit_num()) {
+//                 visit_num = user_info->visit_num() + 1;
+//             }
+//             visit_params["visit_num"] = Tool::mysql_filter(visit_num);
+//             ret = e.update("t_user", visit_params, "where id = " + Tool::mysql_filter(visit_uid) + ";");
+//             // exception
+//             if (ret != DB_OK) {
+//                 result = DB_ERROR;
+//                 _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+//                 break;
+//             }
+//         }
 
-        // check whether follow or not
-        if (self_uid > 0) {
-            bool exist;
-            ret = e.is_exist("t_follow", 
-                "where follow_id = " + Tool::mysql_filter(self_uid) + " and followed_id = " + Tool::mysql_filter(visit_uid) + ";", 
-                exist);
-            // exception
-            if (ret != DB_OK) {
-                result = DB_ERROR;
-                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-                break;
-            }
-            if (exist) {
-                detail_res->set_is_follow(true);
-            } 
-        }
+//         // check whether follow or not
+//         bool exist;
+//         int self_uid = Tool::S2I(Session::get(sid)->uid);
+//         ret = e.is_exist("t_follow", 
+//             "where follow_id = " + Tool::mysql_filter(self_uid) + " and followed_id = " + Tool::mysql_filter(visit_uid) + ";", 
+//             exist);
+//         // exception
+//         if (ret != DB_OK) {
+//             result = DB_ERROR;
+//             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+//             break;
+//         }
+//         if (exist) {
+//             detail_res->set_is_follow(true);
+//         } 
 
-        result = VIEW_USER_INFO_SUCCESS;
-        _set_http_head(result, true, "view user info success", http_res);
+//         result = VIEW_USER_INFO_SUCCESS;
+//         _set_http_head(result, true, "view user info success", http_res);
 
-        detail_res->set_allocated_user_info(user_info);
-        http_res->set_allocated_detail_response(detail_res);
-    } while(0);
+//         detail_res->set_allocated_user_info(user_info);
+//         http_res->set_allocated_detail_response(detail_res);
+//     } while(0);
 
-    print_proto(http_res);
+//     print_proto(http_res);
 
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
+//     http_res->SerializeToString(&respon_data);
+//     memcpy(buf, respon_data.c_str(), respon_data.length());
+//     send_len = respon_data.length();
+//     google::protobuf::ShutdownProtobufLibrary();
 
-    http_res->SerializeToString(&respon_data);
-    memcpy(buf, respon_data.c_str(), respon_data.length());
-    send_len = respon_data.length();
-    google::protobuf::ShutdownProtobufLibrary();
-
-    return result;
-}
+//     return result;
+// }
 
 /**
  * set user info
@@ -154,11 +147,6 @@ int set_user_info(map<string, string> params, string sid, char *buf, int &send_l
     } while(0);
 
     print_proto(http_res);
-
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
 
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());

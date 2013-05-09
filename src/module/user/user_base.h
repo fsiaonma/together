@@ -15,6 +15,6 @@
 
 int _get_user_info(int uid, UserData::User_Info *user_info);
 int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *http_res);
-
+int _get_uid(string username, int &uid);
 
 #endif

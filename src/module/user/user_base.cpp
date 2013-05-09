@@ -46,7 +46,7 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
         } else if (key == "nick_name") {
             user_info->set_nick_name(row[i]);
         } else if (key == "birthday") {
-            user_info->set_birthday(Tool::S2I(row[i]));
+            user_info->set_birthday(row[i]);
         } else if (key == "signature_text") {
             user_info->set_signature_text(row[i]);
         } else if (key == "signature_record_id") {
@@ -86,4 +86,36 @@ int _set_http_head(int code, bool success, string msg, Response::HTTPResponse *h
     http_res->set_success(success);
     http_res->set_msg(msg);
     return 0;
+}
+
+/**
+ * get uid by username
+ *  
+ * @method _get_uid (private)
+ * @param {string} username username which is used for getting user id.
+ * @param {int} uid uid which is getting for.
+ * @return {int} _get_uid status. 
+ */
+int _get_uid(string username, int &uid) {
+    MYSQL mysql;
+    Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+    e.connet();
+
+    e.excute("select id from t_user where username = '" + username + "';");
+    
+    mysql = e.get_mysql();
+    MYSQL_RES *result = NULL;
+    MYSQL_ROW row = NULL;
+
+    result = mysql_store_result(&mysql);
+
+    row = mysql_fetch_row(result);
+    uid = Tool::S2I(row[0]);
+
+    e.close();
+    
+    return 1;
 }

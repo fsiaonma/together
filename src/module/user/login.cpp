@@ -72,11 +72,6 @@ int login(string username, string password, string dev_id, char *buf, int &send_
     } while(0);
 
     print_proto(http_res);
-	
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
 
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
@@ -90,77 +85,45 @@ int login(string username, string password, string dev_id, char *buf, int &send_
  * user logout
  *  
  * @method logout
- * @param {string} username username which is used for logout.
  * @param {string} sid sid which is used for logout.
  * @param {char*} buf respone data.
  * @return {int} louout status. 
  */
-int logout(string username, string sid, char *buf, int &send_len) {
-    string respon_data;
-    int result;
-    string msg;
-    Response::HTTPResponse *http_res = new Response::HTTPResponse();
+// int logout(string sid, char *buf, int &send_len) {
+//     string respon_data;
+//     int result;
+//     string msg;
+//     Response::HTTPResponse *http_res = new Response::HTTPResponse();
 
-    LOG_INFO << "username is " << username << " sid is " << sid << endl;
+//     LOG_INFO << " sid is " << sid << endl;
 
-    do {    
-        // username or password is not be found
-        if (Tool::trim(username).empty() || Tool::trim(sid).empty()) {
-            result = PARAM_ERROR;
-            _set_http_head(result, false, "username or sid is null", http_res);
-            break;
-        }
+//     do {    
+//         //sid is not be found
+//         if (Tool::trim(sid).empty()) {
+//             result = PARAM_ERROR;
+//             _set_http_head(result, false, "sid is null", http_res);
+//             break;
+//         }
 
-        // session is not exist
-        if (Session::get(sid) == NULL) {
-            result = SESSION_NOT_EXIST;
-            _set_http_head(result, false, "session not exist", http_res);
-            break;
-        }
+//         // session is not exist
+//         if (Session::get(sid) == NULL) {
+//             result = SESSION_NOT_EXIST;
+//             _set_http_head(result, false, "session not exist", http_res);
+//             break;
+//         }
 
-        // remove session
-        Session::remove(username);
-        result = LOGOUT_SUCCESS;
-        _set_http_head(result, true, "remove session success", http_res);
-    } while(0);
+//         // remove session
+//         Session::remove(Session.get(sid)->uid);
+//         result = LOGOUT_SUCCESS;
+//         _set_http_head(result, true, "remove session success", http_res);
+//     } while(0);
 
-    print_proto(http_res);
+//     print_proto(http_res);
 
-    // http_res->SerializeToString(&respon_data);
-    // const char *p = respon_data.c_str();
-    // strncpy(buf, p, strlen(p) + 1);
-    // google::protobuf::ShutdownProtobufLibrary();
+//     http_res->SerializeToString(&respon_data);
+//     memcpy(buf, respon_data.c_str(), respon_data.length());
+//     send_len = respon_data.length();
+//     google::protobuf::ShutdownProtobufLibrary();
 
-    http_res->SerializeToString(&respon_data);
-    memcpy(buf, respon_data.c_str(), respon_data.length());
-    send_len = respon_data.length();
-    google::protobuf::ShutdownProtobufLibrary();
-
-    return result;
-}
-
-// private method for get uid by username
-int _get_uid(string username, int &uid) {
-    MYSQL mysql;
-    Config *c = Config::get_instance();
-    map<string, string> config = c->get_config();
-    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
-
-    e.connet();
-
-    e.excute("select id from t_user where username = '" + username + "';");
-    
-    mysql = e.get_mysql();
-    MYSQL_RES *result = NULL;
-    // MYSQL_FIELD *field = NULL;
-    MYSQL_ROW row = NULL;
-
-    result = mysql_store_result(&mysql);
-    // int fieldcount = mysql_num_fields(result);
-
-    row = mysql_fetch_row(result);
-    uid = Tool::S2I(row[0]);
-
-    e.close();
-    return 1;
-}
+//     return result;
+// }
