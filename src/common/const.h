@@ -117,12 +117,14 @@ static const int ROOM_JOIN = 203;
 static const int ROOM_QUIT = 204;
 static const int ROOM_PEOPLE_LIST = 205;
 static const int SHOW_ROOM_INFO = 206;
+static const int SHOW_USER_ROOM = 207;
 
 
 // --------------- Status Code ---------------
 // ============ System ============
 static const int PARAM_ERROR = 1001;
 static const int DB_ERROR = 1002;
+static const int DB_NO_DATA = 1003;
 
 // ============ DataBase ============
 static const int DB_OK = 5000;
@@ -208,6 +210,8 @@ static const int SHOW_ROOM_PEO_LIST_SUCCESS = 21010;
 
 static const int SHOW_ROOM_INFO_SUCCESS = 21011;
 static const int SHOW_ROOM_INFO_ROOM_NOTEXIST = 21012;
+
+static const int SHOW_USER_ROOM_SUCCESS = 21013;
 
 #endif
 

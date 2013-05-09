@@ -35,6 +35,10 @@ int room_handler(process *process, map<string, string> param) {
             show_room_info(param, response_data, send_len);
             break ;
         }
+        case SHOW_USER_ROOM: {
+            show_user_room(param, response_data, send_len);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

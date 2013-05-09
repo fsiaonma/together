@@ -36,6 +36,7 @@ void protobuf_AssignDesc_RoomResponse_2eproto();
 void protobuf_ShutdownFile_RoomResponse_2eproto();
 
 class ShowRoomListResponse;
+class UserRoomListResponse;
 class RoomPeopleListResponse;
 class RoomInfoResponse;
 
@@ -122,6 +123,90 @@ class ShowRoomListResponse : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static ShowRoomListResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class UserRoomListResponse : public ::google::protobuf::Message {
+ public:
+  UserRoomListResponse();
+  virtual ~UserRoomListResponse();
+
+  UserRoomListResponse(const UserRoomListResponse& from);
+
+  inline UserRoomListResponse& operator=(const UserRoomListResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserRoomListResponse& default_instance();
+
+  void Swap(UserRoomListResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  UserRoomListResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UserRoomListResponse& from);
+  void MergeFrom(const UserRoomListResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .Data.List user_room_list = 1;
+  inline bool has_user_room_list() const;
+  inline void clear_user_room_list();
+  static const int kUserRoomListFieldNumber = 1;
+  inline const ::Data::List& user_room_list() const;
+  inline ::Data::List* mutable_user_room_list();
+  inline ::Data::List* release_user_room_list();
+  inline void set_allocated_user_room_list(::Data::List* user_room_list);
+
+  // @@protoc_insertion_point(class_scope:RoomResponse.UserRoomListResponse)
+ private:
+  inline void set_has_user_room_list();
+  inline void clear_has_user_room_list();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::Data::List* user_room_list_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RoomResponse_2eproto();
+  friend void protobuf_AssignDesc_RoomResponse_2eproto();
+  friend void protobuf_ShutdownFile_RoomResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static UserRoomListResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -333,6 +418,48 @@ inline void ShowRoomListResponse::set_allocated_room_list(::Data::List* room_lis
     set_has_room_list();
   } else {
     clear_has_room_list();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// UserRoomListResponse
+
+// optional .Data.List user_room_list = 1;
+inline bool UserRoomListResponse::has_user_room_list() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserRoomListResponse::set_has_user_room_list() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserRoomListResponse::clear_has_user_room_list() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserRoomListResponse::clear_user_room_list() {
+  if (user_room_list_ != NULL) user_room_list_->::Data::List::Clear();
+  clear_has_user_room_list();
+}
+inline const ::Data::List& UserRoomListResponse::user_room_list() const {
+  return user_room_list_ != NULL ? *user_room_list_ : *default_instance_->user_room_list_;
+}
+inline ::Data::List* UserRoomListResponse::mutable_user_room_list() {
+  set_has_user_room_list();
+  if (user_room_list_ == NULL) user_room_list_ = new ::Data::List;
+  return user_room_list_;
+}
+inline ::Data::List* UserRoomListResponse::release_user_room_list() {
+  clear_has_user_room_list();
+  ::Data::List* temp = user_room_list_;
+  user_room_list_ = NULL;
+  return temp;
+}
+inline void UserRoomListResponse::set_allocated_user_room_list(::Data::List* user_room_list) {
+  delete user_room_list_;
+  user_room_list_ = user_room_list;
+  if (user_room_list) {
+    set_has_user_room_list();
+  } else {
+    clear_has_user_room_list();
   }
 }
 

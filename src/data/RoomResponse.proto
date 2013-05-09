@@ -6,6 +6,10 @@ message ShowRoomListResponse {
 	optional Data.List room_list = 1;
 }
 
+message UserRoomListResponse {
+	optional Data.List user_room_list = 1;
+}
+
 message RoomPeopleListResponse {
 	optional Data.List people_list = 1;
 }

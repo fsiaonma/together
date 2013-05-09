@@ -8,5 +8,5 @@ INSERT INTO together.t_address (`id`, `addr_type`, `latitude`, `longitude`, `det
 (1001, 1, 23.041228, 113.375483, '红棉路', '711');
 INSERT INTO together.t_room (`id`, `owner_id`, `title`, `type`, `gender_type`, `room_status`, `limit_person_num`, `preview_pic_id`, `addr_id`, `record_id`, `begin_time`, `create_time`) VALUES
 (1000, 1, '踩单车', 2, 0, 0, 10, 1, 1000, 2, '2013-05-31 17:02:03', '2000-12-31 17:01:01'),
-(1001, 1, '狼人', 1, 0, 0, 10, 1, 1001, 2, '2013-05-31 17:02:03', '2000-12-31 17:01:01');
-INSERT INTO together.t_room_user_relation (room_id, user_id) values (1000, 1);
+(1001, 2, '狼人', 1, 0, 0, 10, 1, 1001, 2, '2013-05-31 17:02:03', '2000-12-31 17:01:01');
+INSERT INTO together.t_room_user_relation (room_id, user_id) values (1001, 1);
