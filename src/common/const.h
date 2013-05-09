@@ -176,6 +176,7 @@ static const int USER_CANT_PRISE_HIMSELF = 16002;
 static const int USER_FOLLOW_SUCCESS = 17000;
 static const int USER_ALREADY_FOLLOW = 17001;
 static const int USER_FOLLOW_FAIL = 17002;
+static const int USER_CANT_FOLLOW_HIMSELF = 17003;
 
 // check username is exist code
 static const int USERNAME_AVAILABLE = 18000;
