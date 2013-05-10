@@ -6,5 +6,5 @@ import "UserData.proto";
 message List {
 	optional bool is_end = 1;
     repeated RoomData.RoomInfo room_info_list = 2;
-    repeated UserData.User_Info user_info = 3;
+    repeated UserResponse.DetailResponse user_detail = 3;
 }
