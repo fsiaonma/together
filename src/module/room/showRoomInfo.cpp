@@ -57,6 +57,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -73,6 +74,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR| |" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -136,12 +138,14 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             room_info->set_allocated_address(addr);
             room_info_res->set_allocated_room_info(room_info);
             http_res->set_allocated_room_info_response(room_info_res);
+            e.close();
         } else {
             result = SHOW_ROOM_INFO_ROOM_NOTEXIST;
             http_res->set_code(SHOW_ROOM_INFO_ROOM_NOTEXIST);
             msg = "room not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -152,10 +156,10 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
         msg = "show room info success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+            e.close();
 
     } while(0);
     print_proto(http_res);
-    e.close();
 
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());

@@ -43,6 +43,12 @@ public:
 	static string base64_decode(const char* Data);
 	static vector<string> split(string str, string pattern);
 	static string now_time();
+	static string url_decode(const string &sIn);
+
+	static unsigned char fromHex(const unsigned char &x)
+    {
+        return isdigit(x) ? x-'0' : x-'A'+10;
+    }
 
 	/**
 	 * [Tool::fromString description]

@@ -87,14 +87,14 @@
  	process->status = STATUS_SEND_RESPONSE_HEADER;
 	// 修改此 sock 的监听状态，改为监视写状态
  	event.data.fd = process->sock;
- 	event.events = EPOLLOUT;
+ 	event.events = EPOLLOUT | EPOLLET;
  	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
  	if (s == -1) {
  		LOG_ERROR << "epoll_ctl error" << endl;
  		abort();
  	}
  	LOG_INFO << "------send header------" << endl;
- 	LOG_INFO << process->buf << endl;
+ 	// LOG_DEBUG << process->buf << endl;
  }
 
 
@@ -115,7 +115,8 @@
 	while (1) {
 		count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 		if (count == -1) {
-			break;
+			if (errno == EAGAIN)
+				break;
 		} else if (count == 0) {
 	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
 			cleanup(process);
@@ -210,8 +211,9 @@
 	LOG_INFO << "content_length|" << content_length << endl;
 	LOG_INFO << line[blank_linenum + 1] << endl;
 
+	int line_num = line.size();
 	// 判断空行下一行(即具体参数那行)是否为空
-	if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
+	if (line[line_num - 1] == "" || line[line_num - 1] == "\r") {
 		LOG_ERROR << "param line is null" << endl;
 		BAD_REQUEST
 		return;
@@ -228,15 +230,16 @@
 	}
 
 	// 解析参数行
-	vector<string> param_list = Tool::split(line[blank_linenum + 1], "&");
+	vector<string> param_list = Tool::split(Tool::url_decode(line[blank_linenum + 1]), "&");
 	int param_list_len = param_list.size();
 	map<string, string> param;
 	for (int i = 0; i < param_list_len; i++)
 	{
+		LOG_DEBUG << param_list[i] << endl;
 	    vector<string> _param = Tool::split(param_list[i], "=");
 	    if (_param.size() == 2)
 	    {
-	        LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
+	        // LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
 	        param.insert(pair<string, string>(_param[0], _param[1]));
 	    } else {
 	    	LOG_ERROR << "_param size err" << endl;
@@ -361,7 +364,7 @@
 	 	process->status = STATUS_SEND_RESPONSE_HEADER;
 		// 修改此 sock 的监听状态，改为监视写状态
 	 	event.data.fd = process->sock;
-	 	event.events = EPOLLOUT;
+	 	event.events = EPOLLOUT | EPOLLET;
 	 	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 	 	if (s == -1) {
 	 		LOG_ERROR << "epoll_ctl error" << endl;
@@ -454,7 +457,8 @@ void read_upload_request(process* process)
 			while (1) {
 				count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 				if (count == -1) {
-					break;
+					if (errno == EAGAIN)
+						break;
 				} else if (count == 0) {
 					break;
 				} else if (count > 0) {
@@ -472,15 +476,13 @@ void read_upload_request(process* process)
 			LOG_INFO << "-----recv-----" << endl;
 			LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
 			int request_len = request.length();
-			// 将最后的等号替换成+，方便之后截取
+
 			for (int i = request_len - 1; i >= 1; i--)
 			{
 				if (request[i] == '\0' || request[i] == '\r' || request[i] == '\n') {
 					other_sign_num++;
 					continue;
 				}
-				if (request[i] == '=')
-					request[i] = '+';
 				else
 					break;
 			}
@@ -526,10 +528,12 @@ void read_upload_request(process* process)
 				}
 			}
 			LOG_INFO << "content_length|" << content_length << endl;
+			LOG_INFO << "filedata length|" << line[blank_linenum + 1].size() << endl;
 			LOG_INFO << line[blank_linenum + 1] << endl;
 
+			int line_num = line.size();
 			// 判断空行下一行(即具体参数那行)是否为空
-			if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
+			if (line[line_num - 1] == "" || line[line_num - 1] == "\r") {
 				LOG_ERROR << "param line is null" << endl;
 				BAD_REQUEST
 				return;
@@ -551,22 +555,17 @@ void read_upload_request(process* process)
 			map<string, string> param;
 			for (int i = 0; i < param_list_len; i++)
 			{
+				LOG_DEBUG << param_list[i] << endl;
 			    vector<string> _param = Tool::split(param_list[i], "=");
 			    if (_param.size() == 2)
 			    {
 					if (_param[0] == "md5") {
 						strncpy(process->md5, _param[1].c_str(), 33);
 					} else if (_param[0] == "filedata") {
-						int filedata_len = _param[1].size();
-						for (int j = filedata_len - 1; j >= 1; j--)
-						{
-							if (_param[1][j] == '+')
-								_param[1][j] = '=';
-							else
-								break;
-						}
+						string ss = Tool::url_decode(_param[1]);
+						_param[1] = ss;
 					}
-			        LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
+			        // LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
 			        param.insert(pair<string, string>(_param[0], _param[1]));
 			    } else {
 			    	LOG_ERROR << "_param size err" << endl;
@@ -695,10 +694,6 @@ void read_upload_request(process* process)
 					process->response_code = 200;
 					memset(process->buf, 0, sizeof(char) * process->kBufferSize); 
 					process->buf[0] = 0;
-					write_to_header(header_200_start);
-					write_to_header("\r\n");
-					write_to_header("SUCC");
-					write_to_header(header_end);
 					process->status = STATUS_SEND_RESPONSE_HEADER;
 
 
@@ -716,7 +711,7 @@ void read_upload_request(process* process)
 
 					// 修改此 sock 的监听状态，改为监视写状态
 					event.data.fd = process->sock;
-					event.events = EPOLLOUT;
+					event.events = EPOLLOUT | EPOLLET;
 					s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 					if (s == -1) {
 						LOG_ERROR << "epoll_ctl error" << endl;
@@ -734,14 +729,33 @@ void read_upload_request(process* process)
 			        	}
 			        	BAD_REQUEST
 			        }
+			        string f_id = Tool::toString(file_insert_id);
+					write_to_header(header_200_start);
+					write_to_header("\r\n");
+					write_to_header(f_id.c_str());
+					// write_to_header(header_end);
 				} else {
 					// MD5不一致
 					LOG_ERROR << "Fail! MD5 sum is inconsistent" << endl;
+		        	// delete file
+		        	if(remove(file_name))
+		        	{
+		        		LOG_ERROR << "DB_ERROR|remove file error" << endl;
+		        	} else {
+		        		LOG_ERROR << "DB_ERROR|insert into t_file error" << endl;
+		        	}
 					BAD_REQUEST
 				}
 			} else {
     			// TODO::计算MD5失败
 				LOG_ERROR << "Calc MD5 err" << endl;
+	        	// delete file
+	        	if(remove(file_name))
+	        	{
+	        		LOG_ERROR << "DB_ERROR|remove file error" << endl;
+	        	} else {
+	        		LOG_ERROR << "DB_ERROR|insert into t_file error" << endl;
+	        	}
 				BAD_REQUEST
 			}
 			process->status = STATUS_UPLOAD_READY;
@@ -767,7 +781,8 @@ void read_tcp_request(process* process)
 	while (1) {
 		count = recv(sock, buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 		if (count == -1) {
-			break;
+			if (errno == EAGAIN)
+				break;
 		} else if (count == 0) {
 	    	// 被客户端关闭连接
 			del_timer(process->sock);

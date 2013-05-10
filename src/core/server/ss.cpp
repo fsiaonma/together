@@ -296,7 +296,7 @@ void handle_request(int sock, int events) {
 		send_response_header(process);
 		process->status = STATUS_READ;
 		event.data.fd = process->sock;
-		event.events = EPOLLIN;
+		event.events = EPOLLIN | EPOLLET;
 		epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 	}
 }
@@ -334,7 +334,7 @@ process* accept_sock(int listen_sock) {
 	}
 
 	event.data.fd = infd;
-	event.events = EPOLLIN;
+	event.events = EPOLLIN | EPOLLET;
 	s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
 	if (s == -1) {
 		LOG_ERROR << "epoll_ctl error" << endl;
@@ -439,7 +439,7 @@ int main()
 	{
 		listen_sock = listen_socks[i];
 		event.data.fd = listen_sock;
-		event.events = EPOLLIN;
+		event.events = EPOLLIN | EPOLLET;
 		s = epoll_ctl(efd, EPOLL_CTL_ADD, listen_sock, &event);
 		if (s == -1) {
 			LOG_ERROR << "epoll_ctl error" << endl;

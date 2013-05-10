@@ -46,16 +46,17 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         string nick_name = param["nickName"];
         string limit_person_num = param["limitPersonNum"];
         int gender_type = Tool::S2I(param["genderType"]);
-        double longitude = Tool::fromString<double>(param["longitude"]);
-        double latitude = Tool::fromString<double>(param["latitude"]);
         string detail_addr = param["detailAddr"];
-        string addr_remark = param["addrRemark"];
+        // string addr_remark = param["addrRemark"];
         int pic_id = Tool::S2I(param["picId"]);
         int record_id = Tool::S2I(param["recordId"]);
 
         if (Tool::trim(title).empty() || type < 0 || Tool::trim(begin_time).empty() ||  user_id < 0
-            || Tool::trim(nick_name).empty() || Tool::trim(limit_person_num).empty() || gender_type < 0 || longitude < 0
-            || latitude < 0 || Tool::trim(detail_addr).empty() || Tool::trim(addr_remark).empty() || pic_id < 0 || record_id < 0
+            || Tool::trim(nick_name).empty() || Tool::trim(limit_person_num).empty() || gender_type < 0 || 
+            // longitude < 0 || latitude < 0 || 
+            Tool::trim(detail_addr).empty() || 
+            // Tool::trim(addr_remark).empty() || 
+            pic_id < 0 || record_id < 0
             || !(gender_type >= 0 && gender_type < GENDERTYPE_NUM))
         {
             result = PARAM_ERROR;
@@ -77,7 +78,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         insert_addr_params["longitude"] = param["longitude"];
         insert_addr_params["latitude"] = param["latitude"];
         insert_addr_params["detail_addr"] = Tool::mysql_filter(detail_addr);
-        insert_addr_params["addr_remark"] = Tool::mysql_filter(addr_remark);
+        // insert_addr_params["addr_remark"] = Tool::mysql_filter(addr_remark);
 
         int addr_insert_id = -1;
         ret = e.insert("t_address", insert_addr_params, addr_insert_id);
@@ -88,6 +89,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|insert into t_address|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -123,6 +125,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
                         msg = "DB ERROR|delete address|" + Tool::toString(ret);
                         LOG_ERROR << msg << endl;
                         http_res->set_msg(msg);
+                        e.close();
                         break;
                     }
                 }
@@ -133,6 +136,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|insert into room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -143,6 +147,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         msg = "insert room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+        e.close();
 
     } while(0);
     print_proto(http_res);

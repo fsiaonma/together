@@ -32,7 +32,9 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
         LOG_INFO << "room_type:" << room_type << "|" << "longitude:" << lng << "|" << 
         "latitude:" << lat << "|" << "pageNo:" << page_no << "|" << "pageSize:" << page_size << endl;
 
-        sql_condition = sql_condition + " and r.type = " + room_type + " ";
+        if (Tool::S2I(room_type) != 0) {
+            sql_condition = sql_condition + " and r.type = " + room_type + " ";
+        }
         int begin_pos = (page_no - 1) * page_size;
         
         // inessential
@@ -88,6 +90,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|get room list info|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -102,6 +105,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|excute dis_sql_total|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -117,6 +121,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|no data";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -130,6 +135,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|get room list info|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -143,6 +149,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|excute dis_sql error|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 

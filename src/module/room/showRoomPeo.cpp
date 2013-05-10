@@ -59,6 +59,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -74,6 +75,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|excute count user|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -89,11 +91,11 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|no data";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         LOG_DEBUG << "total:" << total_num << endl;
 
-        // mysql_free_result(count_rst); 
         e.close();
 
 
@@ -105,6 +107,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|join room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         int begin_pos = (page_no - 1) * page_size;
@@ -121,6 +124,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR| |" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -178,10 +182,10 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         msg = "show room peo list success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+        e.close();
 
     } while(0);
     print_proto(http_res);
-    e.close();
 
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());

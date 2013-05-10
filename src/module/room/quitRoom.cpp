@@ -57,6 +57,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|quit room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -77,6 +78,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|quit room call pr|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -92,6 +94,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "call pr_quit_room err|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         if (db_ret == DB_PR_PARAM_ERR)
@@ -101,6 +104,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "user or room not exist";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         if (db_ret == DB_PR_QUIT_ROOM_NOTJOINED)
@@ -110,6 +114,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "not joined room yet";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         if (db_ret == DB_PR_QUIT_ROOM_ISOWNER)
@@ -119,6 +124,7 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
             msg = "user is owner cannot quit";
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -131,12 +137,11 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
         msg = "quit room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+        e.close();
 
     } while(0);
     print_proto(http_res);
-    mysql_free_result(db_rst); 
-    e.close();
-
+    
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();

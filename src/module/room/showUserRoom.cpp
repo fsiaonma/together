@@ -90,6 +90,7 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|count room|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
         LOG_INFO << "total user room:" << Tool::toString(count);
@@ -102,6 +103,7 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|get user room list|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -115,6 +117,7 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
             msg = "DB ERROR|excute sql error|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
+            e.close();
             break;
         }
 
@@ -194,11 +197,10 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
         msg = "show user room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+        e.close();
 
     } while(0);
     print_proto(http_res);
-    // mysql_free_result(db_rst); 
-    e.close();
 
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());

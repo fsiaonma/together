@@ -251,3 +251,30 @@ string Tool::now_time()
     string str(buf);
     return str;
 }
+
+
+string Tool::url_decode(const string &sIn)
+{
+
+    string sOut;
+    for(size_t ix = 0; ix < sIn.size(); ix++ )
+    {
+        unsigned char ch = 0;
+        if(sIn[ix]=='%')
+        {
+            ch = (fromHex(sIn[ix+1])<<4);
+            ch |= fromHex(sIn[ix+2]);
+            ix += 2;
+        }
+        else if(sIn[ix] == '+')
+        {
+            ch = ' ';
+        }
+        else
+        {
+            ch = sIn[ix];
+        }
+        sOut += (char)ch;
+    }
+    return sOut;
+}
