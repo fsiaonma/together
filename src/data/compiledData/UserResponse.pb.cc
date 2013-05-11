@@ -29,12 +29,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UsernameExistResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UsernameExistResponse_reflection_ = NULL;
-const ::google::protobuf::Descriptor* FollowListResponse_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FollowListResponse_reflection_ = NULL;
-const ::google::protobuf::Descriptor* FollowedListResponse_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FollowedListResponse_reflection_ = NULL;
 
 }  // namespace
 
@@ -92,36 +86,6 @@ void protobuf_AssignDesc_UserResponse_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UsernameExistResponse));
-  FollowListResponse_descriptor_ = file->message_type(3);
-  static const int FollowListResponse_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowListResponse, people_list_),
-  };
-  FollowListResponse_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FollowListResponse_descriptor_,
-      FollowListResponse::default_instance_,
-      FollowListResponse_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowListResponse, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowListResponse, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FollowListResponse));
-  FollowedListResponse_descriptor_ = file->message_type(4);
-  static const int FollowedListResponse_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowedListResponse, people_list_),
-  };
-  FollowedListResponse_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FollowedListResponse_descriptor_,
-      FollowedListResponse::default_instance_,
-      FollowedListResponse_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowedListResponse, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FollowedListResponse, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FollowedListResponse));
 }
 
 namespace {
@@ -140,10 +104,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
     DetailResponse_descriptor_, &DetailResponse::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UsernameExistResponse_descriptor_, &UsernameExistResponse::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FollowListResponse_descriptor_, &FollowListResponse::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FollowedListResponse_descriptor_, &FollowedListResponse::default_instance());
 }
 
 }  // namespace
@@ -155,10 +115,6 @@ void protobuf_ShutdownFile_UserResponse_2eproto() {
   delete DetailResponse_reflection_;
   delete UsernameExistResponse::default_instance_;
   delete UsernameExistResponse_reflection_;
-  delete FollowListResponse::default_instance_;
-  delete FollowListResponse_reflection_;
-  delete FollowedListResponse::default_instance_;
-  delete FollowedListResponse_reflection_;
 }
 
 void protobuf_AddDesc_UserResponse_2eproto() {
@@ -167,31 +123,22 @@ void protobuf_AddDesc_UserResponse_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::Data::protobuf_AddDesc_data_2eproto();
   ::UserData::protobuf_AddDesc_UserData_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\022UserResponse.proto\022\014UserResponse\032\ndata"
-    ".proto\032\016UserData.proto\"D\n\rLoginResponse\022"
-    "\013\n\003sid\030\001 \001(\t\022&\n\tUser_Info\030\002 \001(\0132\023.UserDa"
-    "ta.User_Info\"K\n\016DetailResponse\022\021\n\tis_fol"
-    "low\030\001 \001(\010\022&\n\tUser_Info\030\002 \001(\0132\023.UserData."
-    "User_Info\")\n\025UsernameExistResponse\022\020\n\010is"
-    "_exist\030\001 \001(\010\"5\n\022FollowListResponse\022\037\n\013pe"
-    "ople_list\030\001 \001(\0132\n.Data.List\"7\n\024FollowedL"
-    "istResponse\022\037\n\013people_list\030\001 \001(\0132\n.Data."
-    "List", 364);
+    "\n\022UserResponse.proto\022\014UserResponse\032\016User"
+    "Data.proto\"D\n\rLoginResponse\022\013\n\003sid\030\001 \001(\t"
+    "\022&\n\tUser_Info\030\002 \001(\0132\023.UserData.User_Info"
+    "\"K\n\016DetailResponse\022\021\n\tis_follow\030\001 \001(\010\022&\n"
+    "\tUser_Info\030\002 \001(\0132\023.UserData.User_Info\")\n"
+    "\025UsernameExistResponse\022\020\n\010is_exist\030\001 \001(\010", 240);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserResponse.proto", &protobuf_RegisterTypes);
   LoginResponse::default_instance_ = new LoginResponse();
   DetailResponse::default_instance_ = new DetailResponse();
   UsernameExistResponse::default_instance_ = new UsernameExistResponse();
-  FollowListResponse::default_instance_ = new FollowListResponse();
-  FollowedListResponse::default_instance_ = new FollowedListResponse();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   DetailResponse::default_instance_->InitAsDefaultInstance();
   UsernameExistResponse::default_instance_->InitAsDefaultInstance();
-  FollowListResponse::default_instance_->InitAsDefaultInstance();
-  FollowedListResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_UserResponse_2eproto);
 }
 
@@ -925,432 +872,6 @@ void UsernameExistResponse::Swap(UsernameExistResponse* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = UsernameExistResponse_descriptor_;
   metadata.reflection = UsernameExistResponse_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int FollowListResponse::kPeopleListFieldNumber;
-#endif  // !_MSC_VER
-
-FollowListResponse::FollowListResponse()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void FollowListResponse::InitAsDefaultInstance() {
-  people_list_ = const_cast< ::Data::List*>(&::Data::List::default_instance());
-}
-
-FollowListResponse::FollowListResponse(const FollowListResponse& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void FollowListResponse::SharedCtor() {
-  _cached_size_ = 0;
-  people_list_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-FollowListResponse::~FollowListResponse() {
-  SharedDtor();
-}
-
-void FollowListResponse::SharedDtor() {
-  if (this != default_instance_) {
-    delete people_list_;
-  }
-}
-
-void FollowListResponse::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* FollowListResponse::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FollowListResponse_descriptor_;
-}
-
-const FollowListResponse& FollowListResponse::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
-  return *default_instance_;
-}
-
-FollowListResponse* FollowListResponse::default_instance_ = NULL;
-
-FollowListResponse* FollowListResponse::New() const {
-  return new FollowListResponse;
-}
-
-void FollowListResponse::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_people_list()) {
-      if (people_list_ != NULL) people_list_->::Data::List::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool FollowListResponse::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Data.List people_list = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_people_list()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void FollowListResponse::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional .Data.List people_list = 1;
-  if (has_people_list()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->people_list(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* FollowListResponse::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional .Data.List people_list = 1;
-  if (has_people_list()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->people_list(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int FollowListResponse::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Data.List people_list = 1;
-    if (has_people_list()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->people_list());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void FollowListResponse::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FollowListResponse* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FollowListResponse*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void FollowListResponse::MergeFrom(const FollowListResponse& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_people_list()) {
-      mutable_people_list()->::Data::List::MergeFrom(from.people_list());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FollowListResponse::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void FollowListResponse::CopyFrom(const FollowListResponse& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool FollowListResponse::IsInitialized() const {
-
-  return true;
-}
-
-void FollowListResponse::Swap(FollowListResponse* other) {
-  if (other != this) {
-    std::swap(people_list_, other->people_list_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata FollowListResponse::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FollowListResponse_descriptor_;
-  metadata.reflection = FollowListResponse_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int FollowedListResponse::kPeopleListFieldNumber;
-#endif  // !_MSC_VER
-
-FollowedListResponse::FollowedListResponse()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void FollowedListResponse::InitAsDefaultInstance() {
-  people_list_ = const_cast< ::Data::List*>(&::Data::List::default_instance());
-}
-
-FollowedListResponse::FollowedListResponse(const FollowedListResponse& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void FollowedListResponse::SharedCtor() {
-  _cached_size_ = 0;
-  people_list_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-FollowedListResponse::~FollowedListResponse() {
-  SharedDtor();
-}
-
-void FollowedListResponse::SharedDtor() {
-  if (this != default_instance_) {
-    delete people_list_;
-  }
-}
-
-void FollowedListResponse::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* FollowedListResponse::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FollowedListResponse_descriptor_;
-}
-
-const FollowedListResponse& FollowedListResponse::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
-  return *default_instance_;
-}
-
-FollowedListResponse* FollowedListResponse::default_instance_ = NULL;
-
-FollowedListResponse* FollowedListResponse::New() const {
-  return new FollowedListResponse;
-}
-
-void FollowedListResponse::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_people_list()) {
-      if (people_list_ != NULL) people_list_->::Data::List::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool FollowedListResponse::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Data.List people_list = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_people_list()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void FollowedListResponse::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional .Data.List people_list = 1;
-  if (has_people_list()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->people_list(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* FollowedListResponse::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional .Data.List people_list = 1;
-  if (has_people_list()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->people_list(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int FollowedListResponse::ByteSize() const {
-  int total_size = 0;
-
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Data.List people_list = 1;
-    if (has_people_list()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->people_list());
-    }
-
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void FollowedListResponse::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FollowedListResponse* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FollowedListResponse*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void FollowedListResponse::MergeFrom(const FollowedListResponse& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_people_list()) {
-      mutable_people_list()->::Data::List::MergeFrom(from.people_list());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FollowedListResponse::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void FollowedListResponse::CopyFrom(const FollowedListResponse& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool FollowedListResponse::IsInitialized() const {
-
-  return true;
-}
-
-void FollowedListResponse::Swap(FollowedListResponse* other) {
-  if (other != this) {
-    std::swap(people_list_, other->people_list_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata FollowedListResponse::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FollowedListResponse_descriptor_;
-  metadata.reflection = FollowedListResponse_reflection_;
   return metadata;
 }
 

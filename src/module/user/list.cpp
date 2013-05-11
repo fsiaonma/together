@@ -3,14 +3,15 @@
 /**
  * get follow list
  *  
- * @method get_follow_list
+ * @method get_following_list
+ * @param {int} uid uid which is used for mark which user is to depend on
  * @param {int} page_no page_no which is used for get follow list
  * @param {int} page_size page_size which is used for get follow list
  * @param {string} sid sid which is used for mark whether login or not
  * @param {char*} respone data. 
- * @return {int} get_follow_list status.
+ * @return {int} get_following_list status.
  */
-int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send_len) {
+int get_following_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -18,7 +19,7 @@ int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send
     int ret;
     int total;
 
-    LOG_INFO << "page_no is " << page_no << " page_size is " << page_size << " sid is " << sid << endl;
+    LOG_INFO << " uid is " << uid << " page_no is " << page_no << " page_size is " << page_size << " sid is " << sid << endl;
 
     do {
         // page_no or page_size or sid is not be found
@@ -45,7 +46,6 @@ int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send
         }
 
         int begin_pos = (page_no - 1) * page_size;
-        int uid = Tool::S2I(Session::get(sid)->uid);
         ret = e.excute("select followed_id from t_follow where follow_id = " + Tool::mysql_filter(uid) + 
         " order by id desc limit " + Tool::mysql_filter(begin_pos) + "," + Tool::mysql_filter(page_size) + ";");
         if (ret != DB_OK) {
@@ -64,11 +64,20 @@ int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send
         row = mysql_fetch_row(mysql_result);
 
         // follow_list construtor
-        UserResponse::FollowListResponse *follow_list = new UserResponse::FollowListResponse();
+        UserListResponse::FollowListResponse *follow_list = new UserListResponse::FollowListResponse();
         Data::List *people_list = new Data::List();
         while(NULL != row) {
-            UserData::User_Info *user_info = people_list->add_user_info();
-        	   _get_user_info(Tool::S2I(row[0]), user_info);
+            UserResponse::DetailResponse *detailResponse = people_list->add_user_detail_list();
+        	
+            UserData::User_Info *user_info = new UserData::User_Info();
+            _get_user_info(Tool::S2I(row[0]), user_info);
+            detailResponse->set_allocated_user_info(user_info);
+
+            bool exist;
+            int self_id = Tool::S2I(Session::get(sid)->uid);
+            _is_follow(self_id, user_info->uid(), exist);
+            detailResponse->set_is_follow(exist);
+
             row = mysql_fetch_row(mysql_result);
         }
         e.count("t_follow", "where follow_id = " + Tool::mysql_filter(uid) + ";", total);
@@ -82,7 +91,7 @@ int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send
 
         e.close();
 
-        result = GET_FOLLOW_LIST_SUCCESS;
+        result = GET_FOLLOWING_LIST_SUCCESS;
         _set_http_head(result, true, "get follow list success", http_res);
         http_res->set_allocated_follow_list_response(follow_list);
     }while(0);
@@ -100,14 +109,15 @@ int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send
 /**
  * get followed list
  *  
- * @method get_followed_list
+ * @method get_followers_list
+ * @param {int} uid uid which is used for mark which user is to depend on
  * @param {int} page_no page_no which is used for get followed list
  * @param {int} page_size page_size which is used for get followed list
  * @param {string} sid sid which is used for mark whether login or not
  * @param {char*} respone data. 
- * @return {int} get_followed_list status.
+ * @return {int} get_followers_list status.
  */
-int get_followed_list(int page_no, int page_size, string sid, char *buf, int &send_len) {
+int get_followers_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
@@ -115,7 +125,7 @@ int get_followed_list(int page_no, int page_size, string sid, char *buf, int &se
     int ret;
     int total;
 
-    LOG_INFO << "page_no is " << page_no << " page_size is " << page_size << " sid is " << sid << endl;
+    LOG_INFO << " uid is " << uid << " page_no is " << page_no << " page_size is " << page_size << " sid is " << sid << endl;
 
     do {
         // page_no or page_size or sid is not be found
@@ -142,7 +152,6 @@ int get_followed_list(int page_no, int page_size, string sid, char *buf, int &se
         }
 
         int begin_pos = (page_no - 1) * page_size;
-        int uid = Tool::S2I(Session::get(sid)->uid);
         ret = e.excute("select follow_id from t_follow where followed_id = " + Tool::mysql_filter(uid) + 
         " order by id desc limit " + Tool::mysql_filter(begin_pos) + "," + Tool::mysql_filter(page_size) + ";");
         if (ret != DB_OK) {
@@ -161,11 +170,20 @@ int get_followed_list(int page_no, int page_size, string sid, char *buf, int &se
         row = mysql_fetch_row(mysql_result);
 
         // followed_list construtor
-        UserResponse::FollowedListResponse *followed_list = new UserResponse::FollowedListResponse();
+        UserListResponse::FollowedListResponse *followed_list = new UserListResponse::FollowedListResponse();
         Data::List *people_list = new Data::List();
         while(NULL != row) {
-            UserData::User_Info *user_info = people_list->add_user_info();
+            UserResponse::DetailResponse *detailResponse = people_list->add_user_detail_list();
+            
+            UserData::User_Info *user_info = new UserData::User_Info();
             _get_user_info(Tool::S2I(row[0]), user_info);
+            detailResponse->set_allocated_user_info(user_info);
+
+            bool exist;
+            int self_id = Tool::S2I(Session::get(sid)->uid);
+            _is_follow(self_id, user_info->uid(), exist);
+            detailResponse->set_is_follow(exist);
+            
             row = mysql_fetch_row(mysql_result);
         }
         e.count("t_follow", "where followed_id = " + Tool::mysql_filter(uid) + ";", total);
@@ -179,7 +197,7 @@ int get_followed_list(int page_no, int page_size, string sid, char *buf, int &se
 
         e.close();
 
-        result = GET_FOLLOWED_LIST_SUCCESS;
+        result = GET_FOLLOWERS_LIST_SUCCESS;
         _set_http_head(result, true, "get followed list success", http_res);
         http_res->set_allocated_followed_list_response(followed_list);
     }while(0);

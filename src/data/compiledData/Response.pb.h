@@ -25,6 +25,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "UserResponse.pb.h"
+#include "UserListResponse.pb.h"
 #include "RoomResponse.pb.h"
 // @@protoc_insertion_point(includes)
 
@@ -173,23 +174,23 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::RoomResponse::RoomInfoResponse* release_room_info_response();
   inline void set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response);
 
-  // optional .UserResponse.FollowListResponse follow_list_response = 10;
+  // optional .UserListResponse.FollowListResponse follow_list_response = 10;
   inline bool has_follow_list_response() const;
   inline void clear_follow_list_response();
   static const int kFollowListResponseFieldNumber = 10;
-  inline const ::UserResponse::FollowListResponse& follow_list_response() const;
-  inline ::UserResponse::FollowListResponse* mutable_follow_list_response();
-  inline ::UserResponse::FollowListResponse* release_follow_list_response();
-  inline void set_allocated_follow_list_response(::UserResponse::FollowListResponse* follow_list_response);
+  inline const ::UserListResponse::FollowListResponse& follow_list_response() const;
+  inline ::UserListResponse::FollowListResponse* mutable_follow_list_response();
+  inline ::UserListResponse::FollowListResponse* release_follow_list_response();
+  inline void set_allocated_follow_list_response(::UserListResponse::FollowListResponse* follow_list_response);
 
-  // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+  // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
   inline bool has_followed_list_response() const;
   inline void clear_followed_list_response();
   static const int kFollowedListResponseFieldNumber = 11;
-  inline const ::UserResponse::FollowedListResponse& followed_list_response() const;
-  inline ::UserResponse::FollowedListResponse* mutable_followed_list_response();
-  inline ::UserResponse::FollowedListResponse* release_followed_list_response();
-  inline void set_allocated_followed_list_response(::UserResponse::FollowedListResponse* followed_list_response);
+  inline const ::UserListResponse::FollowedListResponse& followed_list_response() const;
+  inline ::UserListResponse::FollowedListResponse* mutable_followed_list_response();
+  inline ::UserListResponse::FollowedListResponse* release_followed_list_response();
+  inline void set_allocated_followed_list_response(::UserListResponse::FollowedListResponse* followed_list_response);
 
   // optional .RoomResponse.UserRoomListResponse user_room_list_response = 12;
   inline bool has_user_room_list_response() const;
@@ -238,8 +239,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::RoomResponse::ShowRoomListResponse* room_list_response_;
   ::RoomResponse::RoomPeopleListResponse* room_people_list_response_;
   ::RoomResponse::RoomInfoResponse* room_info_response_;
-  ::UserResponse::FollowListResponse* follow_list_response_;
-  ::UserResponse::FollowedListResponse* followed_list_response_;
+  ::UserListResponse::FollowListResponse* follow_list_response_;
+  ::UserListResponse::FollowedListResponse* followed_list_response_;
   ::RoomResponse::UserRoomListResponse* user_room_list_response_;
 
   mutable int _cached_size_;
@@ -601,7 +602,7 @@ inline void HTTPResponse::set_allocated_room_info_response(::RoomResponse::RoomI
   }
 }
 
-// optional .UserResponse.FollowListResponse follow_list_response = 10;
+// optional .UserListResponse.FollowListResponse follow_list_response = 10;
 inline bool HTTPResponse::has_follow_list_response() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
@@ -612,24 +613,24 @@ inline void HTTPResponse::clear_has_follow_list_response() {
   _has_bits_[0] &= ~0x00000200u;
 }
 inline void HTTPResponse::clear_follow_list_response() {
-  if (follow_list_response_ != NULL) follow_list_response_->::UserResponse::FollowListResponse::Clear();
+  if (follow_list_response_ != NULL) follow_list_response_->::UserListResponse::FollowListResponse::Clear();
   clear_has_follow_list_response();
 }
-inline const ::UserResponse::FollowListResponse& HTTPResponse::follow_list_response() const {
+inline const ::UserListResponse::FollowListResponse& HTTPResponse::follow_list_response() const {
   return follow_list_response_ != NULL ? *follow_list_response_ : *default_instance_->follow_list_response_;
 }
-inline ::UserResponse::FollowListResponse* HTTPResponse::mutable_follow_list_response() {
+inline ::UserListResponse::FollowListResponse* HTTPResponse::mutable_follow_list_response() {
   set_has_follow_list_response();
-  if (follow_list_response_ == NULL) follow_list_response_ = new ::UserResponse::FollowListResponse;
+  if (follow_list_response_ == NULL) follow_list_response_ = new ::UserListResponse::FollowListResponse;
   return follow_list_response_;
 }
-inline ::UserResponse::FollowListResponse* HTTPResponse::release_follow_list_response() {
+inline ::UserListResponse::FollowListResponse* HTTPResponse::release_follow_list_response() {
   clear_has_follow_list_response();
-  ::UserResponse::FollowListResponse* temp = follow_list_response_;
+  ::UserListResponse::FollowListResponse* temp = follow_list_response_;
   follow_list_response_ = NULL;
   return temp;
 }
-inline void HTTPResponse::set_allocated_follow_list_response(::UserResponse::FollowListResponse* follow_list_response) {
+inline void HTTPResponse::set_allocated_follow_list_response(::UserListResponse::FollowListResponse* follow_list_response) {
   delete follow_list_response_;
   follow_list_response_ = follow_list_response;
   if (follow_list_response) {
@@ -639,7 +640,7 @@ inline void HTTPResponse::set_allocated_follow_list_response(::UserResponse::Fol
   }
 }
 
-// optional .UserResponse.FollowedListResponse followed_list_response = 11;
+// optional .UserListResponse.FollowedListResponse followed_list_response = 11;
 inline bool HTTPResponse::has_followed_list_response() const {
   return (_has_bits_[0] & 0x00000400u) != 0;
 }
@@ -650,24 +651,24 @@ inline void HTTPResponse::clear_has_followed_list_response() {
   _has_bits_[0] &= ~0x00000400u;
 }
 inline void HTTPResponse::clear_followed_list_response() {
-  if (followed_list_response_ != NULL) followed_list_response_->::UserResponse::FollowedListResponse::Clear();
+  if (followed_list_response_ != NULL) followed_list_response_->::UserListResponse::FollowedListResponse::Clear();
   clear_has_followed_list_response();
 }
-inline const ::UserResponse::FollowedListResponse& HTTPResponse::followed_list_response() const {
+inline const ::UserListResponse::FollowedListResponse& HTTPResponse::followed_list_response() const {
   return followed_list_response_ != NULL ? *followed_list_response_ : *default_instance_->followed_list_response_;
 }
-inline ::UserResponse::FollowedListResponse* HTTPResponse::mutable_followed_list_response() {
+inline ::UserListResponse::FollowedListResponse* HTTPResponse::mutable_followed_list_response() {
   set_has_followed_list_response();
-  if (followed_list_response_ == NULL) followed_list_response_ = new ::UserResponse::FollowedListResponse;
+  if (followed_list_response_ == NULL) followed_list_response_ = new ::UserListResponse::FollowedListResponse;
   return followed_list_response_;
 }
-inline ::UserResponse::FollowedListResponse* HTTPResponse::release_followed_list_response() {
+inline ::UserListResponse::FollowedListResponse* HTTPResponse::release_followed_list_response() {
   clear_has_followed_list_response();
-  ::UserResponse::FollowedListResponse* temp = followed_list_response_;
+  ::UserListResponse::FollowedListResponse* temp = followed_list_response_;
   followed_list_response_ = NULL;
   return temp;
 }
-inline void HTTPResponse::set_allocated_followed_list_response(::UserResponse::FollowedListResponse* followed_list_response) {
+inline void HTTPResponse::set_allocated_followed_list_response(::UserListResponse::FollowedListResponse* followed_list_response) {
   delete followed_list_response_;
   followed_list_response_ = followed_list_response;
   if (followed_list_response) {

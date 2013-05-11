@@ -23,11 +23,11 @@ int view_user_info(int visit_uid, string sid, char *buf, int &send_len);
 int set_user_info(map<string, string> params, string sid, char *buf, int &send_len);
 
 int prise(int uid, string sid, char *buf, int &send_len);
-int follow(int followed_id, string sid, char *buf, int &send_len);
-int unfollow(int unfollowed_id, string sid, char *buf, int &send_len);
+int follow(int uid, string sid, char *buf, int &send_len);
+int unfollow(int uid, string sid, char *buf, int &send_len);
 
-int get_follow_list(int page_no, int page_size, string sid, char *buf, int &send_len);
-int get_followed_list(int page_no, int page_size, string sid, char *buf, int &send_len);
+int get_following_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len);
+int get_followers_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len);
 
 int user_handler(process *process, map<string, string> param);
 #endif

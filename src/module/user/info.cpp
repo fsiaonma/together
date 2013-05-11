@@ -57,15 +57,7 @@ int view_user_info(int visit_uid, string sid, char *buf, int &send_len) {
         // check whether follow or not
         bool exist;
         int self_uid = Tool::S2I(Session::get(sid)->uid);
-        ret = e.is_exist("t_follow", 
-            "where follow_id = " + Tool::mysql_filter(self_uid) + " and followed_id = " + Tool::mysql_filter(visit_uid) + ";", 
-            exist);
-        // exception
-        if (ret != DB_OK) {
-            result = DB_ERROR;
-            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-            break;
-        }
+        _is_follow(self_uid, visit_uid, exist);
         if (exist) {
             detail_res->set_is_follow(true);
         } 

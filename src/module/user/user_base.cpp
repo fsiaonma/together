@@ -119,3 +119,13 @@ int _get_uid(string username, int &uid) {
     
     return 1;
 }
+
+int _is_follow(int following_id, int follower_id, bool &exist) {
+    Config *c = Config::get_instance();
+    map<string, string> config = c->get_config();
+    eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+    e.is_exist("t_follow", 
+        "where follow_id = " + Tool::mysql_filter(following_id) + " and followed_id = " + Tool::mysql_filter(follower_id) + ";", 
+        exist);
+    return 1;
+}

@@ -26,6 +26,7 @@
 #include <google/protobuf/unknown_field_set.h>
 #include "RoomData.pb.h"
 #include "UserData.pb.h"
+#include "UserResponse.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace Data {
@@ -124,6 +125,18 @@ class List : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
       mutable_user_info();
 
+  // repeated .UserResponse.DetailResponse user_detail_list = 4;
+  inline int user_detail_list_size() const;
+  inline void clear_user_detail_list();
+  static const int kUserDetailListFieldNumber = 4;
+  inline const ::UserResponse::DetailResponse& user_detail_list(int index) const;
+  inline ::UserResponse::DetailResponse* mutable_user_detail_list(int index);
+  inline ::UserResponse::DetailResponse* add_user_detail_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >&
+      user_detail_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
+      mutable_user_detail_list();
+
   // @@protoc_insertion_point(class_scope:Data.List)
  private:
   inline void set_has_is_end();
@@ -133,10 +146,11 @@ class List : public ::google::protobuf::Message {
 
   ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_list_;
   ::google::protobuf::RepeatedPtrField< ::UserData::User_Info > user_info_;
+  ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse > user_detail_list_;
   bool is_end_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
@@ -222,6 +236,31 @@ List::user_info() const {
 inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
 List::mutable_user_info() {
   return &user_info_;
+}
+
+// repeated .UserResponse.DetailResponse user_detail_list = 4;
+inline int List::user_detail_list_size() const {
+  return user_detail_list_.size();
+}
+inline void List::clear_user_detail_list() {
+  user_detail_list_.Clear();
+}
+inline const ::UserResponse::DetailResponse& List::user_detail_list(int index) const {
+  return user_detail_list_.Get(index);
+}
+inline ::UserResponse::DetailResponse* List::mutable_user_detail_list(int index) {
+  return user_detail_list_.Mutable(index);
+}
+inline ::UserResponse::DetailResponse* List::add_user_detail_list() {
+  return user_detail_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >&
+List::user_detail_list() const {
+  return user_detail_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
+List::mutable_user_detail_list() {
+  return &user_detail_list_;
 }
 
 

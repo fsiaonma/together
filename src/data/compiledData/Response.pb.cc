@@ -89,26 +89,28 @@ void protobuf_AddDesc_Response_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
+  ::UserListResponse::protobuf_AddDesc_UserListResponse_2eproto();
   ::RoomResponse::protobuf_AddDesc_RoomResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
-    ".proto\032\022RoomResponse.proto\"\361\004\n\014HTTPRespo"
-    "nse\022\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n\003ms"
-    "g\030\003 \001(\t\0223\n\016login_response\030\004 \001(\0132\033.UserRe"
-    "sponse.LoginResponse\0225\n\017detail_response\030"
-    "\005 \001(\0132\034.UserResponse.DetailResponse\022;\n\016e"
-    "xist_response\030\006 \001(\0132#.UserResponse.Usern"
-    "ameExistResponse\022>\n\022room_list_response\030\007"
-    " \001(\0132\".RoomResponse.ShowRoomListResponse"
-    "\022G\n\031room_people_list_response\030\010 \001(\0132$.Ro"
-    "omResponse.RoomPeopleListResponse\022:\n\022roo"
-    "m_info_response\030\t \001(\0132\036.RoomResponse.Roo"
-    "mInfoResponse\022>\n\024follow_list_response\030\n "
-    "\001(\0132 .UserResponse.FollowListResponse\022B\n"
-    "\026followed_list_response\030\013 \001(\0132\".UserResp"
-    "onse.FollowedListResponse\022C\n\027user_room_l"
-    "ist_response\030\014 \001(\0132\".RoomResponse.UserRo"
-    "omListResponse", 694);
+    ".proto\032\026UserListResponse.proto\032\022RoomResp"
+    "onse.proto\"\371\004\n\014HTTPResponse\022\014\n\004code\030\001 \001("
+    "\005\022\017\n\007success\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\0223\n\016login"
+    "_response\030\004 \001(\0132\033.UserResponse.LoginResp"
+    "onse\0225\n\017detail_response\030\005 \001(\0132\034.UserResp"
+    "onse.DetailResponse\022;\n\016exist_response\030\006 "
+    "\001(\0132#.UserResponse.UsernameExistResponse"
+    "\022>\n\022room_list_response\030\007 \001(\0132\".RoomRespo"
+    "nse.ShowRoomListResponse\022G\n\031room_people_"
+    "list_response\030\010 \001(\0132$.RoomResponse.RoomP"
+    "eopleListResponse\022:\n\022room_info_response\030"
+    "\t \001(\0132\036.RoomResponse.RoomInfoResponse\022B\n"
+    "\024follow_list_response\030\n \001(\0132$.UserListRe"
+    "sponse.FollowListResponse\022F\n\026followed_li"
+    "st_response\030\013 \001(\0132&.UserListResponse.Fol"
+    "lowedListResponse\022C\n\027user_room_list_resp"
+    "onse\030\014 \001(\0132\".RoomResponse.UserRoomListRe"
+    "sponse", 726);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -152,8 +154,8 @@ void HTTPResponse::InitAsDefaultInstance() {
   room_list_response_ = const_cast< ::RoomResponse::ShowRoomListResponse*>(&::RoomResponse::ShowRoomListResponse::default_instance());
   room_people_list_response_ = const_cast< ::RoomResponse::RoomPeopleListResponse*>(&::RoomResponse::RoomPeopleListResponse::default_instance());
   room_info_response_ = const_cast< ::RoomResponse::RoomInfoResponse*>(&::RoomResponse::RoomInfoResponse::default_instance());
-  follow_list_response_ = const_cast< ::UserResponse::FollowListResponse*>(&::UserResponse::FollowListResponse::default_instance());
-  followed_list_response_ = const_cast< ::UserResponse::FollowedListResponse*>(&::UserResponse::FollowedListResponse::default_instance());
+  follow_list_response_ = const_cast< ::UserListResponse::FollowListResponse*>(&::UserListResponse::FollowListResponse::default_instance());
+  followed_list_response_ = const_cast< ::UserListResponse::FollowedListResponse*>(&::UserListResponse::FollowedListResponse::default_instance());
   user_room_list_response_ = const_cast< ::RoomResponse::UserRoomListResponse*>(&::RoomResponse::UserRoomListResponse::default_instance());
 }
 
@@ -252,10 +254,10 @@ void HTTPResponse::Clear() {
       if (room_info_response_ != NULL) room_info_response_->::RoomResponse::RoomInfoResponse::Clear();
     }
     if (has_follow_list_response()) {
-      if (follow_list_response_ != NULL) follow_list_response_->::UserResponse::FollowListResponse::Clear();
+      if (follow_list_response_ != NULL) follow_list_response_->::UserListResponse::FollowListResponse::Clear();
     }
     if (has_followed_list_response()) {
-      if (followed_list_response_ != NULL) followed_list_response_->::UserResponse::FollowedListResponse::Clear();
+      if (followed_list_response_ != NULL) followed_list_response_->::UserListResponse::FollowedListResponse::Clear();
     }
     if (has_user_room_list_response()) {
       if (user_room_list_response_ != NULL) user_room_list_response_->::RoomResponse::UserRoomListResponse::Clear();
@@ -403,7 +405,7 @@ bool HTTPResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .UserResponse.FollowListResponse follow_list_response = 10;
+      // optional .UserListResponse.FollowListResponse follow_list_response = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -417,7 +419,7 @@ bool HTTPResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+      // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
       case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -518,13 +520,13 @@ void HTTPResponse::SerializeWithCachedSizes(
       9, this->room_info_response(), output);
   }
 
-  // optional .UserResponse.FollowListResponse follow_list_response = 10;
+  // optional .UserListResponse.FollowListResponse follow_list_response = 10;
   if (has_follow_list_response()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       10, this->follow_list_response(), output);
   }
 
-  // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+  // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
   if (has_followed_list_response()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       11, this->followed_list_response(), output);
@@ -606,14 +608,14 @@ void HTTPResponse::SerializeWithCachedSizes(
         9, this->room_info_response(), target);
   }
 
-  // optional .UserResponse.FollowListResponse follow_list_response = 10;
+  // optional .UserListResponse.FollowListResponse follow_list_response = 10;
   if (has_follow_list_response()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         10, this->follow_list_response(), target);
   }
 
-  // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+  // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
   if (has_followed_list_response()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -701,14 +703,14 @@ int HTTPResponse::ByteSize() const {
           this->room_info_response());
     }
 
-    // optional .UserResponse.FollowListResponse follow_list_response = 10;
+    // optional .UserListResponse.FollowListResponse follow_list_response = 10;
     if (has_follow_list_response()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->follow_list_response());
     }
 
-    // optional .UserResponse.FollowedListResponse followed_list_response = 11;
+    // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
     if (has_followed_list_response()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -779,10 +781,10 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
       mutable_room_info_response()->::RoomResponse::RoomInfoResponse::MergeFrom(from.room_info_response());
     }
     if (from.has_follow_list_response()) {
-      mutable_follow_list_response()->::UserResponse::FollowListResponse::MergeFrom(from.follow_list_response());
+      mutable_follow_list_response()->::UserListResponse::FollowListResponse::MergeFrom(from.follow_list_response());
     }
     if (from.has_followed_list_response()) {
-      mutable_followed_list_response()->::UserResponse::FollowedListResponse::MergeFrom(from.followed_list_response());
+      mutable_followed_list_response()->::UserListResponse::FollowedListResponse::MergeFrom(from.followed_list_response());
     }
     if (from.has_user_room_list_response()) {
       mutable_user_room_list_response()->::RoomResponse::UserRoomListResponse::MergeFrom(from.user_room_list_response());

@@ -50,7 +50,7 @@ handle_error(process, "bad request");
 #endif
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 #ifndef _CONST_H_
@@ -106,8 +106,8 @@ static const int USER_SET_INFO = 105;
 static const int USER_PRISE = 106;
 static const int USER_FOLLOW = 107;
 static const int USER_IS_EXIST = 108;
-static const int GET_FOLLOW_LIST = 109;
-static const int GET_FOLLOWED_LIST = 111;
+static const int GET_FOLLOWING_LIST = 109;
+static const int GET_FOLLOWERS_LIST = 111;
 static const int USER_UNFOLLOW = 112;
 
 // ============ ROOM ============
@@ -182,10 +182,10 @@ static const int USER_CANT_FOLLOW_HIMSELF = 17003;
 static const int USERNAME_AVAILABLE = 18000;
 
 // get follow list code
-static const int GET_FOLLOW_LIST_SUCCESS = 19000;
+static const int GET_FOLLOWING_LIST_SUCCESS = 19000;
 
 // get followed list code
-static const int GET_FOLLOWED_LIST_SUCCESS = 11100;
+static const int GET_FOLLOWERS_LIST_SUCCESS = 11100;
 
 // unfollow user code
 static const int USER_UNFOLLOW_SUCCESS = 11200;
