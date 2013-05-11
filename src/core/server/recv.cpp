@@ -211,9 +211,9 @@
 	LOG_INFO << "content_length|" << content_length << endl;
 	LOG_INFO << line[blank_linenum + 1] << endl;
 
-	int line_num = line.size();
+	// int line_num = line.size();
 	// 判断空行下一行(即具体参数那行)是否为空
-	if (line[line_num - 1] == "" || line[line_num - 1] == "\r") {
+	if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
 		LOG_ERROR << "param line is null" << endl;
 		BAD_REQUEST
 		return;
@@ -531,9 +531,9 @@ void read_upload_request(process* process)
 			LOG_INFO << "filedata length|" << line[blank_linenum + 1].size() << endl;
 			LOG_INFO << line[blank_linenum + 1] << endl;
 
-			int line_num = line.size();
+			// int line_num = line.size();
 			// 判断空行下一行(即具体参数那行)是否为空
-			if (line[line_num - 1] == "" || line[line_num - 1] == "\r") {
+			if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
 				LOG_ERROR << "param line is null" << endl;
 				BAD_REQUEST
 				return;
