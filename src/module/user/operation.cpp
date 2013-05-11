@@ -212,7 +212,7 @@ int unfollow(int uid, string sid, char *buf, int &send_len) {
         // followed_id or sid is not be found
         if (uid <= 0 || Tool::trim(sid).empty()) {
             result = PARAM_ERROR;
-            _set_http_head(result, false, "unfollowed_id or sid is not be found", http_res);
+            _set_http_head(result, false, "uid or sid is not be found", http_res);
             break;
         }
 
