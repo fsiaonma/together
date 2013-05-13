@@ -87,7 +87,7 @@
  	process->status = STATUS_SEND_RESPONSE_HEADER;
 	// 修改此 sock 的监听状态，改为监视写状态
  	event.data.fd = process->sock;
- 	event.events = EPOLLOUT | EPOLLET;
+ 	event.events = EPOLLOUT;
  	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
  	if (s == -1) {
  		LOG_ERROR << "epoll_ctl error" << endl;
@@ -108,7 +108,7 @@
 	char* _buf = process->buf;
 	ssize_t count;
 	string request;
-	int content_length = 0;
+	// int content_length = 0;
 	int other_sign_num = 0;
 	string module_name;
 	// 接收HTTP请求
@@ -171,15 +171,16 @@
 
 	int first_blank = firstline.find(' ');
 	int last_blank = firstline.find_last_of(' ');
-	if (firstline.substr(0, 4) != "POST") {
+	int question_mark = firstline.find('?');
+	if (firstline.substr(0, 3) != "GET") {
 		LOG_ERROR << "http request type error" << endl;
 		BAD_REQUEST
 		return ;
 	}
 
-	if (first_blank > 0 && last_blank > 0 && (last_blank - first_blank > 2))
+	if (first_blank > 0 && question_mark > 0 && (question_mark - first_blank > 2))
 	{
-		module_name = firstline.substr(first_blank + 2, last_blank - first_blank - 2);
+		module_name = firstline.substr(first_blank + 2, question_mark - first_blank - 2);
 	} else {
 		LOG_ERROR << "module name err|" << module_name << endl;
 		BAD_REQUEST
@@ -187,7 +188,19 @@
 	}
 	LOG_INFO << "module_name|" << module_name << endl;
 
+	string params;
+	if (question_mark > 0 && last_blank > 0 && (last_blank - question_mark > 2))
+	{
+		params = firstline.substr(question_mark + 1, last_blank - question_mark - 2);
+	} else {
+		LOG_ERROR << "param err|" << params << endl;
+		BAD_REQUEST
+		return ;
+	}
+	LOG_INFO << "param|" << params << endl;
+
 	// 解析空行前(HTTP首部)的内容，如果有Content-Length这个属性就保存下来
+	#if 0
 	vector<string> prope_list;
 	for (int i = 1; i < blank_linenum; i++)
 	{
@@ -228,9 +241,10 @@
 			return;
 		}
 	}
+	#endif
 
 	// 解析参数行
-	vector<string> param_list = Tool::split(Tool::url_decode(line[blank_linenum + 1]), "&");
+	vector<string> param_list = Tool::split(Tool::url_decode(params), "&");
 	int param_list_len = param_list.size();
 	map<string, string> param;
 	for (int i = 0; i < param_list_len; i++)
@@ -364,7 +378,7 @@
 	 	process->status = STATUS_SEND_RESPONSE_HEADER;
 		// 修改此 sock 的监听状态，改为监视写状态
 	 	event.data.fd = process->sock;
-	 	event.events = EPOLLOUT | EPOLLET;
+	 	event.events = EPOLLOUT;
 	 	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 	 	if (s == -1) {
 	 		LOG_ERROR << "epoll_ctl error" << endl;
@@ -711,7 +725,7 @@ void read_upload_request(process* process)
 
 					// 修改此 sock 的监听状态，改为监视写状态
 					event.data.fd = process->sock;
-					event.events = EPOLLOUT | EPOLLET;
+					event.events = EPOLLOUT;
 					s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 					if (s == -1) {
 						LOG_ERROR << "epoll_ctl error" << endl;
@@ -792,6 +806,7 @@ void read_tcp_request(process* process)
 			process->read_pos += count;
 		}
 	}
+	#if 0
 	int header_length = process->read_pos;
 	LOG_INFO << "-----recv-----" << endl;
 	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
@@ -813,4 +828,10 @@ void read_tcp_request(process* process)
 		process->response_code = 200;
 		// handle_read_request(process, buf);
 	}
+	#endif
+	process->status = STATUS_SEND_RESPONSE_HEADER;
+    // 修改此 sock 的监听状态，改为监视写状态
+	event.data.fd = process->sock;
+	event.events = EPOLLOUT;
+	epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 }

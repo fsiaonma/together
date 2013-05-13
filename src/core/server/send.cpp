@@ -16,17 +16,15 @@ void send_response_header(process *process) {
 		cleanup(process);
 		//update_timer(process->sock, current_msec);
 	} else {
-		// 写入完毕
-		if (process->send_length > 0)
-			send(process->sock, process->buf, process->send_length, 0);  
-		else 
-			send(process->sock, process->buf, strlen(process->buf), 0);  
-		send_response(process);
-		// TODO::
-		if (process->type == LISTEN_HTTP_REQ_TYPE || process->type == LISTEN_UPLOAD_REQ_TYPE)
-		// 	update_timer(process->sock, current_msec);
-		// else if (process->type == LISTEN_UPLOAD_REQ_TYPE)
+		if (process->type == LISTEN_HTTP_REQ_TYPE || process->type == LISTEN_UPLOAD_REQ_TYPE) {
+			if (process->send_length > 0)
+				send(process->sock, process->buf, process->send_length, 0);  
+			else 
+				send(process->sock, process->buf, strlen(process->buf), 0);  
+			send_response(process);
 			cleanup(process);
+		}
+
 	}
 }
 

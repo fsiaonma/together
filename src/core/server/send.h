@@ -8,6 +8,8 @@
 #include "../../common/global/global.h"
 #include "../../util/log/log.h"
 
+extern map<int, int> userid_socket;
+
 void send_response_header(process *process);
 
 void send_response(process *process);
