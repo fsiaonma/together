@@ -16,4 +16,5 @@ message HTTPResponse {
     optional UserListResponse.FollowListResponse follow_list_response = 10;
     optional UserListResponse.FollowedListResponse followed_list_response = 11;
     optional RoomResponse.UserRoomListResponse user_room_list_response = 12;
+    optional UserListResponse.MessageListResponse message_list_response = 13;
 }

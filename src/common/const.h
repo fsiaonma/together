@@ -109,6 +109,7 @@ static const int USER_IS_EXIST = 108;
 static const int GET_FOLLOWING_LIST = 109;
 static const int GET_FOLLOWERS_LIST = 111;
 static const int USER_UNFOLLOW = 112;
+static const int GET_FOLLOW_UP_MSG = 113;
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
@@ -191,6 +192,9 @@ static const int GET_FOLLOWERS_LIST_SUCCESS = 11100;
 static const int USER_UNFOLLOW_SUCCESS = 11200;
 static const int USER_HAVENT_FOLLOW = 11201;
 static const int USER_UNFOLLOW_FAIL = 11202;
+
+// get follow up message code
+static const int GET_FOLLOW_UP_MSG_SUCCESS = 11300;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;
