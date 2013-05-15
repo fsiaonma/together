@@ -18,7 +18,7 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
     int result;
     int ret;
 
-    LOG_INFO << "current_id is " << current_id << " sender_id is " << sender_id << "recipient_id is " << recipient_id << endl;
+    LOG_INFO << "current_id is " << current_id << " sender_id is " << sender_id << " recipient_id is " << recipient_id << endl;
 
     do {
         if (current_id <= 0 || sender_id <= 0 || recipient_id <= 0) {
@@ -38,9 +38,15 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
         }
 
         ret = e.excute("select id,sender_id,recipient_id from t_message where id>" + 
+            Tool::mysql_filter(current_id) + " and sender_id=" + 
+            Tool::mysql_filter(sender_id) + " and recipient_id=" + 
+            Tool::mysql_filter(recipient_id) + " and type=" + Tool::mysql_filter(USER_MODULE) + ";");
+
+        cout << "select id,sender_id,recipient_id from t_message where id>" + 
             Tool::mysql_filter(current_id) + " and sender_id = " + 
             Tool::mysql_filter(sender_id) + " and recipient_id=" + 
-            Tool::mysql_filter(recipient_id) + " and type='user';");
+            Tool::mysql_filter(recipient_id) + " and type='user';" << endl;
+
         if (ret != DB_OK) {
             result = DB_ERROR;
             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
@@ -78,7 +84,7 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
             _get_user_info(recipient_id, recipient_info);
             user_message_info->set_allocated_recipient(recipient_info);
 
-            e.count("t_message", "where id>" + Tool::mysql_filter(current_id) + 
+            e.count("t_message", "where id>=" + Tool::mysql_filter(current_id) + 
                 " and sender_id = " + Tool::mysql_filter(sender_id) + 
                 " and recipient_id=" + Tool::mysql_filter(recipient_id) + 
                 " and type=" + Tool::mysql_filter(USER_MODULE) + ";", count);
