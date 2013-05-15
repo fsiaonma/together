@@ -1,0 +1,14 @@
+package MessageData;
+
+//user data
+message Message_Info {
+    optional int32 id = 1;
+    optional int32 sender_id = 2;
+    optional int32 recipient_id = 3;
+    optional int32 type = 4;
+    optional string content = 5;
+    optional string title = 6;
+    optional int32 file_id = 7;
+    optional int32 room_id = 8;
+    optional int32 time = 9;
+}

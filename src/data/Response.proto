@@ -2,6 +2,7 @@ package Response;
 import "UserResponse.proto";
 import "UserListResponse.proto";
 import "RoomResponse.proto";
+import "data.proto";
 
 message HTTPResponse {
 	optional int32 code = 1;
@@ -16,5 +17,5 @@ message HTTPResponse {
     optional UserListResponse.FollowListResponse follow_list_response = 10;
     optional UserListResponse.FollowedListResponse followed_list_response = 11;
     optional RoomResponse.UserRoomListResponse user_room_list_response = 12;
-    optional UserListResponse.MessageListResponse message_list_response = 13;
+    optional Data.List user_message_list_response = 13;
 }

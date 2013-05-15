@@ -25,6 +25,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "UserData.pb.h"
+#include "MessageData.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace UserResponse {
@@ -37,6 +38,7 @@ void protobuf_ShutdownFile_UserResponse_2eproto();
 class LoginResponse;
 class DetailResponse;
 class UsernameExistResponse;
+class UserMessageResponse;
 
 // ===================================================================
 
@@ -313,6 +315,124 @@ class UsernameExistResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static UsernameExistResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class UserMessageResponse : public ::google::protobuf::Message {
+ public:
+  UserMessageResponse();
+  virtual ~UserMessageResponse();
+
+  UserMessageResponse(const UserMessageResponse& from);
+
+  inline UserMessageResponse& operator=(const UserMessageResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserMessageResponse& default_instance();
+
+  void Swap(UserMessageResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  UserMessageResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UserMessageResponse& from);
+  void MergeFrom(const UserMessageResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .UserData.User_Info sender = 1;
+  inline bool has_sender() const;
+  inline void clear_sender();
+  static const int kSenderFieldNumber = 1;
+  inline const ::UserData::User_Info& sender() const;
+  inline ::UserData::User_Info* mutable_sender();
+  inline ::UserData::User_Info* release_sender();
+  inline void set_allocated_sender(::UserData::User_Info* sender);
+
+  // optional .UserData.User_Info recipient = 2;
+  inline bool has_recipient() const;
+  inline void clear_recipient();
+  static const int kRecipientFieldNumber = 2;
+  inline const ::UserData::User_Info& recipient() const;
+  inline ::UserData::User_Info* mutable_recipient();
+  inline ::UserData::User_Info* release_recipient();
+  inline void set_allocated_recipient(::UserData::User_Info* recipient);
+
+  // optional .MessageData.Message_Info message_info = 3;
+  inline bool has_message_info() const;
+  inline void clear_message_info();
+  static const int kMessageInfoFieldNumber = 3;
+  inline const ::MessageData::Message_Info& message_info() const;
+  inline ::MessageData::Message_Info* mutable_message_info();
+  inline ::MessageData::Message_Info* release_message_info();
+  inline void set_allocated_message_info(::MessageData::Message_Info* message_info);
+
+  // optional int32 message_count = 4;
+  inline bool has_message_count() const;
+  inline void clear_message_count();
+  static const int kMessageCountFieldNumber = 4;
+  inline ::google::protobuf::int32 message_count() const;
+  inline void set_message_count(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:UserResponse.UserMessageResponse)
+ private:
+  inline void set_has_sender();
+  inline void clear_has_sender();
+  inline void set_has_recipient();
+  inline void clear_has_recipient();
+  inline void set_has_message_info();
+  inline void clear_has_message_info();
+  inline void set_has_message_count();
+  inline void clear_has_message_count();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::UserData::User_Info* sender_;
+  ::UserData::User_Info* recipient_;
+  ::MessageData::Message_Info* message_info_;
+  ::google::protobuf::int32 message_count_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static UserMessageResponse* default_instance_;
+};
 // ===================================================================
 
 
@@ -516,6 +636,146 @@ inline bool UsernameExistResponse::is_exist() const {
 inline void UsernameExistResponse::set_is_exist(bool value) {
   set_has_is_exist();
   is_exist_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// UserMessageResponse
+
+// optional .UserData.User_Info sender = 1;
+inline bool UserMessageResponse::has_sender() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void UserMessageResponse::set_has_sender() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void UserMessageResponse::clear_has_sender() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void UserMessageResponse::clear_sender() {
+  if (sender_ != NULL) sender_->::UserData::User_Info::Clear();
+  clear_has_sender();
+}
+inline const ::UserData::User_Info& UserMessageResponse::sender() const {
+  return sender_ != NULL ? *sender_ : *default_instance_->sender_;
+}
+inline ::UserData::User_Info* UserMessageResponse::mutable_sender() {
+  set_has_sender();
+  if (sender_ == NULL) sender_ = new ::UserData::User_Info;
+  return sender_;
+}
+inline ::UserData::User_Info* UserMessageResponse::release_sender() {
+  clear_has_sender();
+  ::UserData::User_Info* temp = sender_;
+  sender_ = NULL;
+  return temp;
+}
+inline void UserMessageResponse::set_allocated_sender(::UserData::User_Info* sender) {
+  delete sender_;
+  sender_ = sender;
+  if (sender) {
+    set_has_sender();
+  } else {
+    clear_has_sender();
+  }
+}
+
+// optional .UserData.User_Info recipient = 2;
+inline bool UserMessageResponse::has_recipient() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void UserMessageResponse::set_has_recipient() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void UserMessageResponse::clear_has_recipient() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void UserMessageResponse::clear_recipient() {
+  if (recipient_ != NULL) recipient_->::UserData::User_Info::Clear();
+  clear_has_recipient();
+}
+inline const ::UserData::User_Info& UserMessageResponse::recipient() const {
+  return recipient_ != NULL ? *recipient_ : *default_instance_->recipient_;
+}
+inline ::UserData::User_Info* UserMessageResponse::mutable_recipient() {
+  set_has_recipient();
+  if (recipient_ == NULL) recipient_ = new ::UserData::User_Info;
+  return recipient_;
+}
+inline ::UserData::User_Info* UserMessageResponse::release_recipient() {
+  clear_has_recipient();
+  ::UserData::User_Info* temp = recipient_;
+  recipient_ = NULL;
+  return temp;
+}
+inline void UserMessageResponse::set_allocated_recipient(::UserData::User_Info* recipient) {
+  delete recipient_;
+  recipient_ = recipient;
+  if (recipient) {
+    set_has_recipient();
+  } else {
+    clear_has_recipient();
+  }
+}
+
+// optional .MessageData.Message_Info message_info = 3;
+inline bool UserMessageResponse::has_message_info() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void UserMessageResponse::set_has_message_info() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void UserMessageResponse::clear_has_message_info() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void UserMessageResponse::clear_message_info() {
+  if (message_info_ != NULL) message_info_->::MessageData::Message_Info::Clear();
+  clear_has_message_info();
+}
+inline const ::MessageData::Message_Info& UserMessageResponse::message_info() const {
+  return message_info_ != NULL ? *message_info_ : *default_instance_->message_info_;
+}
+inline ::MessageData::Message_Info* UserMessageResponse::mutable_message_info() {
+  set_has_message_info();
+  if (message_info_ == NULL) message_info_ = new ::MessageData::Message_Info;
+  return message_info_;
+}
+inline ::MessageData::Message_Info* UserMessageResponse::release_message_info() {
+  clear_has_message_info();
+  ::MessageData::Message_Info* temp = message_info_;
+  message_info_ = NULL;
+  return temp;
+}
+inline void UserMessageResponse::set_allocated_message_info(::MessageData::Message_Info* message_info) {
+  delete message_info_;
+  message_info_ = message_info;
+  if (message_info) {
+    set_has_message_info();
+  } else {
+    clear_has_message_info();
+  }
+}
+
+// optional int32 message_count = 4;
+inline bool UserMessageResponse::has_message_count() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void UserMessageResponse::set_has_message_count() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void UserMessageResponse::clear_has_message_count() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void UserMessageResponse::clear_message_count() {
+  message_count_ = 0;
+  clear_has_message_count();
+}
+inline ::google::protobuf::int32 UserMessageResponse::message_count() const {
+  return message_count_;
+}
+inline void UserMessageResponse::set_message_count(::google::protobuf::int32 value) {
+  set_has_message_count();
+  message_count_ = value;
 }
 
 

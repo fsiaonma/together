@@ -173,6 +173,73 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_follow` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1000;
 
+
+-- -----------------------------------------------------
+-- Table `together`.`t_message`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `together`.`t_message` ;
+
+CREATE  TABLE IF NOT EXISTS `together`.`t_message` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `sender_id` INT NULL ,
+  `recipient_id` INT NULL ,
+  `type` INT NULL ,
+  `content` VARCHAR(255) NULL ,
+  `title` VARCHAR(255) NULL ,
+  `file_id` INT NULL ,
+  `room_id` INT NULL ,
+  `time` TIMESTAMP NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_t_msg_t_user1_idx` (`sender_id` ASC) ,
+  INDEX `fk_t_msg_t_file1_idx` (`file_id` ASC) ,
+  INDEX `fk_t_msg_t_user2_idx` (`recipient_id` ASC) ,
+  INDEX `fk_t_msg_t_room1_idx` (`room_id` ASC) ,
+  CONSTRAINT `fk_t_msg_t_user1`
+    FOREIGN KEY (`sender_id` )
+    REFERENCES `together`.`t_user` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_msg_t_file1`
+    FOREIGN KEY (`file_id` )
+    REFERENCES `together`.`t_file` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_msg_t_user2`
+    FOREIGN KEY (`recipient_id` )
+    REFERENCES `together`.`t_user` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_msg_t_room1`
+    FOREIGN KEY (`room_id` )
+    REFERENCES `together`.`t_room` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `together`.`t_msg_has_t_msg`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `together`.`t_msg_has_t_msg` ;
+
+CREATE  TABLE IF NOT EXISTS `together`.`t_msg_has_t_msg` (
+  `t_msg_id` INT NOT NULL ,
+  `t_msg_id1` INT NOT NULL ,
+  PRIMARY KEY (`t_msg_id`, `t_msg_id1`) ,
+  INDEX `fk_t_msg_has_t_msg_t_msg2_idx` (`t_msg_id1` ASC) ,
+  INDEX `fk_t_msg_has_t_msg_t_msg1_idx` (`t_msg_id` ASC) ,
+  CONSTRAINT `fk_t_msg_has_t_msg_t_msg1`
+    FOREIGN KEY (`t_msg_id` )
+    REFERENCES `together`.`t_message` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_msg_has_t_msg_t_msg2`
+    FOREIGN KEY (`t_msg_id1` )
+    REFERENCES `together`.`t_message` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `together` ;
 
 -- -----------------------------------------------------

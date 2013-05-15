@@ -34,11 +34,12 @@ void protobuf_AssignDesc_data_2eproto() {
       "data.proto");
   GOOGLE_CHECK(file != NULL);
   List_descriptor_ = file->message_type(0);
-  static const int List_offsets_[4] = {
+  static const int List_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, is_end_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, room_info_list_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_info_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_detail_list_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_message_info_),
   };
   List_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -85,11 +86,13 @@ void protobuf_AddDesc_data_2eproto() {
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\ndata.proto\022\004Data\032\016RoomData.proto\032\016User"
-    "Data.proto\032\022UserResponse.proto\"\242\001\n\004List\022"
+    "Data.proto\032\022UserResponse.proto\"\340\001\n\004List\022"
     "\016\n\006is_end\030\001 \001(\010\022*\n\016room_info_list\030\002 \003(\0132"
     "\022.RoomData.RoomInfo\022&\n\tuser_info\030\003 \003(\0132\023"
     ".UserData.User_Info\0226\n\020user_detail_list\030"
-    "\004 \003(\0132\034.UserResponse.DetailResponse", 235);
+    "\004 \003(\0132\034.UserResponse.DetailResponse\022<\n\021u"
+    "ser_message_info\030\005 \003(\0132!.UserResponse.Us"
+    "erMessageResponse", 297);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   List::default_instance_ = new List();
@@ -111,6 +114,7 @@ const int List::kIsEndFieldNumber;
 const int List::kRoomInfoListFieldNumber;
 const int List::kUserInfoFieldNumber;
 const int List::kUserDetailListFieldNumber;
+const int List::kUserMessageInfoFieldNumber;
 #endif  // !_MSC_VER
 
 List::List()
@@ -170,6 +174,7 @@ void List::Clear() {
   room_info_list_.Clear();
   user_info_.Clear();
   user_detail_list_.Clear();
+  user_message_info_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -236,6 +241,21 @@ bool List::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(34)) goto parse_user_detail_list;
+        if (input->ExpectTag(42)) goto parse_user_message_info;
+        break;
+      }
+
+      // repeated .UserResponse.UserMessageResponse user_message_info = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_message_info:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_user_message_info()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(42)) goto parse_user_message_info;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -281,6 +301,12 @@ void List::SerializeWithCachedSizes(
       4, this->user_detail_list(i), output);
   }
 
+  // repeated .UserResponse.UserMessageResponse user_message_info = 5;
+  for (int i = 0; i < this->user_message_info_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->user_message_info(i), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -313,6 +339,13 @@ void List::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->user_detail_list(i), target);
+  }
+
+  // repeated .UserResponse.UserMessageResponse user_message_info = 5;
+  for (int i = 0; i < this->user_message_info_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->user_message_info(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -356,6 +389,14 @@ int List::ByteSize() const {
         this->user_detail_list(i));
   }
 
+  // repeated .UserResponse.UserMessageResponse user_message_info = 5;
+  total_size += 1 * this->user_message_info_size();
+  for (int i = 0; i < this->user_message_info_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->user_message_info(i));
+  }
+
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -384,6 +425,7 @@ void List::MergeFrom(const List& from) {
   room_info_list_.MergeFrom(from.room_info_list_);
   user_info_.MergeFrom(from.user_info_);
   user_detail_list_.MergeFrom(from.user_detail_list_);
+  user_message_info_.MergeFrom(from.user_message_info_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_is_end()) {
       set_is_end(from.is_end());
@@ -415,6 +457,7 @@ void List::Swap(List* other) {
     room_info_list_.Swap(&other->room_info_list_);
     user_info_.Swap(&other->user_info_);
     user_detail_list_.Swap(&other->user_detail_list_);
+    user_message_info_.Swap(&other->user_message_info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

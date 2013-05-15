@@ -4,7 +4,7 @@
  * get user info
  *  
  * @method _get_user_info (private)
- * @param {string} username username which is used for getting user info.
+ * @param {int} uid uid which is used for getting user info.
  * @param {UserData::User_Info*} user_info respone data.
  * @return {int} _get_user_info status. 
  */

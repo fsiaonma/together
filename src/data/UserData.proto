@@ -15,10 +15,3 @@ message User_Info {
     optional int32 sex = 11;
     optional int32 pic_id = 12;
 }
-
-// message data
-message Message_Info {
-    optional int sender_id = 1;
-    optional int recipient_id = 2;
-    optional string content = 3;
-}

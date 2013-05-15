@@ -106,14 +106,14 @@ int user_handler(process *process, map<string, string> param) {
             unfollow(Tool::S2I(param["uid"]), param["sid"], response_data, send_len);
             break ;
         }
-        // case GET_FOLLOW_UP_MSG: {
-        //     if (param.count("current_id") == 0 || param.count("sender_id") == 0 || param.count("recipient_id") == 0) {
-        //         LOG_ERROR << "current_id or sender_id or recipient_id is not exist" << endl;
-        //         return -1;
-        //     }
-        //     get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["sender_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
-        //     break;
-        // }
+        case GET_FOLLOW_UP_MSG: {
+            if (param.count("current_id") == 0 || param.count("sender_id") == 0 || param.count("recipient_id") == 0) {
+                LOG_ERROR << "current_id or sender_id or recipient_id is not exist" << endl;
+                return -1;
+            }
+            get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["sender_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
+            break;
+        }
         // case GET_PREVIOUS_MSG: {
         //     if (param.count("current_id") == 0 || param.count("msgs_num") || param.count("sender_id") == 0 || param.count("recipient_id") == 0) {
         //         LOG_ERROR << "current_id or msgs_num or sender_id or recipient_id is not exist" << endl;

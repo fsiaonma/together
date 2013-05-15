@@ -1,5 +1,6 @@
 package UserResponse;
 import "UserData.proto";
+import "MessageData.proto";
 
 // user login
 message LoginResponse {
@@ -16,4 +17,12 @@ message DetailResponse {
 // is user exist
 message UsernameExistResponse {
     optional bool is_exist = 1;
+}
+
+// message data
+message UserMessageResponse {
+    optional UserData.User_Info sender = 1;
+    optional UserData.User_Info recipient = 2;
+    optional MessageData.Message_Info message_info = 3;
+    optional int32 message_count = 4;
 }
