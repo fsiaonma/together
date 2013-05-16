@@ -787,25 +787,34 @@ void read_upload_request(process* process)
 void read_tcp_request(process* process)
 {
 	int sock = process->sock;
-	char* buf = process->buf;
-	char read_complete = 0;
-
+	char* _buf = process->buf;
 	ssize_t count;
-
+	string request;
+	// int content_length = 0;
+	int other_sign_num = 0;
+	string module_name;
+	// 接收HTTP请求
 	while (1) {
-		count = recv(sock, buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
+		count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
 		if (count == -1) {
 			if (errno == EAGAIN)
 				break;
 		} else if (count == 0) {
-	    	// 被客户端关闭连接
-			del_timer(process->sock);
+	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
 			cleanup(process);
-			return;
+			break;
 		} else if (count > 0) {
 			process->read_pos += count;
+			_buf[process->read_pos] = 0;
+			request.append(_buf);
+			if (process->read_pos == process->kBufferSize)
+			{
+				process->read_pos = 0;
+			}
 		}
 	}
+	LOG_INFO << "request|" << request << endl;
+
 	#if 0
 	int header_length = process->read_pos;
 	LOG_INFO << "-----recv-----" << endl;
@@ -829,9 +838,28 @@ void read_tcp_request(process* process)
 		// handle_read_request(process, buf);
 	}
 	#endif
-	process->status = STATUS_SEND_RESPONSE_HEADER;
-    // 修改此 sock 的监听状态，改为监视写状态
-	event.data.fd = process->sock;
-	event.events = EPOLLOUT;
-	epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
+	// process->response_code = 200;
+	// process->status = STATUS_SEND_RESPONSE_HEADER;
+ //    // 修改此 sock 的监听状态，改为监视写状态
+	// event.data.fd = process->sock;
+	// event.events = EPOLLOUT;
+	// epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
+	
+	vector<string> param_list = Tool::split(Tool::url_decode(request), "&");
+	int param_list_len = param_list.size();
+	map<string, string> param;
+	for (int i = 0; i < param_list_len; i++)
+	{
+		LOG_DEBUG << param_list[i] << endl;
+	    vector<string> _param = Tool::split(param_list[i], "=");
+	    if (_param.size() == 2)
+	    {
+	        // LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
+	        param.insert(pair<string, string>(_param[0], _param[1]));
+	    } else {
+	    	LOG_ERROR << "_param size err" << endl;
+	    	BAD_REQUEST
+	    	return;
+	    }
+	}
 }
