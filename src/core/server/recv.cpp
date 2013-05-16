@@ -189,9 +189,9 @@
 	LOG_INFO << "module_name|" << module_name << endl;
 
 	string params;
-	if (question_mark > 0 && last_blank > 0 && (last_blank - question_mark > 2))
+	if (question_mark > 0 && last_blank > 0 && (last_blank - question_mark > 1))
 	{
-		params = firstline.substr(question_mark + 1, last_blank - question_mark - 2);
+		params = firstline.substr(question_mark + 1, last_blank - question_mark - 1);
 	} else {
 		LOG_ERROR << "param err|" << params << endl;
 		BAD_REQUEST

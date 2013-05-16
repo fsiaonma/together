@@ -137,6 +137,18 @@ class List : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
       mutable_user_detail_list();
 
+  // repeated .UserResponse.UserMessageResponse user_message_info = 5;
+  inline int user_message_info_size() const;
+  inline void clear_user_message_info();
+  static const int kUserMessageInfoFieldNumber = 5;
+  inline const ::UserResponse::UserMessageResponse& user_message_info(int index) const;
+  inline ::UserResponse::UserMessageResponse* mutable_user_message_info(int index);
+  inline ::UserResponse::UserMessageResponse* add_user_message_info();
+  inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >&
+      user_message_info() const;
+  inline ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >*
+      mutable_user_message_info();
+
   // @@protoc_insertion_point(class_scope:Data.List)
  private:
   inline void set_has_is_end();
@@ -147,10 +159,11 @@ class List : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_list_;
   ::google::protobuf::RepeatedPtrField< ::UserData::User_Info > user_info_;
   ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse > user_detail_list_;
+  ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse > user_message_info_;
   bool is_end_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
@@ -261,6 +274,31 @@ List::user_detail_list() const {
 inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
 List::mutable_user_detail_list() {
   return &user_detail_list_;
+}
+
+// repeated .UserResponse.UserMessageResponse user_message_info = 5;
+inline int List::user_message_info_size() const {
+  return user_message_info_.size();
+}
+inline void List::clear_user_message_info() {
+  user_message_info_.Clear();
+}
+inline const ::UserResponse::UserMessageResponse& List::user_message_info(int index) const {
+  return user_message_info_.Get(index);
+}
+inline ::UserResponse::UserMessageResponse* List::mutable_user_message_info(int index) {
+  return user_message_info_.Mutable(index);
+}
+inline ::UserResponse::UserMessageResponse* List::add_user_message_info() {
+  return user_message_info_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >&
+List::user_message_info() const {
+  return user_message_info_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >*
+List::mutable_user_message_info() {
+  return &user_message_info_;
 }
 
 

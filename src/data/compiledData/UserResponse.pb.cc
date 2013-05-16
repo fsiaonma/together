@@ -29,6 +29,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UsernameExistResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UsernameExistResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* UserMessageResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  UserMessageResponse_reflection_ = NULL;
 
 }  // namespace
 
@@ -86,6 +89,24 @@ void protobuf_AssignDesc_UserResponse_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UsernameExistResponse));
+  UserMessageResponse_descriptor_ = file->message_type(3);
+  static const int UserMessageResponse_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, sender_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, recipient_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, message_info_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, message_count_),
+  };
+  UserMessageResponse_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      UserMessageResponse_descriptor_,
+      UserMessageResponse::default_instance_,
+      UserMessageResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UserMessageResponse, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(UserMessageResponse));
 }
 
 namespace {
@@ -104,6 +125,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     DetailResponse_descriptor_, &DetailResponse::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UsernameExistResponse_descriptor_, &UsernameExistResponse::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    UserMessageResponse_descriptor_, &UserMessageResponse::default_instance());
 }
 
 }  // namespace
@@ -115,6 +138,8 @@ void protobuf_ShutdownFile_UserResponse_2eproto() {
   delete DetailResponse_reflection_;
   delete UsernameExistResponse::default_instance_;
   delete UsernameExistResponse_reflection_;
+  delete UserMessageResponse::default_instance_;
+  delete UserMessageResponse_reflection_;
 }
 
 void protobuf_AddDesc_UserResponse_2eproto() {
@@ -124,21 +149,29 @@ void protobuf_AddDesc_UserResponse_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::UserData::protobuf_AddDesc_UserData_2eproto();
+  ::MessageData::protobuf_AddDesc_MessageData_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\022UserResponse.proto\022\014UserResponse\032\016User"
-    "Data.proto\"D\n\rLoginResponse\022\013\n\003sid\030\001 \001(\t"
-    "\022&\n\tUser_Info\030\002 \001(\0132\023.UserData.User_Info"
-    "\"K\n\016DetailResponse\022\021\n\tis_follow\030\001 \001(\010\022&\n"
-    "\tUser_Info\030\002 \001(\0132\023.UserData.User_Info\")\n"
-    "\025UsernameExistResponse\022\020\n\010is_exist\030\001 \001(\010", 240);
+    "Data.proto\032\021MessageData.proto\"D\n\rLoginRe"
+    "sponse\022\013\n\003sid\030\001 \001(\t\022&\n\tUser_Info\030\002 \001(\0132\023"
+    ".UserData.User_Info\"K\n\016DetailResponse\022\021\n"
+    "\tis_follow\030\001 \001(\010\022&\n\tUser_Info\030\002 \001(\0132\023.Us"
+    "erData.User_Info\")\n\025UsernameExistRespons"
+    "e\022\020\n\010is_exist\030\001 \001(\010\"\252\001\n\023UserMessageRespo"
+    "nse\022#\n\006sender\030\001 \001(\0132\023.UserData.User_Info"
+    "\022&\n\trecipient\030\002 \001(\0132\023.UserData.User_Info"
+    "\022/\n\014message_info\030\003 \001(\0132\031.MessageData.Mes"
+    "sage_Info\022\025\n\rmessage_count\030\004 \001(\005", 432);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserResponse.proto", &protobuf_RegisterTypes);
   LoginResponse::default_instance_ = new LoginResponse();
   DetailResponse::default_instance_ = new DetailResponse();
   UsernameExistResponse::default_instance_ = new UsernameExistResponse();
+  UserMessageResponse::default_instance_ = new UserMessageResponse();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   DetailResponse::default_instance_->InitAsDefaultInstance();
   UsernameExistResponse::default_instance_->InitAsDefaultInstance();
+  UserMessageResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_UserResponse_2eproto);
 }
 
@@ -872,6 +905,349 @@ void UsernameExistResponse::Swap(UsernameExistResponse* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = UsernameExistResponse_descriptor_;
   metadata.reflection = UsernameExistResponse_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int UserMessageResponse::kSenderFieldNumber;
+const int UserMessageResponse::kRecipientFieldNumber;
+const int UserMessageResponse::kMessageInfoFieldNumber;
+const int UserMessageResponse::kMessageCountFieldNumber;
+#endif  // !_MSC_VER
+
+UserMessageResponse::UserMessageResponse()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void UserMessageResponse::InitAsDefaultInstance() {
+  sender_ = const_cast< ::UserData::User_Info*>(&::UserData::User_Info::default_instance());
+  recipient_ = const_cast< ::UserData::User_Info*>(&::UserData::User_Info::default_instance());
+  message_info_ = const_cast< ::MessageData::Message_Info*>(&::MessageData::Message_Info::default_instance());
+}
+
+UserMessageResponse::UserMessageResponse(const UserMessageResponse& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void UserMessageResponse::SharedCtor() {
+  _cached_size_ = 0;
+  sender_ = NULL;
+  recipient_ = NULL;
+  message_info_ = NULL;
+  message_count_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+UserMessageResponse::~UserMessageResponse() {
+  SharedDtor();
+}
+
+void UserMessageResponse::SharedDtor() {
+  if (this != default_instance_) {
+    delete sender_;
+    delete recipient_;
+    delete message_info_;
+  }
+}
+
+void UserMessageResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserMessageResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return UserMessageResponse_descriptor_;
+}
+
+const UserMessageResponse& UserMessageResponse::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
+  return *default_instance_;
+}
+
+UserMessageResponse* UserMessageResponse::default_instance_ = NULL;
+
+UserMessageResponse* UserMessageResponse::New() const {
+  return new UserMessageResponse;
+}
+
+void UserMessageResponse::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_sender()) {
+      if (sender_ != NULL) sender_->::UserData::User_Info::Clear();
+    }
+    if (has_recipient()) {
+      if (recipient_ != NULL) recipient_->::UserData::User_Info::Clear();
+    }
+    if (has_message_info()) {
+      if (message_info_ != NULL) message_info_->::MessageData::Message_Info::Clear();
+    }
+    message_count_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool UserMessageResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .UserData.User_Info sender = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_sender()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_recipient;
+        break;
+      }
+
+      // optional .UserData.User_Info recipient = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_recipient:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_recipient()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_message_info;
+        break;
+      }
+
+      // optional .MessageData.Message_Info message_info = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_message_info:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_message_info()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(32)) goto parse_message_count;
+        break;
+      }
+
+      // optional int32 message_count = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_message_count:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &message_count_)));
+          set_has_message_count();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void UserMessageResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional .UserData.User_Info sender = 1;
+  if (has_sender()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->sender(), output);
+  }
+
+  // optional .UserData.User_Info recipient = 2;
+  if (has_recipient()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->recipient(), output);
+  }
+
+  // optional .MessageData.Message_Info message_info = 3;
+  if (has_message_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->message_info(), output);
+  }
+
+  // optional int32 message_count = 4;
+  if (has_message_count()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->message_count(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* UserMessageResponse::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional .UserData.User_Info sender = 1;
+  if (has_sender()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->sender(), target);
+  }
+
+  // optional .UserData.User_Info recipient = 2;
+  if (has_recipient()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->recipient(), target);
+  }
+
+  // optional .MessageData.Message_Info message_info = 3;
+  if (has_message_info()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->message_info(), target);
+  }
+
+  // optional int32 message_count = 4;
+  if (has_message_count()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->message_count(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int UserMessageResponse::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional .UserData.User_Info sender = 1;
+    if (has_sender()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->sender());
+    }
+
+    // optional .UserData.User_Info recipient = 2;
+    if (has_recipient()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->recipient());
+    }
+
+    // optional .MessageData.Message_Info message_info = 3;
+    if (has_message_info()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->message_info());
+    }
+
+    // optional int32 message_count = 4;
+    if (has_message_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->message_count());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserMessageResponse::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const UserMessageResponse* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const UserMessageResponse*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void UserMessageResponse::MergeFrom(const UserMessageResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_sender()) {
+      mutable_sender()->::UserData::User_Info::MergeFrom(from.sender());
+    }
+    if (from.has_recipient()) {
+      mutable_recipient()->::UserData::User_Info::MergeFrom(from.recipient());
+    }
+    if (from.has_message_info()) {
+      mutable_message_info()->::MessageData::Message_Info::MergeFrom(from.message_info());
+    }
+    if (from.has_message_count()) {
+      set_message_count(from.message_count());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void UserMessageResponse::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserMessageResponse::CopyFrom(const UserMessageResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserMessageResponse::IsInitialized() const {
+
+  return true;
+}
+
+void UserMessageResponse::Swap(UserMessageResponse* other) {
+  if (other != this) {
+    std::swap(sender_, other->sender_);
+    std::swap(recipient_, other->recipient_);
+    std::swap(message_info_, other->message_info_);
+    std::swap(message_count_, other->message_count_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata UserMessageResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = UserMessageResponse_descriptor_;
+  metadata.reflection = UserMessageResponse_reflection_;
   return metadata;
 }
 

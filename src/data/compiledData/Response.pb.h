@@ -27,6 +27,7 @@
 #include "UserResponse.pb.h"
 #include "UserListResponse.pb.h"
 #include "RoomResponse.pb.h"
+#include "data.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace Response {
@@ -201,6 +202,15 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::RoomResponse::UserRoomListResponse* release_user_room_list_response();
   inline void set_allocated_user_room_list_response(::RoomResponse::UserRoomListResponse* user_room_list_response);
 
+  // optional .Data.List user_message_list_response = 13;
+  inline bool has_user_message_list_response() const;
+  inline void clear_user_message_list_response();
+  static const int kUserMessageListResponseFieldNumber = 13;
+  inline const ::Data::List& user_message_list_response() const;
+  inline ::Data::List* mutable_user_message_list_response();
+  inline ::Data::List* release_user_message_list_response();
+  inline void set_allocated_user_message_list_response(::Data::List* user_message_list_response);
+
   // @@protoc_insertion_point(class_scope:Response.HTTPResponse)
  private:
   inline void set_has_code();
@@ -227,6 +237,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_followed_list_response();
   inline void set_has_user_room_list_response();
   inline void clear_has_user_room_list_response();
+  inline void set_has_user_message_list_response();
+  inline void clear_has_user_message_list_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -242,9 +254,10 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::UserListResponse::FollowListResponse* follow_list_response_;
   ::UserListResponse::FollowedListResponse* followed_list_response_;
   ::RoomResponse::UserRoomListResponse* user_room_list_response_;
+  ::Data::List* user_message_list_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -713,6 +726,44 @@ inline void HTTPResponse::set_allocated_user_room_list_response(::RoomResponse::
     set_has_user_room_list_response();
   } else {
     clear_has_user_room_list_response();
+  }
+}
+
+// optional .Data.List user_message_list_response = 13;
+inline bool HTTPResponse::has_user_message_list_response() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void HTTPResponse::set_has_user_message_list_response() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void HTTPResponse::clear_has_user_message_list_response() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void HTTPResponse::clear_user_message_list_response() {
+  if (user_message_list_response_ != NULL) user_message_list_response_->::Data::List::Clear();
+  clear_has_user_message_list_response();
+}
+inline const ::Data::List& HTTPResponse::user_message_list_response() const {
+  return user_message_list_response_ != NULL ? *user_message_list_response_ : *default_instance_->user_message_list_response_;
+}
+inline ::Data::List* HTTPResponse::mutable_user_message_list_response() {
+  set_has_user_message_list_response();
+  if (user_message_list_response_ == NULL) user_message_list_response_ = new ::Data::List;
+  return user_message_list_response_;
+}
+inline ::Data::List* HTTPResponse::release_user_message_list_response() {
+  clear_has_user_message_list_response();
+  ::Data::List* temp = user_message_list_response_;
+  user_message_list_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_user_message_list_response(::Data::List* user_message_list_response) {
+  delete user_message_list_response_;
+  user_message_list_response_ = user_message_list_response;
+  if (user_message_list_response) {
+    set_has_user_message_list_response();
+  } else {
+    clear_has_user_message_list_response();
   }
 }
 

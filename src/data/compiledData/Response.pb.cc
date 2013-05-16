@@ -34,7 +34,7 @@ void protobuf_AssignDesc_Response_2eproto() {
       "Response.proto");
   GOOGLE_CHECK(file != NULL);
   HTTPResponse_descriptor_ = file->message_type(0);
-  static const int HTTPResponse_offsets_[12] = {
+  static const int HTTPResponse_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
@@ -47,6 +47,7 @@ void protobuf_AssignDesc_Response_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, follow_list_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, followed_list_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, user_room_list_response_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, user_message_list_response_),
   };
   HTTPResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -91,26 +92,28 @@ void protobuf_AddDesc_Response_2eproto() {
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
   ::UserListResponse::protobuf_AddDesc_UserListResponse_2eproto();
   ::RoomResponse::protobuf_AddDesc_RoomResponse_2eproto();
+  ::Data::protobuf_AddDesc_data_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
     ".proto\032\026UserListResponse.proto\032\022RoomResp"
-    "onse.proto\"\371\004\n\014HTTPResponse\022\014\n\004code\030\001 \001("
-    "\005\022\017\n\007success\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\0223\n\016login"
-    "_response\030\004 \001(\0132\033.UserResponse.LoginResp"
-    "onse\0225\n\017detail_response\030\005 \001(\0132\034.UserResp"
-    "onse.DetailResponse\022;\n\016exist_response\030\006 "
-    "\001(\0132#.UserResponse.UsernameExistResponse"
-    "\022>\n\022room_list_response\030\007 \001(\0132\".RoomRespo"
-    "nse.ShowRoomListResponse\022G\n\031room_people_"
-    "list_response\030\010 \001(\0132$.RoomResponse.RoomP"
-    "eopleListResponse\022:\n\022room_info_response\030"
-    "\t \001(\0132\036.RoomResponse.RoomInfoResponse\022B\n"
-    "\024follow_list_response\030\n \001(\0132$.UserListRe"
-    "sponse.FollowListResponse\022F\n\026followed_li"
-    "st_response\030\013 \001(\0132&.UserListResponse.Fol"
-    "lowedListResponse\022C\n\027user_room_list_resp"
-    "onse\030\014 \001(\0132\".RoomResponse.UserRoomListRe"
-    "sponse", 726);
+    "onse.proto\032\ndata.proto\"\251\005\n\014HTTPResponse\022"
+    "\014\n\004code\030\001 \001(\005\022\017\n\007success\030\002 \001(\010\022\013\n\003msg\030\003 "
+    "\001(\t\0223\n\016login_response\030\004 \001(\0132\033.UserRespon"
+    "se.LoginResponse\0225\n\017detail_response\030\005 \001("
+    "\0132\034.UserResponse.DetailResponse\022;\n\016exist"
+    "_response\030\006 \001(\0132#.UserResponse.UsernameE"
+    "xistResponse\022>\n\022room_list_response\030\007 \001(\013"
+    "2\".RoomResponse.ShowRoomListResponse\022G\n\031"
+    "room_people_list_response\030\010 \001(\0132$.RoomRe"
+    "sponse.RoomPeopleListResponse\022:\n\022room_in"
+    "fo_response\030\t \001(\0132\036.RoomResponse.RoomInf"
+    "oResponse\022B\n\024follow_list_response\030\n \001(\0132"
+    "$.UserListResponse.FollowListResponse\022F\n"
+    "\026followed_list_response\030\013 \001(\0132&.UserList"
+    "Response.FollowedListResponse\022C\n\027user_ro"
+    "om_list_response\030\014 \001(\0132\".RoomResponse.Us"
+    "erRoomListResponse\022.\n\032user_message_list_"
+    "response\030\r \001(\0132\n.Data.List", 786);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -140,6 +143,7 @@ const int HTTPResponse::kRoomInfoResponseFieldNumber;
 const int HTTPResponse::kFollowListResponseFieldNumber;
 const int HTTPResponse::kFollowedListResponseFieldNumber;
 const int HTTPResponse::kUserRoomListResponseFieldNumber;
+const int HTTPResponse::kUserMessageListResponseFieldNumber;
 #endif  // !_MSC_VER
 
 HTTPResponse::HTTPResponse()
@@ -157,6 +161,7 @@ void HTTPResponse::InitAsDefaultInstance() {
   follow_list_response_ = const_cast< ::UserListResponse::FollowListResponse*>(&::UserListResponse::FollowListResponse::default_instance());
   followed_list_response_ = const_cast< ::UserListResponse::FollowedListResponse*>(&::UserListResponse::FollowedListResponse::default_instance());
   user_room_list_response_ = const_cast< ::RoomResponse::UserRoomListResponse*>(&::RoomResponse::UserRoomListResponse::default_instance());
+  user_message_list_response_ = const_cast< ::Data::List*>(&::Data::List::default_instance());
 }
 
 HTTPResponse::HTTPResponse(const HTTPResponse& from)
@@ -179,6 +184,7 @@ void HTTPResponse::SharedCtor() {
   follow_list_response_ = NULL;
   followed_list_response_ = NULL;
   user_room_list_response_ = NULL;
+  user_message_list_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -200,6 +206,7 @@ void HTTPResponse::SharedDtor() {
     delete follow_list_response_;
     delete followed_list_response_;
     delete user_room_list_response_;
+    delete user_message_list_response_;
   }
 }
 
@@ -261,6 +268,9 @@ void HTTPResponse::Clear() {
     }
     if (has_user_room_list_response()) {
       if (user_room_list_response_ != NULL) user_room_list_response_->::RoomResponse::UserRoomListResponse::Clear();
+    }
+    if (has_user_message_list_response()) {
+      if (user_message_list_response_ != NULL) user_message_list_response_->::Data::List::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -443,6 +453,20 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(106)) goto parse_user_message_list_response;
+        break;
+      }
+
+      // optional .Data.List user_message_list_response = 13;
+      case 13: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_message_list_response:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_user_message_list_response()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -538,6 +562,12 @@ void HTTPResponse::SerializeWithCachedSizes(
       12, this->user_room_list_response(), output);
   }
 
+  // optional .Data.List user_message_list_response = 13;
+  if (has_user_message_list_response()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      13, this->user_message_list_response(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -627,6 +657,13 @@ void HTTPResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         12, this->user_room_list_response(), target);
+  }
+
+  // optional .Data.List user_message_list_response = 13;
+  if (has_user_message_list_response()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        13, this->user_message_list_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -724,6 +761,13 @@ int HTTPResponse::ByteSize() const {
           this->user_room_list_response());
     }
 
+    // optional .Data.List user_message_list_response = 13;
+    if (has_user_message_list_response()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->user_message_list_response());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -789,6 +833,9 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_user_room_list_response()) {
       mutable_user_room_list_response()->::RoomResponse::UserRoomListResponse::MergeFrom(from.user_room_list_response());
     }
+    if (from.has_user_message_list_response()) {
+      mutable_user_message_list_response()->::Data::List::MergeFrom(from.user_message_list_response());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -824,6 +871,7 @@ void HTTPResponse::Swap(HTTPResponse* other) {
     std::swap(follow_list_response_, other->follow_list_response_);
     std::swap(followed_list_response_, other->followed_list_response_);
     std::swap(user_room_list_response_, other->user_room_list_response_);
+    std::swap(user_message_list_response_, other->user_message_list_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
