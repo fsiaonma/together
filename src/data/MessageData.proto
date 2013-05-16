@@ -10,5 +10,5 @@ message Message_Info {
     optional string title = 6;
     optional int32 file_id = 7;
     optional int32 room_id = 8;
-    optional int32 time = 9;
+    optional string time = 9;
 }

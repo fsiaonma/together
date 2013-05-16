@@ -90,7 +90,7 @@ void protobuf_AddDesc_MessageData_2eproto() {
     "sage_Info\022\n\n\002id\030\001 \001(\005\022\021\n\tsender_id\030\002 \001(\005"
     "\022\024\n\014recipient_id\030\003 \001(\005\022\014\n\004type\030\004 \001(\005\022\017\n\007"
     "content\030\005 \001(\t\022\r\n\005title\030\006 \001(\t\022\017\n\007file_id\030"
-    "\007 \001(\005\022\017\n\007room_id\030\010 \001(\005\022\014\n\004time\030\t \001(\005", 196);
+    "\007 \001(\005\022\017\n\007room_id\030\010 \001(\005\022\014\n\004time\030\t \001(\t", 196);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageData.proto", &protobuf_RegisterTypes);
   Message_Info::default_instance_ = new Message_Info();
@@ -143,7 +143,7 @@ void Message_Info::SharedCtor() {
   title_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   file_id_ = 0;
   room_id_ = 0;
-  time_ = 0;
+  time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -157,6 +157,9 @@ void Message_Info::SharedDtor() {
   }
   if (title_ != &::google::protobuf::internal::kEmptyString) {
     delete title_;
+  }
+  if (time_ != &::google::protobuf::internal::kEmptyString) {
+    delete time_;
   }
   if (this != default_instance_) {
   }
@@ -203,7 +206,11 @@ void Message_Info::Clear() {
     room_id_ = 0;
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    time_ = 0;
+    if (has_time()) {
+      if (time_ != &::google::protobuf::internal::kEmptyString) {
+        time_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -340,19 +347,20 @@ bool Message_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(72)) goto parse_time;
+        if (input->ExpectTag(74)) goto parse_time;
         break;
       }
 
-      // optional int32 time = 9;
+      // optional string time = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_time:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &time_)));
-          set_has_time();
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_time()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->time().data(), this->time().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -426,9 +434,13 @@ void Message_Info::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->room_id(), output);
   }
 
-  // optional int32 time = 9;
+  // optional string time = 9;
   if (has_time()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->time(), output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->time().data(), this->time().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      9, this->time(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -489,9 +501,14 @@ void Message_Info::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->room_id(), target);
   }
 
-  // optional int32 time = 9;
+  // optional string time = 9;
   if (has_time()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->time(), target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->time().data(), this->time().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        9, this->time(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -563,10 +580,10 @@ int Message_Info::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 time = 9;
+    // optional string time = 9;
     if (has_time()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->time());
     }
 

@@ -786,13 +786,14 @@ void read_upload_request(process* process)
  */
 void read_tcp_request(process* process)
 {
+	int s;
 	int sock = process->sock;
 	char* _buf = process->buf;
 	ssize_t count;
 	string request;
-	// int content_length = 0;
-	int other_sign_num = 0;
+
 	string module_name;
+    memset(process->buf, 0, process->kBufferSize);
 	// 接收HTTP请求
 	while (1) {
 		count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
@@ -802,7 +803,7 @@ void read_tcp_request(process* process)
 		} else if (count == 0) {
 	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
 			cleanup(process);
-			break;
+			return;
 		} else if (count > 0) {
 			process->read_pos += count;
 			_buf[process->read_pos] = 0;
@@ -814,36 +815,8 @@ void read_tcp_request(process* process)
 		}
 	}
 	LOG_INFO << "request|" << request << endl;
+	reset_process(process);
 
-	#if 0
-	int header_length = process->read_pos;
-	LOG_INFO << "-----recv-----" << endl;
-	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
-	buf[header_length]=0;
-	LOG_INFO << buf << endl;
-  	// 请求超长，不处理了
-	if (header_length > process->kBufferSize - 1) {
-		BAD_REQUEST
-		return;
-	}
-	#if 0
-	read_complete =(strstr(buf, "\n\n") != 0) ||(strstr(buf, "\r\n\r\n") != 0);
-	#else
-	read_complete = 1;
-	#endif
-	if (read_complete) {
-    	// 重置读取位置
-		reset_process(process);
-		process->response_code = 200;
-		// handle_read_request(process, buf);
-	}
-	#endif
-	// process->response_code = 200;
-	// process->status = STATUS_SEND_RESPONSE_HEADER;
- //    // 修改此 sock 的监听状态，改为监视写状态
-	// event.data.fd = process->sock;
-	// event.events = EPOLLOUT;
-	// epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 	
 	vector<string> param_list = Tool::split(Tool::url_decode(request), "&");
 	int param_list_len = param_list.size();
@@ -854,12 +827,39 @@ void read_tcp_request(process* process)
 	    vector<string> _param = Tool::split(param_list[i], "=");
 	    if (_param.size() == 2)
 	    {
-	        // LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
 	        param.insert(pair<string, string>(_param[0], _param[1]));
 	    } else {
 	    	LOG_ERROR << "_param size err" << endl;
-	    	BAD_REQUEST
-	    	return;
+	    	char r[10];
+	    	sprintf(r, "%d", CHAT_PARAM_ERR);
+	    	write_to_header(r);
+	    	send(sock, r, strlen(r), 0);
+	    	return ;
 	    }
 	}
+	list<int> send_sock_list;
+	s = chat_handler(process, param, send_sock_list);
+	if (s < 0) {
+		LOG_INFO << "action type error" << endl;
+    	char r[10];
+    	sprintf(r, "%d", CHAT_HANDLE_ERR);
+    	write_to_header(r);
+    	send(sock, r, strlen(r), 0);
+		return ;
+	}
+	// event.data.fd = process->sock;
+	// event.events = EPOLLOUT;
+	// s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
+
+
+	list<int>::iterator iter;
+    for(iter = send_sock_list.begin(); iter != send_sock_list.end(); iter++)
+    {
+        // LOG_INFO << "send sock|" << *iter << endl;
+        send(*iter, process->buf, strlen(process->buf), 0);
+    }
+
+ //    event.data.fd = process->sock;
+	// event.events = EPOLLIN;
+	// epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 }

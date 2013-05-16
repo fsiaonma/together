@@ -157,12 +157,17 @@ class Message_Info : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 room_id() const;
   inline void set_room_id(::google::protobuf::int32 value);
 
-  // optional int32 time = 9;
+  // optional string time = 9;
   inline bool has_time() const;
   inline void clear_time();
   static const int kTimeFieldNumber = 9;
-  inline ::google::protobuf::int32 time() const;
-  inline void set_time(::google::protobuf::int32 value);
+  inline const ::std::string& time() const;
+  inline void set_time(const ::std::string& value);
+  inline void set_time(const char* value);
+  inline void set_time(const char* value, size_t size);
+  inline ::std::string* mutable_time();
+  inline ::std::string* release_time();
+  inline void set_allocated_time(::std::string* time);
 
   // @@protoc_insertion_point(class_scope:MessageData.Message_Info)
  private:
@@ -195,7 +200,7 @@ class Message_Info : public ::google::protobuf::Message {
   ::std::string* title_;
   ::google::protobuf::int32 file_id_;
   ::google::protobuf::int32 room_id_;
-  ::google::protobuf::int32 time_;
+  ::std::string* time_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
@@ -486,7 +491,7 @@ inline void Message_Info::set_room_id(::google::protobuf::int32 value) {
   room_id_ = value;
 }
 
-// optional int32 time = 9;
+// optional string time = 9;
 inline bool Message_Info::has_time() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -497,15 +502,63 @@ inline void Message_Info::clear_has_time() {
   _has_bits_[0] &= ~0x00000100u;
 }
 inline void Message_Info::clear_time() {
-  time_ = 0;
+  if (time_ != &::google::protobuf::internal::kEmptyString) {
+    time_->clear();
+  }
   clear_has_time();
 }
-inline ::google::protobuf::int32 Message_Info::time() const {
+inline const ::std::string& Message_Info::time() const {
+  return *time_;
+}
+inline void Message_Info::set_time(const ::std::string& value) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(value);
+}
+inline void Message_Info::set_time(const char* value) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(value);
+}
+inline void Message_Info::set_time(const char* value, size_t size) {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
+  time_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Message_Info::mutable_time() {
+  set_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    time_ = new ::std::string;
+  }
   return time_;
 }
-inline void Message_Info::set_time(::google::protobuf::int32 value) {
-  set_has_time();
-  time_ = value;
+inline ::std::string* Message_Info::release_time() {
+  clear_has_time();
+  if (time_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = time_;
+    time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Message_Info::set_allocated_time(::std::string* time) {
+  if (time_ != &::google::protobuf::internal::kEmptyString) {
+    delete time_;
+  }
+  if (time) {
+    set_has_time();
+    time_ = time;
+  } else {
+    clear_has_time();
+    time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 

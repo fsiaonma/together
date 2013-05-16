@@ -122,6 +122,8 @@ static const int ROOM_PEOPLE_LIST = 205;
 static const int SHOW_ROOM_INFO = 206;
 static const int SHOW_USER_ROOM = 207;
 
+// ============ CHAT ============
+static const int BIND_USER_CHAT = 301;
 
 // --------------- Status Code ---------------
 // ============ System ============
@@ -147,6 +149,10 @@ static const int DB_PR_QUIT_ROOM_ISOWNER = 5106;
 // ============ Session ============
 static const int SESSION_OK = 6000;
 static const int SESSION_NOT_EXIST = 6001;
+
+// ============ Chat ============
+static const int CHAT_PARAM_ERR = 7000;
+static const int CHAT_HANDLE_ERR = 7001;
 
 
 // --------------- Function Result Code ---------------
@@ -225,6 +231,10 @@ static const int SHOW_ROOM_INFO_SUCCESS = 21011;
 static const int SHOW_ROOM_INFO_ROOM_NOTEXIST = 21012;
 
 static const int SHOW_USER_ROOM_SUCCESS = 21013;
+
+// ============ Chat ============
+static const int BIND_USER_CHAT_SUCCESS = 31000;
+static const int BIND_USER_CHAT_USER_NOTEXIST = 31001;
 
 #endif
 

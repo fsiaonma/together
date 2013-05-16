@@ -426,7 +426,7 @@ int main()
 		listen_socks[i] = listen_sock;
 	}
 
-	CreateWorker(10);
+	// CreateWorker(10);
 
 	efd = epoll_create1(0);
 	LOG_TRACE << "efd:" << efd << endl;

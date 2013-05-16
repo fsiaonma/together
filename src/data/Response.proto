@@ -8,14 +8,15 @@ message HTTPResponse {
 	optional int32 code = 1;
 	optional bool success = 2;
 	optional string msg = 3;
-	optional UserResponse.LoginResponse login_response = 4;
-    optional UserResponse.DetailResponse detail_response = 5;
-    optional UserResponse.UsernameExistResponse exist_response = 6;
-    optional RoomResponse.ShowRoomListResponse room_list_response = 7;
-    optional RoomResponse.RoomPeopleListResponse room_people_list_response = 8;
-    optional RoomResponse.RoomInfoResponse room_info_response = 9;
-    optional UserListResponse.FollowListResponse follow_list_response = 10;
-    optional UserListResponse.FollowedListResponse followed_list_response = 11;
-    optional RoomResponse.UserRoomListResponse user_room_list_response = 12;
-    optional Data.List user_message_list_response = 13;
+    optional string server_time = 4;
+	optional UserResponse.LoginResponse login_response = 5;
+    optional UserResponse.DetailResponse detail_response = 6;
+    optional UserResponse.UsernameExistResponse exist_response = 7;
+    optional RoomResponse.ShowRoomListResponse room_list_response = 8;
+    optional RoomResponse.RoomPeopleListResponse room_people_list_response = 9;
+    optional RoomResponse.RoomInfoResponse room_info_response = 10;
+    optional UserListResponse.FollowListResponse follow_list_response = 11;
+    optional UserListResponse.FollowedListResponse followed_list_response = 12;
+    optional RoomResponse.UserRoomListResponse user_room_list_response = 13;
+    optional Data.List user_message_list_response = 14;
 }

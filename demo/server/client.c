@@ -83,6 +83,7 @@ printf("(%d:%d:%d)", lt->tm_hour, lt->tm_min, lt->tm_sec);
             buf[len] = 0;
 		    printNowTime(); 
             printf("receive from server:%s\n",buf);  
+            memset(buf, 0, BUFFER_SIZE);
             if(len<0)  
             {  
                 perror("receive from server failed");  

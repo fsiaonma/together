@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <map>
+#include <list>
 #include <errno.h>
 
 #include "../../common/global/global.h"
@@ -14,6 +15,7 @@
 
 #include "../../module/user/user.h"
 #include "../../module/room/room.h"
+#include "../../module/message/message.h"
 
 void handle_read_request(process *process, const char *module, map<string, string> param);
 

@@ -1,8 +1,9 @@
 #ifndef _MESSAGE_BASE_H_
-#define _USER_BASE_H_
+#define _MESSAGE_BASE_H_
 
 #include <mysql/mysql.h>
 #include <map>
+#include <list>
 #include <stdlib.h>
 
 #include "../../common/config/config.h"
@@ -13,5 +14,6 @@
 #include "../../data/compiledData/Response.pb.h"
 
 int _get_message_info(int message_id, MessageData::Message_Info *message_info);
+int _bind_user_chat(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
 
 #endif

@@ -121,91 +121,103 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::std::string* release_msg();
   inline void set_allocated_msg(::std::string* msg);
 
-  // optional .UserResponse.LoginResponse login_response = 4;
+  // optional string server_time = 4;
+  inline bool has_server_time() const;
+  inline void clear_server_time();
+  static const int kServerTimeFieldNumber = 4;
+  inline const ::std::string& server_time() const;
+  inline void set_server_time(const ::std::string& value);
+  inline void set_server_time(const char* value);
+  inline void set_server_time(const char* value, size_t size);
+  inline ::std::string* mutable_server_time();
+  inline ::std::string* release_server_time();
+  inline void set_allocated_server_time(::std::string* server_time);
+
+  // optional .UserResponse.LoginResponse login_response = 5;
   inline bool has_login_response() const;
   inline void clear_login_response();
-  static const int kLoginResponseFieldNumber = 4;
+  static const int kLoginResponseFieldNumber = 5;
   inline const ::UserResponse::LoginResponse& login_response() const;
   inline ::UserResponse::LoginResponse* mutable_login_response();
   inline ::UserResponse::LoginResponse* release_login_response();
   inline void set_allocated_login_response(::UserResponse::LoginResponse* login_response);
 
-  // optional .UserResponse.DetailResponse detail_response = 5;
+  // optional .UserResponse.DetailResponse detail_response = 6;
   inline bool has_detail_response() const;
   inline void clear_detail_response();
-  static const int kDetailResponseFieldNumber = 5;
+  static const int kDetailResponseFieldNumber = 6;
   inline const ::UserResponse::DetailResponse& detail_response() const;
   inline ::UserResponse::DetailResponse* mutable_detail_response();
   inline ::UserResponse::DetailResponse* release_detail_response();
   inline void set_allocated_detail_response(::UserResponse::DetailResponse* detail_response);
 
-  // optional .UserResponse.UsernameExistResponse exist_response = 6;
+  // optional .UserResponse.UsernameExistResponse exist_response = 7;
   inline bool has_exist_response() const;
   inline void clear_exist_response();
-  static const int kExistResponseFieldNumber = 6;
+  static const int kExistResponseFieldNumber = 7;
   inline const ::UserResponse::UsernameExistResponse& exist_response() const;
   inline ::UserResponse::UsernameExistResponse* mutable_exist_response();
   inline ::UserResponse::UsernameExistResponse* release_exist_response();
   inline void set_allocated_exist_response(::UserResponse::UsernameExistResponse* exist_response);
 
-  // optional .RoomResponse.ShowRoomListResponse room_list_response = 7;
+  // optional .RoomResponse.ShowRoomListResponse room_list_response = 8;
   inline bool has_room_list_response() const;
   inline void clear_room_list_response();
-  static const int kRoomListResponseFieldNumber = 7;
+  static const int kRoomListResponseFieldNumber = 8;
   inline const ::RoomResponse::ShowRoomListResponse& room_list_response() const;
   inline ::RoomResponse::ShowRoomListResponse* mutable_room_list_response();
   inline ::RoomResponse::ShowRoomListResponse* release_room_list_response();
   inline void set_allocated_room_list_response(::RoomResponse::ShowRoomListResponse* room_list_response);
 
-  // optional .RoomResponse.RoomPeopleListResponse room_people_list_response = 8;
+  // optional .RoomResponse.RoomPeopleListResponse room_people_list_response = 9;
   inline bool has_room_people_list_response() const;
   inline void clear_room_people_list_response();
-  static const int kRoomPeopleListResponseFieldNumber = 8;
+  static const int kRoomPeopleListResponseFieldNumber = 9;
   inline const ::RoomResponse::RoomPeopleListResponse& room_people_list_response() const;
   inline ::RoomResponse::RoomPeopleListResponse* mutable_room_people_list_response();
   inline ::RoomResponse::RoomPeopleListResponse* release_room_people_list_response();
   inline void set_allocated_room_people_list_response(::RoomResponse::RoomPeopleListResponse* room_people_list_response);
 
-  // optional .RoomResponse.RoomInfoResponse room_info_response = 9;
+  // optional .RoomResponse.RoomInfoResponse room_info_response = 10;
   inline bool has_room_info_response() const;
   inline void clear_room_info_response();
-  static const int kRoomInfoResponseFieldNumber = 9;
+  static const int kRoomInfoResponseFieldNumber = 10;
   inline const ::RoomResponse::RoomInfoResponse& room_info_response() const;
   inline ::RoomResponse::RoomInfoResponse* mutable_room_info_response();
   inline ::RoomResponse::RoomInfoResponse* release_room_info_response();
   inline void set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response);
 
-  // optional .UserListResponse.FollowListResponse follow_list_response = 10;
+  // optional .UserListResponse.FollowListResponse follow_list_response = 11;
   inline bool has_follow_list_response() const;
   inline void clear_follow_list_response();
-  static const int kFollowListResponseFieldNumber = 10;
+  static const int kFollowListResponseFieldNumber = 11;
   inline const ::UserListResponse::FollowListResponse& follow_list_response() const;
   inline ::UserListResponse::FollowListResponse* mutable_follow_list_response();
   inline ::UserListResponse::FollowListResponse* release_follow_list_response();
   inline void set_allocated_follow_list_response(::UserListResponse::FollowListResponse* follow_list_response);
 
-  // optional .UserListResponse.FollowedListResponse followed_list_response = 11;
+  // optional .UserListResponse.FollowedListResponse followed_list_response = 12;
   inline bool has_followed_list_response() const;
   inline void clear_followed_list_response();
-  static const int kFollowedListResponseFieldNumber = 11;
+  static const int kFollowedListResponseFieldNumber = 12;
   inline const ::UserListResponse::FollowedListResponse& followed_list_response() const;
   inline ::UserListResponse::FollowedListResponse* mutable_followed_list_response();
   inline ::UserListResponse::FollowedListResponse* release_followed_list_response();
   inline void set_allocated_followed_list_response(::UserListResponse::FollowedListResponse* followed_list_response);
 
-  // optional .RoomResponse.UserRoomListResponse user_room_list_response = 12;
+  // optional .RoomResponse.UserRoomListResponse user_room_list_response = 13;
   inline bool has_user_room_list_response() const;
   inline void clear_user_room_list_response();
-  static const int kUserRoomListResponseFieldNumber = 12;
+  static const int kUserRoomListResponseFieldNumber = 13;
   inline const ::RoomResponse::UserRoomListResponse& user_room_list_response() const;
   inline ::RoomResponse::UserRoomListResponse* mutable_user_room_list_response();
   inline ::RoomResponse::UserRoomListResponse* release_user_room_list_response();
   inline void set_allocated_user_room_list_response(::RoomResponse::UserRoomListResponse* user_room_list_response);
 
-  // optional .Data.List user_message_list_response = 13;
+  // optional .Data.List user_message_list_response = 14;
   inline bool has_user_message_list_response() const;
   inline void clear_user_message_list_response();
-  static const int kUserMessageListResponseFieldNumber = 13;
+  static const int kUserMessageListResponseFieldNumber = 14;
   inline const ::Data::List& user_message_list_response() const;
   inline ::Data::List* mutable_user_message_list_response();
   inline ::Data::List* release_user_message_list_response();
@@ -219,6 +231,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_success();
   inline void set_has_msg();
   inline void clear_has_msg();
+  inline void set_has_server_time();
+  inline void clear_has_server_time();
   inline void set_has_login_response();
   inline void clear_has_login_response();
   inline void set_has_detail_response();
@@ -245,6 +259,7 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::google::protobuf::int32 code_;
   bool success_;
   ::std::string* msg_;
+  ::std::string* server_time_;
   ::UserResponse::LoginResponse* login_response_;
   ::UserResponse::DetailResponse* detail_response_;
   ::UserResponse::UsernameExistResponse* exist_response_;
@@ -257,7 +272,7 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::Data::List* user_message_list_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(14 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -387,15 +402,85 @@ inline void HTTPResponse::set_allocated_msg(::std::string* msg) {
   }
 }
 
-// optional .UserResponse.LoginResponse login_response = 4;
-inline bool HTTPResponse::has_login_response() const {
+// optional string server_time = 4;
+inline bool HTTPResponse::has_server_time() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void HTTPResponse::set_has_login_response() {
+inline void HTTPResponse::set_has_server_time() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void HTTPResponse::clear_has_login_response() {
+inline void HTTPResponse::clear_has_server_time() {
   _has_bits_[0] &= ~0x00000008u;
+}
+inline void HTTPResponse::clear_server_time() {
+  if (server_time_ != &::google::protobuf::internal::kEmptyString) {
+    server_time_->clear();
+  }
+  clear_has_server_time();
+}
+inline const ::std::string& HTTPResponse::server_time() const {
+  return *server_time_;
+}
+inline void HTTPResponse::set_server_time(const ::std::string& value) {
+  set_has_server_time();
+  if (server_time_ == &::google::protobuf::internal::kEmptyString) {
+    server_time_ = new ::std::string;
+  }
+  server_time_->assign(value);
+}
+inline void HTTPResponse::set_server_time(const char* value) {
+  set_has_server_time();
+  if (server_time_ == &::google::protobuf::internal::kEmptyString) {
+    server_time_ = new ::std::string;
+  }
+  server_time_->assign(value);
+}
+inline void HTTPResponse::set_server_time(const char* value, size_t size) {
+  set_has_server_time();
+  if (server_time_ == &::google::protobuf::internal::kEmptyString) {
+    server_time_ = new ::std::string;
+  }
+  server_time_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* HTTPResponse::mutable_server_time() {
+  set_has_server_time();
+  if (server_time_ == &::google::protobuf::internal::kEmptyString) {
+    server_time_ = new ::std::string;
+  }
+  return server_time_;
+}
+inline ::std::string* HTTPResponse::release_server_time() {
+  clear_has_server_time();
+  if (server_time_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_time_;
+    server_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void HTTPResponse::set_allocated_server_time(::std::string* server_time) {
+  if (server_time_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_time_;
+  }
+  if (server_time) {
+    set_has_server_time();
+    server_time_ = server_time;
+  } else {
+    clear_has_server_time();
+    server_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional .UserResponse.LoginResponse login_response = 5;
+inline bool HTTPResponse::has_login_response() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void HTTPResponse::set_has_login_response() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void HTTPResponse::clear_has_login_response() {
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void HTTPResponse::clear_login_response() {
   if (login_response_ != NULL) login_response_->::UserResponse::LoginResponse::Clear();
@@ -425,15 +510,15 @@ inline void HTTPResponse::set_allocated_login_response(::UserResponse::LoginResp
   }
 }
 
-// optional .UserResponse.DetailResponse detail_response = 5;
+// optional .UserResponse.DetailResponse detail_response = 6;
 inline bool HTTPResponse::has_detail_response() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void HTTPResponse::set_has_detail_response() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void HTTPResponse::clear_has_detail_response() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void HTTPResponse::clear_detail_response() {
   if (detail_response_ != NULL) detail_response_->::UserResponse::DetailResponse::Clear();
@@ -463,15 +548,15 @@ inline void HTTPResponse::set_allocated_detail_response(::UserResponse::DetailRe
   }
 }
 
-// optional .UserResponse.UsernameExistResponse exist_response = 6;
+// optional .UserResponse.UsernameExistResponse exist_response = 7;
 inline bool HTTPResponse::has_exist_response() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void HTTPResponse::set_has_exist_response() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void HTTPResponse::clear_has_exist_response() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void HTTPResponse::clear_exist_response() {
   if (exist_response_ != NULL) exist_response_->::UserResponse::UsernameExistResponse::Clear();
@@ -501,15 +586,15 @@ inline void HTTPResponse::set_allocated_exist_response(::UserResponse::UsernameE
   }
 }
 
-// optional .RoomResponse.ShowRoomListResponse room_list_response = 7;
+// optional .RoomResponse.ShowRoomListResponse room_list_response = 8;
 inline bool HTTPResponse::has_room_list_response() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void HTTPResponse::set_has_room_list_response() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void HTTPResponse::clear_has_room_list_response() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void HTTPResponse::clear_room_list_response() {
   if (room_list_response_ != NULL) room_list_response_->::RoomResponse::ShowRoomListResponse::Clear();
@@ -539,15 +624,15 @@ inline void HTTPResponse::set_allocated_room_list_response(::RoomResponse::ShowR
   }
 }
 
-// optional .RoomResponse.RoomPeopleListResponse room_people_list_response = 8;
+// optional .RoomResponse.RoomPeopleListResponse room_people_list_response = 9;
 inline bool HTTPResponse::has_room_people_list_response() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void HTTPResponse::set_has_room_people_list_response() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void HTTPResponse::clear_has_room_people_list_response() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void HTTPResponse::clear_room_people_list_response() {
   if (room_people_list_response_ != NULL) room_people_list_response_->::RoomResponse::RoomPeopleListResponse::Clear();
@@ -577,15 +662,15 @@ inline void HTTPResponse::set_allocated_room_people_list_response(::RoomResponse
   }
 }
 
-// optional .RoomResponse.RoomInfoResponse room_info_response = 9;
+// optional .RoomResponse.RoomInfoResponse room_info_response = 10;
 inline bool HTTPResponse::has_room_info_response() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 inline void HTTPResponse::set_has_room_info_response() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
 }
 inline void HTTPResponse::clear_has_room_info_response() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void HTTPResponse::clear_room_info_response() {
   if (room_info_response_ != NULL) room_info_response_->::RoomResponse::RoomInfoResponse::Clear();
@@ -615,15 +700,15 @@ inline void HTTPResponse::set_allocated_room_info_response(::RoomResponse::RoomI
   }
 }
 
-// optional .UserListResponse.FollowListResponse follow_list_response = 10;
+// optional .UserListResponse.FollowListResponse follow_list_response = 11;
 inline bool HTTPResponse::has_follow_list_response() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void HTTPResponse::set_has_follow_list_response() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void HTTPResponse::clear_has_follow_list_response() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void HTTPResponse::clear_follow_list_response() {
   if (follow_list_response_ != NULL) follow_list_response_->::UserListResponse::FollowListResponse::Clear();
@@ -653,15 +738,15 @@ inline void HTTPResponse::set_allocated_follow_list_response(::UserListResponse:
   }
 }
 
-// optional .UserListResponse.FollowedListResponse followed_list_response = 11;
+// optional .UserListResponse.FollowedListResponse followed_list_response = 12;
 inline bool HTTPResponse::has_followed_list_response() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void HTTPResponse::set_has_followed_list_response() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void HTTPResponse::clear_has_followed_list_response() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void HTTPResponse::clear_followed_list_response() {
   if (followed_list_response_ != NULL) followed_list_response_->::UserListResponse::FollowedListResponse::Clear();
@@ -691,15 +776,15 @@ inline void HTTPResponse::set_allocated_followed_list_response(::UserListRespons
   }
 }
 
-// optional .RoomResponse.UserRoomListResponse user_room_list_response = 12;
+// optional .RoomResponse.UserRoomListResponse user_room_list_response = 13;
 inline bool HTTPResponse::has_user_room_list_response() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 inline void HTTPResponse::set_has_user_room_list_response() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00001000u;
 }
 inline void HTTPResponse::clear_has_user_room_list_response() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void HTTPResponse::clear_user_room_list_response() {
   if (user_room_list_response_ != NULL) user_room_list_response_->::RoomResponse::UserRoomListResponse::Clear();
@@ -729,15 +814,15 @@ inline void HTTPResponse::set_allocated_user_room_list_response(::RoomResponse::
   }
 }
 
-// optional .Data.List user_message_list_response = 13;
+// optional .Data.List user_message_list_response = 14;
 inline bool HTTPResponse::has_user_message_list_response() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 inline void HTTPResponse::set_has_user_message_list_response() {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
 }
 inline void HTTPResponse::clear_has_user_message_list_response() {
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void HTTPResponse::clear_user_message_list_response() {
   if (user_message_list_response_ != NULL) user_message_list_response_->::Data::List::Clear();
