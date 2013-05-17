@@ -130,13 +130,11 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
         int fieldcount = mysql_num_fields(rst);
         row = mysql_fetch_row(rst);
 
-        RoomResponse::UserRoomListResponse *user_room_list_res = new RoomResponse::UserRoomListResponse();
-
         Data::List *room_list = new Data::List();
         int data_num = begin_pos;
         while(NULL != row) 
         {
-            RoomData::RoomInfo *room_info = room_list->add_room_info_list();
+            RoomData::RoomInfo *room_info = room_list->add_room_info();
             RoomData::Address *addr = new RoomData::Address();
             for(int i = 0; i < fieldcount; i++) 
             {
@@ -185,8 +183,7 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
         if (data_num == count) {
             room_list->set_is_end(true);
         }
-        user_room_list_res->set_allocated_user_room_list(room_list);
-        http_res->set_allocated_user_room_list_response(user_room_list_res);
+        http_res->set_allocated_list(room_list);
 
 
 
@@ -202,6 +199,12 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
     } while(0);
     print_proto(http_res);
 
+  fstream output("./response.log", ios::out | ios::trunc | ios::binary);   
+  
+  if (!http_res->SerializeToOstream(&output)) {   
+    cerr << "Failed to write msg." << endl;   
+    return -1;   
+  }
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();

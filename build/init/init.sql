@@ -11,3 +11,4 @@ INSERT INTO together.t_room (`id`, `owner_id`, `title`, `type`, `gender_type`, `
 (1000, 1, '踩单车', 2, 0, 0, 10, 1, 1000, 2, '2013-05-31 17:02:03', '2000-12-31 17:01:01'),
 (1001, 2, '狼人', 1, 0, 0, 10, 1, 1001, 2, '2013-05-31 17:02:03', '2000-12-31 17:01:01');
 INSERT INTO together.t_room_user_relation (room_id, user_id) values (1001, 1),(1001, 3);
+insert into together.t_follow (followed_id, follow_id) value (3, 1);

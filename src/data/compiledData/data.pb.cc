@@ -36,7 +36,7 @@ void protobuf_AssignDesc_data_2eproto() {
   List_descriptor_ = file->message_type(0);
   static const int List_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, is_end_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, room_info_list_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, room_info_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_info_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_detail_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(List, user_message_info_),
@@ -87,13 +87,13 @@ void protobuf_AddDesc_data_2eproto() {
   ::UserResponse::protobuf_AddDesc_UserResponse_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\ndata.proto\022\004Data\032\016RoomData.proto\032\016User"
-    "Data.proto\032\022UserResponse.proto\"\350\001\n\004List\022"
-    "\016\n\006is_end\030\001 \001(\010\022*\n\016room_info_list\030\002 \003(\0132"
-    "\022.RoomData.RoomInfo\022&\n\tuser_info\030\003 \003(\0132\023"
-    ".UserData.User_Info\0221\n\013user_detail\030\004 \003(\013"
-    "2\034.UserResponse.DetailResponse\022<\n\021user_m"
-    "essage_info\030\005 \003(\0132!.UserResponse.UserMes"
-    "sageResponse\022\013\n\003end\030\006 \001(\005", 305);
+    "Data.proto\032\022UserResponse.proto\"\343\001\n\004List\022"
+    "\016\n\006is_end\030\001 \001(\010\022%\n\troom_info\030\002 \003(\0132\022.Roo"
+    "mData.RoomInfo\022&\n\tuser_info\030\003 \003(\0132\023.User"
+    "Data.User_Info\0221\n\013user_detail\030\004 \003(\0132\034.Us"
+    "erResponse.DetailResponse\022<\n\021user_messag"
+    "e_info\030\005 \003(\0132!.UserResponse.UserMessageR"
+    "esponse\022\013\n\003end\030\006 \001(\005", 300);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data.proto", &protobuf_RegisterTypes);
   List::default_instance_ = new List();
@@ -112,7 +112,7 @@ struct StaticDescriptorInitializer_data_2eproto {
 
 #ifndef _MSC_VER
 const int List::kIsEndFieldNumber;
-const int List::kRoomInfoListFieldNumber;
+const int List::kRoomInfoFieldNumber;
 const int List::kUserInfoFieldNumber;
 const int List::kUserDetailFieldNumber;
 const int List::kUserMessageInfoFieldNumber;
@@ -175,7 +175,7 @@ void List::Clear() {
     is_end_ = false;
     end_ = 0;
   }
-  room_info_list_.Clear();
+  room_info_.Clear();
   user_info_.Clear();
   user_detail_.Clear();
   user_message_info_.Clear();
@@ -200,21 +200,21 @@ bool List::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_room_info_list;
+        if (input->ExpectTag(18)) goto parse_room_info;
         break;
       }
 
-      // repeated .RoomData.RoomInfo room_info_list = 2;
+      // repeated .RoomData.RoomInfo room_info = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_room_info_list:
+         parse_room_info:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_room_info_list()));
+                input, add_room_info()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_room_info_list;
+        if (input->ExpectTag(18)) goto parse_room_info;
         if (input->ExpectTag(26)) goto parse_user_info;
         break;
       }
@@ -303,10 +303,10 @@ void List::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->is_end(), output);
   }
 
-  // repeated .RoomData.RoomInfo room_info_list = 2;
-  for (int i = 0; i < this->room_info_list_size(); i++) {
+  // repeated .RoomData.RoomInfo room_info = 2;
+  for (int i = 0; i < this->room_info_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->room_info_list(i), output);
+      2, this->room_info(i), output);
   }
 
   // repeated .UserData.User_Info user_info = 3;
@@ -345,11 +345,11 @@ void List::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->is_end(), target);
   }
 
-  // repeated .RoomData.RoomInfo room_info_list = 2;
-  for (int i = 0; i < this->room_info_list_size(); i++) {
+  // repeated .RoomData.RoomInfo room_info = 2;
+  for (int i = 0; i < this->room_info_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->room_info_list(i), target);
+        2, this->room_info(i), target);
   }
 
   // repeated .UserData.User_Info user_info = 3;
@@ -402,12 +402,12 @@ int List::ByteSize() const {
     }
 
   }
-  // repeated .RoomData.RoomInfo room_info_list = 2;
-  total_size += 1 * this->room_info_list_size();
-  for (int i = 0; i < this->room_info_list_size(); i++) {
+  // repeated .RoomData.RoomInfo room_info = 2;
+  total_size += 1 * this->room_info_size();
+  for (int i = 0; i < this->room_info_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->room_info_list(i));
+        this->room_info(i));
   }
 
   // repeated .UserData.User_Info user_info = 3;
@@ -459,7 +459,7 @@ void List::MergeFrom(const ::google::protobuf::Message& from) {
 
 void List::MergeFrom(const List& from) {
   GOOGLE_CHECK_NE(&from, this);
-  room_info_list_.MergeFrom(from.room_info_list_);
+  room_info_.MergeFrom(from.room_info_);
   user_info_.MergeFrom(from.user_info_);
   user_detail_.MergeFrom(from.user_detail_);
   user_message_info_.MergeFrom(from.user_message_info_);
@@ -494,7 +494,7 @@ bool List::IsInitialized() const {
 void List::Swap(List* other) {
   if (other != this) {
     std::swap(is_end_, other->is_end_);
-    room_info_list_.Swap(&other->room_info_list_);
+    room_info_.Swap(&other->room_info_);
     user_info_.Swap(&other->user_info_);
     user_detail_.Swap(&other->user_detail_);
     user_message_info_.Swap(&other->user_message_info_);

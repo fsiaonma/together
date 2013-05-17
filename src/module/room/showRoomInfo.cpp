@@ -159,6 +159,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             room_info->set_allocated_address(addr);
             room_info_res->set_allocated_room_info(room_info);
             http_res->set_allocated_room_info_response(room_info_res);
+            http_res->set_server_time(Tool::now_time());
             e.close();
         } else {
             result = SHOW_ROOM_INFO_ROOM_NOTEXIST;

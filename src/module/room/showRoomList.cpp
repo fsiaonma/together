@@ -162,12 +162,11 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
         int fieldcount = mysql_num_fields(rst);
         row = mysql_fetch_row(rst);
 
-        RoomResponse::ShowRoomListResponse *room_list_res = new RoomResponse::ShowRoomListResponse();
         Data::List *room_list = new Data::List();
         int data_num = begin_pos;
         while(NULL != row) 
         {
-            RoomData::RoomInfo *room_info = room_list->add_room_info_list();
+            RoomData::RoomInfo *room_info = room_list->add_room_info();
             RoomData::Address *addr = new RoomData::Address();
             for(int i = 0; i < fieldcount; i++) 
             {
@@ -220,8 +219,7 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
         if (data_num == total_num) {
             room_list->set_is_end(true);
         }
-        room_list_res->set_allocated_room_list(room_list);
-        http_res->set_allocated_room_list_response(room_list_res);
+        http_res->set_allocated_list(room_list);
 
         e.close();
 
