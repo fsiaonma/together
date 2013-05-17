@@ -32,7 +32,6 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
 
     for(int i = 0; i < fieldcount; i++) {
         field = mysql_fetch_field_direct(result, i);
-        LOG_INFO << field->name << endl;
         string key = field->name;
 
         if (row[i] == NULL) {

@@ -110,8 +110,6 @@ static const int USER_IS_EXIST = 108;
 static const int GET_FOLLOWING_LIST = 109;
 static const int GET_FOLLOWERS_LIST = 111;
 static const int USER_UNFOLLOW = 112;
-static const int GET_FOLLOW_UP_MSG = 113;
-static const int GET_PREVIOUS_MSG = 114;
 static const int GET_ALL_NEW_MSG = 115;
 
 // ============ ROOM ============
@@ -125,6 +123,10 @@ static const int SHOW_USER_ROOM = 207;
 
 // ============ CHAT ============
 static const int BIND_USER_CHAT = 301;
+
+// ============ MESSAGE ============
+static const int GET_FOLLOW_UP_MSG = 401;
+static const int GET_PREVIOUS_MSG = 402;
 
 // --------------- Status Code ---------------
 // ============ System ============
@@ -207,12 +209,6 @@ static const int USER_UNFOLLOW_SUCCESS = 11200;
 static const int USER_HAVENT_FOLLOW = 11201;
 static const int USER_UNFOLLOW_FAIL = 11202;
 
-// get follow up message code
-static const int GET_FOLLOW_UP_MSG_SUCCESS = 11300;
-
-// get previous message code
-static const int GET_PREVIOUS_MSG_SUCCESS = 11400;
-
 // get all new message code
 static const int GET_ALL_NEW_MSG_SUCCESS = 11500;
 
@@ -246,6 +242,13 @@ static const int SAVE_MSG_SENDER_NOTEXIST = 31003;
 static const int SAVE_MSG_ROOM_NOTEXIST = 31004;
 static const int SAVE_MSG_RECIPIENT_NOTEXIST = 31005;
 static const int SAVE_MSG_MSGTYPE_ERROR = 31006;
+
+// ============ Message ============
+// get follow up message code
+static const int GET_FOLLOW_UP_MSG_SUCCESS = 41000;
+
+// get previous message code
+static const int GET_PREVIOUS_MSG_SUCCESS = 42000;
 
 #endif
 

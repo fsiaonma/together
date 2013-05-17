@@ -29,40 +29,46 @@ int chat_handler(process *process, map<string, string> param, list<int> &send_so
 }
 
 int message_handler(process *process, map<string, string> param) {
-    char response_data[100];
-    memset(response_data, 0, 100);
+    char response_data[3500];
     if (param.count("action") == 0) {
         LOG_ERROR << "action type is not exist" << endl;
         return -1;
     }
-    int action_type = Tool::S2I(param["action"]);
+    int action_type = atoi(param["action"].c_str());
     LOG_INFO << "action_type: " << action_type << endl;
-    int result;
     int send_len = -1;
     switch (action_type) {
-        // case GET_FOLLOW_UP_MSG: {
-        //     if (param.count("current_id") == 0 || param.count("sender_id") == 0 || param.count("recipient_id") == 0) {
-        //         LOG_ERROR << "current_id or sender_id or recipient_id is not exist" << endl;
-        //         return -1;
-        //     }
-        //     get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["sender_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
-        //     break;
-        // }
-        // case GET_PREVIOUS_MSG: {
-        //     if (param.count("current_id") == 0 || param.count("msgs_num") || param.count("sender_id") == 0 || param.count("recipient_id") == 0) {
-        //         LOG_ERROR << "current_id or msgs_num or sender_id or recipient_id is not exist" << endl;
-        //         return -1;
-        //     }
-        //     get_previous_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["msgs_num"]), Tool::S2I(param["sender_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
-        //     break ;
-        // }
+        case GET_FOLLOW_UP_MSG: {
+            if (param.count("current_id") == 0 || param.count("recipient_id") == 0 || param.count("tid") == 0 || param.count("type") == 0) {
+                LOG_ERROR << "current_id or recipient_id or tid or type is not exist" << endl;
+                return -1;
+            }
+            get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), Tool::S2I(param["tid"]), Tool::S2I(param["type"]), response_data, send_len);
+            break;
+        }
+        case GET_PREVIOUS_MSG: {
+            if (param.count("current_id") == 0 || param.count("msgs_num") == 0 || param.count("recipient_id") == 0 || param.count("tid") == 0 || param.count("type") == 0) {
+                LOG_ERROR << "current_id or msgs_num or recipient_id or tid or type is not exist" << endl;
+                return -1;
+            }
+            get_previous_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["msgs_num"]),  Tool::S2I(param["recipient_id"]), Tool::S2I(param["tid"]), Tool::S2I(param["type"]), response_data, send_len);
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;
         }
     }
+
+    LOG_INFO << "length:" << strlen(response_data) << endl;
+
     process->buf[0] = 0; 
-    write_to_header(response_data);
+    write_to_header(header_200_start); // start to write header
+    write_to_header("\r\n");
+    memcpy(process->buf + strlen(process->buf), response_data, 3500);
+    if (send_len > 0) {
+        process->send_length = send_len + strlen(header_200_start) + strlen("\r\n");
+    }
 
     return 0;
 }
