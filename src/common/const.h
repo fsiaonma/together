@@ -123,6 +123,7 @@ static const int SHOW_USER_ROOM = 207;
 
 // ============ CHAT ============
 static const int BIND_USER_CHAT = 301;
+static const int SAVE_MSG = 302;
 
 // ============ MESSAGE ============
 static const int GET_FOLLOW_UP_MSG = 401;

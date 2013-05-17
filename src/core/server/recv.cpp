@@ -812,6 +812,7 @@ void read_tcp_request(process* process)
 				break;
 		} else if (count == 0) {
 	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
+	    	del_by_sock(process->sock);
 			cleanup(process);
 			return;
 		} else if (count > 0) {
@@ -861,6 +862,7 @@ void read_tcp_request(process* process)
 	list<int>::iterator iter;
     for(iter = send_sock_list.begin(); iter != send_sock_list.end(); iter++)
     {
+    	LOG_DEBUG << "send to:" << *iter << endl;
         send(*iter, process->buf, strlen(process->buf), 0);
     }
 

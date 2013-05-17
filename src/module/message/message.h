@@ -3,6 +3,7 @@
 
 #include <mysql/mysql.h>
 #include <map>
+#include <vector>
 #include <stdlib.h>
 
 #include "../../common/config/config.h"
@@ -12,6 +13,7 @@
 #include "../../data/compiledData/Response.pb.h"
 #include "../../util/tool/tool.h"
 #include "./message_base.h"
+#include "./message_sock.h"
 #include "../user/user_base.h"
 
 int get_follow_up_msg(int current_id, int recipient_id, int tid, int type, char *buf, int &send_len);
