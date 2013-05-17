@@ -175,11 +175,11 @@ AUTO_INCREMENT = 1000;
 
 
 -- -----------------------------------------------------
--- Table `together`.`t_message`
+-- Table `together`.`t_msg`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `together`.`t_message` ;
+DROP TABLE IF EXISTS `together`.`t_msg` ;
 
-CREATE  TABLE IF NOT EXISTS `together`.`t_message` (
+CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `sender_id` INT NULL ,
   `recipient_id` INT NULL ,
@@ -212,30 +212,6 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_message` (
   CONSTRAINT `fk_t_msg_t_room1`
     FOREIGN KEY (`room_id` )
     REFERENCES `together`.`t_room` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `together`.`t_msg_has_t_msg`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `together`.`t_msg_has_t_msg` ;
-
-CREATE  TABLE IF NOT EXISTS `together`.`t_msg_has_t_msg` (
-  `t_msg_id` INT NOT NULL ,
-  `t_msg_id1` INT NOT NULL ,
-  PRIMARY KEY (`t_msg_id`, `t_msg_id1`) ,
-  INDEX `fk_t_msg_has_t_msg_t_msg2_idx` (`t_msg_id1` ASC) ,
-  INDEX `fk_t_msg_has_t_msg_t_msg1_idx` (`t_msg_id` ASC) ,
-  CONSTRAINT `fk_t_msg_has_t_msg_t_msg1`
-    FOREIGN KEY (`t_msg_id` )
-    REFERENCES `together`.`t_message` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_msg_has_t_msg_t_msg2`
-    FOREIGN KEY (`t_msg_id1` )
-    REFERENCES `together`.`t_message` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -391,6 +367,95 @@ end if;
 
 #显示结果
 #select ret;
+end$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure pr_insert_msg
+-- -----------------------------------------------------
+
+USE `together`;
+DROP procedure IF EXISTS `together`.`pr_insert_msg`;
+
+DELIMITER $$
+USE `together`$$
+create procedure pr_insert_msg 
+(  
+in i_sender_id int   
+, in i_recipient_id int
+, in i_room_id int
+, in i_msg_type int
+, in i_content varchar(255)
+, out ret int
+, out send_user_list varchar(255)
+)
+
+BEGIN
+
+DECLARE v_sender_exist int;
+DECLARE v_recipient_exist int;
+DECLARE v_room_exist int;
+DECLARE v_user_id int;
+DECLARE Done INT DEFAULT 0;
+-- 声明游标
+DECLARE rs CURSOR FOR SELECT user_id FROM t_room_user_relation where room_id = i_room_id;
+# 如果出现sql异常，则将ret设为5199并退出
+declare exit handler for sqlexception
+begin
+set ret = 5199;
+rollback;
+select ret;
+end;
+
+
+begin
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
+
+set send_user_list = '';
+select count(1) into v_sender_exist from t_user where id = i_sender_id;
+if v_sender_exist = 0 then
+	set ret = 5107;
+else
+	if i_msg_type = 1 then -- 房间群聊
+		select count(1) into v_room_exist from t_room where id = i_room_id;
+		if v_room_exist = 0 then
+			set ret = 5108;
+		else
+			select owner_id into v_user_id from t_room where id = i_room_id;
+			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+				values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+			set send_user_list = concat(send_user_list, '', v_user_id);
+			OPEN rs;
+				FETCH NEXT FROM rs INTO v_user_id;
+				REPEAT
+					IF NOT Done THEN
+						select v_user_id;
+						set send_user_list = concat(send_user_list, '|', v_user_id);
+						insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+							values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+					END IF;
+				FETCH NEXT FROM rs INTO v_user_id;
+				UNTIL Done END REPEAT;
+			CLOSE rs;
+			set ret = 5109;
+		end if;
+	elseif i_msg_type = 2 then -- 私聊
+		select ret;
+	else -- 类型出错
+		select ret;
+	end if;
+	commit;
+end if;
+
+
+
+
+
+select ret, send_user_list;
+end;
+
 end$$
 
 DELIMITER ;

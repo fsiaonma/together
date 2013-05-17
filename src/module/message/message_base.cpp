@@ -19,7 +19,7 @@ int _get_message_info(int message_id, MessageData::Message_Info *message_info) {
 
     e.connet();
     
-    e.excute("select * from t_message where id = " + Tool::mysql_filter(message_id) + ";");
+    e.excute("select * from t_msg where id = " + Tool::mysql_filter(message_id) + ";");
     mysql = e.get_mysql();
 
     MYSQL_RES *result = NULL;
