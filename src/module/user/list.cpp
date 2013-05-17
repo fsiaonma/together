@@ -64,10 +64,9 @@ int get_following_list(int uid, int page_no, int page_size, string sid, char *bu
         row = mysql_fetch_row(mysql_result);
 
         // follow_list construtor
-        UserListResponse::FollowListResponse *follow_list = new UserListResponse::FollowListResponse();
-        Data::List *people_list = new Data::List();
+        Data::List *following_list = new Data::List();
         while(NULL != row) {
-            UserResponse::DetailResponse *detailResponse = people_list->add_user_detail_list();
+            UserResponse::DetailResponse *detailResponse = following_list->add_user_detail();
         	
             UserData::User_Info *user_info = new UserData::User_Info();
             _get_user_info(Tool::S2I(row[0]), user_info);
@@ -86,14 +85,14 @@ int get_following_list(int uid, int page_no, int page_size, string sid, char *bu
             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
-        people_list->set_is_end(begin_pos + page_size >= total);
-        follow_list->set_allocated_people_list(people_list);
+
+        following_list->set_is_end(begin_pos + page_size >= total);
 
         e.close();
 
         result = GET_FOLLOWING_LIST_SUCCESS;
         _set_http_head(result, true, "get follow list success", http_res);
-        http_res->set_allocated_follow_list_response(follow_list);
+        http_res->set_allocated_list(following_list);
     }while(0);
 
     print_proto(http_res);
@@ -170,10 +169,9 @@ int get_followers_list(int uid, int page_no, int page_size, string sid, char *bu
         row = mysql_fetch_row(mysql_result);
 
         // followed_list construtor
-        UserListResponse::FollowedListResponse *followed_list = new UserListResponse::FollowedListResponse();
-        Data::List *people_list = new Data::List();
+        Data::List *followers_list = new Data::List();
         while(NULL != row) {
-            UserResponse::DetailResponse *detailResponse = people_list->add_user_detail_list();
+            UserResponse::DetailResponse *detailResponse = followers_list->add_user_detail();
             
             UserData::User_Info *user_info = new UserData::User_Info();
             _get_user_info(Tool::S2I(row[0]), user_info);
@@ -192,14 +190,16 @@ int get_followers_list(int uid, int page_no, int page_size, string sid, char *bu
             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
             break;
         }
-        people_list->set_is_end(begin_pos + page_size >= total);
-        followed_list->set_allocated_people_list(people_list);
 
+
+        followers_list->set_is_end(true);
+        cout << "~~~~~~~~" << followers_list->is_end() << endl;
+        // followers_list->set_is_end(1);
         e.close();
 
         result = GET_FOLLOWERS_LIST_SUCCESS;
         _set_http_head(result, true, "get followed list success", http_res);
-        http_res->set_allocated_followed_list_response(followed_list);
+        http_res->set_allocated_list(followers_list);
     }while(0);
 
     print_proto(http_res);

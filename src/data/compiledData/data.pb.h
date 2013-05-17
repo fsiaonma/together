@@ -125,17 +125,17 @@ class List : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::UserData::User_Info >*
       mutable_user_info();
 
-  // repeated .UserResponse.DetailResponse user_detail_list = 4;
-  inline int user_detail_list_size() const;
-  inline void clear_user_detail_list();
-  static const int kUserDetailListFieldNumber = 4;
-  inline const ::UserResponse::DetailResponse& user_detail_list(int index) const;
-  inline ::UserResponse::DetailResponse* mutable_user_detail_list(int index);
-  inline ::UserResponse::DetailResponse* add_user_detail_list();
+  // repeated .UserResponse.DetailResponse user_detail = 4;
+  inline int user_detail_size() const;
+  inline void clear_user_detail();
+  static const int kUserDetailFieldNumber = 4;
+  inline const ::UserResponse::DetailResponse& user_detail(int index) const;
+  inline ::UserResponse::DetailResponse* mutable_user_detail(int index);
+  inline ::UserResponse::DetailResponse* add_user_detail();
   inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >&
-      user_detail_list() const;
+      user_detail() const;
   inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
-      mutable_user_detail_list();
+      mutable_user_detail();
 
   // repeated .UserResponse.UserMessageResponse user_message_info = 5;
   inline int user_message_info_size() const;
@@ -149,21 +149,31 @@ class List : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >*
       mutable_user_message_info();
 
+  // optional int32 end = 6;
+  inline bool has_end() const;
+  inline void clear_end();
+  static const int kEndFieldNumber = 6;
+  inline ::google::protobuf::int32 end() const;
+  inline void set_end(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:Data.List)
  private:
   inline void set_has_is_end();
   inline void clear_has_is_end();
+  inline void set_has_end();
+  inline void clear_has_end();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_list_;
   ::google::protobuf::RepeatedPtrField< ::UserData::User_Info > user_info_;
-  ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse > user_detail_list_;
-  ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse > user_message_info_;
   bool is_end_;
+  ::google::protobuf::int32 end_;
+  ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse > user_detail_;
+  ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse > user_message_info_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
 
   friend void  protobuf_AddDesc_data_2eproto();
   friend void protobuf_AssignDesc_data_2eproto();
@@ -251,29 +261,29 @@ List::mutable_user_info() {
   return &user_info_;
 }
 
-// repeated .UserResponse.DetailResponse user_detail_list = 4;
-inline int List::user_detail_list_size() const {
-  return user_detail_list_.size();
+// repeated .UserResponse.DetailResponse user_detail = 4;
+inline int List::user_detail_size() const {
+  return user_detail_.size();
 }
-inline void List::clear_user_detail_list() {
-  user_detail_list_.Clear();
+inline void List::clear_user_detail() {
+  user_detail_.Clear();
 }
-inline const ::UserResponse::DetailResponse& List::user_detail_list(int index) const {
-  return user_detail_list_.Get(index);
+inline const ::UserResponse::DetailResponse& List::user_detail(int index) const {
+  return user_detail_.Get(index);
 }
-inline ::UserResponse::DetailResponse* List::mutable_user_detail_list(int index) {
-  return user_detail_list_.Mutable(index);
+inline ::UserResponse::DetailResponse* List::mutable_user_detail(int index) {
+  return user_detail_.Mutable(index);
 }
-inline ::UserResponse::DetailResponse* List::add_user_detail_list() {
-  return user_detail_list_.Add();
+inline ::UserResponse::DetailResponse* List::add_user_detail() {
+  return user_detail_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >&
-List::user_detail_list() const {
-  return user_detail_list_;
+List::user_detail() const {
+  return user_detail_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse >*
-List::mutable_user_detail_list() {
-  return &user_detail_list_;
+List::mutable_user_detail() {
+  return &user_detail_;
 }
 
 // repeated .UserResponse.UserMessageResponse user_message_info = 5;
@@ -299,6 +309,28 @@ List::user_message_info() const {
 inline ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse >*
 List::mutable_user_message_info() {
   return &user_message_info_;
+}
+
+// optional int32 end = 6;
+inline bool List::has_end() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void List::set_has_end() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void List::clear_has_end() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void List::clear_end() {
+  end_ = 0;
+  clear_has_end();
+}
+inline ::google::protobuf::int32 List::end() const {
+  return end_;
+}
+inline void List::set_end(::google::protobuf::int32 value) {
+  set_has_end();
+  end_ = value;
 }
 
 

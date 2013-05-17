@@ -37,15 +37,10 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
             _set_http_head(result, false, "sql connet fail", http_res);
         }
 
-        ret = e.excute("select id,sender_id,recipient_id from t_message where id>" + 
+        ret = e.excute("select id,sender_id,recipient_id from t_msg where id>" + 
             Tool::mysql_filter(current_id) + " and sender_id=" + 
             Tool::mysql_filter(sender_id) + " and recipient_id=" + 
             Tool::mysql_filter(recipient_id) + " and type=" + Tool::mysql_filter(USER_MODULE) + ";");
-
-        cout << "select id,sender_id,recipient_id from t_message where id>" + 
-            Tool::mysql_filter(current_id) + " and sender_id = " + 
-            Tool::mysql_filter(sender_id) + " and recipient_id=" + 
-            Tool::mysql_filter(recipient_id) + " and type='user';" << endl;
 
         if (ret != DB_OK) {
             result = DB_ERROR;
@@ -65,6 +60,7 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
         // follow_list construtor
         Data::List *message_list = new Data::List();
         while(NULL != row) {
+            cout << "!!!!!!!!!!!!!!!!!!" << endl;
             int message_id = Tool::S2I(row[0]);
             int sender_id = Tool::S2I(row[1]);
             int recipient_id = Tool::S2I(row[2]);
@@ -84,7 +80,7 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
             _get_user_info(recipient_id, recipient_info);
             user_message_info->set_allocated_recipient(recipient_info);
 
-            e.count("t_message", "where id>=" + Tool::mysql_filter(current_id) + 
+            e.count("t_msg", "where id>=" + Tool::mysql_filter(current_id) + 
                 " and sender_id = " + Tool::mysql_filter(sender_id) + 
                 " and recipient_id=" + Tool::mysql_filter(recipient_id) + 
                 " and type=" + Tool::mysql_filter(USER_MODULE) + ";", count);
@@ -98,7 +94,7 @@ int get_follow_up_msg(int current_id, int sender_id, int recipient_id, char *buf
       
         result = GET_FOLLOW_UP_MSG_SUCCESS;
         _set_http_head(result, true, "get follow up message success", http_res);
-        http_res->set_allocated_user_message_list_response(message_list);
+        http_res->set_allocated_list(message_list);
     } while(0);
 
     print_proto(http_res);

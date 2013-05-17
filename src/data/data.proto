@@ -8,6 +8,7 @@ message List {
 	optional bool is_end = 1;
     repeated RoomData.RoomInfo room_info_list = 2;
     repeated UserData.User_Info user_info = 3;
-    repeated UserResponse.DetailResponse user_detail_list = 4;
+    repeated UserResponse.DetailResponse user_detail = 4;
     repeated UserResponse.UserMessageResponse user_message_info = 5;
+    optional int32 end = 6;
 }

@@ -1,6 +1,5 @@
 package Response;
 import "UserResponse.proto";
-import "UserListResponse.proto";
 import "RoomResponse.proto";
 import "data.proto";
 
@@ -12,11 +11,10 @@ message HTTPResponse {
 	optional UserResponse.LoginResponse login_response = 5;
     optional UserResponse.DetailResponse detail_response = 6;
     optional UserResponse.UsernameExistResponse exist_response = 7;
-    optional RoomResponse.ShowRoomListResponse room_list_response = 8;
-    optional RoomResponse.RoomPeopleListResponse room_people_list_response = 9;
-    optional RoomResponse.RoomInfoResponse room_info_response = 10;
-    optional UserListResponse.FollowListResponse follow_list_response = 11;
-    optional UserListResponse.FollowedListResponse followed_list_response = 12;
-    optional RoomResponse.UserRoomListResponse user_room_list_response = 13;
-    optional Data.List user_message_list_response = 14;
+    optional RoomResponse.RoomInfoResponse room_info_response = 8;
+    optional Data.List list = 9;
+    optional RoomResponse.UserRoomListResponse user_room_list_response = 10;
+    optional RoomResponse.ShowRoomListResponse room_list_response = 11;
+    optional RoomResponse.RoomPeopleListResponse room_people_list_response = 12;
+    
 }

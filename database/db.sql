@@ -433,8 +433,8 @@ else
 					IF NOT Done THEN
 						select v_user_id;
 						set send_user_list = concat(send_user_list, '|', v_user_id);
-						insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-							values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+						-- insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+							-- values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
 					END IF;
 				FETCH NEXT FROM rs INTO v_user_id;
 				UNTIL Done END REPEAT;
