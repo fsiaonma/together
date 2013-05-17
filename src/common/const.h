@@ -236,6 +236,7 @@ static const int SHOW_USER_ROOM_SUCCESS = 21013;
 // ============ Chat ============
 static const int BIND_USER_CHAT_SUCCESS = 31000;
 static const int BIND_USER_CHAT_USER_NOTEXIST = 31001;
+static const int SAVE_MSG_SUCCESS = 31002;
 
 #endif
 

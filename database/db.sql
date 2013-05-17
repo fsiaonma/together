@@ -341,7 +341,7 @@ if v_user_num = 0 or v_room_num = 0 then
 	set ret = 5100;
 else
 	#判断用户是否为房主
-	select count(1) into v_isowner_num from t_room where owner_id = i_user_id;
+	select count(1) into v_isowner_num from t_room where id = i_room_id and owner_id = i_user_id;
 	if v_isowner_num > 0 then
 		set ret = 5106;
 	else
@@ -414,44 +414,52 @@ begin
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
 
 set send_user_list = '';
+-- 判断发送人是否存在
 select count(1) into v_sender_exist from t_user where id = i_sender_id;
 if v_sender_exist = 0 then
-	set ret = 5107;
+	set ret = 5107; -- 发送人不存在
 else
 	if i_msg_type = 1 then -- 房间群聊
+		-- 判断房间是否存在
 		select count(1) into v_room_exist from t_room where id = i_room_id;
 		if v_room_exist = 0 then
-			set ret = 5108;
+			set ret = 5108; -- 房间不存在
 		else
+			-- 房主
 			select owner_id into v_user_id from t_room where id = i_room_id;
 			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
 				values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
 			set send_user_list = concat(send_user_list, '', v_user_id);
+			-- 已加入房间的人
 			OPEN rs;
 				FETCH NEXT FROM rs INTO v_user_id;
 				REPEAT
 					IF NOT Done THEN
 						select v_user_id;
 						set send_user_list = concat(send_user_list, '|', v_user_id);
-						-- insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-							-- values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+						insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+							values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
 					END IF;
 				FETCH NEXT FROM rs INTO v_user_id;
 				UNTIL Done END REPEAT;
 			CLOSE rs;
-			set ret = 5109;
+			set ret = 5111; -- 插入成功
 		end if;
 	elseif i_msg_type = 2 then -- 私聊
-		select ret;
+		select count(1) into v_recipient_exist from t_user where id = i_recipient_id;
+		if v_recipient_exist = 0 then
+			set ret = 5109; -- 接收人不存在
+		else
+			insert into t_msg (sender_id, recipient_id, type, content, time)
+				values (i_sender_id, i_recipient_id, i_msg_type, i_content, now());
+			set send_user_list = concat(send_user_list, '', i_recipient_id);
+			set ret = 5111; -- 插入成功
+		end if;
 	else -- 类型出错
-		select ret;
+		set ret = 5110; -- 类型错误
 	end if;
 	commit;
 end if;
-
-
-
-
 
 select ret, send_user_list;
 end;
