@@ -27,7 +27,8 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         }
 
         // session is not exist
-        if (Session::get(Tool::trim(param["sid"])) == NULL) {
+        SESSION *se = Session::get(Tool::trim(param["sid"]));
+        if (se == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
             msg = "session not exist";
@@ -35,6 +36,8 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             http_res->set_msg(msg);
             break;
         }
+
+        string s_user_id = se->uid;
         
         int room_id = Tool::S2I(param["roomId"]);
         int page_size = Tool::S2I(param["pageSize"]);
@@ -112,7 +115,9 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         }
         int begin_pos = (page_no - 1) * page_size;
 
-        string sql = "select id, username, nickname, sex, pic_id from t_user where id in " 
+        string sql = "select u.id, u.username, u.nickname, u.sex, u.pic_id, "
+        " (select count(1) from t_follow where followed_id = u.id and follow_id = " + s_user_id + ") as is_follow "
+        " from t_user u where u.id in " 
         " (SELECT user_id FROM t_room_user_relation where room_id = " + param["roomId"] + ") "
         "limit " + Tool::toString(begin_pos) + ", " + param["pageSize"];
 
@@ -121,7 +126,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (ret != DB_OK) {
             result = DB_ERROR;
             http_res->set_code(DB_ERROR);
-            msg = "DB ERROR| |" + Tool::toString(ret);
+            msg = "DB ERROR|get room people|" + Tool::toString(ret);
             LOG_ERROR << msg << endl;
             http_res->set_msg(msg);
             e.close();
@@ -138,12 +143,13 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         int fieldcount = mysql_num_fields(rst);
         row = mysql_fetch_row(rst);
 
-        RoomResponse::RoomPeopleListResponse *room_peo_list_res = new RoomResponse::RoomPeopleListResponse();
         Data::List *people_list = new Data::List();
         int data_num = begin_pos;
         while(NULL != row) 
         {
-            UserData::User_Info *user_info = people_list->add_user_info();
+            UserResponse::DetailResponse *user_detail = people_list->add_user_detail();
+            UserData::User_Info *info = new UserData::User_Info();
+            int is_follow;
             for(int i = 0; i < fieldcount; i++) 
             {
                 field = mysql_fetch_field_direct(rst, i);
@@ -152,17 +158,21 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
                     continue;
                 LOG_DEBUG << row[i] << endl;
                 if (key == "id") {
-                    user_info->set_uid(Tool::S2I(row[i]));
+                    info->set_uid(Tool::S2I(row[i]));
                 } else if (key == "username") {
-                    user_info->set_username(row[i]);
+                    info->set_username(row[i]);
                 } else if (key == "nickname") {
-                    user_info->set_nick_name(row[i]);
+                    info->set_nick_name(row[i]);
                 } else if (key == "sex") {
-                    user_info->set_sex(Tool::S2I(row[i]));
+                    info->set_sex(Tool::S2I(row[i]));
                 } else if (key == "pic_id") {
-                    user_info->set_pic_id(Tool::S2I(row[i]));
+                    info->set_pic_id(Tool::S2I(row[i]));
+                } else if (key == "is_follow") {
+                    is_follow = Tool::S2I(row[i]);
                 }
             }
+            is_follow > 0 ? user_detail->set_is_follow(true): user_detail->set_is_follow(false);
+            user_detail->set_allocated_user_info(info);
             LOG_DEBUG << "------------------------" << endl;
             row = mysql_fetch_row(rst);
             data_num++;
@@ -170,8 +180,8 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         if (data_num == total_num) {
             people_list->set_is_end(true);
         }
-        room_peo_list_res->set_allocated_people_list(people_list);
-        http_res->set_allocated_room_people_list_response(room_peo_list_res);
+        http_res->set_allocated_list(people_list);
+
         // mysql_free_result(rst); 
 
 

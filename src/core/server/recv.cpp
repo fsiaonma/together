@@ -857,19 +857,12 @@ void read_tcp_request(process* process)
     	send(sock, r, strlen(r), 0);
 		return ;
 	}
-	// event.data.fd = process->sock;
-	// event.events = EPOLLOUT;
-	// s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 
 
 	list<int>::iterator iter;
     for(iter = send_sock_list.begin(); iter != send_sock_list.end(); iter++)
     {
-        // LOG_INFO << "send sock|" << *iter << endl;
         send(*iter, process->buf, strlen(process->buf), 0);
     }
 
- //    event.data.fd = process->sock;
-	// event.events = EPOLLIN;
-	// epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 }

@@ -101,17 +101,17 @@ class List : public ::google::protobuf::Message {
   inline bool is_end() const;
   inline void set_is_end(bool value);
 
-  // repeated .RoomData.RoomInfo room_info_list = 2;
-  inline int room_info_list_size() const;
-  inline void clear_room_info_list();
-  static const int kRoomInfoListFieldNumber = 2;
-  inline const ::RoomData::RoomInfo& room_info_list(int index) const;
-  inline ::RoomData::RoomInfo* mutable_room_info_list(int index);
-  inline ::RoomData::RoomInfo* add_room_info_list();
+  // repeated .RoomData.RoomInfo room_info = 2;
+  inline int room_info_size() const;
+  inline void clear_room_info();
+  static const int kRoomInfoFieldNumber = 2;
+  inline const ::RoomData::RoomInfo& room_info(int index) const;
+  inline ::RoomData::RoomInfo* mutable_room_info(int index);
+  inline ::RoomData::RoomInfo* add_room_info();
   inline const ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >&
-      room_info_list() const;
+      room_info() const;
   inline ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >*
-      mutable_room_info_list();
+      mutable_room_info();
 
   // repeated .UserResponse.DetailResponse user_detail = 3;
   inline int user_detail_size() const;
@@ -144,7 +144,7 @@ class List : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_list_;
+  ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo > room_info_;
   ::google::protobuf::RepeatedPtrField< ::UserResponse::DetailResponse > user_detail_;
   ::google::protobuf::RepeatedPtrField< ::UserResponse::UserMessageResponse > user_message_info_;
   bool is_end_;
@@ -188,29 +188,29 @@ inline void List::set_is_end(bool value) {
   is_end_ = value;
 }
 
-// repeated .RoomData.RoomInfo room_info_list = 2;
-inline int List::room_info_list_size() const {
-  return room_info_list_.size();
+// repeated .RoomData.RoomInfo room_info = 2;
+inline int List::room_info_size() const {
+  return room_info_.size();
 }
-inline void List::clear_room_info_list() {
-  room_info_list_.Clear();
+inline void List::clear_room_info() {
+  room_info_.Clear();
 }
-inline const ::RoomData::RoomInfo& List::room_info_list(int index) const {
-  return room_info_list_.Get(index);
+inline const ::RoomData::RoomInfo& List::room_info(int index) const {
+  return room_info_.Get(index);
 }
-inline ::RoomData::RoomInfo* List::mutable_room_info_list(int index) {
-  return room_info_list_.Mutable(index);
+inline ::RoomData::RoomInfo* List::mutable_room_info(int index) {
+  return room_info_.Mutable(index);
 }
-inline ::RoomData::RoomInfo* List::add_room_info_list() {
-  return room_info_list_.Add();
+inline ::RoomData::RoomInfo* List::add_room_info() {
+  return room_info_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >&
-List::room_info_list() const {
-  return room_info_list_;
+List::room_info() const {
+  return room_info_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::RoomData::RoomInfo >*
-List::mutable_room_info_list() {
-  return &room_info_list_;
+List::mutable_room_info() {
+  return &room_info_;
 }
 
 // repeated .UserResponse.DetailResponse user_detail = 3;
