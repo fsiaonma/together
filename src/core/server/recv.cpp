@@ -858,7 +858,6 @@ void read_tcp_request(process* process)
 		return ;
 	}
 
-
 	list<int>::iterator iter;
     for(iter = send_sock_list.begin(); iter != send_sock_list.end(); iter++)
     {
