@@ -95,6 +95,7 @@ static const int GENDERTYPE_NUM = 3;
 static const int UNKNOWN_MODULE = 99;
 static const int USER_MODULE = 100;
 static const int ROOM_MODULE = 200;
+static const int MESSAGE_MODULE = 300;
 
 // --------------- Module Action Code ---------------
 // ============ USER ============

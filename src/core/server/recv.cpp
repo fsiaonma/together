@@ -76,6 +76,16 @@
  			}
  			break;
  		}
+ 		case MESSAGE_MODULE:
+ 		{
+ 			s = message_handler(process, param);
+ 			if (s == -1) {
+ 				LOG_ERROR << "message_handler err" << endl;
+	 			BAD_REQUEST
+	 			return;
+ 			}
+ 			break;
+ 		}
  		default:
  		{
  			LOG_ERROR << "module_type err|" << module_type << endl;

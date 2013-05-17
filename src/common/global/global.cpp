@@ -41,6 +41,8 @@ int get_module_type(const char *req) {
 		ret = USER_MODULE;
 	} else if (strcmp(req, "ROOM") == 0) {
 		ret = ROOM_MODULE;
+	} else if (strcmp(req, "MESSAGE") == 0) {
+		ret = MESSAGE_MODULE;
 	}
 	return ret;
 }
