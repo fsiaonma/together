@@ -20,4 +20,7 @@ int get_previous_msg(int current_id, int msgs_num, int recipient_id, int tid, in
 int chat_handler(process *process, map<string, string> param, list<int> &send_sock_list);
 int message_handler(process *process, map<string, string> param);
 
+int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
+
+
 #endif
