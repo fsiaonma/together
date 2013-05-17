@@ -1,7 +1,13 @@
 package RoomResponse;
 import "data.proto";
 import "RoomData.proto";
+import "UserData.proto";
+
+message CreateRoomResponse {
+	optional RoomData.RoomInfo room_info = 1;
+}
 
 message RoomInfoResponse {
 	optional RoomData.RoomInfo room_info = 1;
+	optional UserData.UserRelation relation = 2;
 }

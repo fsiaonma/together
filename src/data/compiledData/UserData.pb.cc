@@ -23,6 +23,7 @@ namespace {
 const ::google::protobuf::Descriptor* User_Info_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   User_Info_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* UserRelation_descriptor_ = NULL;
 
 }  // namespace
 
@@ -59,6 +60,7 @@ void protobuf_AssignDesc_UserData_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(User_Info));
+  UserRelation_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -95,7 +97,9 @@ void protobuf_AddDesc_UserData_2eproto() {
     "e_text\030\005 \001(\t\022\033\n\023signature_record_id\030\006 \001("
     "\005\022\022\n\npraise_num\030\007 \001(\005\022\021\n\tvisit_num\030\010 \001(\005"
     "\022\024\n\014followed_num\030\t \001(\005\022\022\n\nfollow_num\030\n \001"
-    "(\005\022\013\n\003sex\030\013 \001(\005\022\016\n\006pic_id\030\014 \001(\005", 271);
+    "(\005\022\013\n\003sex\030\013 \001(\005\022\016\n\006pic_id\030\014 \001(\005*M\n\014UserR"
+    "elation\022\016\n\nNORELATION\020\000\022\n\n\006FOLLOW\020\001\022\010\n\004F"
+    "ANS\020\002\022\016\n\nFOLLOWEACH\020\003\022\007\n\003OWN\020\004", 350);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserData.proto", &protobuf_RegisterTypes);
   User_Info::default_instance_ = new User_Info();
@@ -109,6 +113,23 @@ struct StaticDescriptorInitializer_UserData_2eproto {
     protobuf_AddDesc_UserData_2eproto();
   }
 } static_descriptor_initializer_UserData_2eproto_;
+const ::google::protobuf::EnumDescriptor* UserRelation_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return UserRelation_descriptor_;
+}
+bool UserRelation_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 

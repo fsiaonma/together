@@ -20,6 +20,9 @@ namespace RoomResponse {
 
 namespace {
 
+const ::google::protobuf::Descriptor* CreateRoomResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CreateRoomResponse_reflection_ = NULL;
 const ::google::protobuf::Descriptor* RoomInfoResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   RoomInfoResponse_reflection_ = NULL;
@@ -33,9 +36,25 @@ void protobuf_AssignDesc_RoomResponse_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "RoomResponse.proto");
   GOOGLE_CHECK(file != NULL);
-  RoomInfoResponse_descriptor_ = file->message_type(0);
-  static const int RoomInfoResponse_offsets_[1] = {
+  CreateRoomResponse_descriptor_ = file->message_type(0);
+  static const int CreateRoomResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CreateRoomResponse, room_info_),
+  };
+  CreateRoomResponse_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      CreateRoomResponse_descriptor_,
+      CreateRoomResponse::default_instance_,
+      CreateRoomResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CreateRoomResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CreateRoomResponse, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(CreateRoomResponse));
+  RoomInfoResponse_descriptor_ = file->message_type(1);
+  static const int RoomInfoResponse_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfoResponse, room_info_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfoResponse, relation_),
   };
   RoomInfoResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -61,12 +80,16 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    CreateRoomResponse_descriptor_, &CreateRoomResponse::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     RoomInfoResponse_descriptor_, &RoomInfoResponse::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_RoomResponse_2eproto() {
+  delete CreateRoomResponse::default_instance_;
+  delete CreateRoomResponse_reflection_;
   delete RoomInfoResponse::default_instance_;
   delete RoomInfoResponse_reflection_;
 }
@@ -79,14 +102,19 @@ void protobuf_AddDesc_RoomResponse_2eproto() {
 
   ::Data::protobuf_AddDesc_data_2eproto();
   ::RoomData::protobuf_AddDesc_RoomData_2eproto();
+  ::UserData::protobuf_AddDesc_UserData_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\022RoomResponse.proto\022\014RoomResponse\032\ndata"
-    ".proto\032\016RoomData.proto\"9\n\020RoomInfoRespon"
-    "se\022%\n\troom_info\030\001 \001(\0132\022.RoomData.RoomInf"
-    "o", 121);
+    ".proto\032\016RoomData.proto\032\016UserData.proto\";"
+    "\n\022CreateRoomResponse\022%\n\troom_info\030\001 \001(\0132"
+    "\022.RoomData.RoomInfo\"c\n\020RoomInfoResponse\022"
+    "%\n\troom_info\030\001 \001(\0132\022.RoomData.RoomInfo\022("
+    "\n\010relation\030\002 \001(\0162\026.UserData.UserRelation", 240);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomResponse.proto", &protobuf_RegisterTypes);
+  CreateRoomResponse::default_instance_ = new CreateRoomResponse();
   RoomInfoResponse::default_instance_ = new RoomInfoResponse();
+  CreateRoomResponse::default_instance_->InitAsDefaultInstance();
   RoomInfoResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RoomResponse_2eproto);
 }
@@ -101,7 +129,221 @@ struct StaticDescriptorInitializer_RoomResponse_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int CreateRoomResponse::kRoomInfoFieldNumber;
+#endif  // !_MSC_VER
+
+CreateRoomResponse::CreateRoomResponse()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void CreateRoomResponse::InitAsDefaultInstance() {
+  room_info_ = const_cast< ::RoomData::RoomInfo*>(&::RoomData::RoomInfo::default_instance());
+}
+
+CreateRoomResponse::CreateRoomResponse(const CreateRoomResponse& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void CreateRoomResponse::SharedCtor() {
+  _cached_size_ = 0;
+  room_info_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+CreateRoomResponse::~CreateRoomResponse() {
+  SharedDtor();
+}
+
+void CreateRoomResponse::SharedDtor() {
+  if (this != default_instance_) {
+    delete room_info_;
+  }
+}
+
+void CreateRoomResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CreateRoomResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CreateRoomResponse_descriptor_;
+}
+
+const CreateRoomResponse& CreateRoomResponse::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_RoomResponse_2eproto();
+  return *default_instance_;
+}
+
+CreateRoomResponse* CreateRoomResponse::default_instance_ = NULL;
+
+CreateRoomResponse* CreateRoomResponse::New() const {
+  return new CreateRoomResponse;
+}
+
+void CreateRoomResponse::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_room_info()) {
+      if (room_info_ != NULL) room_info_->::RoomData::RoomInfo::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool CreateRoomResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .RoomData.RoomInfo room_info = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_room_info()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void CreateRoomResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional .RoomData.RoomInfo room_info = 1;
+  if (has_room_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->room_info(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* CreateRoomResponse::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional .RoomData.RoomInfo room_info = 1;
+  if (has_room_info()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->room_info(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int CreateRoomResponse::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional .RoomData.RoomInfo room_info = 1;
+    if (has_room_info()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->room_info());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CreateRoomResponse::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const CreateRoomResponse* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const CreateRoomResponse*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void CreateRoomResponse::MergeFrom(const CreateRoomResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_room_info()) {
+      mutable_room_info()->::RoomData::RoomInfo::MergeFrom(from.room_info());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void CreateRoomResponse::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CreateRoomResponse::CopyFrom(const CreateRoomResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CreateRoomResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CreateRoomResponse::Swap(CreateRoomResponse* other) {
+  if (other != this) {
+    std::swap(room_info_, other->room_info_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata CreateRoomResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CreateRoomResponse_descriptor_;
+  metadata.reflection = CreateRoomResponse_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int RoomInfoResponse::kRoomInfoFieldNumber;
+const int RoomInfoResponse::kRelationFieldNumber;
 #endif  // !_MSC_VER
 
 RoomInfoResponse::RoomInfoResponse()
@@ -122,6 +364,7 @@ RoomInfoResponse::RoomInfoResponse(const RoomInfoResponse& from)
 void RoomInfoResponse::SharedCtor() {
   _cached_size_ = 0;
   room_info_ = NULL;
+  relation_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -161,6 +404,7 @@ void RoomInfoResponse::Clear() {
     if (has_room_info()) {
       if (room_info_ != NULL) room_info_->::RoomData::RoomInfo::Clear();
     }
+    relation_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -178,6 +422,27 @@ bool RoomInfoResponse::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_room_info()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(16)) goto parse_relation;
+        break;
+      }
+
+      // optional .UserData.UserRelation relation = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_relation:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::UserData::UserRelation_IsValid(value)) {
+            set_relation(static_cast< ::UserData::UserRelation >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(2, value);
+          }
         } else {
           goto handle_uninterpreted;
         }
@@ -209,6 +474,12 @@ void RoomInfoResponse::SerializeWithCachedSizes(
       1, this->room_info(), output);
   }
 
+  // optional .UserData.UserRelation relation = 2;
+  if (has_relation()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->relation(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -222,6 +493,12 @@ void RoomInfoResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->room_info(), target);
+  }
+
+  // optional .UserData.UserRelation relation = 2;
+  if (has_relation()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      2, this->relation(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -240,6 +517,12 @@ int RoomInfoResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->room_info());
+    }
+
+    // optional .UserData.UserRelation relation = 2;
+    if (has_relation()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->relation());
     }
 
   }
@@ -272,6 +555,9 @@ void RoomInfoResponse::MergeFrom(const RoomInfoResponse& from) {
     if (from.has_room_info()) {
       mutable_room_info()->::RoomData::RoomInfo::MergeFrom(from.room_info());
     }
+    if (from.has_relation()) {
+      set_relation(from.relation());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -296,6 +582,7 @@ bool RoomInfoResponse::IsInitialized() const {
 void RoomInfoResponse::Swap(RoomInfoResponse* other) {
   if (other != this) {
     std::swap(room_info_, other->room_info_);
+    std::swap(relation_, other->relation_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

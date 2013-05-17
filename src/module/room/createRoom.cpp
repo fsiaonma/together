@@ -80,6 +80,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         insert_addr_params["detail_addr"] = Tool::mysql_filter(detail_addr);
         // insert_addr_params["addr_remark"] = Tool::mysql_filter(addr_remark);
 
+
         int addr_insert_id = -1;
         ret = e.insert("t_address", insert_addr_params, addr_insert_id);
         // exception
@@ -92,7 +93,6 @@ int create_room(map<string, string> param, char *buf, int &send_len)
             e.close();
             break;
         }
-
 
         // save the room info to database
         map<string, string> insert_room_params;
@@ -144,6 +144,32 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         result = CREATE_ROOM_SUCCESS;
         http_res->set_code(CREATE_ROOM_SUCCESS);
         http_res->set_success(true);
+
+
+        RoomData::Address *addr = new RoomData::Address();
+        addr->set_addr_type(type);
+        addr->set_longitude(Tool::fromString<double>(param["longitude"]));
+        addr->set_latitude(Tool::fromString<double>(param["latitude"]));
+        addr->set_detail_addr(detail_addr);
+
+        RoomResponse::CreateRoomResponse *cr_res = new RoomResponse::CreateRoomResponse();
+        RoomData::RoomInfo *room_info = new RoomData::RoomInfo();
+        room_info->set_room_id(room_insert_id);
+        room_info->set_owner_id(user_id);
+        room_info->set_title(title);
+        room_info->set_type(type);
+        room_info->set_gender_type(gender_type);
+        room_info->set_limit_person_count(Tool::S2I(limit_person_num));
+        room_info->set_pic_id(pic_id);
+        room_info->set_record_id(record_id);
+        room_info->set_begin_time(param["beginTime"]);
+        room_info->set_create_time(Tool::now_time());
+        room_info->set_status(0);
+        room_info->set_allocated_address(addr);
+        cr_res->set_allocated_room_info(room_info);
+        http_res->set_allocated_create_room_response(cr_res);
+
+
         msg = "insert room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
@@ -152,6 +178,12 @@ int create_room(map<string, string> param, char *buf, int &send_len)
     } while(0);
     print_proto(http_res);
 
+  fstream output("./response.log", ios::out | ios::trunc | ios::binary);   
+  
+  if (!http_res->SerializeToOstream(&output)) {   
+    cerr << "Failed to write msg." << endl;   
+    return -1;   
+  }
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();

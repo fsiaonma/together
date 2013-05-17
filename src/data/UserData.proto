@@ -15,3 +15,11 @@ message User_Info {
     optional int32 sex = 11;
     optional int32 pic_id = 12;
 }
+
+enum UserRelation {
+    NORELATION = 0;
+    FOLLOW = 1;
+    FANS = 2;
+    FOLLOWEACH = 3;
+    OWN = 4;
+}

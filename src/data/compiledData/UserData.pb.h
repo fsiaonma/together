@@ -23,6 +23,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -35,6 +36,28 @@ void protobuf_ShutdownFile_UserData_2eproto();
 
 class User_Info;
 
+enum UserRelation {
+  NORELATION = 0,
+  FOLLOW = 1,
+  FANS = 2,
+  FOLLOWEACH = 3,
+  OWN = 4
+};
+bool UserRelation_IsValid(int value);
+const UserRelation UserRelation_MIN = NORELATION;
+const UserRelation UserRelation_MAX = OWN;
+const int UserRelation_ARRAYSIZE = UserRelation_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* UserRelation_descriptor();
+inline const ::std::string& UserRelation_Name(UserRelation value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    UserRelation_descriptor(), value);
+}
+inline bool UserRelation_Parse(
+    const ::std::string& name, UserRelation* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<UserRelation>(
+    UserRelation_descriptor(), name, value);
+}
 // ===================================================================
 
 class User_Info : public ::google::protobuf::Message {
@@ -719,6 +742,10 @@ inline void User_Info::set_pic_id(::google::protobuf::int32 value) {
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::UserData::UserRelation>() {
+  return ::UserData::UserRelation_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf
