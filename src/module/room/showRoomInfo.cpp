@@ -27,7 +27,8 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
         }
 
         // session is not exist
-        if (Session::get(Tool::trim(param["sid"])) == NULL) {
+        SESSION *s = Session::get(Tool::trim(param["sid"]));
+        if (s == NULL) {
             result = SESSION_NOT_EXIST;
             http_res->set_code(SESSION_NOT_EXIST);
             msg = "session not exist";
@@ -35,6 +36,8 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             http_res->set_msg(msg);
             break;
         }
+        int user_id = Tool::S2I(s->uid);
+        LOG_INFO << "user id :" << user_id << endl;
         
         int room_id = Tool::S2I(param["roomId"]);
 
@@ -62,9 +65,12 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
         }
 
         string sql = "select r.id as room_id, r.title, r.owner_id, u.nickname, r.type, r.room_status, "
+        "(select count(1) from t_room_user_relation where room_id = r.id and user_id = " + Tool::mysql_filter(user_id) + ") as is_join, "
         "r.preview_pic_id as pic_id, r.gender_type, (select count(1) from t_room_user_relation where room_id = r.id) as join_person_num,  "
         "r.limit_person_num, r.record_id, r.create_time, r.begin_time, a.longitude, a.latitude, a.detail_addr, a.addr_remark "
         "from t_room r, t_address a, t_user u where a.id = r.addr_id and u.id = r.owner_id and r.id = " + param["roomId"];
+
+        LOG_INFO << sql << endl;
 
         ret = e.excute(sql);
         // exception
@@ -94,6 +100,8 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             RoomResponse::RoomInfoResponse *room_info_res = new RoomResponse::RoomInfoResponse();
             RoomData::RoomInfo *room_info = new RoomData::RoomInfo();
             RoomData::Address *addr = new RoomData::Address();
+            int owner_id;
+            int is_join;
             for(int i = 0; i < fieldcount; i++) {
                 if (row[i] != NULL) {
                     field = mysql_fetch_field_direct(rst, i);
@@ -103,6 +111,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
                     } else if (key == "title") {
                         room_info->set_title(row[i]);
                     } else if (key == "owner_id") {
+                        owner_id = Tool::S2I(row[i]);
                         room_info->set_owner_id(Tool::S2I(row[i]));
                     } else if (key == "nickname") {
                         room_info->set_owner_nickname(row[i]);
@@ -132,8 +141,20 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
                         addr->set_detail_addr(row[i]);
                     } else if (key == "addr_remark") {
                         addr->set_addr_remark(row[i]);
+                    } else if (key == "is_join") {
+                        is_join = Tool::S2I(row[i]);
                     }
                 }
+            }
+
+            LOG_INFO << "owner_id:" << owner_id << "|" << "is_join:" << is_join << endl;
+            if (owner_id == user_id) {
+                room_info->set_join_status(2);
+            } else {
+                if (is_join > 0)
+                    room_info->set_join_status(1);
+                else
+                    room_info->set_join_status(0);
             }
             room_info->set_allocated_address(addr);
             room_info_res->set_allocated_room_info(room_info);
@@ -156,7 +177,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
         msg = "show room info success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
-            e.close();
+        e.close();
 
     } while(0);
     print_proto(http_res);

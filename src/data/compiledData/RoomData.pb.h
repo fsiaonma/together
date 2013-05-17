@@ -219,6 +219,13 @@ class RoomInfo : public ::google::protobuf::Message {
   inline ::RoomData::Address* release_address();
   inline void set_allocated_address(::RoomData::Address* address);
 
+  // optional int32 join_status = 16;
+  inline bool has_join_status() const;
+  inline void clear_join_status();
+  static const int kJoinStatusFieldNumber = 16;
+  inline ::google::protobuf::int32 join_status() const;
+  inline void set_join_status(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:RoomData.RoomInfo)
  private:
   inline void set_has_room_id();
@@ -251,6 +258,8 @@ class RoomInfo : public ::google::protobuf::Message {
   inline void clear_has_begin_time();
   inline void set_has_address();
   inline void clear_has_address();
+  inline void set_has_join_status();
+  inline void clear_has_join_status();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -267,11 +276,12 @@ class RoomInfo : public ::google::protobuf::Message {
   ::google::protobuf::int32 limit_person_count_;
   ::std::string* create_time_;
   ::std::string* begin_time_;
-  ::RoomData::Address* address_;
   ::google::protobuf::int32 record_id_;
+  ::google::protobuf::int32 join_status_;
+  ::RoomData::Address* address_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(15 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(16 + 31) / 32];
 
   friend void  protobuf_AddDesc_RoomData_2eproto();
   friend void protobuf_AssignDesc_RoomData_2eproto();
@@ -955,6 +965,28 @@ inline void RoomInfo::set_allocated_address(::RoomData::Address* address) {
   } else {
     clear_has_address();
   }
+}
+
+// optional int32 join_status = 16;
+inline bool RoomInfo::has_join_status() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void RoomInfo::set_has_join_status() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void RoomInfo::clear_has_join_status() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void RoomInfo::clear_join_status() {
+  join_status_ = 0;
+  clear_has_join_status();
+}
+inline ::google::protobuf::int32 RoomInfo::join_status() const {
+  return join_status_;
+}
+inline void RoomInfo::set_join_status(::google::protobuf::int32 value) {
+  set_has_join_status();
+  join_status_ = value;
 }
 
 // -------------------------------------------------------------------

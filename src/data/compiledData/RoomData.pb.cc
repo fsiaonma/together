@@ -37,7 +37,7 @@ void protobuf_AssignDesc_RoomData_2eproto() {
       "RoomData.proto");
   GOOGLE_CHECK(file != NULL);
   RoomInfo_descriptor_ = file->message_type(0);
-  static const int RoomInfo_offsets_[15] = {
+  static const int RoomInfo_offsets_[16] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, room_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, title_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, owner_id_),
@@ -53,6 +53,7 @@ void protobuf_AssignDesc_RoomData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, create_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, begin_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, address_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RoomInfo, join_status_),
   };
   RoomInfo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -118,7 +119,7 @@ void protobuf_AddDesc_RoomData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016RoomData.proto\022\010RoomData\"\300\002\n\010RoomInfo\022"
+    "\n\016RoomData.proto\022\010RoomData\"\325\002\n\010RoomInfo\022"
     "\017\n\007room_id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\020\n\010owner"
     "_id\030\003 \001(\005\022\026\n\016owner_nickname\030\004 \001(\t\022\014\n\004typ"
     "e\030\005 \001(\005\022\016\n\006status\030\006 \001(\005\022\016\n\006pic_id\030\007 \001(\005\022"
@@ -126,10 +127,10 @@ void protobuf_AddDesc_RoomData_2eproto() {
     "\n\021join_person_count\030\n \001(\005\022\032\n\022limit_perso"
     "n_count\030\013 \001(\005\022\021\n\trecord_id\030\014 \001(\005\022\023\n\013crea"
     "te_time\030\r \001(\t\022\022\n\nbegin_time\030\016 \001(\t\022\"\n\007add"
-    "ress\030\017 \001(\0132\021.RoomData.Address\"k\n\007Address"
-    "\022\021\n\taddr_type\030\001 \001(\005\022\021\n\tlongitude\030\002 \001(\001\022\020"
-    "\n\010latitude\030\003 \001(\001\022\023\n\013detail_addr\030\004 \001(\t\022\023\n"
-    "\013addr_remark\030\005 \001(\t", 458);
+    "ress\030\017 \001(\0132\021.RoomData.Address\022\023\n\013join_st"
+    "atus\030\020 \001(\005\"k\n\007Address\022\021\n\taddr_type\030\001 \001(\005"
+    "\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitude\030\003 \001(\001\022\023\n"
+    "\013detail_addr\030\004 \001(\t\022\023\n\013addr_remark\030\005 \001(\t", 479);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RoomData.proto", &protobuf_RegisterTypes);
   RoomInfo::default_instance_ = new RoomInfo();
@@ -164,6 +165,7 @@ const int RoomInfo::kRecordIdFieldNumber;
 const int RoomInfo::kCreateTimeFieldNumber;
 const int RoomInfo::kBeginTimeFieldNumber;
 const int RoomInfo::kAddressFieldNumber;
+const int RoomInfo::kJoinStatusFieldNumber;
 #endif  // !_MSC_VER
 
 RoomInfo::RoomInfo()
@@ -198,6 +200,7 @@ void RoomInfo::SharedCtor() {
   create_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   begin_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   address_ = NULL;
+  join_status_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -281,6 +284,7 @@ void RoomInfo::Clear() {
     if (has_address()) {
       if (address_ != NULL) address_->::RoomData::Address::Clear();
     }
+    join_status_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -529,6 +533,22 @@ bool RoomInfo::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(128)) goto parse_join_status;
+        break;
+      }
+
+      // optional int32 join_status = 16;
+      case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_join_status:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &join_status_)));
+          set_has_join_status();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -643,6 +663,11 @@ void RoomInfo::SerializeWithCachedSizes(
       15, this->address(), output);
   }
 
+  // optional int32 join_status = 16;
+  if (has_join_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->join_status(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -746,6 +771,11 @@ void RoomInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         15, this->address(), target);
+  }
+
+  // optional int32 join_status = 16;
+  if (has_join_status()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->join_status(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -864,6 +894,13 @@ int RoomInfo::ByteSize() const {
           this->address());
     }
 
+    // optional int32 join_status = 16;
+    if (has_join_status()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->join_status());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -938,6 +975,9 @@ void RoomInfo::MergeFrom(const RoomInfo& from) {
     if (from.has_address()) {
       mutable_address()->::RoomData::Address::MergeFrom(from.address());
     }
+    if (from.has_join_status()) {
+      set_join_status(from.join_status());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -976,6 +1016,7 @@ void RoomInfo::Swap(RoomInfo* other) {
     std::swap(create_time_, other->create_time_);
     std::swap(begin_time_, other->begin_time_);
     std::swap(address_, other->address_);
+    std::swap(join_status_, other->join_status_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

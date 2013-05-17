@@ -17,6 +17,7 @@ message RoomInfo {
     optional string create_time = 13;
     optional string begin_time = 14;
     optional Address address = 15;
+    optional int32 join_status = 16;
 }
 
 message Address {
