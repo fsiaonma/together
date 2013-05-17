@@ -91,12 +91,12 @@ class Message_Info : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::int32 id() const;
-  inline void set_id(::google::protobuf::int32 value);
+  // optional int32 message_id = 1;
+  inline bool has_message_id() const;
+  inline void clear_message_id();
+  static const int kMessageIdFieldNumber = 1;
+  inline ::google::protobuf::int32 message_id() const;
+  inline void set_message_id(::google::protobuf::int32 value);
 
   // optional int32 sender_id = 2;
   inline bool has_sender_id() const;
@@ -171,8 +171,8 @@ class Message_Info : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:MessageData.Message_Info)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
+  inline void set_has_message_id();
+  inline void clear_has_message_id();
   inline void set_has_sender_id();
   inline void clear_has_sender_id();
   inline void set_has_recipient_id();
@@ -192,7 +192,7 @@ class Message_Info : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 message_id_;
   ::google::protobuf::int32 sender_id_;
   ::google::protobuf::int32 recipient_id_;
   ::google::protobuf::int32 type_;
@@ -219,26 +219,26 @@ class Message_Info : public ::google::protobuf::Message {
 
 // Message_Info
 
-// optional int32 id = 1;
-inline bool Message_Info::has_id() const {
+// optional int32 message_id = 1;
+inline bool Message_Info::has_message_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Message_Info::set_has_id() {
+inline void Message_Info::set_has_message_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Message_Info::clear_has_id() {
+inline void Message_Info::clear_has_message_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Message_Info::clear_id() {
-  id_ = 0;
-  clear_has_id();
+inline void Message_Info::clear_message_id() {
+  message_id_ = 0;
+  clear_has_message_id();
 }
-inline ::google::protobuf::int32 Message_Info::id() const {
-  return id_;
+inline ::google::protobuf::int32 Message_Info::message_id() const {
+  return message_id_;
 }
-inline void Message_Info::set_id(::google::protobuf::int32 value) {
-  set_has_id();
-  id_ = value;
+inline void Message_Info::set_message_id(::google::protobuf::int32 value) {
+  set_has_message_id();
+  message_id_ = value;
 }
 
 // optional int32 sender_id = 2;

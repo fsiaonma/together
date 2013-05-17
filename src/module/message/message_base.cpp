@@ -40,7 +40,7 @@ int _get_message_info(int message_id, MessageData::Message_Info *message_info) {
         }
 
         if (key == "id") {
-            message_info->set_id(message_id);
+            message_info->set_message_id(message_id);
         } else if (key == "sender_id") {
             message_info->set_sender_id(Tool::S2I(row[i]));
         } else if (key == "recipient_id") {

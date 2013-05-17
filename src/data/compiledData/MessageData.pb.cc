@@ -35,7 +35,7 @@ void protobuf_AssignDesc_MessageData_2eproto() {
   GOOGLE_CHECK(file != NULL);
   Message_Info_descriptor_ = file->message_type(0);
   static const int Message_Info_offsets_[9] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, message_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, sender_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, recipient_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, type_),
@@ -86,11 +86,12 @@ void protobuf_AddDesc_MessageData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021MessageData.proto\022\013MessageData\"\241\001\n\014Mes"
-    "sage_Info\022\n\n\002id\030\001 \001(\005\022\021\n\tsender_id\030\002 \001(\005"
-    "\022\024\n\014recipient_id\030\003 \001(\005\022\014\n\004type\030\004 \001(\005\022\017\n\007"
-    "content\030\005 \001(\t\022\r\n\005title\030\006 \001(\t\022\017\n\007file_id\030"
-    "\007 \001(\005\022\017\n\007room_id\030\010 \001(\005\022\014\n\004time\030\t \001(\t", 196);
+    "\n\021MessageData.proto\022\013MessageData\"\251\001\n\014Mes"
+    "sage_Info\022\022\n\nmessage_id\030\001 \001(\005\022\021\n\tsender_"
+    "id\030\002 \001(\005\022\024\n\014recipient_id\030\003 \001(\005\022\014\n\004type\030\004"
+    " \001(\005\022\017\n\007content\030\005 \001(\t\022\r\n\005title\030\006 \001(\t\022\017\n\007"
+    "file_id\030\007 \001(\005\022\017\n\007room_id\030\010 \001(\005\022\014\n\004time\030\t"
+    " \001(\t", 204);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageData.proto", &protobuf_RegisterTypes);
   Message_Info::default_instance_ = new Message_Info();
@@ -108,7 +109,7 @@ struct StaticDescriptorInitializer_MessageData_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Message_Info::kIdFieldNumber;
+const int Message_Info::kMessageIdFieldNumber;
 const int Message_Info::kSenderIdFieldNumber;
 const int Message_Info::kRecipientIdFieldNumber;
 const int Message_Info::kTypeFieldNumber;
@@ -135,7 +136,7 @@ Message_Info::Message_Info(const Message_Info& from)
 
 void Message_Info::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0;
+  message_id_ = 0;
   sender_id_ = 0;
   recipient_id_ = 0;
   type_ = 0;
@@ -188,7 +189,7 @@ Message_Info* Message_Info::New() const {
 
 void Message_Info::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0;
+    message_id_ = 0;
     sender_id_ = 0;
     recipient_id_ = 0;
     type_ = 0;
@@ -222,14 +223,14 @@ bool Message_Info::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 id = 1;
+      // optional int32 message_id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-          set_has_id();
+                 input, &message_id_)));
+          set_has_message_id();
         } else {
           goto handle_uninterpreted;
         }
@@ -386,9 +387,9 @@ bool Message_Info::MergePartialFromCodedStream(
 
 void Message_Info::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // optional int32 id = 1;
-  if (has_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+  // optional int32 message_id = 1;
+  if (has_message_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->message_id(), output);
   }
 
   // optional int32 sender_id = 2;
@@ -451,9 +452,9 @@ void Message_Info::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Message_Info::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional int32 id = 1;
-  if (has_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  // optional int32 message_id = 1;
+  if (has_message_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->message_id(), target);
   }
 
   // optional int32 sender_id = 2;
@@ -522,11 +523,11 @@ int Message_Info::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 id = 1;
-    if (has_id()) {
+    // optional int32 message_id = 1;
+    if (has_message_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->id());
+          this->message_id());
     }
 
     // optional int32 sender_id = 2;
@@ -614,8 +615,8 @@ void Message_Info::MergeFrom(const ::google::protobuf::Message& from) {
 void Message_Info::MergeFrom(const Message_Info& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_id()) {
-      set_id(from.id());
+    if (from.has_message_id()) {
+      set_message_id(from.message_id());
     }
     if (from.has_sender_id()) {
       set_sender_id(from.sender_id());
@@ -666,7 +667,7 @@ bool Message_Info::IsInitialized() const {
 
 void Message_Info::Swap(Message_Info* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(message_id_, other->message_id_);
     std::swap(sender_id_, other->sender_id_);
     std::swap(recipient_id_, other->recipient_id_);
     std::swap(type_, other->type_);
