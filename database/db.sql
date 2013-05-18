@@ -187,13 +187,12 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
   `content` VARCHAR(255) NULL ,
   `title` VARCHAR(255) NULL ,
   `file_id` INT NULL ,
-  `room_id` INT NULL ,
   `time` TIMESTAMP NULL ,
+  `room_id` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_msg_t_user1_idx` (`sender_id` ASC) ,
   INDEX `fk_t_msg_t_file1_idx` (`file_id` ASC) ,
   INDEX `fk_t_msg_t_user2_idx` (`recipient_id` ASC) ,
-  INDEX `fk_t_msg_t_room1_idx` (`room_id` ASC) ,
   CONSTRAINT `fk_t_msg_t_user1`
     FOREIGN KEY (`sender_id` )
     REFERENCES `together`.`t_user` (`id` )
@@ -207,11 +206,6 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
   CONSTRAINT `fk_t_msg_t_user2`
     FOREIGN KEY (`recipient_id` )
     REFERENCES `together`.`t_user` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_msg_t_room1`
-    FOREIGN KEY (`room_id` )
-    REFERENCES `together`.`t_room` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -398,6 +392,8 @@ DECLARE v_recipient_exist int;
 DECLARE v_room_exist int;
 DECLARE v_user_id int;
 DECLARE Done INT DEFAULT 0;
+DECLARE CHECK_ROOM_ID_S varchar(20);
+DECLARE CHECK_ROOM_ID int;
 -- 声明游标
 DECLARE rs CURSOR FOR SELECT user_id FROM t_room_user_relation where room_id = i_room_id;
 # 如果出现sql异常，则将ret设为5199并退出
@@ -414,6 +410,8 @@ begin
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
 
 set send_user_list = '';
+set CHECK_ROOM_ID_S = '';
+
 -- 判断发送人是否存在
 select count(1) into v_sender_exist from t_user where id = i_sender_id;
 if v_sender_exist = 0 then
@@ -427,21 +425,22 @@ else
 		else
 			-- 房主
 			select owner_id into v_user_id from t_room where id = i_room_id;
-			if v_user_id <> i_sender_id then
+			-- if v_user_id <> i_sender_id then
 				insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
 					values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
 				set send_user_list = concat(send_user_list, '', v_user_id);
-			end if;
+			-- end if;
 			-- 已加入房间的人
 			OPEN rs;
 				FETCH NEXT FROM rs INTO v_user_id;
 				REPEAT
 					IF NOT Done THEN
-						if v_user_id <> i_sender_id then
+						-- if v_user_id <> i_sender_id then
 							insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
 								values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+							
 							set send_user_list = concat(send_user_list, '|', v_user_id);
-						end if;
+						-- end if;
 					END IF;
 				FETCH NEXT FROM rs INTO v_user_id;
 				UNTIL Done END REPEAT;
@@ -453,9 +452,15 @@ else
 		if v_recipient_exist = 0 then
 			set ret = 5109; -- 接收人不存在
 		else
-			insert into t_msg (sender_id, recipient_id, type, content, time)
-				values (i_sender_id, i_recipient_id, i_msg_type, i_content, now());
+			set CHECK_ROOM_ID_S = concat(CHECK_ROOM_ID_S, i_sender_id, i_recipient_id);
+			set CHECK_ROOM_ID = CHECK_ROOM_ID_S + 0;
+			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+				values (i_sender_id, i_recipient_id, i_msg_type, i_content, CHECK_ROOM_ID, now());
 			set send_user_list = concat(send_user_list, '', i_recipient_id);
+
+			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+				values (i_sender_id, i_sender_id, i_msg_type, i_content, CHECK_ROOM_ID, now());
+			
 			set ret = 5111; -- 插入成功
 		end if;
 	else -- 类型出错
