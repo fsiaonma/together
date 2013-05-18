@@ -13,6 +13,8 @@ int find_sock(int user_id);
 
 void del_sock(int user_id);
 
+void del_by_sock(int sock);
+
 void show_sock();
 
 #endif

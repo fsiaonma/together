@@ -66,6 +66,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
 
         string sql = "select r.id as room_id, r.title, r.owner_id, u.nickname, r.type, r.room_status, "
         "(select count(1) from t_room_user_relation where room_id = r.id and user_id = " + Tool::mysql_filter(user_id) + ") as is_join, "
+        " (select count(1) from t_follow where followed_id = r.owner_id and follow_id = " + s->uid + ") as is_follow, "
         "r.preview_pic_id as pic_id, r.gender_type, (select count(1) from t_room_user_relation where room_id = r.id) as join_person_num,  "
         "r.limit_person_num, r.record_id, r.create_time, r.begin_time, a.longitude, a.latitude, a.detail_addr, a.addr_remark "
         "from t_room r, t_address a, t_user u where a.id = r.addr_id and u.id = r.owner_id and r.id = " + param["roomId"];
@@ -102,6 +103,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             RoomData::Address *addr = new RoomData::Address();
             int owner_id;
             int is_join;
+            int is_follow;
             for(int i = 0; i < fieldcount; i++) {
                 if (row[i] != NULL) {
                     field = mysql_fetch_field_direct(rst, i);
@@ -143,6 +145,8 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
                         addr->set_addr_remark(row[i]);
                     } else if (key == "is_join") {
                         is_join = Tool::S2I(row[i]);
+                    } else if (key == "is_follow") {
+                    is_follow = Tool::S2I(row[i]);
                     }
                 }
             }
@@ -150,14 +154,17 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
             LOG_INFO << "owner_id:" << owner_id << "|" << "is_join:" << is_join << endl;
             if (owner_id == user_id) {
                 room_info->set_join_status(2);
+                room_info_res->set_relation(UserData::OWN);
             } else {
                 if (is_join > 0)
                     room_info->set_join_status(1);
                 else
                     room_info->set_join_status(0);
+                is_follow > 0 ? room_info_res->set_relation(UserData::FOLLOW): room_info_res->set_relation(UserData::NORELATION);
             }
             room_info->set_allocated_address(addr);
             room_info_res->set_allocated_room_info(room_info);
+            // is_follow > 0 ? room_info_res->set_is_follow(true): room_info_res->set_is_follow(false);
             http_res->set_allocated_room_info_response(room_info_res);
             http_res->set_server_time(Tool::now_time());
             e.close();

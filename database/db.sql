@@ -405,7 +405,7 @@ declare exit handler for sqlexception
 begin
 set ret = 5199;
 rollback;
-select ret;
+-- select ret;
 end;
 
 
@@ -427,18 +427,21 @@ else
 		else
 			-- 房主
 			select owner_id into v_user_id from t_room where id = i_room_id;
-			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-				values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
-			set send_user_list = concat(send_user_list, '', v_user_id);
+			if v_user_id <> i_sender_id then
+				insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+					values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+				set send_user_list = concat(send_user_list, '', v_user_id);
+			end if;
 			-- 已加入房间的人
 			OPEN rs;
 				FETCH NEXT FROM rs INTO v_user_id;
 				REPEAT
 					IF NOT Done THEN
-						select v_user_id;
-						set send_user_list = concat(send_user_list, '|', v_user_id);
-						insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-							values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+						if v_user_id <> i_sender_id then
+							insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
+								values (i_sender_id, v_user_id, i_msg_type, i_content, i_room_id, now());
+							set send_user_list = concat(send_user_list, '|', v_user_id);
+						end if;
 					END IF;
 				FETCH NEXT FROM rs INTO v_user_id;
 				UNTIL Done END REPEAT;
@@ -461,7 +464,7 @@ else
 	commit;
 end if;
 
-select ret, send_user_list;
+-- select ret, send_user_list;
 end;
 
 end$$

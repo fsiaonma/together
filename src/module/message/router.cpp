@@ -14,9 +14,14 @@ int chat_handler(process *process, map<string, string> param, list<int> &send_so
     switch (action_type) {
     	case BIND_USER_CHAT: {
             result = _bind_user_chat(process->sock, param, send_sock_list, response_data);
-            LOG_DEBUG << "_bind_user_chat result|" << result << "|" << send_sock_list.size() << endl;
+            LOG_DEBUG << "_bind_user_chat result|" << process->sock << "|" << result << "|" << send_sock_list.size() << endl;
     	    break ;
     	}
+        case SAVE_MSG: {
+            result = save_msg(process->sock, param, send_sock_list, response_data);
+            LOG_DEBUG << "SAVE_MSG result|" << process->sock << "|" << result << "|" << send_sock_list.size() << endl;
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;

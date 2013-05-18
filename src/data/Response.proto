@@ -12,5 +12,6 @@ message HTTPResponse {
     optional UserResponse.DetailResponse detail_response = 6;
     optional UserResponse.UsernameExistResponse exist_response = 7;
     optional RoomResponse.RoomInfoResponse room_info_response = 8;
-    optional Data.List list = 9;
+    optional RoomResponse.CreateRoomResponse create_room_response = 9;
+    optional Data.List list = 10;
 }

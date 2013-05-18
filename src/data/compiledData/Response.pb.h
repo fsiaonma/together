@@ -168,10 +168,19 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::RoomResponse::RoomInfoResponse* release_room_info_response();
   inline void set_allocated_room_info_response(::RoomResponse::RoomInfoResponse* room_info_response);
 
-  // optional .Data.List list = 9;
+  // optional .RoomResponse.CreateRoomResponse create_room_response = 9;
+  inline bool has_create_room_response() const;
+  inline void clear_create_room_response();
+  static const int kCreateRoomResponseFieldNumber = 9;
+  inline const ::RoomResponse::CreateRoomResponse& create_room_response() const;
+  inline ::RoomResponse::CreateRoomResponse* mutable_create_room_response();
+  inline ::RoomResponse::CreateRoomResponse* release_create_room_response();
+  inline void set_allocated_create_room_response(::RoomResponse::CreateRoomResponse* create_room_response);
+
+  // optional .Data.List list = 10;
   inline bool has_list() const;
   inline void clear_list();
-  static const int kListFieldNumber = 9;
+  static const int kListFieldNumber = 10;
   inline const ::Data::List& list() const;
   inline ::Data::List* mutable_list();
   inline ::Data::List* release_list();
@@ -195,6 +204,8 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_exist_response();
   inline void set_has_room_info_response();
   inline void clear_has_room_info_response();
+  inline void set_has_create_room_response();
+  inline void clear_has_create_room_response();
   inline void set_has_list();
   inline void clear_has_list();
 
@@ -208,10 +219,11 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::UserResponse::DetailResponse* detail_response_;
   ::UserResponse::UsernameExistResponse* exist_response_;
   ::RoomResponse::RoomInfoResponse* room_info_response_;
+  ::RoomResponse::CreateRoomResponse* create_room_response_;
   ::Data::List* list_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -563,15 +575,53 @@ inline void HTTPResponse::set_allocated_room_info_response(::RoomResponse::RoomI
   }
 }
 
-// optional .Data.List list = 9;
-inline bool HTTPResponse::has_list() const {
+// optional .RoomResponse.CreateRoomResponse create_room_response = 9;
+inline bool HTTPResponse::has_create_room_response() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void HTTPResponse::set_has_list() {
+inline void HTTPResponse::set_has_create_room_response() {
   _has_bits_[0] |= 0x00000100u;
 }
-inline void HTTPResponse::clear_has_list() {
+inline void HTTPResponse::clear_has_create_room_response() {
   _has_bits_[0] &= ~0x00000100u;
+}
+inline void HTTPResponse::clear_create_room_response() {
+  if (create_room_response_ != NULL) create_room_response_->::RoomResponse::CreateRoomResponse::Clear();
+  clear_has_create_room_response();
+}
+inline const ::RoomResponse::CreateRoomResponse& HTTPResponse::create_room_response() const {
+  return create_room_response_ != NULL ? *create_room_response_ : *default_instance_->create_room_response_;
+}
+inline ::RoomResponse::CreateRoomResponse* HTTPResponse::mutable_create_room_response() {
+  set_has_create_room_response();
+  if (create_room_response_ == NULL) create_room_response_ = new ::RoomResponse::CreateRoomResponse;
+  return create_room_response_;
+}
+inline ::RoomResponse::CreateRoomResponse* HTTPResponse::release_create_room_response() {
+  clear_has_create_room_response();
+  ::RoomResponse::CreateRoomResponse* temp = create_room_response_;
+  create_room_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_create_room_response(::RoomResponse::CreateRoomResponse* create_room_response) {
+  delete create_room_response_;
+  create_room_response_ = create_room_response;
+  if (create_room_response) {
+    set_has_create_room_response();
+  } else {
+    clear_has_create_room_response();
+  }
+}
+
+// optional .Data.List list = 10;
+inline bool HTTPResponse::has_list() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void HTTPResponse::set_has_list() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void HTTPResponse::clear_has_list() {
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void HTTPResponse::clear_list() {
   if (list_ != NULL) list_->::Data::List::Clear();

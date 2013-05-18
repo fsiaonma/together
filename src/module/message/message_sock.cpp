@@ -31,6 +31,19 @@ void del_sock(int user_id)
     }
 }
 
+void del_by_sock(int sock)
+{
+    std::map<int, int>::iterator iter;
+    for (iter = chat_sock.begin(); iter != chat_sock.end(); iter++)
+    {
+        if (iter->second == sock)
+        {
+            chat_sock.erase(iter++);
+            break;
+        }
+    }
+}
+
 void show_sock()
 {
     std::map<int, int>::iterator iter;

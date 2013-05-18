@@ -123,6 +123,7 @@ static const int SHOW_USER_ROOM = 207;
 
 // ============ CHAT ============
 static const int BIND_USER_CHAT = 301;
+static const int SAVE_MSG = 302;
 
 // ============ MESSAGE ============
 static const int GET_FOLLOW_UP_MSG = 401;
@@ -148,6 +149,11 @@ static const int DB_PR_JOIN_ROOM_OVERLIMITNUM = 5103;
 static const int DB_PR_QUIT_ROOM_SUCCESS = 5104;
 static const int DB_PR_QUIT_ROOM_NOTJOINED = 5105;
 static const int DB_PR_QUIT_ROOM_ISOWNER = 5106;
+static const int DB_PR_INSERT_MSG_SENDER_NOTEXIST = 5107;
+static const int DB_PR_INSERT_MSG_ROOM_NOTEXIST = 5108;
+static const int DB_PR_INSERT_MSG_RECIPIENT_NOTEXIST = 5109;
+static const int DB_PR_INSERT_MSG_MSGTYPE_ERROR = 5110;
+static const int DB_PR_INSERT_MSG_SUCCESS = 5110;
 
 // ============ Session ============
 static const int SESSION_OK = 6000;
@@ -233,6 +239,10 @@ static const int SHOW_USER_ROOM_SUCCESS = 21013;
 static const int BIND_USER_CHAT_SUCCESS = 31000;
 static const int BIND_USER_CHAT_USER_NOTEXIST = 31001;
 static const int SAVE_MSG_SUCCESS = 31002;
+static const int SAVE_MSG_SENDER_NOTEXIST = 31003;
+static const int SAVE_MSG_ROOM_NOTEXIST = 31004;
+static const int SAVE_MSG_RECIPIENT_NOTEXIST = 31005;
+static const int SAVE_MSG_MSGTYPE_ERROR = 31006;
 
 // ============ Message ============
 // get follow up message code
