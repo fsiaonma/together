@@ -115,3 +115,84 @@ int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, cha
     strncpy(buf, c_rst, strlen(c_rst) + 1);
     return result;
 }
+
+/**
+ * change message status from not read to have read
+ *  
+ * @method change_msg_status
+ * @param {int} msg_id id of message
+ * @return {int} change_msg_status status.
+ */
+int change_msg_status(int msg_id, char *buf, int &send_len) {
+     string respon_data;
+    Response::HTTPResponse *http_res = new Response::HTTPResponse();
+    string msg;
+    int result;
+    int ret;
+
+    LOG_INFO << "msg_id is " << msg_id << endl;
+
+    do {    
+        // msg_id is not be found
+        if (msg_id <= 0) {
+            result = PARAM_ERROR;
+            _set_http_head(result, false, "msg_id error", http_res);
+            break;
+        }
+
+        // change message status
+        map<string, string> update_params;
+
+        Config *c = Config::get_instance();
+        map<string, string> config = c->get_config();
+        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
+            config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+        
+        if (!e.connet()) {
+            result = SQL_CONNECT_FAIL;
+            _set_http_head(result, false, "sql connet fail", http_res);
+        }
+
+        ret = e.excute("select is_read from t_msg where id = " + Tool::mysql_filter(msg_id) + ";");
+        if (ret != DB_OK) {
+            result = DB_ERROR;
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+            break;
+        }
+
+        MYSQL mysql;
+        mysql = e.get_mysql();
+
+        MYSQL_RES *res = NULL;
+        MYSQL_ROW row = NULL;
+
+        res = mysql_store_result(&mysql);
+        row = mysql_fetch_row(res);
+
+        LOG_INFO << "is_read is: " << row[0] << endl;
+
+        update_params["is_read"] = Tool::mysql_filter(MSG_HAVE_READ);
+
+        e.close();
+
+        ret = e.update("t_user", update_params, "where id = " + Tool::mysql_filter(msg_id) + ";");
+        // exception
+        if (ret != DB_OK) {
+            result = CHANGE_MSG_STATUS_FAIL;
+            _set_http_head(result, false, "change message status fail", http_res);
+            break;
+        }
+
+        result = CHANGE_MSG_STATUS_SUCCESS;
+        _set_http_head(result, true, "change message status success", http_res);
+    } while(0);
+
+    print_proto(http_res);
+
+    http_res->SerializeToString(&respon_data);
+    memcpy(buf, respon_data.c_str(), respon_data.length());
+    send_len = respon_data.length();
+    google::protobuf::ShutdownProtobufLibrary();
+
+    return result;
+}

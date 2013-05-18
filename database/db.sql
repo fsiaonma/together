@@ -180,7 +180,7 @@ AUTO_INCREMENT = 1000;
 DROP TABLE IF EXISTS `together`.`t_msg` ;
 
 CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
+  `id` INT NOT NULL ,
   `sender_id` INT NULL ,
   `recipient_id` INT NULL ,
   `type` INT NULL ,
@@ -189,6 +189,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
   `file_id` INT NULL ,
   `time` TIMESTAMP NULL ,
   `room_id` VARCHAR(45) NULL ,
+  `status` INT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_t_msg_t_user1_idx` (`sender_id` ASC) ,
   INDEX `fk_t_msg_t_file1_idx` (`file_id` ASC) ,

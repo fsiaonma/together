@@ -2,79 +2,25 @@
 #include "../message/message_base.h"
 
 /*
- * judge whether there is exist new message or not
- *  
- * @method exist_new_msg
- * @param {int} current_id current message id.
- * @return {int} exist_new_msg status.
- */
-int exist_new_msg(int current_id, int recipient_id, char *buf, int &send_len) {
-    string respon_data;
-    Response::HTTPResponse *http_res = new Response::HTTPResponse();
-    string msg;
-    int result;
-    int ret;
-
-    LOG_INFO << "current_id is " << current_id << " recipient_id is " << recipient_id << endl;
-
-    do {
-        if (current_id <= 0 || recipient_id < 0) {
-            result = PARAM_ERROR;
-            _set_http_head(result, false, "current_id or recipient_id is not exist", http_res);
-            break;
-        }
-
-        Config *c = Config::get_instance();
-        map<string, string> config = c->get_config();
-        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
-            config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
-
-        bool exist;
-        ret = e.is_exist("t_msg", "where id>" + Tool::mysql_filter(current_id) + " and recipient_id=" 
-            + Tool::mysql_filter(recipient_id) + " and type=" + Tool::mysql_filter(USER_MODULE), exist);
-        if (ret != DB_OK) {
-            result = DB_ERROR;
-            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-            break;
-        }
-        UserResponse::IsExistNewMessageResponse *msg_exist_response = new UserResponse::IsExistNewMessageResponse();
-        msg_exist_response->set_is_exist(exist);
-
-        result = CHECK_EXIST_NEW_MSG_SUCCESS;
-        _set_http_head(result, true, "check whether is exist new message success", http_res);
-        http_res->set_allocated_exist_new_message_response(msg_exist_response);
-    } while(0);
-
-    print_proto(http_res);
-
-    http_res->SerializeToString(&respon_data);
-    memcpy(buf, respon_data.c_str(), respon_data.length());
-    send_len = respon_data.length();
-    google::protobuf::ShutdownProtobufLibrary();
-
-    return result;
-}
-
-/*
  * get new messages
  *  
  * @method get_new_msgs
  * @param {int} current_id current message id.
  * @return {int} get_new_msgs status.
  */
-int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len) {
+int get_msg_list(int recipient_id, char *buf, int &send_len) {
     string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
     int result;
     int ret;
 
-    LOG_INFO << "current_id is " << current_id << " recipient_id is " << recipient_id << endl;
+    LOG_INFO << " recipient_id is " << recipient_id << endl;
 
     do {
-        if (current_id <= 0 || recipient_id < 0) {
+        if (recipient_id < 0) {
             result = PARAM_ERROR;
-            _set_http_head(result, false, "current_id or recipient_id is not exist", http_res);
+            _set_http_head(result, false, "recipient_id is not exist", http_res);
             break; 
         }
 
@@ -88,8 +34,8 @@ int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len) 
             _set_http_head(result, false, "sql connet fail", http_res);
         }
 
-        ret = e.excute("select id,sender_id,recipient_id from t_msg where id>" + Tool::mysql_filter(current_id) 
-            + " and recipient_id=" + Tool::mysql_filter(recipient_id) 
+        ret = e.excute("select id,sender_id,recipient_id from t_msg where recipient_id=" + Tool::mysql_filter(recipient_id) 
+            + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
             + " and type=" + Tool::mysql_filter(USER_MODULE) + ";");
         if (ret != DB_OK) {
             result = DB_ERROR;
@@ -114,9 +60,8 @@ int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len) 
             int sender_id = Tool::S2I(row[1]);
             int recipient_id = Tool::S2I(row[2]);
 
-            e.count("t_msg", "where id>=" + Tool::mysql_filter(message_id) 
-            + " and recipient_id=" + Tool::mysql_filter(recipient_id) 
-            + " and sender_id=" + Tool::mysql_filter(sender_id)
+            e.count("t_msg", "where recipient_id=" + Tool::mysql_filter(recipient_id) 
+            + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
             + " and type=" + Tool::mysql_filter(USER_MODULE) + ";", follow_count);
 
             cout << "follow_count is " << follow_count << endl;
@@ -137,9 +82,8 @@ int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len) 
                 user_message_info->set_allocated_recipient(recipient_info);
 
                 int count = 0;
-                e.count("t_msg", "where id>=" + Tool::mysql_filter(current_id) 
-                + " and recipient_id=" + Tool::mysql_filter(recipient_id) 
-                + " and sender_id=" + Tool::mysql_filter(sender_id)
+                e.count("t_msg", "where recipient_id=" + Tool::mysql_filter(recipient_id)
+                + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
                 + " and type=" + Tool::mysql_filter(USER_MODULE) + ";", count);            
                 user_message_info->set_message_count(count);
             }
@@ -150,7 +94,7 @@ int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len) 
 
         e.close();
 
-        result = GET_ALL_NEW_MSG_SUCCESS;
+        result = GET_MSG_LIST_SUCCESS;
         _set_http_head(result, true, "get all new message success", http_res);
         http_res->set_allocated_list(message_list);
     } while(0);

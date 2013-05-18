@@ -199,12 +199,6 @@ int show_user_room(map<string, string> param, char *buf, int &send_len)
     } while(0);
     print_proto(http_res);
 
-  fstream output("./response.log", ios::out | ios::trunc | ios::binary);   
-  
-  if (!http_res->SerializeToOstream(&output)) {   
-    cerr << "Failed to write msg." << endl;   
-    return -1;   
-  }
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();

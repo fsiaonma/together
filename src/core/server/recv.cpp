@@ -470,114 +470,54 @@ void read_upload_request(process* process)
 		{
 			LOG_INFO << "STATUS_UPLOAD_READY" << endl;
 			int sock = process->sock;
-			char* _buf = process->buf;
+			char buf[500];
 			ssize_t count;
-			string request;
-			int content_length = 0;
-			int other_sign_num = 0;
+			string &request = process->request;
+			int need_to_recv = 0;
 			// 接收HTTP请求
 			while (1) {
-				count = recv(sock, _buf + process->read_pos, process->kBufferSize - process->read_pos, MSG_DONTWAIT);
+				count = recv(sock, buf, 500, MSG_DONTWAIT);
 				if (count == -1) {
-					if (errno == EAGAIN)
+					LOG_INFO << "total recv:" << process->read_pos << endl;
+					LOG_INFO << "need to recv:" << need_to_recv << endl;
+					if (need_to_recv == process->read_pos) {
+						LOG_INFO << "recv all data !!" << endl;
 						break;
+					}
+					if (errno == EAGAIN)
+						return ;
 				} else if (count == 0) {
 					break;
 				} else if (count > 0) {
 					process->read_pos += count;
-					_buf[process->read_pos] = 0;
-					request.append(_buf);
-					LOG_DEBUG << _buf << endl;
-					LOG_INFO << "process->read_pos|" << process->read_pos << endl;
-					if (process->read_pos == process->kBufferSize)
-					{
-						process->read_pos = 0;
+					buf[count] = 0;
+					request.append(buf);
+					// LOG_INFO << "recv:" << count << endl;
+
+					if (request.substr(0, 7) == "length=") {
+						int equal_mark = request.find('=');
+						int _mark = request.find('&');
+						if (_mark > equal_mark) {
+							string data_len = request.substr(7, (_mark - equal_mark - 1));
+							need_to_recv = Tool::S2I(data_len);
+							// LOG_INFO << "data len:" << data_len << endl;
+						}
 					}
 				}
 			}
 			LOG_INFO << "-----recv-----" << endl;
 			LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
-			int request_len = request.length();
-
-			for (int i = request_len - 1; i >= 1; i--)
-			{
-				if (request[i] == '\0' || request[i] == '\r' || request[i] == '\n') {
-					other_sign_num++;
-					continue;
-				}
-				else
-					break;
-			}
-
-			// 按行截取HTTP请求
-			vector<string> line = Tool::split(request, "\n");
-			int line_size = line.size();
-			int blank_linenum = 0;
-
-			// 获得空行的位置
-			for (int i = 0; i < line_size; i++)
-			{
-			    if (line[i] == "" || line[i] == "\r") {
-			        blank_linenum = i;
-			        break;
-			    }
-			}
-			if (blank_linenum == 0) {
-				LOG_ERROR << "request is null" << endl;
-				BAD_REQUEST
-				return ;
-			}
-
-			// 解析空行前(HTTP首部)的内容，如果有Content-Length这个属性就保存下来
-			vector<string> prope_list;
-			for (int i = 1; i < blank_linenum; i++)
-			{
-				prope_list = Tool::split(line[i], ": ");
-				if (prope_list[0] == "Content-Length") {
-					if (prope_list.size() == 2) {
-						content_length = Tool::S2I(prope_list[1]);
-						if (content_length < 0)
-						{
-							LOG_ERROR << "content_length err|" << prope_list[1] << endl;
-							BAD_REQUEST
-							return;
-						}
-					} else {
-						LOG_ERROR << "prope list size err" << endl;
-						BAD_REQUEST
-						return;
-					}
-				}
-			}
-			LOG_INFO << "content_length|" << content_length << endl;
-			LOG_INFO << "filedata length|" << line[blank_linenum + 1].size() << endl;
-			LOG_INFO << line[blank_linenum + 1] << endl;
-
-			// int line_num = line.size();
-			// 判断空行下一行(即具体参数那行)是否为空
-			if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
-				LOG_ERROR << "param line is null" << endl;
-				BAD_REQUEST
-				return;
-			}
-
-			// 比对content_length与接收参数的长度是否一致
-			if (content_length > 0)
-			{
-				if ((int)line[blank_linenum + 1].size() + other_sign_num != content_length) {
-					LOG_ERROR << "content_length not equal" << endl;
-					BAD_REQUEST
-					return;
-				}
-			}
+			int request_len = request.size();
+			// LOG_INFO << request << endl;
+			LOG_INFO << "request len:" << request_len << endl;
 
 			// 解析参数行
-			vector<string> param_list = Tool::split(line[blank_linenum + 1], "&");
+			vector<string> param_list = Tool::split(request, "&");
 			int param_list_len = param_list.size();
 			map<string, string> param;
 			for (int i = 0; i < param_list_len; i++)
 			{
-				LOG_DEBUG << param_list[i] << endl;
+				// LOG_DEBUG << param_list[i] << endl;
 			    vector<string> _param = Tool::split(param_list[i], "=");
 			    if (_param.size() == 2)
 			    {

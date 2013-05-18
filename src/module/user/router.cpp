@@ -106,20 +106,12 @@ int user_handler(process *process, map<string, string> param) {
             unfollow(Tool::S2I(param["uid"]), param["sid"], response_data, send_len);
             break ;
         }
-        case CHECK_EXIST_NEW_MSG: {
+        case GET_MSG_LIST: {
             if (param.count("current_id") == 0 || param.count("recipient_id") == 0) {
                 LOG_ERROR << "current_id or recipient_id is not exist" << endl;
                 return -1;
             }
-            exist_new_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
-            break ;
-        }
-        case GET_ALL_NEW_MSG: {
-            if (param.count("current_id") == 0 || param.count("recipient_id") == 0) {
-                LOG_ERROR << "current_id or recipient_id is not exist" << endl;
-                return -1;
-            }
-            get_all_new_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
+            get_msg_list(Tool::S2I(param["recipient_id"]), response_data, send_len);
             break ;
         }
         default: {

@@ -116,10 +116,14 @@ int show_room_list(map<string, string> param, char *buf, int &send_len)
         if (count_row) {
             total_num = atoi(count_row[0]);
         } else {
-            result = DB_ERROR;
-            http_res->set_code(DB_ERROR);
+            result = SHOW_ROOM_LIST_SUCCESS;
+            http_res->set_code(SHOW_ROOM_LIST_SUCCESS);
+            http_res->set_success(true);
             msg = "DB ERROR|no data";
             LOG_ERROR << msg << endl;
+            Data::List *room_list = new Data::List();
+            room_list->set_is_end(true);
+            http_res->set_allocated_list(room_list);
             http_res->set_msg(msg);
             e.close();
             break;

@@ -43,20 +43,25 @@ int message_handler(process *process, map<string, string> param) {
     LOG_INFO << "action_type: " << action_type << endl;
     int send_len = -1;
     switch (action_type) {
-        case GET_FOLLOW_UP_MSG: {
-            if (param.count("current_id") == 0 || param.count("recipient_id") == 0 || param.count("room_id") == 0 || param.count("type") == 0) {
-                LOG_ERROR << "current_id or recipient_id or room_id or type is not exist" << endl;
+        case GET_MSG: {
+            if (param.count("current_id") == 0 || 
+                param.count("msg_num") == 0 ||
+                param.count("recipient_id") == 0 || 
+                param.count("room_id") == 0 || 
+                param.count("type") == 0 ||
+                param.count("get_type") == 0) {
+                LOG_ERROR << "current_id or msg_num or recipient_id or room_id or type or get_type is not exist" << endl;
                 return -1;
             }
-            get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), Tool::S2I(param["room_id"]), Tool::S2I(param["type"]), response_data, send_len);
+            get_msgs(param, response_data, send_len);
             break;
         }
-        case GET_PREVIOUS_MSG: {
-            if (param.count("current_id") == 0 || param.count("msgs_num") == 0 || param.count("recipient_id") == 0 || param.count("room_id") == 0 || param.count("type") == 0) {
-                LOG_ERROR << "current_id or msgs_num or recipient_id or room_id or type is not exist" << endl;
+        case CHANGE_MSG_STATUS: {
+            if (param.count("msg_id") == 0) {
+                LOG_ERROR << "msg_id is not exist" << endl;
                 return -1;
             }
-            get_previous_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["msgs_num"]),  Tool::S2I(param["recipient_id"]), Tool::S2I(param["room_id"]), Tool::S2I(param["type"]), response_data, send_len);
+            change_msg_status(Tool::S2I("msg_id"), response_data, send_len);
             break ;
         }
         default: {

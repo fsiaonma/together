@@ -50,7 +50,7 @@ handle_error(process, "bad request");
 #endif
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 #ifndef _CONST_H_
@@ -110,8 +110,7 @@ static const int USER_IS_EXIST = 108;
 static const int GET_FOLLOWING_LIST = 109;
 static const int GET_FOLLOWERS_LIST = 111;
 static const int USER_UNFOLLOW = 112;
-static const int CHECK_EXIST_NEW_MSG = 113;
-static const int GET_ALL_NEW_MSG = 114;
+static const int GET_MSG_LIST = 113;
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
@@ -127,8 +126,8 @@ static const int BIND_USER_CHAT = 301;
 static const int SAVE_MSG = 302;
 
 // ============ MESSAGE ============
-static const int GET_FOLLOW_UP_MSG = 401;
-static const int GET_PREVIOUS_MSG = 402;
+static const int GET_MSG = 401;
+static const int CHANGE_MSG_STATUS = 402;
 
 // --------------- Status Code ---------------
 // ============ System ============
@@ -211,11 +210,8 @@ static const int USER_UNFOLLOW_SUCCESS = 11200;
 static const int USER_HAVENT_FOLLOW = 11201;
 static const int USER_UNFOLLOW_FAIL = 11202;
 
-// check exist new message
-static const int CHECK_EXIST_NEW_MSG_SUCCESS = 11300;
-
 // get all new message code
-static const int GET_ALL_NEW_MSG_SUCCESS = 11400;
+static const int GET_MSG_LIST_SUCCESS = 11300;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;
@@ -249,11 +245,17 @@ static const int SAVE_MSG_RECIPIENT_NOTEXIST = 31005;
 static const int SAVE_MSG_MSGTYPE_ERROR = 31006;
 
 // ============ Message ============
-// get follow up message code
-static const int GET_FOLLOW_UP_MSG_SUCCESS = 41000;
+// get message code
+static const int GET_MSG_SUCCESS = 41000;
+static const int GET_MSG_FAIL = 41001;
+static const int GET_PREVIOUS = 41002;
+static const int GET_FOLLOW = 41003;
 
-// get previous message code
-static const int GET_PREVIOUS_MSG_SUCCESS = 42000;
+// message status code
+static const int MSG_NOT_READ = 0;
+static const int MSG_HAVE_READ = 1;
+static const int CHANGE_MSG_STATUS_FAIL = 42000;
+static const int CHANGE_MSG_STATUS_SUCCESS = 42001;
 
 #endif
 

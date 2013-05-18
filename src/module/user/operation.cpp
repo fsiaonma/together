@@ -75,7 +75,7 @@ int prise(int uid, string sid, char *buf, int &send_len) {
 
 	    e.close();
 
-        ret = e.update("t_user", update_params, "where id = " + Tool::mysql_filter(uid) + "");
+        ret = e.update("t_user", update_params, "where id = " + Tool::mysql_filter(uid) + ";");
    		// exception
         if (ret != DB_OK) {
             result = USER_PRISE_FAIL;

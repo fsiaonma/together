@@ -16,13 +16,12 @@
 #include "./message_sock.h"
 #include "../user/user_base.h"
 
-int get_follow_up_msg(int current_id, int recipient_id, int room_id, int type, char *buf, int &send_len);
-int get_previous_msg(int current_id, int msgs_num, int recipient_id, int room_id, int type, char *buf, int &send_len);
+int get_msgs(map<string, string> param, char *buf, int &send_len);
+
+int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
+int change_msg_status(int msg_id, char *buf, int &send_len);
 
 int chat_handler(process *process, map<string, string> param, list<int> &send_sock_list);
 int message_handler(process *process, map<string, string> param);
-
-int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
-
 
 #endif

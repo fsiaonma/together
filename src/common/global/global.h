@@ -34,6 +34,7 @@ struct process {
 	char suffix[11];
 	int type;
 	int send_length;
+	string request;
 };
 
 int get_index_file(char *filename_buf, struct stat *pstat);

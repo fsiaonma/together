@@ -354,6 +354,7 @@ process* accept_sock(int listen_sock) {
 	}
 	process->sock = infd;
     process->fd = NO_FILE;
+    process->request = "";
     memset(process->md5, 0, sizeof(char) * MD5_LEN + 1);
     memset(process->buf, 0, process->kBufferSize); 
     memset(process->suffix, 0, 11); 
