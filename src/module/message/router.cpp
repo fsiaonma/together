@@ -39,19 +39,19 @@ int message_handler(process *process, map<string, string> param) {
     int send_len = -1;
     switch (action_type) {
         case GET_FOLLOW_UP_MSG: {
-            if (param.count("current_id") == 0 || param.count("recipient_id") == 0 || param.count("tid") == 0 || param.count("type") == 0) {
-                LOG_ERROR << "current_id or recipient_id or tid or type is not exist" << endl;
+            if (param.count("current_id") == 0 || param.count("recipient_id") == 0 || param.count("room_id") == 0 || param.count("type") == 0) {
+                LOG_ERROR << "current_id or recipient_id or room_id or type is not exist" << endl;
                 return -1;
             }
-            get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), Tool::S2I(param["tid"]), Tool::S2I(param["type"]), response_data, send_len);
+            get_follow_up_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["recipient_id"]), Tool::S2I(param["room_id"]), Tool::S2I(param["type"]), response_data, send_len);
             break;
         }
         case GET_PREVIOUS_MSG: {
-            if (param.count("current_id") == 0 || param.count("msgs_num") == 0 || param.count("recipient_id") == 0 || param.count("tid") == 0 || param.count("type") == 0) {
-                LOG_ERROR << "current_id or msgs_num or recipient_id or tid or type is not exist" << endl;
+            if (param.count("current_id") == 0 || param.count("msgs_num") == 0 || param.count("recipient_id") == 0 || param.count("room_id") == 0 || param.count("type") == 0) {
+                LOG_ERROR << "current_id or msgs_num or recipient_id or room_id or type is not exist" << endl;
                 return -1;
             }
-            get_previous_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["msgs_num"]),  Tool::S2I(param["recipient_id"]), Tool::S2I(param["tid"]), Tool::S2I(param["type"]), response_data, send_len);
+            get_previous_msg(Tool::S2I(param["current_id"]), Tool::S2I(param["msgs_num"]),  Tool::S2I(param["recipient_id"]), Tool::S2I(param["room_id"]), Tool::S2I(param["type"]), response_data, send_len);
             break ;
         }
         default: {

@@ -14,8 +14,8 @@
 #include "./message_base.h"
 #include "../user/user_base.h"
 
-int get_follow_up_msg(int current_id, int recipient_id, int tid, int type, char *buf, int &send_len);
-int get_previous_msg(int current_id, int msgs_num, int recipient_id, int tid, int type, char *buf, int &send_len);
+int get_follow_up_msg(int current_id, int recipient_id, int room_id, int type, char *buf, int &send_len);
+int get_previous_msg(int current_id, int msgs_num, int recipient_id, int room_id, int type, char *buf, int &send_len);
 
 int chat_handler(process *process, map<string, string> param, list<int> &send_sock_list);
 int message_handler(process *process, map<string, string> param);
