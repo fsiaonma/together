@@ -39,6 +39,7 @@ class LoginResponse;
 class DetailResponse;
 class UsernameExistResponse;
 class UserMessageResponse;
+class IsExistNewMessageResponse;
 
 // ===================================================================
 
@@ -433,6 +434,88 @@ class UserMessageResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static UserMessageResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class IsExistNewMessageResponse : public ::google::protobuf::Message {
+ public:
+  IsExistNewMessageResponse();
+  virtual ~IsExistNewMessageResponse();
+
+  IsExistNewMessageResponse(const IsExistNewMessageResponse& from);
+
+  inline IsExistNewMessageResponse& operator=(const IsExistNewMessageResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const IsExistNewMessageResponse& default_instance();
+
+  void Swap(IsExistNewMessageResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  IsExistNewMessageResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const IsExistNewMessageResponse& from);
+  void MergeFrom(const IsExistNewMessageResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional bool is_exist = 1;
+  inline bool has_is_exist() const;
+  inline void clear_is_exist();
+  static const int kIsExistFieldNumber = 1;
+  inline bool is_exist() const;
+  inline void set_is_exist(bool value);
+
+  // @@protoc_insertion_point(class_scope:UserResponse.IsExistNewMessageResponse)
+ private:
+  inline void set_has_is_exist();
+  inline void clear_has_is_exist();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  bool is_exist_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_UserResponse_2eproto();
+  friend void protobuf_AssignDesc_UserResponse_2eproto();
+  friend void protobuf_ShutdownFile_UserResponse_2eproto();
+
+  void InitAsDefaultInstance();
+  static IsExistNewMessageResponse* default_instance_;
+};
 // ===================================================================
 
 
@@ -776,6 +859,32 @@ inline ::google::protobuf::int32 UserMessageResponse::message_count() const {
 inline void UserMessageResponse::set_message_count(::google::protobuf::int32 value) {
   set_has_message_count();
   message_count_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// IsExistNewMessageResponse
+
+// optional bool is_exist = 1;
+inline bool IsExistNewMessageResponse::has_is_exist() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void IsExistNewMessageResponse::set_has_is_exist() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void IsExistNewMessageResponse::clear_has_is_exist() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void IsExistNewMessageResponse::clear_is_exist() {
+  is_exist_ = false;
+  clear_has_is_exist();
+}
+inline bool IsExistNewMessageResponse::is_exist() const {
+  return is_exist_;
+}
+inline void IsExistNewMessageResponse::set_is_exist(bool value) {
+  set_has_is_exist();
+  is_exist_ = value;
 }
 
 

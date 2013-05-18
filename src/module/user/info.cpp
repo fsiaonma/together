@@ -35,7 +35,7 @@ int view_user_info(int visit_uid, string sid, char *buf, int &send_len) {
         map<string, string> config = c->get_config();
         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
-        
+
         // increase visit num
         if (!Tool::trim(sid).empty() && visit_uid != Tool::S2I(Session::get(sid) -> uid)) {
             // increase visit number

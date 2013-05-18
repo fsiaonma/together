@@ -26,3 +26,8 @@ message UserMessageResponse {
     optional MessageData.Message_Info message_info = 3;
     optional int32 message_count = 4;
 }
+
+// is exist new messages
+message IsExistNewMessageResponse {
+	optional bool is_exist = 1;
+}

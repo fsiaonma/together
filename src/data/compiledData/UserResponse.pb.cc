@@ -32,6 +32,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UserMessageResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UserMessageResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* IsExistNewMessageResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  IsExistNewMessageResponse_reflection_ = NULL;
 
 }  // namespace
 
@@ -107,6 +110,21 @@ void protobuf_AssignDesc_UserResponse_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UserMessageResponse));
+  IsExistNewMessageResponse_descriptor_ = file->message_type(4);
+  static const int IsExistNewMessageResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IsExistNewMessageResponse, is_exist_),
+  };
+  IsExistNewMessageResponse_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      IsExistNewMessageResponse_descriptor_,
+      IsExistNewMessageResponse::default_instance_,
+      IsExistNewMessageResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IsExistNewMessageResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IsExistNewMessageResponse, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(IsExistNewMessageResponse));
 }
 
 namespace {
@@ -127,6 +145,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     UsernameExistResponse_descriptor_, &UsernameExistResponse::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UserMessageResponse_descriptor_, &UserMessageResponse::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    IsExistNewMessageResponse_descriptor_, &IsExistNewMessageResponse::default_instance());
 }
 
 }  // namespace
@@ -140,6 +160,8 @@ void protobuf_ShutdownFile_UserResponse_2eproto() {
   delete UsernameExistResponse_reflection_;
   delete UserMessageResponse::default_instance_;
   delete UserMessageResponse_reflection_;
+  delete IsExistNewMessageResponse::default_instance_;
+  delete IsExistNewMessageResponse_reflection_;
 }
 
 void protobuf_AddDesc_UserResponse_2eproto() {
@@ -161,17 +183,20 @@ void protobuf_AddDesc_UserResponse_2eproto() {
     "nse\022#\n\006sender\030\001 \001(\0132\023.UserData.User_Info"
     "\022&\n\trecipient\030\002 \001(\0132\023.UserData.User_Info"
     "\022/\n\014message_info\030\003 \001(\0132\031.MessageData.Mes"
-    "sage_Info\022\025\n\rmessage_count\030\004 \001(\005", 432);
+    "sage_Info\022\025\n\rmessage_count\030\004 \001(\005\"-\n\031IsEx"
+    "istNewMessageResponse\022\020\n\010is_exist\030\001 \001(\010", 479);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "UserResponse.proto", &protobuf_RegisterTypes);
   LoginResponse::default_instance_ = new LoginResponse();
   DetailResponse::default_instance_ = new DetailResponse();
   UsernameExistResponse::default_instance_ = new UsernameExistResponse();
   UserMessageResponse::default_instance_ = new UserMessageResponse();
+  IsExistNewMessageResponse::default_instance_ = new IsExistNewMessageResponse();
   LoginResponse::default_instance_->InitAsDefaultInstance();
   DetailResponse::default_instance_->InitAsDefaultInstance();
   UsernameExistResponse::default_instance_->InitAsDefaultInstance();
   UserMessageResponse::default_instance_->InitAsDefaultInstance();
+  IsExistNewMessageResponse::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_UserResponse_2eproto);
 }
 
@@ -1248,6 +1273,212 @@ void UserMessageResponse::Swap(UserMessageResponse* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = UserMessageResponse_descriptor_;
   metadata.reflection = UserMessageResponse_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int IsExistNewMessageResponse::kIsExistFieldNumber;
+#endif  // !_MSC_VER
+
+IsExistNewMessageResponse::IsExistNewMessageResponse()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void IsExistNewMessageResponse::InitAsDefaultInstance() {
+}
+
+IsExistNewMessageResponse::IsExistNewMessageResponse(const IsExistNewMessageResponse& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void IsExistNewMessageResponse::SharedCtor() {
+  _cached_size_ = 0;
+  is_exist_ = false;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+IsExistNewMessageResponse::~IsExistNewMessageResponse() {
+  SharedDtor();
+}
+
+void IsExistNewMessageResponse::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void IsExistNewMessageResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* IsExistNewMessageResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return IsExistNewMessageResponse_descriptor_;
+}
+
+const IsExistNewMessageResponse& IsExistNewMessageResponse::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_UserResponse_2eproto();
+  return *default_instance_;
+}
+
+IsExistNewMessageResponse* IsExistNewMessageResponse::default_instance_ = NULL;
+
+IsExistNewMessageResponse* IsExistNewMessageResponse::New() const {
+  return new IsExistNewMessageResponse;
+}
+
+void IsExistNewMessageResponse::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    is_exist_ = false;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool IsExistNewMessageResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional bool is_exist = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &is_exist_)));
+          set_has_is_exist();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void IsExistNewMessageResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional bool is_exist = 1;
+  if (has_is_exist()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->is_exist(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* IsExistNewMessageResponse::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional bool is_exist = 1;
+  if (has_is_exist()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->is_exist(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int IsExistNewMessageResponse::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional bool is_exist = 1;
+    if (has_is_exist()) {
+      total_size += 1 + 1;
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void IsExistNewMessageResponse::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const IsExistNewMessageResponse* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const IsExistNewMessageResponse*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void IsExistNewMessageResponse::MergeFrom(const IsExistNewMessageResponse& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_is_exist()) {
+      set_is_exist(from.is_exist());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void IsExistNewMessageResponse::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void IsExistNewMessageResponse::CopyFrom(const IsExistNewMessageResponse& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool IsExistNewMessageResponse::IsInitialized() const {
+
+  return true;
+}
+
+void IsExistNewMessageResponse::Swap(IsExistNewMessageResponse* other) {
+  if (other != this) {
+    std::swap(is_exist_, other->is_exist_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata IsExistNewMessageResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = IsExistNewMessageResponse_descriptor_;
+  metadata.reflection = IsExistNewMessageResponse_reflection_;
   return metadata;
 }
 

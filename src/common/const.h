@@ -110,7 +110,8 @@ static const int USER_IS_EXIST = 108;
 static const int GET_FOLLOWING_LIST = 109;
 static const int GET_FOLLOWERS_LIST = 111;
 static const int USER_UNFOLLOW = 112;
-static const int GET_ALL_NEW_MSG = 115;
+static const int CHECK_EXIST_NEW_MSG = 113;
+static const int GET_ALL_NEW_MSG = 114;
 
 // ============ ROOM ============
 static const int ROOM_CREATE = 201;
@@ -210,8 +211,11 @@ static const int USER_UNFOLLOW_SUCCESS = 11200;
 static const int USER_HAVENT_FOLLOW = 11201;
 static const int USER_UNFOLLOW_FAIL = 11202;
 
+// check exist new message
+static const int CHECK_EXIST_NEW_MSG_SUCCESS = 11300;
+
 // get all new message code
-static const int GET_ALL_NEW_MSG_SUCCESS = 11500;
+static const int GET_ALL_NEW_MSG_SUCCESS = 11400;
 
 // ============ Room ============
 static const int CREATE_ROOM_SUCCESS = 21000;

@@ -10,8 +10,9 @@ message HTTPResponse {
     optional string server_time = 4;
 	optional UserResponse.LoginResponse login_response = 5;
     optional UserResponse.DetailResponse detail_response = 6;
-    optional UserResponse.UsernameExistResponse exist_response = 7;
+    optional UserResponse.UsernameExistResponse exist_username_response = 7;
     optional RoomResponse.RoomInfoResponse room_info_response = 8;
     optional RoomResponse.CreateRoomResponse create_room_response = 9;
     optional Data.List list = 10;
+    optional UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
 }

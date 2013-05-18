@@ -175,7 +175,7 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
     exist = false;
     if (!connet())
         return SQL_CONNECT_FAIL;
-
+    cout << "sql " <<  "select count(1) from " + table + " " + condition + ";" << endl;
     excute("select count(1) from " + table + " " + condition + ";");
     MYSQL_RES *result = mysql_store_result(&(this->mysql));
     MYSQL_ROW rowdata = mysql_fetch_row(result);

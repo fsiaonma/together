@@ -115,6 +115,9 @@ int username_is_exist(string username, char *buf, int &send_len) {
 
         result = USERNAME_AVAILABLE;
         _set_http_head(result, true, "username is available", http_res);
+        UserResponse::UsernameExistResponse *username_exist_response = new UserResponse::UsernameExistResponse();
+        username_exist_response->set_is_exist(exist);
+        http_res->set_allocated_exist_username_response(username_exist_response);
     } while(0);
 
     print_proto(http_res);

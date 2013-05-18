@@ -29,8 +29,8 @@ int unfollow(int uid, string sid, char *buf, int &send_len);
 int get_following_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len);
 int get_followers_list(int uid, int page_no, int page_size, string sid, char *buf, int &send_len);
 
-// int exist_new_msg(int current_id, int recipient_id, int &exist);
-// int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len);
+int exist_new_msg(int current_id, int recipient_id, char *buf, int &send_len);
+int get_all_new_msg(int current_id, int recipient_id, char *buf, int &send_len);
 
 int user_handler(process *process, map<string, string> param);
 #endif

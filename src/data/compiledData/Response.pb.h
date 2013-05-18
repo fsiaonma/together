@@ -150,14 +150,14 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::UserResponse::DetailResponse* release_detail_response();
   inline void set_allocated_detail_response(::UserResponse::DetailResponse* detail_response);
 
-  // optional .UserResponse.UsernameExistResponse exist_response = 7;
-  inline bool has_exist_response() const;
-  inline void clear_exist_response();
-  static const int kExistResponseFieldNumber = 7;
-  inline const ::UserResponse::UsernameExistResponse& exist_response() const;
-  inline ::UserResponse::UsernameExistResponse* mutable_exist_response();
-  inline ::UserResponse::UsernameExistResponse* release_exist_response();
-  inline void set_allocated_exist_response(::UserResponse::UsernameExistResponse* exist_response);
+  // optional .UserResponse.UsernameExistResponse exist_username_response = 7;
+  inline bool has_exist_username_response() const;
+  inline void clear_exist_username_response();
+  static const int kExistUsernameResponseFieldNumber = 7;
+  inline const ::UserResponse::UsernameExistResponse& exist_username_response() const;
+  inline ::UserResponse::UsernameExistResponse* mutable_exist_username_response();
+  inline ::UserResponse::UsernameExistResponse* release_exist_username_response();
+  inline void set_allocated_exist_username_response(::UserResponse::UsernameExistResponse* exist_username_response);
 
   // optional .RoomResponse.RoomInfoResponse room_info_response = 8;
   inline bool has_room_info_response() const;
@@ -186,6 +186,15 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline ::Data::List* release_list();
   inline void set_allocated_list(::Data::List* list);
 
+  // optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+  inline bool has_exist_new_message_response() const;
+  inline void clear_exist_new_message_response();
+  static const int kExistNewMessageResponseFieldNumber = 11;
+  inline const ::UserResponse::IsExistNewMessageResponse& exist_new_message_response() const;
+  inline ::UserResponse::IsExistNewMessageResponse* mutable_exist_new_message_response();
+  inline ::UserResponse::IsExistNewMessageResponse* release_exist_new_message_response();
+  inline void set_allocated_exist_new_message_response(::UserResponse::IsExistNewMessageResponse* exist_new_message_response);
+
   // @@protoc_insertion_point(class_scope:Response.HTTPResponse)
  private:
   inline void set_has_code();
@@ -200,14 +209,16 @@ class HTTPResponse : public ::google::protobuf::Message {
   inline void clear_has_login_response();
   inline void set_has_detail_response();
   inline void clear_has_detail_response();
-  inline void set_has_exist_response();
-  inline void clear_has_exist_response();
+  inline void set_has_exist_username_response();
+  inline void clear_has_exist_username_response();
   inline void set_has_room_info_response();
   inline void clear_has_room_info_response();
   inline void set_has_create_room_response();
   inline void clear_has_create_room_response();
   inline void set_has_list();
   inline void clear_has_list();
+  inline void set_has_exist_new_message_response();
+  inline void clear_has_exist_new_message_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -217,13 +228,14 @@ class HTTPResponse : public ::google::protobuf::Message {
   ::std::string* server_time_;
   ::UserResponse::LoginResponse* login_response_;
   ::UserResponse::DetailResponse* detail_response_;
-  ::UserResponse::UsernameExistResponse* exist_response_;
+  ::UserResponse::UsernameExistResponse* exist_username_response_;
   ::RoomResponse::RoomInfoResponse* room_info_response_;
   ::RoomResponse::CreateRoomResponse* create_room_response_;
   ::Data::List* list_;
+  ::UserResponse::IsExistNewMessageResponse* exist_new_message_response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
   friend void  protobuf_AddDesc_Response_2eproto();
   friend void protobuf_AssignDesc_Response_2eproto();
@@ -499,41 +511,41 @@ inline void HTTPResponse::set_allocated_detail_response(::UserResponse::DetailRe
   }
 }
 
-// optional .UserResponse.UsernameExistResponse exist_response = 7;
-inline bool HTTPResponse::has_exist_response() const {
+// optional .UserResponse.UsernameExistResponse exist_username_response = 7;
+inline bool HTTPResponse::has_exist_username_response() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void HTTPResponse::set_has_exist_response() {
+inline void HTTPResponse::set_has_exist_username_response() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void HTTPResponse::clear_has_exist_response() {
+inline void HTTPResponse::clear_has_exist_username_response() {
   _has_bits_[0] &= ~0x00000040u;
 }
-inline void HTTPResponse::clear_exist_response() {
-  if (exist_response_ != NULL) exist_response_->::UserResponse::UsernameExistResponse::Clear();
-  clear_has_exist_response();
+inline void HTTPResponse::clear_exist_username_response() {
+  if (exist_username_response_ != NULL) exist_username_response_->::UserResponse::UsernameExistResponse::Clear();
+  clear_has_exist_username_response();
 }
-inline const ::UserResponse::UsernameExistResponse& HTTPResponse::exist_response() const {
-  return exist_response_ != NULL ? *exist_response_ : *default_instance_->exist_response_;
+inline const ::UserResponse::UsernameExistResponse& HTTPResponse::exist_username_response() const {
+  return exist_username_response_ != NULL ? *exist_username_response_ : *default_instance_->exist_username_response_;
 }
-inline ::UserResponse::UsernameExistResponse* HTTPResponse::mutable_exist_response() {
-  set_has_exist_response();
-  if (exist_response_ == NULL) exist_response_ = new ::UserResponse::UsernameExistResponse;
-  return exist_response_;
+inline ::UserResponse::UsernameExistResponse* HTTPResponse::mutable_exist_username_response() {
+  set_has_exist_username_response();
+  if (exist_username_response_ == NULL) exist_username_response_ = new ::UserResponse::UsernameExistResponse;
+  return exist_username_response_;
 }
-inline ::UserResponse::UsernameExistResponse* HTTPResponse::release_exist_response() {
-  clear_has_exist_response();
-  ::UserResponse::UsernameExistResponse* temp = exist_response_;
-  exist_response_ = NULL;
+inline ::UserResponse::UsernameExistResponse* HTTPResponse::release_exist_username_response() {
+  clear_has_exist_username_response();
+  ::UserResponse::UsernameExistResponse* temp = exist_username_response_;
+  exist_username_response_ = NULL;
   return temp;
 }
-inline void HTTPResponse::set_allocated_exist_response(::UserResponse::UsernameExistResponse* exist_response) {
-  delete exist_response_;
-  exist_response_ = exist_response;
-  if (exist_response) {
-    set_has_exist_response();
+inline void HTTPResponse::set_allocated_exist_username_response(::UserResponse::UsernameExistResponse* exist_username_response) {
+  delete exist_username_response_;
+  exist_username_response_ = exist_username_response;
+  if (exist_username_response) {
+    set_has_exist_username_response();
   } else {
-    clear_has_exist_response();
+    clear_has_exist_username_response();
   }
 }
 
@@ -648,6 +660,44 @@ inline void HTTPResponse::set_allocated_list(::Data::List* list) {
     set_has_list();
   } else {
     clear_has_list();
+  }
+}
+
+// optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+inline bool HTTPResponse::has_exist_new_message_response() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void HTTPResponse::set_has_exist_new_message_response() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void HTTPResponse::clear_has_exist_new_message_response() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void HTTPResponse::clear_exist_new_message_response() {
+  if (exist_new_message_response_ != NULL) exist_new_message_response_->::UserResponse::IsExistNewMessageResponse::Clear();
+  clear_has_exist_new_message_response();
+}
+inline const ::UserResponse::IsExistNewMessageResponse& HTTPResponse::exist_new_message_response() const {
+  return exist_new_message_response_ != NULL ? *exist_new_message_response_ : *default_instance_->exist_new_message_response_;
+}
+inline ::UserResponse::IsExistNewMessageResponse* HTTPResponse::mutable_exist_new_message_response() {
+  set_has_exist_new_message_response();
+  if (exist_new_message_response_ == NULL) exist_new_message_response_ = new ::UserResponse::IsExistNewMessageResponse;
+  return exist_new_message_response_;
+}
+inline ::UserResponse::IsExistNewMessageResponse* HTTPResponse::release_exist_new_message_response() {
+  clear_has_exist_new_message_response();
+  ::UserResponse::IsExistNewMessageResponse* temp = exist_new_message_response_;
+  exist_new_message_response_ = NULL;
+  return temp;
+}
+inline void HTTPResponse::set_allocated_exist_new_message_response(::UserResponse::IsExistNewMessageResponse* exist_new_message_response) {
+  delete exist_new_message_response_;
+  exist_new_message_response_ = exist_new_message_response;
+  if (exist_new_message_response) {
+    set_has_exist_new_message_response();
+  } else {
+    clear_has_exist_new_message_response();
   }
 }
 

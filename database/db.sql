@@ -36,7 +36,7 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_user` (
   `signature_text` VARCHAR(255) NULL COMMENT '个性签名(文字)' ,
   `signature_record_id` INT NULL COMMENT '个性签名(语音文件ID)' ,
   `pic_id` INT NULL ,
-  `praise_num` INT NULL COMMENT '赞次数' ,
+  `praise_num` INT NULL DEFAULT 0 COMMENT '赞次数' ,
   `visit_num` INT NULL COMMENT '访问次数' ,
   `sex` INT NULL COMMENT '0为男\n1为女' ,
   PRIMARY KEY (`id`) ,
@@ -208,7 +208,8 @@ CREATE  TABLE IF NOT EXISTS `together`.`t_msg` (
     REFERENCES `together`.`t_user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 1000;
 
 USE `together` ;
 

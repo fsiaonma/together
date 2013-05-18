@@ -309,8 +309,6 @@
 	    e.excute(sql);
 	    mysql = e.get_mysql();
 
-	    LOG_INFO << "11qqqw" << endl;
-
 	    MYSQL_RES *result = NULL;
 	    MYSQL_FIELD *field = NULL;
 	    MYSQL_ROW row = NULL;

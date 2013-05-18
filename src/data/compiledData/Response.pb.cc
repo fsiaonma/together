@@ -34,17 +34,18 @@ void protobuf_AssignDesc_Response_2eproto() {
       "Response.proto");
   GOOGLE_CHECK(file != NULL);
   HTTPResponse_descriptor_ = file->message_type(0);
-  static const int HTTPResponse_offsets_[10] = {
+  static const int HTTPResponse_offsets_[11] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, success_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, msg_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, server_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, login_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, detail_response_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, exist_response_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, exist_username_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, room_info_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, create_room_response_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, list_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HTTPResponse, exist_new_message_response_),
   };
   HTTPResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -91,17 +92,20 @@ void protobuf_AddDesc_Response_2eproto() {
   ::Data::protobuf_AddDesc_data_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016Response.proto\022\010Response\032\022UserResponse"
-    ".proto\032\022RoomResponse.proto\032\ndata.proto\"\216"
+    ".proto\032\022RoomResponse.proto\032\ndata.proto\"\344"
     "\003\n\014HTTPResponse\022\014\n\004code\030\001 \001(\005\022\017\n\007success"
     "\030\002 \001(\010\022\013\n\003msg\030\003 \001(\t\022\023\n\013server_time\030\004 \001(\t"
     "\0223\n\016login_response\030\005 \001(\0132\033.UserResponse."
     "LoginResponse\0225\n\017detail_response\030\006 \001(\0132\034"
-    ".UserResponse.DetailResponse\022;\n\016exist_re"
-    "sponse\030\007 \001(\0132#.UserResponse.UsernameExis"
-    "tResponse\022:\n\022room_info_response\030\010 \001(\0132\036."
-    "RoomResponse.RoomInfoResponse\022>\n\024create_"
-    "room_response\030\t \001(\0132 .RoomResponse.Creat"
-    "eRoomResponse\022\030\n\004list\030\n \001(\0132\n.Data.List", 479);
+    ".UserResponse.DetailResponse\022D\n\027exist_us"
+    "ername_response\030\007 \001(\0132#.UserResponse.Use"
+    "rnameExistResponse\022:\n\022room_info_response"
+    "\030\010 \001(\0132\036.RoomResponse.RoomInfoResponse\022>"
+    "\n\024create_room_response\030\t \001(\0132 .RoomRespo"
+    "nse.CreateRoomResponse\022\030\n\004list\030\n \001(\0132\n.D"
+    "ata.List\022K\n\032exist_new_message_response\030\013"
+    " \001(\0132\'.UserResponse.IsExistNewMessageRes"
+    "ponse", 565);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Response.proto", &protobuf_RegisterTypes);
   HTTPResponse::default_instance_ = new HTTPResponse();
@@ -125,10 +129,11 @@ const int HTTPResponse::kMsgFieldNumber;
 const int HTTPResponse::kServerTimeFieldNumber;
 const int HTTPResponse::kLoginResponseFieldNumber;
 const int HTTPResponse::kDetailResponseFieldNumber;
-const int HTTPResponse::kExistResponseFieldNumber;
+const int HTTPResponse::kExistUsernameResponseFieldNumber;
 const int HTTPResponse::kRoomInfoResponseFieldNumber;
 const int HTTPResponse::kCreateRoomResponseFieldNumber;
 const int HTTPResponse::kListFieldNumber;
+const int HTTPResponse::kExistNewMessageResponseFieldNumber;
 #endif  // !_MSC_VER
 
 HTTPResponse::HTTPResponse()
@@ -139,10 +144,11 @@ HTTPResponse::HTTPResponse()
 void HTTPResponse::InitAsDefaultInstance() {
   login_response_ = const_cast< ::UserResponse::LoginResponse*>(&::UserResponse::LoginResponse::default_instance());
   detail_response_ = const_cast< ::UserResponse::DetailResponse*>(&::UserResponse::DetailResponse::default_instance());
-  exist_response_ = const_cast< ::UserResponse::UsernameExistResponse*>(&::UserResponse::UsernameExistResponse::default_instance());
+  exist_username_response_ = const_cast< ::UserResponse::UsernameExistResponse*>(&::UserResponse::UsernameExistResponse::default_instance());
   room_info_response_ = const_cast< ::RoomResponse::RoomInfoResponse*>(&::RoomResponse::RoomInfoResponse::default_instance());
   create_room_response_ = const_cast< ::RoomResponse::CreateRoomResponse*>(&::RoomResponse::CreateRoomResponse::default_instance());
   list_ = const_cast< ::Data::List*>(&::Data::List::default_instance());
+  exist_new_message_response_ = const_cast< ::UserResponse::IsExistNewMessageResponse*>(&::UserResponse::IsExistNewMessageResponse::default_instance());
 }
 
 HTTPResponse::HTTPResponse(const HTTPResponse& from)
@@ -159,10 +165,11 @@ void HTTPResponse::SharedCtor() {
   server_time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   login_response_ = NULL;
   detail_response_ = NULL;
-  exist_response_ = NULL;
+  exist_username_response_ = NULL;
   room_info_response_ = NULL;
   create_room_response_ = NULL;
   list_ = NULL;
+  exist_new_message_response_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -180,10 +187,11 @@ void HTTPResponse::SharedDtor() {
   if (this != default_instance_) {
     delete login_response_;
     delete detail_response_;
-    delete exist_response_;
+    delete exist_username_response_;
     delete room_info_response_;
     delete create_room_response_;
     delete list_;
+    delete exist_new_message_response_;
   }
 }
 
@@ -228,8 +236,8 @@ void HTTPResponse::Clear() {
     if (has_detail_response()) {
       if (detail_response_ != NULL) detail_response_->::UserResponse::DetailResponse::Clear();
     }
-    if (has_exist_response()) {
-      if (exist_response_ != NULL) exist_response_->::UserResponse::UsernameExistResponse::Clear();
+    if (has_exist_username_response()) {
+      if (exist_username_response_ != NULL) exist_username_response_->::UserResponse::UsernameExistResponse::Clear();
     }
     if (has_room_info_response()) {
       if (room_info_response_ != NULL) room_info_response_->::RoomResponse::RoomInfoResponse::Clear();
@@ -241,6 +249,9 @@ void HTTPResponse::Clear() {
     }
     if (has_list()) {
       if (list_ != NULL) list_->::Data::List::Clear();
+    }
+    if (has_exist_new_message_response()) {
+      if (exist_new_message_response_ != NULL) exist_new_message_response_->::UserResponse::IsExistNewMessageResponse::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -342,17 +353,17 @@ bool HTTPResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(58)) goto parse_exist_response;
+        if (input->ExpectTag(58)) goto parse_exist_username_response;
         break;
       }
 
-      // optional .UserResponse.UsernameExistResponse exist_response = 7;
+      // optional .UserResponse.UsernameExistResponse exist_username_response = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_exist_response:
+         parse_exist_username_response:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_exist_response()));
+               input, mutable_exist_username_response()));
         } else {
           goto handle_uninterpreted;
         }
@@ -395,6 +406,20 @@ bool HTTPResponse::MergePartialFromCodedStream(
          parse_list:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_list()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(90)) goto parse_exist_new_message_response;
+        break;
+      }
+
+      // optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+      case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_exist_new_message_response:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_exist_new_message_response()));
         } else {
           goto handle_uninterpreted;
         }
@@ -460,10 +485,10 @@ void HTTPResponse::SerializeWithCachedSizes(
       6, this->detail_response(), output);
   }
 
-  // optional .UserResponse.UsernameExistResponse exist_response = 7;
-  if (has_exist_response()) {
+  // optional .UserResponse.UsernameExistResponse exist_username_response = 7;
+  if (has_exist_username_response()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->exist_response(), output);
+      7, this->exist_username_response(), output);
   }
 
   // optional .RoomResponse.RoomInfoResponse room_info_response = 8;
@@ -482,6 +507,12 @@ void HTTPResponse::SerializeWithCachedSizes(
   if (has_list()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       10, this->list(), output);
+  }
+
+  // optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+  if (has_exist_new_message_response()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      11, this->exist_new_message_response(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -536,11 +567,11 @@ void HTTPResponse::SerializeWithCachedSizes(
         6, this->detail_response(), target);
   }
 
-  // optional .UserResponse.UsernameExistResponse exist_response = 7;
-  if (has_exist_response()) {
+  // optional .UserResponse.UsernameExistResponse exist_username_response = 7;
+  if (has_exist_username_response()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->exist_response(), target);
+        7, this->exist_username_response(), target);
   }
 
   // optional .RoomResponse.RoomInfoResponse room_info_response = 8;
@@ -562,6 +593,13 @@ void HTTPResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         10, this->list(), target);
+  }
+
+  // optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+  if (has_exist_new_message_response()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        11, this->exist_new_message_response(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -615,11 +653,11 @@ int HTTPResponse::ByteSize() const {
           this->detail_response());
     }
 
-    // optional .UserResponse.UsernameExistResponse exist_response = 7;
-    if (has_exist_response()) {
+    // optional .UserResponse.UsernameExistResponse exist_username_response = 7;
+    if (has_exist_username_response()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->exist_response());
+          this->exist_username_response());
     }
 
     // optional .RoomResponse.RoomInfoResponse room_info_response = 8;
@@ -643,6 +681,13 @@ int HTTPResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->list());
+    }
+
+    // optional .UserResponse.IsExistNewMessageResponse exist_new_message_response = 11;
+    if (has_exist_new_message_response()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->exist_new_message_response());
     }
 
   }
@@ -690,8 +735,8 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     if (from.has_detail_response()) {
       mutable_detail_response()->::UserResponse::DetailResponse::MergeFrom(from.detail_response());
     }
-    if (from.has_exist_response()) {
-      mutable_exist_response()->::UserResponse::UsernameExistResponse::MergeFrom(from.exist_response());
+    if (from.has_exist_username_response()) {
+      mutable_exist_username_response()->::UserResponse::UsernameExistResponse::MergeFrom(from.exist_username_response());
     }
     if (from.has_room_info_response()) {
       mutable_room_info_response()->::RoomResponse::RoomInfoResponse::MergeFrom(from.room_info_response());
@@ -703,6 +748,9 @@ void HTTPResponse::MergeFrom(const HTTPResponse& from) {
     }
     if (from.has_list()) {
       mutable_list()->::Data::List::MergeFrom(from.list());
+    }
+    if (from.has_exist_new_message_response()) {
+      mutable_exist_new_message_response()->::UserResponse::IsExistNewMessageResponse::MergeFrom(from.exist_new_message_response());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -733,10 +781,11 @@ void HTTPResponse::Swap(HTTPResponse* other) {
     std::swap(server_time_, other->server_time_);
     std::swap(login_response_, other->login_response_);
     std::swap(detail_response_, other->detail_response_);
-    std::swap(exist_response_, other->exist_response_);
+    std::swap(exist_username_response_, other->exist_username_response_);
     std::swap(room_info_response_, other->room_info_response_);
     std::swap(create_room_response_, other->create_room_response_);
     std::swap(list_, other->list_);
+    std::swap(exist_new_message_response_, other->exist_new_message_response_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
