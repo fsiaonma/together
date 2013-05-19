@@ -1,4 +1,5 @@
 #include "message.h"
+#include "../../lib/session/session.h"
 
 int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, char *buf)
 {
@@ -110,6 +111,154 @@ int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, cha
         }
 
 
+    } while(0);
+    sprintf(c_rst, "%d", result);
+    strncpy(buf, c_rst, strlen(c_rst) + 1);
+    return result;
+}
+
+int start_room(int sock, map<string, string> param, list<int> &send_sock_list, char *buf)
+{
+    char c_rst[10];
+    int result = START_ROOM_SUCCESS;
+    send_sock_list.push_back(sock);
+    do
+    {
+        // param sid not exist
+        if (param.count("sid") == 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "param sid not exist" << endl;
+            break;
+        }
+
+        // session is not exist
+        SESSION *s = Session::get(Tool::trim(param["sid"]));
+        if (s == NULL) {
+            result = SESSION_NOT_EXIST;
+            LOG_ERROR << "session not exist" << endl;
+            break;
+        }
+        int user_id = Tool::S2I(s->uid);
+        LOG_INFO << "user id :" << user_id << endl;
+
+        int room_id = Tool::S2I(param["roomId"]);
+
+        if (room_id < 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "room id error :" << room_id << endl;
+            break;
+        }
+
+        // database params
+        Config *c = Config::get_instance();
+        map<string, string> config = c->get_config();
+        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+        bool is_exist_room;
+        // whether room exist
+        e.is_exist("t_room",  "where id = " + Tool::mysql_filter(room_id) + " and room_status = 0", is_exist_room);
+        if (!is_exist_room)
+        {
+            result = START_ROOM_HASSTARTED_OR_NOTEXIST;
+            LOG_ERROR << "room has started or not exist" << endl;
+            break;
+        }
+
+        // connect fail
+        if (!e.connet()) {
+            result = DB_ERROR;
+            LOG_ERROR << "connect fail" << endl; 
+            e.close();
+            break;
+        }
+
+        string sql = "SELECT r.owner_id, rel.user_id FROM t_room r left join t_room_user_relation rel "
+        " on r.id = rel.room_id where r.id = " + Tool::mysql_filter(room_id);
+
+
+        result = e.excute(sql);
+        // exception
+        if (result != DB_OK) {
+            LOG_ERROR << "DB ERROR|get owner and joined people|" + Tool::toString(result) << endl;
+            result = DB_ERROR;
+            e.close();
+            break;
+        }
+
+        MYSQL mysql = e.get_mysql();
+
+        MYSQL_RES *rst = NULL;
+        MYSQL_FIELD *field = NULL;
+        MYSQL_ROW row = NULL;
+
+
+        rst = mysql_store_result(&mysql);
+        int fieldcount = mysql_num_fields(rst);
+        row = mysql_fetch_row(rst);
+
+        int owner_id = -1;
+        vector<int> join_peo_list;
+        while(NULL != row) 
+        {
+            for(int i = 0; i < fieldcount; i++) 
+            {
+                field = mysql_fetch_field_direct(rst, i);
+                string key = field->name;
+                if (row[i] == NULL)
+                    continue;
+                // LOG_DEBUG << row[i] << endl;
+                if (key == "owner_id") {
+                    owner_id = Tool::S2I(row[i]);
+                } else if (key == "user_id") {
+                    int join_peo_id = Tool::S2I(row[i]);
+                    if (join_peo_id > 0)
+                        join_peo_list.push_back(join_peo_id);
+                }
+            }
+            row = mysql_fetch_row(rst);
+        }
+        e.close();
+
+
+        // judge whether owner
+        LOG_DEBUG << "owner_id:" << owner_id << endl;
+        if (owner_id != user_id) {
+            result = START_ROOM_ISNOT_OWNER;
+            LOG_ERROR << "user is not owner" << endl;
+            break;
+        }
+
+        // update room status
+        if (!e.connet()) {
+            result = DB_ERROR;
+            LOG_ERROR << "connect fail" << endl; 
+            e.close();
+            break;
+        }
+        string update_room_sql = "update t_room set room_status = 1 where id = " + Tool::mysql_filter(room_id);
+
+        result = e.excute(update_room_sql);
+        // exception
+        if (result != DB_OK) {
+            LOG_ERROR << "DB ERROR|update t_room|" + Tool::toString(result) << endl;
+            result = DB_ERROR;
+            e.close();
+            break;
+        }
+
+        // update success, add join_peo to sock list
+        for (int i = 0; i < (int) join_peo_list.size(); i++)
+        {
+            LOG_DEBUG << "join peo id:" << join_peo_list[i] << endl;
+            if (join_peo_list[i] > 0 && join_peo_list[i] != user_id) {
+                int so = find_sock(join_peo_list[i]);
+                if (!(so < 0 || so == sock))
+                    send_sock_list.push_back(so);
+            }
+        }
+        result = START_ROOM_SUCCESS;
     } while(0);
     sprintf(c_rst, "%d", result);
     strncpy(buf, c_rst, strlen(c_rst) + 1);

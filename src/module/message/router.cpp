@@ -22,6 +22,11 @@ int chat_handler(process *process, map<string, string> param, list<int> &send_so
             LOG_DEBUG << "SAVE_MSG result|" << process->sock << "|" << result << "|" << send_sock_list.size() << endl;
             break ;
         }
+        case START_ROOM: {
+            result = start_room(process->sock, param, send_sock_list, response_data);
+            LOG_DEBUG << "START_ROOM result|" << process->sock << "|" << result << "|" << send_sock_list.size() << endl;
+            break ;
+        }
         default: {
             LOG_ERROR << "action type err" << endl;
             return -1;
