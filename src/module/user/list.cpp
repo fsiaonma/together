@@ -69,7 +69,13 @@ int get_following_list(int uid, int page_no, int page_size, string sid, char *bu
             UserResponse::DetailResponse *detailResponse = following_list->add_user_detail();
         	
             UserData::User_Info *user_info = new UserData::User_Info();
-            _get_user_info(Tool::S2I(row[0]), user_info);
+            ret = _get_user_info(Tool::S2I(row[0]), user_info);
+            // exception
+            if (ret != DB_OK) {
+                result = DB_ERROR;
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                break;
+            }
             detailResponse->set_allocated_user_info(user_info);
 
             bool exist;
@@ -174,7 +180,13 @@ int get_followers_list(int uid, int page_no, int page_size, string sid, char *bu
             UserResponse::DetailResponse *detailResponse = followers_list->add_user_detail();
             
             UserData::User_Info *user_info = new UserData::User_Info();
-            _get_user_info(Tool::S2I(row[0]), user_info);
+            ret = _get_user_info(Tool::S2I(row[0]), user_info);
+            // exception
+            if (ret != DB_OK) {
+                result = DB_ERROR;
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                break;
+            }
             detailResponse->set_allocated_user_info(user_info);
 
             bool exist;

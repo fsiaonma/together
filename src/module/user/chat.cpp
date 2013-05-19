@@ -35,8 +35,9 @@ int get_msg_list(int recipient_id, char *buf, int &send_len) {
         }
 
         ret = e.excute("select id,sender_id,recipient_id from t_msg where recipient_id=" + Tool::mysql_filter(recipient_id) 
-            + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
-            + " and type=" + Tool::mysql_filter(USER_MODULE) + ";");
+            + " and status=" + Tool::mysql_filter(MSG_NOT_READ)
+            + " and type=" + Tool::mysql_filter(PRIVATE_CHAT) + ";");
+
         if (ret != DB_OK) {
             result = DB_ERROR;
             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
@@ -60,9 +61,11 @@ int get_msg_list(int recipient_id, char *buf, int &send_len) {
             int sender_id = Tool::S2I(row[1]);
             int recipient_id = Tool::S2I(row[2]);
 
-            e.count("t_msg", "where recipient_id=" + Tool::mysql_filter(recipient_id) 
-            + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
-            + " and type=" + Tool::mysql_filter(USER_MODULE) + ";", follow_count);
+            e.count("t_msg", "where id>=" + Tool::mysql_filter(message_id)
+            + " and recipient_id=" + Tool::mysql_filter(recipient_id) 
+            + " and sender_id=" + Tool::mysql_filter(sender_id)
+            + " and status=" + Tool::mysql_filter(MSG_NOT_READ)
+            + " and type=" + Tool::mysql_filter(PRIVATE_CHAT) + ";", follow_count);
 
             cout << "follow_count is " << follow_count << endl;
 
@@ -74,17 +77,30 @@ int get_msg_list(int recipient_id, char *buf, int &send_len) {
                  user_message_info->set_allocated_message_info(message_info);
 
                 UserData::User_Info *sender_info = new UserData::User_Info();
-                _get_user_info(sender_id, sender_info);
+                ret = _get_user_info(sender_id, sender_info);
+                // exception
+                if (ret != DB_OK) {
+                    result = DB_ERROR;
+                    _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                    break;
+                }
                 user_message_info->set_allocated_sender(sender_info);
                 
                 UserData::User_Info *recipient_info = new UserData::User_Info();
-                _get_user_info(recipient_id, recipient_info);
+                ret = _get_user_info(recipient_id, recipient_info);
+                // exception
+                if (ret != DB_OK) {
+                    result = DB_ERROR;
+                    _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                    break;
+                }
                 user_message_info->set_allocated_recipient(recipient_info);
 
                 int count = 0;
                 e.count("t_msg", "where recipient_id=" + Tool::mysql_filter(recipient_id)
-                + " and is_read=" + Tool::mysql_filter(MSG_NOT_READ)
-                + " and type=" + Tool::mysql_filter(USER_MODULE) + ";", count);            
+                + " and sender_id=" + Tool::mysql_filter(sender_id)
+                + " and status=" + Tool::mysql_filter(MSG_NOT_READ)
+                + " and type=" + Tool::mysql_filter(PRIVATE_CHAT) + ";", count);            
                 user_message_info->set_message_count(count);
             }
 
@@ -95,7 +111,7 @@ int get_msg_list(int recipient_id, char *buf, int &send_len) {
         e.close();
 
         result = GET_MSG_LIST_SUCCESS;
-        _set_http_head(result, true, "get all new message success", http_res);
+        _set_http_head(result, true, "get message list success", http_res);
         http_res->set_allocated_list(message_list);
     } while(0);
 

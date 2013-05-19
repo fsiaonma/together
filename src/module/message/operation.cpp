@@ -153,7 +153,7 @@ int change_msg_status(int msg_id, char *buf, int &send_len) {
             _set_http_head(result, false, "sql connet fail", http_res);
         }
 
-        ret = e.excute("select is_read from t_msg where id = " + Tool::mysql_filter(msg_id) + ";");
+        ret = e.excute("select status from t_msg where id=" + Tool::mysql_filter(msg_id) + ";");
         if (ret != DB_OK) {
             result = DB_ERROR;
             _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
@@ -169,13 +169,11 @@ int change_msg_status(int msg_id, char *buf, int &send_len) {
         res = mysql_store_result(&mysql);
         row = mysql_fetch_row(res);
 
-        LOG_INFO << "is_read is: " << row[0] << endl;
-
-        update_params["is_read"] = Tool::mysql_filter(MSG_HAVE_READ);
+        update_params["status"] = Tool::mysql_filter(MSG_HAVE_READ);
 
         e.close();
 
-        ret = e.update("t_user", update_params, "where id = " + Tool::mysql_filter(msg_id) + ";");
+        ret = e.update("t_msg", update_params, "where id=" + Tool::mysql_filter(msg_id) + ";");
         // exception
         if (ret != DB_OK) {
             result = CHANGE_MSG_STATUS_FAIL;

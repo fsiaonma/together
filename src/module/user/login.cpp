@@ -64,7 +64,13 @@ int login(string username, string password, string dev_id, char *buf, int &send_
         }
 
         UserData::User_Info *user_info = new UserData::User_Info();
-        _get_user_info(uid, user_info);
+        ret = _get_user_info(uid, user_info);
+        // exception
+        if (ret != DB_OK) {
+            result = DB_ERROR;
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+            break;
+        }
         UserResponse::LoginResponse *login_res = new UserResponse::LoginResponse();
         login_res->set_allocated_user_info(user_info);
         login_res->set_sid(sid);

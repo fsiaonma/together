@@ -107,8 +107,8 @@ int user_handler(process *process, map<string, string> param) {
             break ;
         }
         case GET_MSG_LIST: {
-            if (param.count("current_id") == 0 || param.count("recipient_id") == 0) {
-                LOG_ERROR << "current_id or recipient_id is not exist" << endl;
+            if (param.count("recipient_id") == 0) {
+                LOG_ERROR << "recipient_id is not exist" << endl;
                 return -1;
             }
             get_msg_list(Tool::S2I(param["recipient_id"]), response_data, send_len);

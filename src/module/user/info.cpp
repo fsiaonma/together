@@ -29,7 +29,12 @@ int view_user_info(int visit_uid, string sid, char *buf, int &send_len) {
         UserData::User_Info *user_info = new UserData::User_Info();
         UserResponse::DetailResponse *detail_res = new UserResponse::DetailResponse();
 
-        _get_user_info(visit_uid, user_info);
+        ret = _get_user_info(visit_uid, user_info);
+        if (ret != DB_OK) {
+            result = DB_ERROR;
+            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+            break;
+        }
 
         Config *c = Config::get_instance();
         map<string, string> config = c->get_config();

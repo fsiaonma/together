@@ -50,7 +50,7 @@ handle_error(process, "bad request");
 #endif
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 #ifndef _CONST_H_
@@ -126,6 +126,8 @@ static const int BIND_USER_CHAT = 301;
 static const int SAVE_MSG = 302;
 
 // ============ MESSAGE ============
+static const int GROUP_CHAT = 1;
+static const int PRIVATE_CHAT = 2;
 static const int GET_MSG = 401;
 static const int CHANGE_MSG_STATUS = 402;
 
@@ -246,10 +248,11 @@ static const int SAVE_MSG_MSGTYPE_ERROR = 31006;
 
 // ============ Message ============
 // get message code
+static const int GET_LATEST = -1;
+static const int GET_PREVIOUS = 0;
+static const int GET_FOLLOW = 1;
 static const int GET_MSG_SUCCESS = 41000;
 static const int GET_MSG_FAIL = 41001;
-static const int GET_PREVIOUS = 41002;
-static const int GET_FOLLOW = 41003;
 
 // message status code
 static const int MSG_NOT_READ = 0;

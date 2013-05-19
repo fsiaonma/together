@@ -28,11 +28,11 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
     int get_type = Tool::S2I(param["get_type"]);
 
     LOG_INFO << "current_id is " << current_id << " msgs_num is " << msgs_num 
-             << " recipient_id is " << recipient_id << "room_id is " << room_id 
-             << "type is " << type << "get_type" << get_type << endl;
+             << " recipient_id is " << recipient_id << " room_id is " << room_id 
+             << " type is " << type << " get_type is " << get_type << endl;
 
-     do {
-        if (current_id <= 0 || msgs_num <= 0 || recipient_id <= 0 || room_id <= 0 || type < 0 || get_type < 0) {
+    do {
+        if (current_id < 0 || msgs_num <= 0 || recipient_id <= 0 || room_id <= 0 || type < 0 || get_type < -1) {
             result = PARAM_ERROR;
             _set_http_head(result, false, "current_id or msgs_num or recipient_id or room_id or type or get_type is not exist", http_res);
             break; 
@@ -50,7 +50,7 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
 
         string sql = "";
 
-        if (current_id == -1) {
+        if (get_type == GET_LATEST && current_id == 0) {
             sql = "select id,sender_id,recipient_id from t_msg where recipient_id = " + Tool::mysql_filter(recipient_id) 
                 + " and room_id=" + Tool::mysql_filter(room_id) 
                 + " and type=" + Tool::mysql_filter(type) 
@@ -100,15 +100,27 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
             UserResponse::UserMessageResponse *user_message_info = message_list->add_user_message_info();
         
             MessageData::Message_Info *message_info = new MessageData::Message_Info();
-             _get_message_info(message_id, message_info);
-             user_message_info->set_allocated_message_info(message_info);
+            _get_message_info(message_id, message_info);
+            user_message_info->set_allocated_message_info(message_info);
 
             UserData::User_Info *sender_info = new UserData::User_Info();
-            _get_user_info(sender_id, sender_info);
+            ret = _get_user_info(sender_id, sender_info);
+            // exception
+            if (ret != DB_OK) {
+                result = DB_ERROR;
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                break;
+            }
             user_message_info->set_allocated_sender(sender_info);
 
             UserData::User_Info *recipient_info = new UserData::User_Info();
-            _get_user_info(recipient_id, recipient_info);
+            ret = _get_user_info(recipient_id, recipient_info);
+            // exception
+            if (ret != DB_OK) {
+                result = DB_ERROR;
+                _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
+                break;
+            }
             user_message_info->set_allocated_recipient(recipient_info);
 
             row = mysql_fetch_row(mysql_result);

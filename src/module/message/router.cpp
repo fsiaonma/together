@@ -45,12 +45,12 @@ int message_handler(process *process, map<string, string> param) {
     switch (action_type) {
         case GET_MSG: {
             if (param.count("current_id") == 0 || 
-                param.count("msg_num") == 0 ||
+                param.count("msgs_num") == 0 ||
                 param.count("recipient_id") == 0 || 
                 param.count("room_id") == 0 || 
                 param.count("type") == 0 ||
                 param.count("get_type") == 0) {
-                LOG_ERROR << "current_id or msg_num or recipient_id or room_id or type or get_type is not exist" << endl;
+                LOG_ERROR << "current_id or msgs_num or recipient_id or room_id or type or get_type is not exist" << endl;
                 return -1;
             }
             get_msgs(param, response_data, send_len);
@@ -61,7 +61,7 @@ int message_handler(process *process, map<string, string> param) {
                 LOG_ERROR << "msg_id is not exist" << endl;
                 return -1;
             }
-            change_msg_status(Tool::S2I("msg_id"), response_data, send_len);
+            change_msg_status(Tool::S2I(param["msg_id"]), response_data, send_len);
             break ;
         }
         default: {
