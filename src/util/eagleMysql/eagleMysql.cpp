@@ -185,7 +185,6 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
     } else {
         ret = SQL_COUNT_ERR;
     }
-    cout << "is_exist: " << exist << endl;
     mysql_free_result(result);
     this->close();
     return ret;
@@ -212,7 +211,6 @@ int eagleMysql::count(string table, string condition, int &count) {
     } else {
         ret = SQL_COUNT_ERR;
     }
-    cout << "count is : " << count << endl;
     mysql_free_result(result);
     this->close();
     return ret;

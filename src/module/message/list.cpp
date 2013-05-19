@@ -50,7 +50,7 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
 
         string sql = "";
 
-        if (get_type == GET_LATEST && current_id == 0) {
+        if (get_type == GET_LATEST) {
             sql = "select id,sender_id,recipient_id from t_msg where recipient_id = " + Tool::mysql_filter(recipient_id) 
                 + " and room_id=" + Tool::mysql_filter(room_id) 
                 + " and type=" + Tool::mysql_filter(type) 
@@ -88,10 +88,16 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
         mysql_result = mysql_store_result(&mysql);
         row = mysql_fetch_row(mysql_result);
         rowcount = mysql_num_rows(mysql_result);
+        if (rowcount == 0) {
+            result = DB_NO_DATA;
+            _set_http_head(result, false, "DB no data", http_res);
+            break;
+        }
 
         LOG_INFO << "rowcount is " << rowcount << endl;
 
         Data::List *message_list = new Data::List();
+        LOG_INFO << "------------ show msg ------------" << endl;
         while(NULL != row) {
             int message_id = Tool::S2I(row[0]);
             int sender_id = Tool::S2I(row[1]);
@@ -123,8 +129,11 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
             }
             user_message_info->set_allocated_recipient(recipient_info);
 
+            LOG_INFO << "sender_id:" << sender_id << "|" << "content:" << message_info->content() << endl;
+
             row = mysql_fetch_row(mysql_result);
         }
+        LOG_INFO << "------------ show msg end ------------" << endl;
         message_list->set_is_end(rowcount < msgs_num);
         
         e.close();

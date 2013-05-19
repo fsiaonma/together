@@ -26,6 +26,13 @@ int view_user_info(int visit_uid, string sid, char *buf, int &send_len) {
             break;
         }
 
+        // session is not exist
+        if (Session::get(sid) == NULL) {
+            result = SESSION_NOT_EXIST;
+            _set_http_head(result, false, "session not exist", http_res);
+            break;
+        }
+
         UserData::User_Info *user_info = new UserData::User_Info();
         UserResponse::DetailResponse *detail_res = new UserResponse::DetailResponse();
 
