@@ -241,14 +241,15 @@ static const int SHOW_USER_ROOM_SUCCESS = 21013;
 // ============ Chat ============
 static const int BIND_USER_CHAT_SUCCESS = 31000;
 static const int BIND_USER_CHAT_USER_NOTEXIST = 31001;
-static const int SAVE_MSG_SUCCESS = 31002;
-static const int SAVE_MSG_SENDER_NOTEXIST = 31003;
-static const int SAVE_MSG_ROOM_NOTEXIST = 31004;
-static const int SAVE_MSG_RECIPIENT_NOTEXIST = 31005;
-static const int SAVE_MSG_MSGTYPE_ERROR = 31006;
-static const int START_ROOM_SUCCESS = 31007;
-static const int START_ROOM_ISNOT_OWNER = 31008;
-static const int START_ROOM_HASSTARTED_OR_NOTEXIST = 31009;
+static const int SAVE_MSG_SINGLE_SUCCESS = 31002;
+static const int SAVE_MSG_GROUP_SUCCESS = 31003;
+static const int SAVE_MSG_SENDER_NOTEXIST = 31004;
+static const int SAVE_MSG_ROOM_NOTEXIST = 31005;
+static const int SAVE_MSG_RECIPIENT_NOTEXIST = 31006;
+static const int SAVE_MSG_MSGTYPE_ERROR = 31007;
+static const int START_ROOM_SUCCESS = 31008;
+static const int START_ROOM_ISNOT_OWNER = 31009;
+static const int START_ROOM_HASSTARTED_OR_NOTEXIST = 31010;
 
 // ============ Message ============
 // get message code

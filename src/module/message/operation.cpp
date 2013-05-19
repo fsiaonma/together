@@ -100,7 +100,11 @@ int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, cha
             e.close();
             break;
         }
-        result = SAVE_MSG_SUCCESS;
+        if (msg_type == 1) {
+            result = SAVE_MSG_GROUP_SUCCESS;
+        } else {
+            result = SAVE_MSG_SINGLE_SUCCESS;
+        }
         std::vector<string> v = Tool::split(send_list, "|");
         for (int i = 0; i < (int)v.size(); i++)
         {

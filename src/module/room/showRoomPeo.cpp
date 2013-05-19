@@ -67,7 +67,8 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         }
 
         string sql_count = "select count(1) from t_user where id in "
-        " (select user_id from t_room_user_relation where room_id = " + param["roomId"] + ") ";
+        " (select user_id from t_room_user_relation where room_id = " + param["roomId"] + 
+        " union select owner_id from t_room where id = " + param["roomId"] + ") ";
         LOG_DEBUG << sql_count << endl;
 
         ret = e.excute(sql_count);
@@ -118,7 +119,8 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
         string sql = "select u.id, u.username, u.nickname, u.sex, u.pic_id, "
         " (select count(1) from t_follow where followed_id = u.id and follow_id = " + s_user_id + ") as is_follow "
         " from t_user u where u.id in " 
-        " (SELECT user_id FROM t_room_user_relation where room_id = " + param["roomId"] + ") "
+        " (SELECT user_id FROM t_room_user_relation where room_id = " + param["roomId"] + 
+        " union select owner_id from t_room where id = " + param["roomId"] + ") "
         "limit " + Tool::toString(begin_pos) + ", " + param["pageSize"];
 
         ret = e.excute(sql);
