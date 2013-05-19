@@ -50,7 +50,7 @@ handle_error(process, "bad request");
 #endif
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 #ifndef _CONST_H_
