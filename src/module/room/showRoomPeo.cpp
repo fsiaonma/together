@@ -156,7 +156,7 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
                 string key = field->name;
                 if (row[i] == NULL)
                     continue;
-                LOG_DEBUG << row[i] << endl;
+                // LOG_DEBUG << row[i] << endl;
                 if (key == "id") {
                     info->set_uid(Tool::S2I(row[i]));
                 } else if (key == "username") {

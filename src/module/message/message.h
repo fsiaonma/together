@@ -19,6 +19,7 @@
 int get_msgs(map<string, string> param, char *buf, int &send_len);
 
 int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
+int start_room(int sock, map<string, string> param, list<int> &send_sock_list, char *buf);
 int change_msg_status(int msg_id, char *buf, int &send_len);
 
 int chat_handler(process *process, map<string, string> param, list<int> &send_sock_list);
