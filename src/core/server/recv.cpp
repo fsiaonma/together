@@ -115,6 +115,7 @@
  void read_http_request(process* process)
  {
 	int sock = process->sock;
+	process->send_length = -1;
 	char* _buf = process->buf;
 	ssize_t count;
 	string request;
@@ -346,7 +347,7 @@
 	    	msg = "md5 or suffix or user_id is illeagal";
 	    	break;
 	    }
-	    LOG_INFO << "md5:" << md5 << "|" << "suffix:" << suffix << "|" << "user_id" << user_id << endl;
+	    LOG_INFO << "md5:" << md5 << "|" << "suffix:" << suffix << "|" << "user_id:" << user_id << endl;
 	    // get file info
 	    string file_path = config["UPLOAD_PATH"] + md5 + "_" + user_id + suffix;
 	    LOG_INFO << "download filename:" << file_path << endl;
@@ -390,7 +391,8 @@
 	 	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 	 	if (s == -1) {
 	 		LOG_ERROR << "epoll_ctl error" << endl;
-	 		abort();
+	 		// abort();
+	 		BAD_REQUEST
 	 	}
  	} else {
  		LOG_ERROR << msg << endl;

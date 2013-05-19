@@ -126,7 +126,7 @@ int show_room_info(map<string, string> param, char *buf, int &send_len)
                     } else if (key == "gender_type") {
                         room_info->set_gender_type(Tool::S2I(row[i]));
                     } else if (key == "join_person_num") {
-                        room_info->set_join_person_count(Tool::S2I(row[i]));
+                        room_info->set_join_person_count(Tool::S2I(row[i]) + 1);
                     } else if (key == "limit_person_num") {
                         room_info->set_limit_person_count(Tool::S2I(row[i]));
                     } else if (key == "record_id") {

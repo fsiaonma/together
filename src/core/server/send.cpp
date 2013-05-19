@@ -6,7 +6,7 @@
  * @param process [description]
  */
 void send_response_header(process *process) {
-	LOG_INFO << "send" << endl;
+	LOG_INFO << "send|code:" << process->response_code << endl;
 	if (process->response_code != 200) {
     	// 非 200 不进入 send_response
 		if (process->send_length > 0)
@@ -16,6 +16,8 @@ void send_response_header(process *process) {
 		cleanup(process);
 		//update_timer(process->sock, current_msec);
 	} else {
+		LOG_DEBUG << "process->send_length|" << process->send_length << endl;
+		LOG_DEBUG << "process->fd|" << process->fd << endl;
 		if (process->type == LISTEN_HTTP_REQ_TYPE || process->type == LISTEN_UPLOAD_REQ_TYPE) {
 			if (process->send_length > 0)
 				send(process->sock, process->buf, process->send_length, 0);  
@@ -33,8 +35,10 @@ void send_response_header(process *process) {
  * @param process [description]
  */
 void send_response(process *process) {
+	LOG_DEBUG << "send file" << endl;
 	if (process->fd == NO_FILE)
 		return ;
+	process->read_pos = 0;
 	while (1) {
 		off_t offset = process->read_pos;
 		sendfile(process-> sock, process -> fd, &offset, process->total_length);
