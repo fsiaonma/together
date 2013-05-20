@@ -72,11 +72,11 @@ int message_handler(process *process, map<string, string> param) {
             break;
         }
         case CHANGE_MSG_STATUS: {
-            if (param.count("msg_id") == 0) {
-                LOG_ERROR << "msg_id is not exist" << endl;
+            if (param.count("msg_id") == 0 || param.count("room_id") == 0 || param.count("recipient_id") == 0) {
+                LOG_ERROR << "msg_id or room_id or recipient_id is not exist" << endl;
                 return -1;
             }
-            change_msg_status(Tool::S2I(param["msg_id"]), response_data, send_len);
+            change_msg_status(Tool::S2I(param["msg_id"]), Tool::S2I(param["room_id"]), Tool::S2I(param["recipient_id"]), response_data, send_len);
             break ;
         }
         default: {

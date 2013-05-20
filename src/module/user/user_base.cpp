@@ -68,6 +68,8 @@ int _get_user_info(int uid, UserData::User_Info *user_info) {
                 user_info->set_visit_num(Tool::S2I(row[i]));
             } else if (key == "pic_id") {
                 user_info->set_pic_id(Tool::S2I(row[i]));
+            } else if (key == "sex") {
+                user_info->set_sex(Tool::S2I(row[i]));
             }
         }
 

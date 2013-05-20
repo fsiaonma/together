@@ -35,6 +35,7 @@ int get_msg_list(int recipient_id, char *buf, int &send_len) {
         }
 
         ret = e.excute("select id,sender_id,recipient_id from t_msg where recipient_id=" + Tool::mysql_filter(recipient_id) 
+            + " and sender_id<>" + Tool::mysql_filter(recipient_id)
             + " and status=" + Tool::mysql_filter(MSG_NOT_READ)
             + " and type=" + Tool::mysql_filter(PRIVATE_CHAT) + ";");
 

@@ -88,11 +88,6 @@ int get_msgs(map<string, string> param, char *buf, int &send_len) {
         mysql_result = mysql_store_result(&mysql);
         row = mysql_fetch_row(mysql_result);
         rowcount = mysql_num_rows(mysql_result);
-        if (rowcount == 0) {
-            result = DB_NO_DATA;
-            _set_http_head(result, false, "DB no data", http_res);
-            break;
-        }
 
         LOG_INFO << "rowcount is " << rowcount << endl;
 

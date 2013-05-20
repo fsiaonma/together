@@ -481,8 +481,8 @@ int start_room(int sock, map<string, string> param, list<int> &send_sock_list, c
  * @param {int} msg_id id of message
  * @return {int} change_msg_status status.
  */
-int change_msg_status(int msg_id, char *buf, int &send_len) {
-     string respon_data;
+int change_msg_status(int msg_id, int room_id, int recipient_id, char *buf, int &send_len) {
+    string respon_data;
     Response::HTTPResponse *http_res = new Response::HTTPResponse();
     string msg;
     int result;
@@ -506,32 +506,12 @@ int change_msg_status(int msg_id, char *buf, int &send_len) {
         eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), 
             config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
         
-        if (!e.connet()) {
-            result = SQL_CONNECT_FAIL;
-            _set_http_head(result, false, "sql connet fail", http_res);
-        }
-
-        ret = e.excute("select status from t_msg where id=" + Tool::mysql_filter(msg_id) + ";");
-        if (ret != DB_OK) {
-            result = DB_ERROR;
-            _set_http_head(result, false, "DB ERROR|" + Tool::toString(ret), http_res);
-            break;
-        }
-
-        MYSQL mysql;
-        mysql = e.get_mysql();
-
-        MYSQL_RES *res = NULL;
-        MYSQL_ROW row = NULL;
-
-        res = mysql_store_result(&mysql);
-        row = mysql_fetch_row(res);
-
         update_params["status"] = Tool::mysql_filter(MSG_HAVE_READ);
 
-        e.close();
-
-        ret = e.update("t_msg", update_params, "where id=" + Tool::mysql_filter(msg_id) + ";");
+        ret = e.update("t_msg", update_params, "where id<=" + Tool::mysql_filter(msg_id) 
+            + " and room_id=" + Tool::mysql_filter(room_id)
+            + " and recipient_id=" + Tool::mysql_filter(recipient_id)
+            + ";");
         // exception
         if (ret != DB_OK) {
             result = CHANGE_MSG_STATUS_FAIL;
