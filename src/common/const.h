@@ -134,7 +134,7 @@ static const int PRIVATE_CHAT = 2;
 static const int GET_MSG = 401;
 static const int CHANGE_MSG_STATUS = 402;
 
-// --------------- Status Code ---------------
+// --------------- Status Code -----------roomId=1001&sid=b7fbee9a885057aa638df19ecfccb5ba----
 // ============ System ============
 static const int PARAM_ERROR = 1001;
 static const int DB_ERROR = 1002;
@@ -264,8 +264,8 @@ static const int GET_MSG_SUCCESS = 41000;
 static const int GET_MSG_FAIL = 41001;
 
 // message status code
-static const int MSG_NOT_READ = 0;
-static const int MSG_HAVE_READ = 1;
+static const bool MSG_NOT_READ = false;
+static const bool MSG_HAVE_READ = true;
 static const int CHANGE_MSG_STATUS_FAIL = 42000;
 static const int CHANGE_MSG_STATUS_SUCCESS = 42001;
 

@@ -34,7 +34,7 @@ void protobuf_AssignDesc_MessageData_2eproto() {
       "MessageData.proto");
   GOOGLE_CHECK(file != NULL);
   Message_Info_descriptor_ = file->message_type(0);
-  static const int Message_Info_offsets_[9] = {
+  static const int Message_Info_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, message_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, sender_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, recipient_id_),
@@ -44,6 +44,7 @@ void protobuf_AssignDesc_MessageData_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, file_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, room_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_Info, status_),
   };
   Message_Info_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -86,12 +87,12 @@ void protobuf_AddDesc_MessageData_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\021MessageData.proto\022\013MessageData\"\251\001\n\014Mes"
+    "\n\021MessageData.proto\022\013MessageData\"\271\001\n\014Mes"
     "sage_Info\022\022\n\nmessage_id\030\001 \001(\005\022\021\n\tsender_"
     "id\030\002 \001(\005\022\024\n\014recipient_id\030\003 \001(\005\022\014\n\004type\030\004"
     " \001(\005\022\017\n\007content\030\005 \001(\t\022\r\n\005title\030\006 \001(\t\022\017\n\007"
     "file_id\030\007 \001(\005\022\017\n\007room_id\030\010 \001(\005\022\014\n\004time\030\t"
-    " \001(\t", 204);
+    " \001(\t\022\016\n\006status\030\n \001(\010", 220);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessageData.proto", &protobuf_RegisterTypes);
   Message_Info::default_instance_ = new Message_Info();
@@ -118,6 +119,7 @@ const int Message_Info::kTitleFieldNumber;
 const int Message_Info::kFileIdFieldNumber;
 const int Message_Info::kRoomIdFieldNumber;
 const int Message_Info::kTimeFieldNumber;
+const int Message_Info::kStatusFieldNumber;
 #endif  // !_MSC_VER
 
 Message_Info::Message_Info()
@@ -145,6 +147,7 @@ void Message_Info::SharedCtor() {
   file_id_ = 0;
   room_id_ = 0;
   time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  status_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -212,6 +215,7 @@ void Message_Info::Clear() {
         time_->clear();
       }
     }
+    status_ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -365,6 +369,22 @@ bool Message_Info::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(80)) goto parse_status;
+        break;
+      }
+
+      // optional bool status = 10;
+      case 10: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_status:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &status_)));
+          set_has_status();
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -444,6 +464,11 @@ void Message_Info::SerializeWithCachedSizes(
       9, this->time(), output);
   }
 
+  // optional bool status = 10;
+  if (has_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(10, this->status(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -510,6 +535,11 @@ void Message_Info::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         9, this->time(), target);
+  }
+
+  // optional bool status = 10;
+  if (has_status()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(10, this->status(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -588,6 +618,11 @@ int Message_Info::ByteSize() const {
           this->time());
     }
 
+    // optional bool status = 10;
+    if (has_status()) {
+      total_size += 1 + 1;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -644,6 +679,9 @@ void Message_Info::MergeFrom(const Message_Info& from) {
     if (from.has_time()) {
       set_time(from.time());
     }
+    if (from.has_status()) {
+      set_status(from.status());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -676,6 +714,7 @@ void Message_Info::Swap(Message_Info* other) {
     std::swap(file_id_, other->file_id_);
     std::swap(room_id_, other->room_id_);
     std::swap(time_, other->time_);
+    std::swap(status_, other->status_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

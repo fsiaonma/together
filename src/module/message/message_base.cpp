@@ -56,6 +56,8 @@ int _get_message_info(int message_id, MessageData::Message_Info *message_info) {
             message_info->set_room_id(Tool::S2I(row[i]));
         } else if (key == "time") {
         	message_info->set_time(row[i]);
+        } else if (key == "status") {
+            message_info->set_status(row[i]);
         }
     }
 

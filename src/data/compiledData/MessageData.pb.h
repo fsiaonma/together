@@ -169,6 +169,13 @@ class Message_Info : public ::google::protobuf::Message {
   inline ::std::string* release_time();
   inline void set_allocated_time(::std::string* time);
 
+  // optional bool status = 10;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 10;
+  inline bool status() const;
+  inline void set_status(bool value);
+
   // @@protoc_insertion_point(class_scope:MessageData.Message_Info)
  private:
   inline void set_has_message_id();
@@ -189,6 +196,8 @@ class Message_Info : public ::google::protobuf::Message {
   inline void clear_has_room_id();
   inline void set_has_time();
   inline void clear_has_time();
+  inline void set_has_status();
+  inline void clear_has_status();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -201,9 +210,10 @@ class Message_Info : public ::google::protobuf::Message {
   ::google::protobuf::int32 file_id_;
   ::google::protobuf::int32 room_id_;
   ::std::string* time_;
+  bool status_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
 
   friend void  protobuf_AddDesc_MessageData_2eproto();
   friend void protobuf_AssignDesc_MessageData_2eproto();
@@ -559,6 +569,28 @@ inline void Message_Info::set_allocated_time(::std::string* time) {
     clear_has_time();
     time_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// optional bool status = 10;
+inline bool Message_Info::has_status() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void Message_Info::set_has_status() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void Message_Info::clear_has_status() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void Message_Info::clear_status() {
+  status_ = false;
+  clear_has_status();
+}
+inline bool Message_Info::status() const {
+  return status_;
+}
+inline void Message_Info::set_status(bool value) {
+  set_has_status();
+  status_ = value;
 }
 
 

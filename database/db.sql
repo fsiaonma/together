@@ -448,8 +448,6 @@ DECLARE v_recipient_exist int;
 DECLARE v_room_exist int;
 DECLARE v_user_id int;
 DECLARE Done INT DEFAULT 0;
-DECLARE CHECK_ROOM_ID_S varchar(20);
-DECLARE CHECK_ROOM_ID int;
 -- 声明游标
 DECLARE rs CURSOR FOR SELECT user_id FROM t_room_user_relation where room_id = i_room_id;
 # 如果出现sql异常，则将ret设为5199并退出
@@ -466,7 +464,6 @@ begin
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
 
 set send_user_list = '';
-set CHECK_ROOM_ID_S = '';
 
 -- 判断发送人是否存在
 select count(1) into v_sender_exist from t_user where id = i_sender_id;
@@ -508,14 +505,12 @@ else
 		if v_recipient_exist = 0 then
 			set ret = 5109; -- 接收人不存在
 		else
-			set CHECK_ROOM_ID_S = concat(CHECK_ROOM_ID_S, i_sender_id, i_recipient_id);
-			set CHECK_ROOM_ID = CHECK_ROOM_ID_S + 0;
 			insert into t_msg (sender_id, recipient_id, type, content, room_id, time, status)
-				values (i_sender_id, i_recipient_id, i_msg_type, i_content, CHECK_ROOM_ID, now(), false);
+				values (i_sender_id, i_recipient_id, i_msg_type, i_content, i_room_id, now(), false);
 			set send_user_list = concat(send_user_list, '', i_recipient_id);
 
 			insert into t_msg (sender_id, recipient_id, type, content, room_id, time, status)
-				values (i_sender_id, i_sender_id, i_msg_type, i_content, CHECK_ROOM_ID, now(), false);
+				values (i_sender_id, i_sender_id, i_msg_type, i_content, i_room_id, now(), false);
 			
 			set ret = 5111; -- 插入成功
 		end if;
