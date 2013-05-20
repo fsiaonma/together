@@ -175,7 +175,6 @@ int show_room_peo_list(map<string, string> param, char *buf, int &send_len)
             }
             is_follow > 0 ? user_detail->set_is_follow(true): user_detail->set_is_follow(false);
             user_detail->set_allocated_user_info(info);
-            LOG_DEBUG << "------------------------" << endl;
             row = mysql_fetch_row(rst);
             data_num++;
         }

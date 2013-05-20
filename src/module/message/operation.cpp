@@ -121,6 +121,209 @@ int save_msg(int sock, map<string, string> param, list<int> &send_sock_list, cha
     return result;
 }
 
+int join_room(int sock, map<string, string> param, list<int> &send_sock_list, char *buf)
+{
+    char c_rst[10];
+    int result;
+    send_sock_list.push_back(sock);
+    do
+    {
+        // param sid not exist
+        if (param.count("sid") == 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "param sid not exist" << endl;
+            break;
+        }
+
+        // session is not exist
+        SESSION *s = Session::get(Tool::trim(param["sid"]));
+        if (s == NULL) {
+            result = SESSION_NOT_EXIST;
+            LOG_ERROR << "session not exist" << endl;
+            break;
+        }
+        int user_id = Tool::S2I(s->uid);
+        LOG_INFO << "user id :" << user_id << endl;
+
+        int room_id = Tool::S2I(param["roomId"]); 
+        if (room_id < 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "room_id error" << endl;
+            break;
+        }
+
+        // database params
+        Config *c = Config::get_instance();
+        map<string, string> config = c->get_config();
+        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+        // connect fail
+        if (!e.connet()) {
+            result = DB_ERROR;
+            LOG_ERROR << "connect fail" << endl; 
+            e.close();
+            break;
+        }
+
+        MYSQL mysql;
+        int db_ret;
+        mysql = e.get_mysql();
+
+        string call_pr = "call pr_join_room(" + 
+            Tool::toString(room_id) + ", " + Tool::toString(user_id) +
+            " , @ret, @now_room_peo_list)";
+        LOG_INFO << call_pr << endl;
+        db_ret = mysql_query(&mysql, call_pr.c_str());
+        db_ret = mysql_query(&mysql, "SELECT @ret, @now_room_peo_list");
+
+        // exception
+        if (db_ret)
+        {
+            result = DB_ERROR;
+            LOG_ERROR << "DB ERROR|join room call pr" << endl;
+            e.close();
+            break;
+        }
+
+        MYSQL_RES *db_rst = NULL;
+        db_rst = mysql_store_result(&mysql);
+        MYSQL_ROW row = NULL;
+        row = mysql_fetch_row(db_rst);
+
+        db_ret = Tool::S2I(row[0]);
+        if (db_ret != DB_PR_JOIN_ROOM_SUCCESS)
+        {
+            result = DB_ERROR;
+            LOG_ERROR << "call pr_join_room result:" << db_ret << endl;
+            e.close();
+            break;
+        }
+
+        // find all people in room
+        LOG_INFO << "room people list:" << row[1] << endl;
+        vector<string> v_room_peo = Tool::split(row[1], "|");
+        for (int i = 0; i < v_room_peo.size(); i++)
+        {
+            int uid = Tool::S2I(v_room_peo[i]);
+            if (uid < 0 || uid == user_id)
+                continue;
+            int so = find_sock(uid);
+            LOG_INFO << "send sock|" << uid << "|" << so << endl;
+            if (!(so < 0 || so == sock))
+                send_sock_list.push_back(so);
+        }
+        result = LC_JOIN_ROOM_SUCCESS;
+
+    } while(0);
+    sprintf(c_rst, "%d", result);
+    strncpy(buf, c_rst, strlen(c_rst) + 1);
+    return result;
+}
+
+
+int quit_room(int sock, map<string, string> param, list<int> &send_sock_list, char *buf)
+{
+    char c_rst[10];
+    int result;
+    send_sock_list.push_back(sock);
+    do
+    {
+        // param sid not exist
+        if (param.count("sid") == 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "param sid not exist" << endl;
+            break;
+        }
+
+        // session is not exist
+        SESSION *s = Session::get(Tool::trim(param["sid"]));
+        if (s == NULL) {
+            result = SESSION_NOT_EXIST;
+            LOG_ERROR << "session not exist" << endl;
+            break;
+        }
+        int user_id = Tool::S2I(s->uid);
+        LOG_INFO << "user id :" << user_id << endl;
+
+        int room_id = Tool::S2I(param["roomId"]); 
+        if (room_id < 0)
+        {
+            result = PARAM_ERROR;
+            LOG_ERROR << "room_id error" << endl;
+            break;
+        }
+
+        // database params
+        Config *c = Config::get_instance();
+        map<string, string> config = c->get_config();
+        eagleMysql e(config["DOMAIN"].c_str(), config["USER_NAME"].c_str(), config["PASSWORD"].c_str(), config["DATABASE"].c_str(), Tool::S2I(config["PORT"], 3306));
+
+        // connect fail
+        if (!e.connet()) {
+            result = DB_ERROR;
+            LOG_ERROR << "connect fail" << endl; 
+            e.close();
+            break;
+        }
+
+        MYSQL mysql;
+        int db_ret;
+        mysql = e.get_mysql();
+
+        string call_pr = "call pr_quit_room(" + 
+            Tool::toString(room_id) + ", " + Tool::toString(user_id) +
+            " , @ret, @now_room_peo_list)";
+        LOG_INFO << call_pr << endl;
+        db_ret = mysql_query(&mysql, call_pr.c_str());
+        db_ret = mysql_query(&mysql, "SELECT @ret, @now_room_peo_list");
+
+        // exception
+        if (db_ret)
+        {
+            result = DB_ERROR;
+            LOG_ERROR << "DB ERROR|quit room call pr" << endl;
+            e.close();
+            break;
+        }
+
+        MYSQL_RES *db_rst = NULL;
+        db_rst = mysql_store_result(&mysql);
+        MYSQL_ROW row = NULL;
+        row = mysql_fetch_row(db_rst);
+
+        db_ret = Tool::S2I(row[0]);
+        if (db_ret != DB_PR_QUIT_ROOM_SUCCESS)
+        {
+            result = DB_ERROR;
+            LOG_ERROR << "call pr_quit_room result:" << db_ret << endl;
+            e.close();
+            break;
+        }
+
+        // find all people in room
+        LOG_INFO << "room people list:" << row[1] << endl;
+        vector<string> v_room_peo = Tool::split(row[1], "|");
+        for (int i = 0; i < v_room_peo.size(); i++)
+        {
+            int uid = Tool::S2I(v_room_peo[i]);
+            if (uid < 0 || uid == user_id)
+                continue;
+            int so = find_sock(uid);
+            LOG_INFO << "send sock|" << uid << "|" << so << endl;
+            if (!(so < 0 || so == sock))
+                send_sock_list.push_back(so);
+        }
+        result = LC_QUIT_ROOM_SUCCESS;
+
+    } while(0);
+    sprintf(c_rst, "%d", result);
+    strncpy(buf, c_rst, strlen(c_rst) + 1);
+    return result;
+}
+
 int start_room(int sock, map<string, string> param, list<int> &send_sock_list, char *buf)
 {
     char c_rst[10];
@@ -241,7 +444,9 @@ int start_room(int sock, map<string, string> param, list<int> &send_sock_list, c
             e.close();
             break;
         }
-        string update_room_sql = "update t_room set room_status = 1 where id = " + Tool::mysql_filter(room_id);
+        string update_room_sql = "update t_room set room_status = 1 "
+        " and begin_time = " + Tool::now_time() +
+        " where id = " + Tool::mysql_filter(room_id);
 
         result = e.excute(update_room_sql);
         // exception

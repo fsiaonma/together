@@ -101,7 +101,8 @@
  	s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
  	if (s == -1) {
  		LOG_ERROR << "epoll_ctl error" << endl;
- 		abort();
+ 		BAD_REQUEST
+ 		// abort();
  	}
  	LOG_INFO << "------send header------" << endl;
  	// LOG_DEBUG << process->buf << endl;
@@ -119,8 +120,7 @@
 	char* _buf = process->buf;
 	ssize_t count;
 	string request;
-	// int content_length = 0;
-	int other_sign_num = 0;
+
 	string module_name;
 	// 接收HTTP请求
 	while (1) {
@@ -129,7 +129,7 @@
 			if (errno == EAGAIN)
 				break;
 		} else if (count == 0) {
-	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
+	    	LOG_WARN << "client " << process->sock << " close connection" << endl;
 			cleanup(process);
 			break;
 		} else if (count > 0) {
@@ -137,7 +137,7 @@
 			_buf[process->read_pos] = 0;
 			request.append(_buf);
 			LOG_DEBUG << _buf << endl;
-			LOG_INFO << "process->read_pos|" << process->read_pos << endl;
+			LOG_DEBUG << "process->read_pos|" << process->read_pos << endl;
 			if (process->read_pos == process->kBufferSize)
 			{
 				process->read_pos = 0;
@@ -145,37 +145,12 @@
 		}
 	}
 	int request_len = request.length();
-	for (int i = request_len - 1; i >= 1; i--)
-	{
-		if (request[i] == '\0' || request[i] == '\r' || request[i] == '\n') {
-			other_sign_num++;
-			continue;
-		}
-		else
-			break;
-	}
-	LOG_INFO << "other_sign_num|" << other_sign_num << endl;
-	LOG_INFO << "-----recv-----" << endl;
-	LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
-
+	LOG_DEBUG << "request_len|" << request_len << endl;
+	LOG_INFO << "recv from sock:" << process->sock << " type:" << process->type << endl;
+	LOG_INFO << request << endl;
+	
 	// 按行截取HTTP请求
 	vector<string> line = Tool::split(request, "\n");
-	int line_size = line.size();
-	int blank_linenum = 0;
-
-	// 获得空行的位置
-	for (int i = 0; i < line_size; i++)
-	{
-	    if (line[i] == "" || line[i] == "\r") {
-	        blank_linenum = i;
-	        break;
-	    }
-	}
-	if (blank_linenum == 0) {
-		LOG_ERROR << "request is null" << endl;
-		BAD_REQUEST
-		return ;
-	}
 
 	// get first line
 	string firstline = line[0];
@@ -210,51 +185,7 @@
 	}
 	LOG_INFO << "param|" << params << endl;
 
-	// 解析空行前(HTTP首部)的内容，如果有Content-Length这个属性就保存下来
-	#if 0
-	vector<string> prope_list;
-	for (int i = 1; i < blank_linenum; i++)
-	{
-		prope_list = Tool::split(line[i], ": ");
-		if (prope_list[0] == "Content-Length") {
-			if (prope_list.size() == 2) {
-				content_length = Tool::S2I(prope_list[1]);
-				if (content_length < 0)
-				{
-					LOG_ERROR << "content_length err|" << prope_list[1] << endl;
-					BAD_REQUEST
-					return;
-				}
-			} else {
-				LOG_ERROR << "prope list size err" << endl;
-				BAD_REQUEST
-				return;
-			}
-		}
-	}
-	LOG_INFO << "content_length|" << content_length << endl;
-	LOG_INFO << line[blank_linenum + 1] << endl;
-
-	// int line_num = line.size();
-	// 判断空行下一行(即具体参数那行)是否为空
-	if (line[blank_linenum + 1] == "" || line[blank_linenum + 1] == "\r") {
-		LOG_ERROR << "param line is null" << endl;
-		BAD_REQUEST
-		return;
-	}
-
-	// 比对content_length与接收参数的长度是否一致
-	if (content_length > 0)
-	{
-		if ((int)line[blank_linenum + 1].size() + other_sign_num != content_length) {
-			LOG_ERROR << "content_length not equal" << endl;
-			BAD_REQUEST
-			return;
-		}
-	}
-	#endif
-
-	// 解析参数行
+	// 解析参数
 	vector<string> param_list = Tool::split(Tool::url_decode(params), "&");
 	int param_list_len = param_list.size();
 	map<string, string> param;
@@ -319,7 +250,7 @@
 	    int fieldcount = mysql_num_fields(result);
 	    row = mysql_fetch_row(result);
 
-	    LOG_INFO << rowcount << "|" << fieldcount << endl;
+	    LOG_DEBUG << rowcount << "|" << fieldcount << endl;
 
 	    string md5, suffix, user_id;
 
@@ -352,8 +283,6 @@
 	    string file_path = config["UPLOAD_PATH"] + md5 + "_" + user_id + suffix;
 	    LOG_INFO << "download filename:" << file_path << endl;
 
-	    // struct _stat info;
-    	// _stat(file_path.c_str(), &info);
     	struct stat filestat;
 		s = lstat(file_path.c_str(), &filestat);
 		if (s == -1)
@@ -378,7 +307,6 @@
 		write_to_header(header_end);
 		LOG_INFO << process->buf << endl;
 
-	    // mysql_free_result(result);
  	} while(0);
  	e.close();
  	if (is_succ)
@@ -465,7 +393,7 @@ void read_upload_request(process* process)
 {
 	int s;
 	int user_id = -1;
-	LOG_INFO << "RECV|" << process->status << endl;
+	LOG_INFO << "RECV UPLOAD REQUEST|" << process->status << endl;
 	switch(process->status)
 	{
 		case STATUS_UPLOAD_READY:
@@ -494,7 +422,6 @@ void read_upload_request(process* process)
 					process->read_pos += count;
 					buf[count] = 0;
 					request.append(buf);
-					// LOG_INFO << "recv:" << count << endl;
 
 					if (request.substr(0, 7) == "length=") {
 						int equal_mark = request.find('=');
@@ -507,19 +434,16 @@ void read_upload_request(process* process)
 					}
 				}
 			}
-			LOG_INFO << "-----recv-----" << endl;
-			LOG_INFO << "from sock:" << process->sock << " type:" << process->type << endl;
+			LOG_INFO << "recv from sock:" << process->sock << " type:" << process->type << endl;
 			int request_len = request.size();
-			// LOG_INFO << request << endl;
 			LOG_INFO << "request len:" << request_len << endl;
 
-			// 解析参数行
+			// 解析参数
 			vector<string> param_list = Tool::split(request, "&");
 			int param_list_len = param_list.size();
 			map<string, string> param;
 			for (int i = 0; i < param_list_len; i++)
 			{
-				// LOG_DEBUG << param_list[i] << endl;
 			    vector<string> _param = Tool::split(param_list[i], "=");
 			    if (_param.size() == 2)
 			    {
@@ -529,7 +453,7 @@ void read_upload_request(process* process)
 						string ss = Tool::url_decode(_param[1]);
 						_param[1] = ss;
 					}
-			        // LOG_INFO << "key,val|" << _param[0] << "|" << _param[1] << endl;
+			        // LOG_DEBUG << "key,val|" << _param[0] << "|" << _param[1] << endl;
 			        param.insert(pair<string, string>(_param[0], _param[1]));
 			    } else {
 			    	LOG_ERROR << "_param size err" << endl;
@@ -679,7 +603,8 @@ void read_upload_request(process* process)
 					s = epoll_ctl(efd, EPOLL_CTL_MOD, process->sock, &event);
 					if (s == -1) {
 						LOG_ERROR << "epoll_ctl error" << endl;
-						abort();
+						// abort();
+						BAD_REQUEST
 					}
 			        // exception
 			        if (ret != DB_OK) 
@@ -751,7 +676,7 @@ void read_tcp_request(process* process)
 			if (errno == EAGAIN)
 				break;
 		} else if (count == 0) {
-	    	LOG_ERROR << "client " << process->sock << " close connection" << endl;
+	    	LOG_WARN << "client " << process->sock << " close connection" << endl;
 	    	del_by_sock(process->sock);
 			cleanup(process);
 			return;
@@ -791,7 +716,6 @@ void read_tcp_request(process* process)
 	list<int> send_sock_list;
 	s = chat_handler(process, param, send_sock_list);
 	if (s < 0) {
-		LOG_INFO << "action type error" << endl;
     	char r[10];
     	sprintf(r, "%d", CHAT_HANDLE_ERR);
     	write_to_header(r);
@@ -802,7 +726,7 @@ void read_tcp_request(process* process)
 	list<int>::iterator iter;
     for(iter = send_sock_list.begin(); iter != send_sock_list.end(); iter++)
     {
-    	LOG_DEBUG << "send to:" << *iter << endl;
+    	LOG_INFO << "send to:" << *iter << endl;
         send(*iter, process->buf, strlen(process->buf), 0);
     }
 

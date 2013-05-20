@@ -72,7 +72,7 @@ int eagleMysql::remove(string table, string condition) {
     int ret = SQL_OK;
 
     string sql = "delete from " + table + " " + condition;
-    cout << "remove operation: " + sql << endl;
+    // cout << "remove operation: " + sql << endl;
     ret = excute(sql);
     this->close();
     return ret;
@@ -104,7 +104,7 @@ int eagleMysql::update(string table, map<string, string> params, string conditio
     sql += ptr->first + "=" + ptr->second + " ";
     sql += condition;
 
-    cout << "update operation: " + sql << endl;
+    // cout << "update operation: " + sql << endl;
 
     ret = excute(sql);
     this->close();
@@ -175,7 +175,7 @@ int eagleMysql::is_exist(string table, string condition, bool &exist) {
     exist = false;
     if (!connet())
         return SQL_CONNECT_FAIL;
-    cout << "sql " <<  "select count(1) from " + table + " " + condition + ";" << endl;
+    // cout << "sql " <<  "select count(1) from " + table + " " + condition + ";" << endl;
     excute("select count(1) from " + table + " " + condition + ";");
     MYSQL_RES *result = mysql_store_result(&(this->mysql));
     MYSQL_ROW rowdata = mysql_fetch_row(result);

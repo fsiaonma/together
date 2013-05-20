@@ -65,7 +65,8 @@ int quit_room(map<string, string> param, char *buf, int &send_len)
         int db_ret;
         mysql = e.get_mysql();
 
-        string call_pr = "call pr_quit_room (" + Tool::toString(room_id) + ", " + Tool::toString(user_id) +", @ret)";
+        string call_pr = "call pr_quit_room (" + Tool::toString(room_id) + ", " + Tool::toString(user_id) +
+            " , @ret, @now_room_peo_list)";
         LOG_DEBUG << call_pr << endl;
         db_ret = mysql_query(&mysql, call_pr.c_str());
         db_ret = mysql_query(&mysql, "SELECT @ret");

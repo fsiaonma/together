@@ -35,7 +35,7 @@ void send_response_header(process *process) {
  * @param process [description]
  */
 void send_response(process *process) {
-	LOG_DEBUG << "send file" << endl;
+	LOG_INFO << "send file" << endl;
 	if (process->fd == NO_FILE)
 		return ;
 	process->read_pos = 0;
@@ -43,6 +43,7 @@ void send_response(process *process) {
 		off_t offset = process->read_pos;
 		sendfile(process-> sock, process -> fd, &offset, process->total_length);
 		process->read_pos = offset;
+		// LOG_INFO << "process->read_pos|" << process->read_pos << endl;
 		if (process->read_pos == process->total_length) {
       		// 读写完毕
 			return;

@@ -125,6 +125,8 @@ static const int SHOW_USER_ROOM = 207;
 static const int BIND_USER_CHAT = 301;
 static const int SAVE_MSG = 302;
 static const int START_ROOM = 303;
+static const int LC_JOIN_ROOM = 304;
+static const int LC_QUIT_ROOM = 305;
 
 // ============ MESSAGE ============
 static const int GROUP_CHAT = 1;
@@ -250,6 +252,8 @@ static const int SAVE_MSG_MSGTYPE_ERROR = 31007;
 static const int START_ROOM_SUCCESS = 31008;
 static const int START_ROOM_ISNOT_OWNER = 31009;
 static const int START_ROOM_HASSTARTED_OR_NOTEXIST = 31010;
+static const int LC_JOIN_ROOM_SUCCESS = 31011;
+static const int LC_QUIT_ROOM_SUCCESS = 31012;
 
 // ============ Message ============
 // get message code

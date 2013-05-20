@@ -226,9 +226,10 @@ USE `together`$$
 # call pr_join_room(1000,2,@ret);
 create procedure pr_join_room 
 (  
-in room_id int   
-, in user_id int
+in i_room_id int   
+, in i_user_id int
 , out ret int
+, out now_room_peo_list varchar(255)
 )
 
 BEGIN
@@ -243,36 +244,50 @@ declare v_limit_person_num int;
 #房间已加入的人数
 declare v_join_person_num int;
 
+#房间已加入的人
+declare v_user_id int;
+declare Done int default 0;
+
 # 标记事务是否出错
 declare t_error int default 0;
+-- 声明游标
+DECLARE rs CURSOR FOR 
+SELECT user_id FROM t_room_user_relation where room_id = i_room_id
+UNION
+select owner_id from t_room where id = i_room_id;
+
 # 如果出现sql异常，则将t_error设置为1后继续执行后面的操作
 declare continue handler for sqlexception set t_error=1;
 
 
 # set DB_PR_ERR
 set ret = 5199;
+set now_room_peo_list = '';
 
-#判断用户,房间是否存在
-select count(1) into v_user_num from t_user where id = user_id;
-select count(1) into v_room_num from t_room where id = room_id and room_status = 0;
+#判断用房间是否存在
+select count(1) into v_user_num from t_user where id = i_user_id;
+select count(1) into v_room_num from t_room where id = i_room_id and room_status = 0;
 if v_user_num = 0 or v_room_num = 0 then
 	#set DB_PR_PARAM_ERR
-	set ret = 5100;
+	set ret = v_user_num + v_room_num;
 else
 	# 判断当前用户是否已加入房间
-	select count(1) into v_isjoin_num from t_room_user_relation rel where rel.room_id = room_id and rel.user_id = user_id;
+	select count(1) into v_isjoin_num from t_room_user_relation rel 
+		where rel.room_id = i_room_id and rel.user_id = i_user_id;
 	if v_isjoin_num > 0 then
 		set ret = 5102;
 	else
 		# 查出房间限制人数和当前已参加的人数
 		SELECT r.limit_person_num, 
-		(select count(1) from together.t_room_user_relation rel where rel.room_id = r.id) into v_limit_person_num, v_join_person_num FROM together.t_room r limit 1;
+		(select count(1) from together.t_room_user_relation rel where rel.room_id = r.id) into 
+			v_limit_person_num, v_join_person_num FROM together.t_room r limit 1;
 		# 当参加人数不限 或 参加人数小于上限
 		if v_limit_person_num = -1 or (v_join_person_num + 1) < v_limit_person_num then
 			# 关闭事务的自动提交
 			set autocommit = 0;
 			# 插入到房间人员关系表
-			insert into t_room_user_relation (room_id, user_id) values (room_id, user_id);
+			insert into t_room_user_relation (room_id, user_id)
+				values (i_room_id, i_user_id);
 			if t_error=1 then  
 				set ret = 5199;
 				rollback; # 事务回滚  
@@ -287,8 +302,21 @@ else
 	end if;
 end if;
 
+begin
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
+OPEN rs;
+	FETCH NEXT FROM rs INTO v_user_id;
+	REPEAT
+		IF NOT Done THEN
+			set now_room_peo_list = concat(now_room_peo_list, '|', v_user_id);
+		END IF;
+	FETCH NEXT FROM rs INTO v_user_id;
+	UNTIL Done END REPEAT;
+CLOSE rs;
+end;
+
 #显示结果
-#select ret, v_limit_person_num, v_join_person_num;
+-- select ret, now_room_peo_list;
 end$$
 
 DELIMITER ;
@@ -308,6 +336,7 @@ create procedure pr_quit_room
 in i_room_id int   
 , in i_user_id int
 , out ret int  
+, out now_room_peo_list varchar(255)
 )
 BEGIN
 #用于判断房间是否存在
@@ -319,14 +348,25 @@ declare v_isjoin_num int;
 #用于判断用户是否为房主
 declare v_isowner_num int;
 
+#房间已加入的人
+declare v_user_id int;
+declare Done int default 0;
+
 # 标记事务是否出错
 declare t_error int default 0;
+-- 声明游标
+DECLARE rs CURSOR FOR 
+SELECT user_id FROM t_room_user_relation where room_id = i_room_id
+UNION
+select owner_id from t_room where id = i_room_id;
+
 # 如果出现sql异常，则将t_error设置为1后继续执行后面的操作
 declare continue handler for sqlexception set t_error=1;
 
 
 # set DB_PR_ERR
 set ret = 5199;
+set now_room_peo_list = '';
 
 
 #判断用户,房间是否存在
@@ -361,8 +401,22 @@ else
 	end if;
 end if;
 
+
+begin
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET Done = 1;
+OPEN rs;
+	FETCH NEXT FROM rs INTO v_user_id;
+	REPEAT
+		IF NOT Done THEN
+			set now_room_peo_list = concat(now_room_peo_list, '|', v_user_id);
+		END IF;
+	FETCH NEXT FROM rs INTO v_user_id;
+	UNTIL Done END REPEAT;
+CLOSE rs;
+end;
+
 #显示结果
-#select ret;
+-- select ret, now_room_peo_list;
 end$$
 
 DELIMITER ;
@@ -456,12 +510,12 @@ else
 		else
 			set CHECK_ROOM_ID_S = concat(CHECK_ROOM_ID_S, i_sender_id, i_recipient_id);
 			set CHECK_ROOM_ID = CHECK_ROOM_ID_S + 0;
-			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-				values (i_sender_id, i_recipient_id, i_msg_type, i_content, CHECK_ROOM_ID, now());
+			insert into t_msg (sender_id, recipient_id, type, content, room_id, time, status)
+				values (i_sender_id, i_recipient_id, i_msg_type, i_content, CHECK_ROOM_ID, now(), false);
 			set send_user_list = concat(send_user_list, '', i_recipient_id);
 
-			insert into t_msg (sender_id, recipient_id, type, content, room_id, time)
-				values (i_sender_id, i_sender_id, i_msg_type, i_content, CHECK_ROOM_ID, now());
+			insert into t_msg (sender_id, recipient_id, type, content, room_id, time, status)
+				values (i_sender_id, i_sender_id, i_msg_type, i_content, CHECK_ROOM_ID, now(), false);
 			
 			set ret = 5111; -- 插入成功
 		end if;

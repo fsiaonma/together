@@ -2,9 +2,10 @@ insert into together.t_file (id, md5, suffix, uploader_id) values
 (1, '00729817beb2031f93d715c4c967aa8e', '.png', 1)
 ,(2, 'adfd71501248d0a6e29f357f4c5ba96d', '.caf', 1);
 insert into together.t_user 
-(id, username, password, nickname, birthday, signature_text, signature_record_id, pic_id, praise_num, visit_num, sex) values (1, 'admin', 'a', 'G-Mart', 20000101010203, 'hello', 2, 1, 0, 0, 0)
-,(2, 'admin2', 'a', 'G-Mart2', 20000101010203, 'hello', 2, 1, 0, 0, 1)
-,(3, 'admin3', 'a', 'G-Mart3', 20000101010203, 'hello', 2, 1, 0, 0, 1)
+(id, username, password, nickname, birthday, signature_text, signature_record_id, pic_id, praise_num, visit_num, sex) values 
+(1, 'admin', '123456', 'G-Mart', 20000101010203, 'hello', 2, 1, 0, 0, 0)
+,(2, 'admin2', '123456', 'G-Mart2', 20000101010203, 'hello', 2, 1, 0, 0, 1)
+,(3, 'admin3', '123456', 'G-Mart3', 20000101010203, 'hello', 2, 1, 0, 0, 1)
 ,(4, 'followtest', '123456', 'followtest', 20000101010203, 'hello', 2, 1, 0, 0, 1)
 ,(5, 'sender', '123456', 'sender', 20000101010203, 'hello', 2, 1, 0, 0, 1)
 ,(6, 'recipient', '123456', 'recipient', 20000101010203, 'hello', 2, 1, 0, 0, 1);

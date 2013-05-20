@@ -159,6 +159,7 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         room_info->set_title(title);
         room_info->set_type(type);
         room_info->set_gender_type(gender_type);
+        room_info->set_join_person_count(1);
         room_info->set_limit_person_count(Tool::S2I(limit_person_num));
         room_info->set_pic_id(pic_id);
         room_info->set_record_id(record_id);
@@ -173,17 +174,12 @@ int create_room(map<string, string> param, char *buf, int &send_len)
         msg = "insert room success";
         LOG_INFO << msg << endl;
         http_res->set_msg(msg);
+        http_res->set_server_time(Tool::now_time());
         e.close();
 
     } while(0);
     print_proto(http_res);
 
-  fstream output("./response.log", ios::out | ios::trunc | ios::binary);   
-  
-  if (!http_res->SerializeToOstream(&output)) {   
-    cerr << "Failed to write msg." << endl;   
-    return -1;   
-  }
     http_res->SerializeToString(&respon_data);
     memcpy(buf, respon_data.c_str(), respon_data.length());
     send_len = respon_data.length();
