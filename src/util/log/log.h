@@ -23,7 +23,7 @@ enum enLogLevel
 
 extern const char* LogLevel[];
 
-#define LEVEL 2
+#define LEVEL 1
 
 class Logger
 {
